@@ -945,11 +945,7 @@ function formatRemainingTime(ms) {
   const hours = Math.floor(totalSeconds / 3600);
   const minutes = Math.floor((totalSeconds % 3600) / 60);
   const seconds = totalSeconds % 60;
-  const parts = [];
-  if (hours > 0) parts.push(`${hours}h`);
-  if (minutes > 0 || hours > 0) parts.push(`${minutes}m`);
-  parts.push(`${seconds}s`);
-  return parts.join(' ');
+  return `${hours}h ${minutes}m ${seconds}s`;
 }
 
 function isIOSDevice() {
@@ -1360,30 +1356,47 @@ async function copyResult() {
   triggerButtonFeedback();
   const text = state.displayValue;
   try {
-    await navigator.clipboard.writeText(text);
-    showToast(translations[state.locale].copied || 'Result copied');
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(text);
+      showToast(translations[state.locale].copied || 'Result copied');
+    } else {
+      throw new Error('Clipboard API not available');
+    }
   } catch (e) {
-    // Fallback
+    // Fallback: temporary textarea + execCommand
     const textarea = document.createElement('textarea');
     textarea.value = text;
+    textarea.setAttribute('readonly', '');
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
     document.body.appendChild(textarea);
     textarea.select();
+    textarea.setSelectionRange(0, textarea.value.length);
+    let success = false;
     try {
-      document.execCommand('copy');
-      showToast(translations[state.locale].copied || 'Result copied');
+      success = document.execCommand('copy');
     } catch (e2) {
-      showToast('Copy failed');
+      success = false;
     }
     document.body.removeChild(textarea);
+    if (success) {
+      showToast(translations[state.locale].copied || 'Result copied');
+    } else {
+      showToast('Copy failed');
+    }
   }
 }
 
-async function pasteNumber() {
+async function pasteNumber(userInitiated = false) {
   triggerButtonFeedback();
   try {
+    if (!navigator.clipboard || !navigator.clipboard.readText) {
+      throw new Error('Clipboard API not available');
+    }
     const text = await navigator.clipboard.readText();
-    const cleaned = text.replace(/[^\d.\-+*/()]/g, '');
-    if (cleaned) {
+    // Accept only valid numeric values: digits, decimal point, optional minus sign
+    const cleaned = text.replace(/[^\d.-]/g, '');
+    if (cleaned && !isNaN(Number(cleaned))) {
       state.displayValue = cleaned;
       state.startNewNumber = false;
       state.hasPressedEquals = false;
@@ -1391,9 +1404,13 @@ async function pasteNumber() {
       updateSecondaryDisplay();
       syncExpressionDisplay();
       showToast(translations[state.locale].pasted || 'Number pasted');
+    } else if (userInitiated) {
+      showToast('Paste failed');
     }
   } catch (e) {
-    showToast('Paste failed');
+    if (userInitiated) {
+      showToast('Paste failed');
+    }
   }
 }
 
@@ -1561,13 +1578,42 @@ function setActiveMode(mode) {
 const HISTORY_LIMIT = 1000;
 const HISTORY_TTL = 24 * 60 * 60 * 1000; // 24 hours
 
+function cleanupExpiredHistory() {
+  const now = Date.now();
+  const before = state.history.length;
+  state.history = state.history.filter(entry => (now - (entry.timestamp || now)) < HISTORY_TTL);
+  if (state.history.length !== before) {
+    saveHistory();
+  }
+}
+
+function migrateHistoryEntry(entry) {
+  const ts = entry.timestamp || entry.date || Date.now();
+  const d = new Date(ts);
+  if (!entry.date) {
+    entry.date = d.toLocaleDateString('en-CA'); // YYYY-MM-DD
+  }
+  if (!entry.time) {
+    entry.time = d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  }
+  if (!entry.id) {
+    entry.id = 'h-' + ts.toString(36) + '-' + Math.random().toString(36).slice(2, 7);
+  }
+  if (!entry.note) entry.note = '';
+  if (!entry.timestamp) entry.timestamp = ts;
+  return entry;
+}
+
 function loadHistory() {
   try {
     const stored = localStorage.getItem(HISTORY_KEY);
     if (stored) {
       const parsed = JSON.parse(stored);
       const now = Date.now();
-      state.history = parsed.filter(entry => (now - (entry.timestamp || now)) < HISTORY_TTL).slice(0, HISTORY_LIMIT);
+      state.history = parsed
+        .filter(entry => entry && (now - (entry.timestamp || now)) < HISTORY_TTL)
+        .map(migrateHistoryEntry)
+        .slice(0, HISTORY_LIMIT);
     } else {
       state.history = [];
     }
@@ -1584,13 +1630,29 @@ function saveHistory() {
 }
 
 function addHistory(expression, result) {
+  const now = Date.now();
+  // Duplicate prevention: skip if an identical expression+result was added within the last 2 seconds
+  const duplicate = state.history.some(entry =>
+    entry.expression === expression &&
+    entry.result === result &&
+    (now - (entry.timestamp || 0)) < 2000
+  );
+  if (duplicate) {
+    return;
+  }
+
+  const d = new Date(now);
   const entry = {
-    id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
+    id: 'h-' + now.toString(36) + '-' + Math.random().toString(36).slice(2, 7),
     expression,
     result,
-    timestamp: Date.now(),
+    timestamp: now,
+    date: d.toLocaleDateString('en-CA'), // YYYY-MM-DD
+    time: d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
     note: ''
   };
+
+  cleanupExpiredHistory();
   state.history.unshift(entry);
   if (state.history.length > HISTORY_LIMIT) {
     state.history = state.history.slice(0, HISTORY_LIMIT);
@@ -1598,6 +1660,25 @@ function addHistory(expression, result) {
   history.entries = state.history;
   saveHistory();
   renderHistory();
+}
+
+const historyDateFormatter = new Intl.DateTimeFormat('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' });
+const historyTimeFormatter = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+function formatEntryDate(ts, locale) {
+  try {
+    return new Intl.DateTimeFormat(locale || 'en', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(ts);
+  } catch (e) {
+    return historyDateFormatter.format(ts);
+  }
+}
+
+function formatEntryTime(ts, locale) {
+  try {
+    return new Intl.DateTimeFormat(locale || 'en', { hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(ts);
+  } catch (e) {
+    return historyTimeFormatter.format(ts);
+  }
 }
 
 function renderHistory() {
@@ -1608,28 +1689,35 @@ function renderHistory() {
     return;
   }
   const now = Date.now();
+  const remainingPrefix = t.historyRemaining || 'remaining';
   historyList.innerHTML = state.history.map((entry) => {
-    const remaining = HISTORY_TTL - (now - entry.timestamp);
-    const remainingText = formatRemainingTime(remaining);
-    const timeStr = new Date(entry.timestamp).toLocaleTimeString(state.locale, { hour: '2-digit', minute: '2-digit' });
-    const dateStr = new Date(entry.timestamp).toLocaleDateString(state.locale, { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '/');
+    const ts = entry.timestamp || Date.now();
+    const remaining = Math.max(0, HISTORY_TTL - (now - ts));
+    const remainingLabel = `${formatRemainingTime(remaining)} ${remainingPrefix}`;
+    const dateStr = entry.date || formatEntryDate(ts, state.locale);
+    const timeStr = entry.time || formatEntryTime(ts, state.locale);
     return `
       <li class="history-entry" data-id="${entry.id}">
         <div class="history-entry-header">
           <label class="history-check">
             <input type="checkbox" class="history-select" />
-            <span class="history-time">${timeStr}</span>
-            <span class="history-date">${dateStr}</span>
+            <span class="history-id-badge">#${escapeHtml(entry.id.slice(0, 4))}</span>
           </label>
-          <span class="history-remaining">${remainingText} ${t.historyRemaining || 'remaining'}</span>
         </div>
         <div class="history-expression">${escapeHtml(entry.expression)}</div>
         <div class="history-result">= ${escapeHtml(entry.result)}</div>
+        <div class="history-datetime">
+          <span class="history-date">📅 ${escapeHtml(dateStr)}</span>
+          <span class="history-time">🕒 ${escapeHtml(timeStr)}</span>
+        </div>
+        <div class="history-remaining-row">
+          <span class="history-remaining" data-ts="${ts}">${remainingLabel}</span>
+        </div>
         <div class="history-note-row">
           <input class="history-note-input" type="text" placeholder="${t.historyNotePlaceholder || 'Tag this calculation'}"
             value="${escapeHtml(entry.note || '')}" data-id="${entry.id}" />
           <button class="history-edit-note-btn" data-id="${entry.id}" title="${t.noteEdit || 'Edit Note'}">
-            <i class="fa-solid fa-pen"></i>
+            ✏️
           </button>
           <button class="history-share-btn" data-id="${entry.id}" title="${t.noteShare || 'Share'}">
             <i class="fa-solid fa-share-nodes"></i>
@@ -1650,17 +1738,19 @@ function escapeHtml(str) {
 }
 
 function openHistory() {
+  cleanupExpiredHistory();
   if (historyPanel) {
-    historyPanel.classList.add('active');
+    historyPanel.classList.add('open');
     historyPanel.setAttribute('aria-hidden', 'false');
   }
   renderHistory();
   startHistoryCountdown();
+  updateHistoryCountdown();
 }
 
 function closeHistory() {
   if (historyPanel) {
-    historyPanel.classList.remove('active');
+    historyPanel.classList.remove('open');
     historyPanel.setAttribute('aria-hidden', 'true');
   }
   stopHistoryCountdown();
@@ -1756,23 +1846,28 @@ function updateHistoryCountdown() {
   const now = Date.now();
   const t = translations[state.locale] || translations.en;
   const remainingLabel = t.historyRemaining || 'remaining';
-  state.history = state.history.filter(entry => (now - entry.timestamp) < HISTORY_TTL);
+  cleanupExpiredHistory();
+  if (!state.history.length) {
+    if (historyList) renderHistory();
+    stopHistoryCountdown();
+    return;
+  }
+  // Performance: use cached data-ts timestamps, no per-element lookup
   document.querySelectorAll('.history-entry').forEach((el) => {
-    const id = el.getAttribute('data-id');
-    const entry = state.history.find(h => h.id === id);
-    if (!entry) {
+    const remainingEl = el.querySelector('.history-remaining');
+    if (!remainingEl) return;
+    const ts = Number(remainingEl.getAttribute('data-ts')) || 0;
+    if (!ts) {
       el.remove();
       return;
     }
-    const remaining = HISTORY_TTL - (now - entry.timestamp);
-    const remainingText = formatRemainingTime(remaining);
-    const remainingEl = el.querySelector('.history-remaining');
-    if (remainingEl) remainingEl.textContent = `${remainingText} ${remainingLabel}`;
+    const remaining = HISTORY_TTL - (now - ts);
+    if (remaining <= 0) {
+      el.remove();
+      return;
+    }
+    remainingEl.textContent = `${formatRemainingTime(remaining)} ${remainingLabel}`;
   });
-  if (!state.history.length && historyList) {
-    renderHistory();
-    stopHistoryCountdown();
-  }
 }
 
 // ============================================================
@@ -2182,6 +2277,23 @@ function updateCurrencyUI() {
   updateConverterOutput();
 }
 
+function formatCleanNumber(value) {
+  if (value === null || value === undefined || value === '') return '0';
+  const num = Number(value);
+  if (isNaN(num)) return '0';
+  // Round to max 8 decimal places to remove floating-point artifacts
+  let fixed;
+  try {
+    fixed = num.toFixed(8);
+  } catch (e) {
+    return formatNumber(String(num));
+  }
+  // Trim trailing zeros (and trailing decimal point)
+  const cleaned = fixed.replace(/\.?0+$/, '');
+  // Add thousands separators
+  return formatNumber(cleaned);
+}
+
 function updateConverterOutput() {
   if (!currencyServiceInstance || !currencyFromSelect || !currencyToSelect || !currencyFromAmount) return;
   const fromCode = currencyFromSelect.value;
@@ -2198,7 +2310,7 @@ function updateConverterOutput() {
   }
 
   if (currencyToAmount) {
-    currencyToAmount.textContent = formatNumber(result.toString());
+    currencyToAmount.textContent = formatCleanNumber(result);
   }
 
   // Update rate display
@@ -2206,7 +2318,7 @@ function updateConverterOutput() {
     const rate = state.converterMode === 'market' && state.marketRate !== null
       ? state.marketRate
       : currencyServiceInstance.convertCurrency(1, fromCode, toCode);
-    const rateText = `1 ${fromCode} = ${formatNumber(rate.toString())} ${toCode}`;
+    const rateText = `1 ${fromCode} = ${formatCleanNumber(rate)} ${toCode}`;
     conversionRateDisplay.textContent = rateText;
   }
 
@@ -2582,7 +2694,7 @@ function wireEvents() {
           copyResult();
           break;
         case 'paste':
-          pasteNumber();
+          pasteNumber(true);
           break;
       }
     });
@@ -2912,9 +3024,13 @@ function initialize() {
   document.body.setAttribute('data-language', state.locale);
   state.isRTL = state.locale === 'ar';
 
-  // Load history
+  // Load history (also removes expired entries on startup)
   loadHistory();
+  cleanupExpiredHistory();
   renderHistory();
+  // Refresh countdown timers on startup
+  startHistoryCountdown();
+  updateHistoryCountdown();
 
   // Load notes
   loadNoteData();
