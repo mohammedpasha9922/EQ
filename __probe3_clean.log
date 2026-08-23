@@ -1,0 +1,10 @@
+��selected
+after grow { x: 573.953125, y: 320.0625, w: 256, h: 256 } { down: 1, move: 8, up: 2, cancel: 0, release: 2, captureErr: '' }
+after shrink { x: 548.953125, y: 295.0625, w: 206, h: 206 } { down: 1, move: 15, up: 3, cancel: 0, release: 3, captureErr: '' }
+after move {
+  dbg: { down: 1, move: 7, up: 1, cancel: 0, release: 1 },
+  tx: '70',
+  ty: '40',
+  draggable: false,
+  attr: 'false'
+}

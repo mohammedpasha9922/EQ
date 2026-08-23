@@ -1,0 +1,50 @@
+PASS  Open starts at state smartDocsStep = 1  -> state=1
+PASS  Track data-step = 1  -> track=1
+PASS  Indicator starts  ● ○ ○ ○  -> ● ○ ○ ○
+PASS  Step 1 is current & active
+PASS  Future steps (2-4) inactive
+PASS  No JS errors (step 1)
+PASS  window.__smartDocsWorkflow.setStep(2) returns 2  -> ret=2
+PASS  Indicator at step 2  ● ● ○ ○  -> ● ● ○ ○
+PASS  State updated to 2
+PASS  Step 2 is current
+PASS  No JS errors (step 2)
+PASS  Indicator at step 3  ● ● ● ○  -> ● ● ● ○
+PASS  State updated to 3
+PASS  No JS errors (step 3)
+PASS  Indicator at step 4  ● ● ● ●  -> ● ● ● ●
+PASS  State updated to 4
+PASS  Step 4 is current
+PASS  No JS errors (step 4)
+PASS  Step clamped to min 1
+PASS  Step clamped to max 4
+PASS  Step names correct across 7 locales  -> ar: البدء/التحرير/المراجعة/التصدير en: Start/Edit/Review/Export fr: Démarrer/Modifier/Révision/Exportation es: Inicio/Edición/Revisión/Exportación tr: Başlangıç/Düzenleme/İnceleme/Dışa Aktarma ru: Начало/Редактирование/Проверка/Экспорт de: Start/Bearbeiten/Überprüfung/Export 
+PASS  No JS errors (i18n cycle)
+PASS  Arabic sets dir=rtl
+PASS  Arabic step names correct (RTL)  -> البدء/التحرير/المراجعة/التصدير
+PASS  RTL: no horizontal overflow  -> {"doc":0,"el":0}
+PASS  No JS errors (RTL)
+PASS  English sets dir=ltr
+PASS  English step names correct (LTR)  -> Start/Edit/Review/Export
+PASS  No JS errors (LTR)
+PASS  Mobile: no document horizontal overflow (RTL)  -> doc=0
+PASS  Mobile: stepper no horizontal overflow  -> {"doc":0,"el":0,"track":0}
+PASS  Mobile: step 2 (● ● ○ ○) no overflow  -> doc=0
+PASS  Mobile: no JS errors
+PASS  Reopen after Back resets to Step 1  -> before=3 after=1
+PASS  Reopen indicator  ● ○ ○ ○  -> ● ○ ○ ○
+PASS  PART1: Drawer item exists
+PASS  PART1: Drawer item has emoji
+PASS  PART1: No JS errors on boot
+PASS  PART1: Smart Docs opens
+PASS  PART1: Back button closes
+PASS  PART2: Heading present (Arabic)  -> heading=ماذا تريد أن تفعل؟
+PASS  PART2: Four cards intact  -> count=4
+PASS  PART2: Card titles correct  -> مسح مستند/استيراد ملف/مستند جديد/القوالب
+PASS  PART2: No JS errors
+PASS  Calculator still works (pressed 7)  -> display=7
+PASS  History still opens
+PASS  Notes manager still opens
+PASS  No JS errors (Calculator/History/Notes)
+
+ALL PASS  (48 checks)

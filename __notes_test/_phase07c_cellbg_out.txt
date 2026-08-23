@@ -1,0 +1,36 @@
+﻿
+==== Desktop ====
+PASS  Desktop: Cell Color button exists
+PASS  Desktop: Cell Color button enabled after cell click  -> disabled=false
+PASS  Desktop: showPicker is a function on input  -> origType=function
+PASS  Desktop: showPicker() was invoked by the button  -> calls=1
+PASS  Desktop: showPicker() did NOT throw  -> threw=null
+PASS  Desktop: showPicker() input layout rendered  -> lastCall={"id":"noteCellBgColorInput","type":"color","offsetParentNull":false,"display":"block","visibility":"visible","opacity":"0","pointerEvents":"none","rectW":6,"rectH":4,"rectX":13,"rectY":91}
+   [Desktop] showPicker call detail = {"id":"noteCellBgColorInput","type":"color","offsetParentNull":false,"display":"block","visibility":"visible","opacity":"0","pointerEvents":"none","rectW":6,"rectH":4,"rectX":13,"rectY":91}
+   [Desktop] activation control (deferred / synthetic click) = {"deferred":"no-throw","syntheticClick":"no-throw"}
+FAIL  Desktop: native picker fired input WITHOUT manual dispatch  -> inputs=[]
+PASS  Desktop: color NOT applied just by opening picker (human must pick)  -> bg=(none)
+   [Desktop] activeElement after button click = TD
+PASS  Desktop: input event applies bg to selected cell  -> bg=rgb(0, 204, 255)
+PASS  Desktop: neighbor cell unchanged  -> neighbor=(none)
+PASS  Desktop: cell text unchanged  -> text=LEFT
+PASS  Desktop: color persists after reopen  -> reopened=rgb(0, 204, 255)
+
+==== Mobile(coarse-pointer) ====
+PASS  Mobile(coarse-pointer): Cell Color button exists
+PASS  Mobile(coarse-pointer): Cell Color button enabled after cell click  -> disabled=false
+PASS  Mobile(coarse-pointer): showPicker is a function on input  -> origType=function
+PASS  Mobile(coarse-pointer): showPicker() was invoked by the button  -> calls=1
+PASS  Mobile(coarse-pointer): showPicker() did NOT throw  -> threw=null
+PASS  Mobile(coarse-pointer): showPicker() input layout rendered  -> lastCall={"id":"noteCellBgColorInput","type":"color","offsetParentNull":false,"display":"block","visibility":"visible","opacity":"0","pointerEvents":"none","rectW":6,"rectH":4,"rectX":13,"rectY":91}
+   [Mobile(coarse-pointer)] showPicker call detail = {"id":"noteCellBgColorInput","type":"color","offsetParentNull":false,"display":"block","visibility":"visible","opacity":"0","pointerEvents":"none","rectW":6,"rectH":4,"rectX":13,"rectY":91}
+   [Mobile(coarse-pointer)] activation control (deferred / synthetic click) = {"deferred":"no-throw","syntheticClick":"no-throw"}
+FAIL  Mobile(coarse-pointer): native picker fired input WITHOUT manual dispatch  -> inputs=[]
+PASS  Mobile(coarse-pointer): color NOT applied just by opening picker (human must pick)  -> bg=(none)
+   [Mobile(coarse-pointer)] activeElement after button click = TD
+PASS  Mobile(coarse-pointer): input event applies bg to selected cell  -> bg=rgb(0, 204, 255)
+PASS  Mobile(coarse-pointer): neighbor cell unchanged  -> neighbor=(none)
+PASS  Mobile(coarse-pointer): cell text unchanged  -> text=LEFT
+PASS  Mobile(coarse-pointer): color persists after reopen  -> reopened=rgb(0, 204, 255)
+
+PHASE 07C CELLBG PROBE SUMMARY failures=2

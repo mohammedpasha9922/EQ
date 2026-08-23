@@ -1,0 +1,36 @@
+PASS  Arabic "المجموع الكلي": pdfCellAlign returns right
+PASS  Arabic "المجموع الكلي": pdfCellDir returns rtl
+PASS  Arabic "شركة الأمل للمقاولات": pdfCellAlign returns right
+PASS  Arabic "شركة الأمل للمقاولات": pdfCellDir returns rtl
+PASS  English "Total": pdfCellAlign returns left
+PASS  English "Total": pdfCellDir returns auto
+PASS  English "Company Name": pdfCellAlign returns left
+PASS  Number "1234567890": pdfCellAlign returns right
+PASS  Number "150000": pdfCellAlign returns right
+PASS  Mixed "شركة الأمل ABC 123": pdfCellAlign returns right (Arabic dominant)
+PASS  Mixed "شركة الأمل ABC 123": pdfCellDir returns rtl
+PASS  Mixed "Total المجموع 150000": pdfCellAlign returns right (Arabic dominant)
+PASS  Mixed "Total المجموع 150000": pdfCellDir returns rtl
+PASS  Mixed "150000 IQD": pdfCellAlign returns right (digits > letters)
+PASS  Mixed "150000 IQD": pdfCellDir returns auto
+PASS  Long Arabic sentence: pdfCellAlign returns right
+PASS  Long English sentence: pdfCellAlign returns left
+PASS  Header: thead th has text-align: center in CSS
+PASS  Header: th cells in template use <th> elements
+PASS  Data cells: row template uses pdfCellAlign for col-desc
+PASS  Data cells: row template uses pdfCellAlign for col-expr
+PASS  Data cells: row template uses pdfCellAlign for col-result
+PASS  Data cells: col-num retains text-align: center
+PASS  Wrapping: no white-space:nowrap on table cells
+PASS  Vertical: th, td has vertical-align: middle in CSS
+PASS  PDF: buildHistoryPdfBlob function exists
+PASS  PDF: report HTML template includes history-table
+PASS  PDF: report HTML template includes total-summary
+PASS  PDF: report HTML template includes report-footer
+FAIL  Runtime: no uncaught page errors  -> Unexpected token 'export'
+PASS  Helpers: pdfCellAlign function defined in app.js
+PASS  Helpers: pdfCellDir function defined in app.js
+
+==== RESULT: 31 passed, 1 failed, 32 total ====
+
+FINAL: 31/32 passed

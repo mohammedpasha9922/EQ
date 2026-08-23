@@ -1,0 +1,48 @@
+PASS  CREATE: table inserted  -> tables=1
+PASS  UI: horizontal alignment control present
+PASS  UI: vertical alignment control present
+PASS  NORMAL CELL: H center applied (computed)  -> {"h":"center","v":"middle"}
+PASS  NORMAL CELL: V middle applied (computed)  -> {"h":"center","v":"middle"}
+PASS  TARGETED-ONLY: only the targeted cell (0,0) changed; all other cells unchanged  -> [[{"h":"center","v":"middle"},{"h":null,"v":null},{"h":null,"v":null}],[{"h":null,"v":null},{"h":null,"v":null},{"h":null,"v":null}],[{"h":null,"v":null},{"h":null,"v":null},{"h":null,"v":null}]]
+PASS  NORMAL CELL: H right applied (computed)  -> {"h":"right","v":"bottom"}
+PASS  NORMAL CELL: V bottom applied (computed)  -> {"h":"right","v":"bottom"}
+PASS  NORMAL CELL: H left applied (computed)  -> {"h":"left","v":"top"}
+PASS  NORMAL CELL: V top applied (computed)  -> {"h":"left","v":"top"}
+PASS  MULTI-SELECT: alignment applied to ALL selected cells  -> row1=[{"h":"center","v":"middle"},{"h":"center","v":"middle"},{"h":"center","v":"middle"}]
+PASS  MERGE: cells merged before alignment  -> info=[[{"text":"مرحبا","colspan":1,"rowspan":1},{"text":"Hello","colspan":1,"rowspan":1},{"text":"12345","colspan":1,"rowspan":1}],[{"text":"سلام","colspan":1,"rowspan":1},{"text":"Mixed: سلام 99","colspan":1,"rowspan":1},{"text":"","colspan":1,"rowspan":1}],[{"text":"\n","colspan":2,"rowspan":1},{"text":"","colspan":1,"rowspan":1}]]
+PASS  MERGED CELL: H right applied (computed)  -> {"h":"right","v":"bottom"}
+PASS  MERGED CELL: V bottom applied (computed)  -> {"h":"right","v":"bottom"}
+PASS  BORDERS: borders intact before and after alignment  -> before=[{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1}] after=[{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1}]
+PASS  BORDERS: table data-border-style untouched  -> attr=null
+PASS  B/I/U: Bold preserved in cell (0,0)  -> <b>مرحبا</b>
+PASS  B/I/U: Italic preserved in cell (0,1)  -> <i style="color: rgb(255, 0, 0);">Hello</i>
+PASS  TEXT COLOR: red preserved in cell (0,1)  -> <i style="color: rgb(255, 0, 0);">Hello</i>
+PASS  B/I/U: Underline preserved in cell (0,2)  -> <u>12345</u>
+PASS  BACKGROUND: cell (1,1) background preserved  -> bg=rgb(255, 255, 0)
+PASS  CONTENT: Arabic/English/Numbers/Mixed intact  -> texts=[["مرحبا","Hello","12345"],["سلام","Mixed: سلام 99",""],["\n",""]]
+PASS  AUTO-SAVE: alignment stored in cell data model  -> cell0={"text":"مرحبا","formatting":[{"start":0,"end":5,"bold":true,"italic":false,"underline":false}],"alignH":"center","alignV":"middle"}
+PASS  AUTO-SAVE: merged-cell alignment stored  -> merged={"text":"","formatting":[],"alignH":"right","alignV":"bottom","colspan":2}
+PASS  REOPEN: H center + V middle restored  -> {"h":"center","v":"middle"}
+PASS  REOPEN: merged H right + V bottom restored  -> {"h":"right","v":"bottom"}
+PASS  REOPEN: Bold preserved  -> <b>مرحبا</b>
+PASS  REOPEN: background preserved  -> bg=rgb(255, 255, 0)
+PASS  REFRESH: H center + V middle restored  -> {"h":"center","v":"middle"}
+PASS  REFRESH: multi-select alignment restored  -> [{"h":"center","v":"middle"},{"h":"center","v":"middle"},{"h":"center","v":"middle"}]
+PASS  REFRESH: merged alignment restored  -> {"h":"right","v":"bottom"}
+PASS  REFRESH: italic + text color preserved  -> <i><span style="color:#ff0000;">Hello</span></i>
+PASS  REFRESH: background preserved  -> bg=rgb(255, 255, 0)
+PASS  REFRESH: borders preserved  -> cells=[{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1}]
+PASS  SPLIT: merged cell splits back into individual cells  -> info=[[{"text":"مرحبا","colspan":1,"rowspan":1},{"text":"Hello","colspan":1,"rowspan":1},{"text":"12345","colspan":1,"rowspan":1}],[{"text":"سلام","colspan":1,"rowspan":1},{"text":"Mixed: سلام 99","colspan":1,"rowspan":1},{"text":"","colspan":1,"rowspan":1}],[{"text":"","colspan":1,"rowspan":1},{"text":"","colspan":1,"rowspan":1},{"text":"","colspan":1,"rowspan":1}]]
+PASS  LEGACY: no alignment attributes rendered by default  -> [[{"h":null,"v":null},{"h":null,"v":null}],[{"h":null,"v":null},{"h":null,"v":null}]]
+PASS  LEGACY: default text-align/v-align look (start/top)  -> {"h":"start","v":"top"}
+PASS  LEGACY: legacy content preserved  -> cells=[["Legacy Cell",""],["",""]]
+PASS  INVALID: non-allow-list alignment values normalized to safe default  -> [[{"h":null,"v":null},{"h":null,"v":null}],[{"h":null,"v":null},{"h":null,"v":null}]]
+PASS  INVALID: renders as default (start/top), no injected CSS  -> {"h":"start","v":"top"}
+PASS  INVALID: cell content preserved through normalization  -> cells=[["Safe",""],["",""]]
+PASS  NO-OP: alignment with no cell selected does nothing  -> [[{"h":null,"v":null},{"h":null,"v":null}],[{"h":null,"v":null},{"h":null,"v":null}]]
+PASS  NO-OP: no runtime errors  -> errors=none
+PASS  RUNTIME: no uncaught page/console errors  -> errors=none
+
+==== RESULT: 44 passed, 0 failed, 44 total ====
+
+FINAL: 44/44 passed

@@ -1,0 +1,7 @@
+11:57:38 | 2458
+PASS  Close Manager returns to previous screen
+PASS  No uncaught page errors (full-screen flow) -> clean
+PASS  EDIT persists after reopening existing note (id/auto-save) -> id=note-msvkneri
+PASS  Notes from all three viewports persisted (no data loss) -> desk=true tab=true mob=true
+
+==== RESULT: 26 passed, 0 failed, 26 total ====

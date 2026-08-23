@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0" />
+    <meta name="theme-color" content="#0f172a" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="description" content="Advanced EQ Calculator with precision math, word conversion, history, and PWA support." />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="EQ Calculator" />
+    <title>EQ Calculator</title>
+    <link rel="icon" type="image/x-icon" href="./favicon.ico" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png" />
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/decimal.js@10.4.3/decimal.min.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <div id="adPlaceholder" class="ad-placeholder" aria-hidden="true"></div>
+
+      <header class="top-bar">
+        <div>
+          <p class="eyebrow" data-i18n="eyebrow">Precision Calculator</p>
+          <h1 data-i18n="title">EQ Calculator</h1>
+        </div>
+        <div class="top-bar-actions">
+          <select id="topBarLanguageSelect" class="lang-switch" aria-label="Select language">
+            <option value="ar" data-i18n="languageArabic">العربية</option>
+            <option value="en" data-i18n="languageEnglish">English</option>
+            <option value="es" data-i18n="languageSpanish">Español</option>
+            <option value="fr" data-i18n="languageFrench">Français</option>
+            <option value="ru" data-i18n="languageRussian">Русский</option>
+            <option value="de" data-i18n="languageGerman">Deutsch</option>
+            <option value="tr" data-i18n="languageTurkish">Türkçe</option>
+          </select>
+          <div id="currencyMenuWrap" class="currency-menu-wrap">
+            <button id="currencyMenuButton" class="ghost-btn icon-btn" type="button" aria-label="Currency Menu" aria-expanded="false">
+              <i class="fa-solid fa-coins"></i>
+            </button>
+            <div id="currencyMenuPopover" class="currency-popover" aria-hidden="true">
+              <button class="currency-popover-item" data-action="search" type="button">
+                <span data-i18n="currencyOptionSearch">Search Currency</span>
+              </button>
+              <button class="currency-popover-item" data-action="prices" type="button">
+                <span data-i18n="currencyOptionPrices">Live Currency Prices</span>
+              </button>
+              <button class="currency-popover-item" data-action="convert" type="button">
+                <span data-i18n="currencyOptionConvert">Convert Currencies</span>
+              </button>
+              <button class="currency-popover-item" data-action="favorites" type="button">
+                <span data-i18n="currencyOptionFavorites">Favorite Currencies</span>
+              </button>
+            </div>
+          </div>
+          <button id="drawerToggle" class="ghost-btn icon-btn" type="button" aria-label="Open EQ Tools">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </header>
+
+      <div class="mode-switcher" role="tablist" aria-label="Calculator modes">
+        <button class="mode-switch active" data-mode="general" type="button" data-i18n="modeGeneral">General Calculator</button>
+      </div>
+
+      <div id="generalCalculatorPanel" class="view-panel active">
+        <main class="calculator-card">
+          <section class="display-section">
+            <button id="speechButton" class="speech-btn" type="button" aria-label="Speak result">🔊</button>
+            <div id="primaryDisplay" class="primary-display">0</div>
+            <div id="expressionDisplay" class="expression-display" aria-live="polite"></div>
+            <div id="secondaryDisplay" class="secondary-display">Zero</div>
+          </section>
+
+          <div class="scientific-toggle-row">
+            <button id="scientificToggle" class="scientific-toggle" type="button" aria-expanded="false" data-i18n="scientificToggle">Scientific</button>
+            <button id="percentToggle" class="scientific-toggle" type="button" aria-expanded="false" data-i18n="percentTab">Percentage</button>
+          </div>
+          <div id="scientificPanel" class="scientific-panel" aria-label="Scientific calculator tools">
+            <button class="scientific-btn" data-scientific="sqrt(" type="button">√</button>
+            <button class="scientific-btn" data-scientific="^2" type="button">x²</button>
+            <button class="scientific-btn" data-scientific="(" type="button">(</button>
+            <button class="scientific-btn" data-scientific=")" type="button">)</button>
+          </div>
+
+          <section class="control-row">
+            <button class="control-btn" data-action="clear" type="button">AC</button>
+            <button class="control-btn" data-action="backspace" type="button">⌫</button>
+            <button class="control-btn" data-action="copy" type="button"><i class="fa-regular fa-copy"></i></button>
+            <button class="control-btn" data-action="paste" type="button"><i class="fa-solid fa-paste"></i></button>
+          </section>
+
+          <div class="keypad-area">
+            <section class="keypad-grid" aria-label="Calculator keypad">
+              <button class="keypad-btn number" data-value="7" type="button">7</button>
+              <button class="keypad-btn number" data-value="8" type="button">8</button>
+              <button class="keypad-btn number" data-value="9" type="button">9</button>
+              <button class="keypad-btn operator" data-value="+" type="button">+</button>
+
+              <button class="keypad-btn number" data-value="4" type="button">4</button>
+              <button class="keypad-btn number" data-value="5" type="button">5</button>
+              <button class="keypad-btn number" data-value="6" type="button">6</button>
+              <button class="keypad-btn operator" data-value="-" type="button">-</button>
+
+              <button class="keypad-btn number" data-value="1" type="button">1</button>
+              <button class="keypad-btn number" data-value="2" type="button">2</button>
+              <button class="keypad-btn number" data-value="3" type="button">3</button>
+              <button class="keypad-btn operator" data-value="*" type="button">×</button>
+
+              <button class="keypad-btn number" data-value="0" type="button">0</button>
+              <button class="keypad-btn number" data-value="." type="button">.</button>
+              <button class="keypad-btn operator" data-value="/" type="button">÷</button>
+              <button class="keypad-btn equals" data-action="equals" type="button">=</button>
+            </section>
+
+            <div id="percentPanel" class="percent-panel" aria-hidden="true">
+              <div class="percent-panel-header">
+                <h4 data-i18n="percentTitle">Percentage Calculator</h4>
+                <button id="percentBackButton" class="percent-back-btn" type="button" aria-label="Back to calculator">
+                  <i class="fa-solid fa-arrow-left"></i>
+                  <span data-i18n="percentBack">Back</span>
+                </button>
+              </div>
+              <div class="percent-panel-body">
+                <label class="field">
+                  <span data-i18n="amountLabel">Amount</span>
+                  <input id="percentAmount" type="number" inputmode="decimal" placeholder="0" />
+                </label>
+                <label class="field">
+                  <span data-i18n="rateLabel">Percentage Rate</span>
+                  <input id="percentRate" type="number" inputmode="decimal" placeholder="0" />
+                </label>
+                <div class="field percent-result-field">
+                  <span data-i18n="percentResultLabel">Result</span>
+                  <div id="percentResult" class="percent-result-value">0</div>
+                </div>
+                <div id="percentWords" class="percent-words"></div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+
+      <div id="historyPanel" class="history-panel" aria-hidden="true">
+        <div class="history-screen">
+          <header class="history-screen-header">
+            <button id="historyBackButton" class="ghost-btn history-back-btn" type="button" aria-label="Back">
+              <i class="fa-solid fa-arrow-left"></i>
+              <span data-i18n="historyBack">Back</span>
+            </button>
+            <h3 class="history-screen-title" data-i18n="historyTitle">24-Hour History</h3>
+            <div class="top-bar-actions">
+              <button id="selectAllHistory" class="ghost-btn small" type="button" data-i18n="selectAll">Select All</button>
+              <button id="exportHistory" class="ghost-btn small" type="button" data-i18n="exportButton">Share / Export</button>
+            </div>
+          </header>
+          <ul id="historyList" class="history-list"></ul>
+        </div>
+      </div>
+
+    <div id="currencyConverterModal" class="currency-modal-backdrop" aria-hidden="true">
+      <div class="currency-modal" role="dialog" aria-modal="true" aria-labelledby="currencyConverterTitle">
+        <div class="currency-modal-header">
+          <div>
+            <h3 id="currencyConverterTitle" data-i18n="currencyConverterTitle">Direct Currency Converter</h3>
+            <p class="currency-modal-subtitle" data-i18n="currencyConverterSubtitle">Convert amounts instantly with live rates.</p>
+          </div>
+          <button id="currencyConverterCloseButton" class="modal-close-btn" type="button" aria-label="Close">×</button>
+        </div>
+
+        <div class="converter-mode-switcher" role="tablist" aria-label="Converter mode">
+          <button type="button" class="converter-mode-btn active" data-converter-mode="bank" data-i18n="bankRateMode">🏦 Bank Rate</button>
+          <button type="button" class="converter-mode-btn" data-converter-mode="market" data-i18n="marketRateMode">🏪 Market Rate</button>
+        </div>
+
+        <label class="field converter-field market-rate-field" id="marketRateField" hidden>
+          <span data-i18n="marketRateFieldLabel">Market Exchange Rate</span>
+          <div class="market-rate-row">
+            <span id="marketRatePrefix" class="market-rate-prefix">1 USD =</span>
+            <input id="marketRateInput" type="number" inputmode="decimal" placeholder="0" />
+            <span id="marketRateSuffix" class="market-rate-suffix">IQD</span>
+          </div>
+        </label>
+
+        <div class="currency-quick-actions">
+          <button id="swapCurrenciesButton" class="ghost-btn small" type="button" title="Swap currencies" data-i18n="swapButton">
+            <i class="fa-solid fa-arrow-right-arrow-left"></i> Swap
+          </button>
+          <button id="showFavoritesButton" class="ghost-btn small" type="button" title="Show favorites" data-i18n="favoritesButton">
+            <i class="fa-solid fa-star"></i> Favorites
+          </button>
+          <button id="showRecentButton" class="ghost-btn small" type="button" title="Show recent" data-i18n="recentButton">
+            <i class="fa-solid fa-clock"></i> Recent
+          </button>
+        </div>
+
+        <div class="converter-grid">
+          <label class="field converter-field">
+            <span data-i18n="fromLabel">From</span>
+            <div class="currency-select-wrapper">
+              <select id="currencyFromSelect"></select>
+              <button id="favoriteFromButton" class="favorite-btn" type="button" aria-label="Add to favorites">
+                <i class="fa-regular fa-star"></i>
+              </button>
+            </div>
+          </label>
+          <label class="field converter-field">
+            <span data-i18n="toLabel">To</span>
+            <div class="currency-select-wrapper">
+              <select id="currencyToSelect"></select>
+              <button id="favoriteToButton" class="favorite-btn" type="button" aria-label="Add to favorites">
+                <i class="fa-regular fa-star"></i>
+              </button>
+            </div>
+          </label>
+          <label class="field converter-field amount-field">
+            <span data-i18n="amountLabel">Amount</span>
+            <input id="currencyFromAmount" type="number" inputmode="decimal" placeholder="0" />
+          </label>
+          <div class="field converter-result-field">
+            <span data-i18n="convertedLabel">Converted</span>
+            <div id="currencyToAmount" class="converter-output">0</div>
+            <div id="conversionRateDisplay" class="conversion-rate"></div>
+            <div id="currencyWords" class="currency-words"></div>
+          </div>
+        </div>
+        
+        <div class="currency-status-row">
+          <div id="currencyStatusMessage" class="currency-status">Loading rates…</div>
+          <div id="cacheIndicator" class="cache-indicator" style="display: none;">
+            <i class="fa-solid fa-database"></i> <span data-i18n="cachedLabel">Cached</span>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button id="refreshRatesButton" class="ghost-btn small" type="button" data-i18n="refreshButton">
+              <i class="fa-solid fa-rotate"></i>
+              Refresh
+            </button>
+            <button id="currencyDirectoryButton" class="ghost-btn small" type="button" data-i18n="globalDirectoryButton">
+              <i class="fa-solid fa-globe"></i>
+              Global directory
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="currencyDirectoryModal" class="currency-modal-backdrop" aria-hidden="true">
+      <div class="currency-modal" role="dialog" aria-modal="true" aria-labelledby="currencyDirectoryTitle">
+        <div class="currency-modal-header">
+          <div>
+            <h3 id="currencyDirectoryTitle" data-i18n="currencyDirectoryTitle">Global Currencies Directory</h3>
+            <p class="currency-modal-subtitle" data-i18n="currencyDirectorySubtitle">Search paper currencies by country name or currency code.</p>
+          </div>
+          <button id="currencyCloseButton" class="modal-close-btn" type="button" aria-label="Close">×</button>
+        </div>
+        <div class="currency-modal-body">
+          <label class="field currency-search-field">
+            <input id="currencySearchInput" type="search" placeholder="Search country or code" data-i18n-placeholder="currencySearchPlaceholder" autocomplete="off" />
+          </label>
+          <ul id="currencyList" class="currency-list"></ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="settingsModal" class="settings-modal-backdrop" aria-hidden="true">
+      <div class="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle">
+        <div class="settings-modal-header">
+          <div>
+            <h3 id="settingsModalTitle" data-i18n="settingsTitle">Settings & Customization</h3>
+            <p class="settings-modal-subtitle" data-i18n="settingsSubtitle">Customize app language, theme and feedback.</p>
+          </div>
+          <button id="settingsCloseButton" class="modal-close-btn" type="button" aria-label="Close">×</button>
+        </div>
+        <div class="settings-modal-body">
+          <label class="field">
+            <span data-i18n="languageLabel">Language</span>
+            <select id="languageSelect">
+              <option value="ar" data-i18n="languageArabic">العربية</option>
+              <option value="en" data-i18n="languageEnglish">English</option>
+              <option value="es" data-i18n="languageSpanish">Español</option>
+              <option value="fr" data-i18n="languageFrench">Français</option>
+              <option value="ru" data-i18n="languageRussian">Русский</option>
+              <option value="de" data-i18n="languageGerman">Deutsch</option>
+              <option value="tr" data-i18n="languageTurkish">Türkçe</option>
+            </select>
+          </label>
+          <div class="theme-group">
+            <span data-i18n="themeLabel">Theme</span>
+            <div class="theme-options">
+              <button class="theme-option active" data-theme="dark" data-i18n="themeDark" type="button">Dark</button>
+              <button class="theme-option" data-theme="light" data-i18n="themeLight" type="button">Light</button>
+              <button class="theme-option" data-theme="violet" data-i18n="themeViolet" type="button">Violet</button>
+            </div>
+          </div>
+          <label class="field">
+            <span data-i18n="soundHapticsLabel">Button sound & haptics</span>
+            <div class="switch-row">
+              <span class="field-caption" data-i18n="soundHapticsCaption">Enable click sounds and vibration</span>
+              <label class="switch">
+                <input id="soundToggle" type="checkbox" checked />
+                <span class="slider"></span>
+              </label>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div id="iosInstallModal" class="install-modal-backdrop" aria-hidden="true">
+      <div class="install-modal" role="dialog" aria-modal="true" aria-labelledby="iosInstallTitle">
+        <div class="install-modal-header">
+          <div class="install-modal-icon">📲</div>
+          <div class="install-modal-heading">
+            <h3 id="iosInstallTitle" data-i18n="installModalTitle">Install on iPhone</h3>
+            <p id="iosInstallSubtitle" class="install-modal-subtitle" data-i18n="installModalSubtitle">Add it to your Home Screen</p>
+          </div>
+          <button id="closeIosInstallModal" class="modal-close-btn" type="button" aria-label="Close">×</button>
+        </div>
+        <ol class="install-modal-steps">
+          <li id="iosInstallStep1" data-i18n="installModalStep1">Step 1: Tap the Share button (⎘ / ⇡) at the bottom or top of the browser.</li>
+          <li id="iosInstallStep2" data-i18n="installModalStep2">Step 2: Choose "Add to Home Screen" from the menu.</li>
+        </ol>
+        <button id="dismissIosInstallModal" class="accent-btn" type="button" data-i18n="installModalClose">Got it</button>
+      </div>
+    </div>
+
+    <div id="notesManagerModal" class="notes-manager-backdrop" aria-hidden="true">
+      <div class="notes-manager" role="dialog" aria-modal="true" aria-labelledby="notesManagerTitle">
+        <div class="notes-manager-header">
+          <div class="notes-manager-heading">
+            <h3 id="notesManagerTitle" data-i18n="notesManagerTitle">Notes Manager</h3>
+            <p id="notesManagerSubtitle" class="notes-manager-subtitle" data-i18n="notesManagerSubtitle">Organize notes in folders and open a full screen editor.</p>
+          </div>
+          <button id="closeNotesManager" class="modal-close-btn" type="button" aria-label="Close">×</button>
+        </div>
+        <div class="notes-manager-content">
+          <div class="folders-panel">
+            <div class="folder-header">
+              <h4 data-i18n="foldersTitle">Folders</h4>
+              <button id="addFolderButton" class="ghost-btn small" type="button" data-i18n="addFolder">+ Folder</button>
+            </div>
+            <ul id="foldersList" class="folders-list"></ul>
+            <button id="openNewNoteButton" class="accent-btn" type="button" data-i18n="newNoteButton">New Full Screen Note</button>
+          </div>
+          <div class="notes-panel">
+            <div class="folder-header">
+              <h4 data-i18n="notesTitle">Notes</h4>
+              <button id="refreshNotesButton" class="ghost-btn small" type="button" data-i18n="refreshNotes">Refresh</button>
+            </div>
+            <ul id="notesList" class="notes-list"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="fullScreenNoteModal" class="full-screen-note-backdrop" aria-hidden="true">
+      <div class="full-screen-note" role="dialog" aria-modal="true" aria-labelledby="fullScreenNoteTitle">
+        <div class="full-screen-note-header">
+          <div>
+            <h3 id="fullScreenNoteTitle" data-i18n="fullScreenNoteTitle">Full Screen Note</h3>
+            <p id="fullScreenNoteFolderLabel" class="notes-manager-subtitle" data-i18n="noteFolderLabel">Folder</p>
+          </div>
+          <button id="closeFullScreenNote" class="modal-close-btn" type="button" aria-label="Close">×</button>
+        </div>
+        <div class="full-screen-note-body">
+          <label class="field">
+            <span data-i18n="noteTitleLabel">Title</span>
+            <input id="noteTitleInput" class="note-input" type="text" maxlength="80" placeholder="Note title" data-i18n-placeholder="noteTitlePlaceholder" />
+          </label>
+          <label class="field">
+            <span data-i18n="folderSelectLabel">Folder</span>
+            <select id="noteFolderSelect"></select>
+          </label>
+          <textarea id="noteBodyInput" class="note-body" placeholder="Start writing..." data-i18n-placeholder="noteBodyPlaceholder"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div id="drawerOverlay" class="drawer-overlay"></div>
+    <aside id="drawer" class="drawer side" aria-label="EQ tools drawer">
+      <div class="drawer-header">
+        <div>
+          <p class="eyebrow" data-i18n="drawerEyebrow">EQ TOOLS</p>
+          <h2 data-i18n="drawerTitle">EQ Tools</h2>
+        </div>
+        <button id="drawerCloseButton" class="modal-close-btn" type="button" aria-label="Close drawer">×</button>
+      </div>
+      <nav class="drawer-menu">
+        <button class="drawer-menu-item" data-action="open-history" type="button">
+         <span class="item-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></span>
+          <span data-i18n="drawerHistory">History</span>
+        </button>
+        <button class="drawer-menu-item" data-action="open-notes" type="button">
+          <span class="item-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></span>
+          <span data-i18n="drawerNotes">Notes</span>
+        </button>
+        <button class="drawer-menu-item" data-action="open-install" type="button">
+          <span class="item-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg></span>
+          <span data-i18n="drawerInstall">Install App</span>
+        </button>
+        <button class="drawer-menu-item" data-action="open-settings" type="button">
+         <span class="item-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></span>
+          <span data-i18n="drawerSettings">Settings</span>
+        </button>
+      </nav>
+    </aside>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

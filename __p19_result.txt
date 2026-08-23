@@ -1,0 +1,118 @@
+STARTED
+PASS  1) Smart Documents opens
+PASS  2) Blank Document opens with A4
+PASS  3) Exactly ONE page at start  -> ["p1"]
+PASS  4) Counter shows صفحة 1 من 1  -> صفحة 1 من 1
+PASS  5) Add page -> pageCount = 2
+PASS  6) New page becomes current (2)
+PASS  7) Counter shows صفحة 2 من 2  -> صفحة 2 من 2
+PASS  8) Add page -> pageCount = 3
+PASS  9) Counter shows صفحة 3 من 3  -> صفحة 3 من 3
+PASS  10) Only ONE page visible at a time
+PASS  A) No JS errors (page creation)
+PASS  11) Delete current page works  -> count=2
+PASS  12) Count indicator updated  -> 2 of 2
+PASS  13) currentPage moved to a nearby page (2)  -> cur=2
+PASS  14) Last page can NEVER be deleted  -> count=1 removed=false delDisabled=true
+PASS  B) No JS errors (delete)
+PASS  15) Rich content created (text/table/image/logo)  -> {"id":"p1","hidden":false,"design":[],"text":["ORIGINAL TEXT"],"headings":[],"tables":1,"images":1,"logos":1,"signatures":0,"signaturesUncertified":0}
+PASS  16) Copy creates a new page  -> {"c":2,"cur":2}
+PASS  17) New page appears after the original
+PASS  18) Text copied  -> ["ORIGINAL TEXT"]
+PASS  19) Table copied  -> tables=1
+PASS  20) Image copied  -> images=1
+PASS  21) Logo copied  -> logos=1
+PASS  22) Page design copied (PART 16)  -> ["formal"]
+PASS  23) Editing the clone leaves the ORIGINAL unchanged  -> [["ORIGINAL TEXT"],["EDITED CLONE"]]
+PASS  24) Original keeps its own table/image/logo  -> {"id":"p1","hidden":true,"design":["formal"],"text":["ORIGINAL TEXT"],"headings":[],"tables":1,"images":1,"logos":1,"signatures":0,"signaturesUncertified":0}
+PASS  25) Clone is a real A4 canvas
+PASS  C) No JS errors (copy)
+PASS  26) Three pages with distinct content  -> [["AAA"],["BBB"],["CCC"]]
+PASS  27) Reorder works (move up)  -> [["AAA"],["CCC"],["BBB"]]
+PASS  28) Content stays bound to its page after reorder
+PASS  29) Page order reflected in state  -> {"pages":["p1","p3","p2"],"cur":2}
+PASS  30) currentPage follows the moved page + counter updates  -> 2 of 3
+PASS  D1) Move down restores the original order  -> [["AAA"],["BBB"],["CCC"]]
+PASS  D2) No JS errors (reorder)
+PASS  31) Prev disabled on last page bounds logic  -> {"prevDisabled":false,"nextDisabled":true,"delDisabled":false,"upDisabled":false,"downDisabled":true,"counter":"3 of 3","counterLabel":"Page 3 of 3"}
+PASS  32) Previous navigates (2 of 3)  -> 2 of 3
+PASS  33) Current page indicator correct (1 of 3)  -> 1 of 3
+PASS  34) Cannot go before the first page
+PASS  35) Cannot go past the last page  -> 3 of 3
+PASS  E) Navigation never loses content (pages intact)  -> n=3
+PASS  E2) No JS errors (navigation)
+PASS  36) Add-menu new-page uses the same page model (no parallel system)  -> {"pc":2,"dom":2,"pages":2}
+PASS  37) Design applies to ALL pages after Add  -> [["classic"],["classic"]]
+PASS  38) Design survives Copy  -> [["classic"],["classic"],["classic"]]
+PASS  39) Design survives Reorder  -> [["classic"],["classic"],["classic"]]
+PASS  40) A4 size intact on every page after all operations
+PASS  F) No JS errors (PART 10/16 integration)
+PASS  41) Document signed (baseline captured)  -> {"status":"signed","inv":0,"cnt":1}
+PASS  42) Add page after signing invalidates  -> {"status":"modified","inv":1,"cnt":1}
+PASS  43) Re-signing restores a valid baseline  -> {"status":"signed","inv":0,"cnt":2}
+PASS  44) Delete page after signing invalidates  -> {"status":"modified","inv":1,"cnt":1}
+PASS  45) Copying a signed page does NOT carry valid signed state  -> {"st":"modified","sig":2,"uncert":2}
+PASS  46) Reordering after signing invalidates (page order is protected)  -> {"status":"modified","inv":5,"cnt":5}
+PASS  47) Re-sign after page operations rebuilds a correct baseline  -> {"status":"signed","inv":0,"cnt":6}
+PASS  G) No JS errors (PART 18 integration)
+PASS  ar) view direction is rtl  -> rtl/rtl
+PASS  ar) counter localized "صفحة 1 من 1"  -> صفحة 1 من 1
+PASS  48) No English leakage in Arabic counter  -> صفحة 1 من 1
+PASS  49) No English leakage in Arabic nav buttons  -> ["السابق","التالي","إضافة صفحة","نسخ الصفحة","حذف الصفحة"]
+PASS  ar) page management buttons present
+PASS  ar) no JS errors
+PASS  en) view direction is ltr  -> ltr/ltr
+PASS  en) counter localized "Page 1 of 1"  -> Page 1 of 1
+PASS  en) page management buttons present
+PASS  en) no JS errors
+PASS  fr) view direction is ltr  -> ltr/ltr
+PASS  fr) counter localized "Page 1 sur 1"  -> Page 1 sur 1
+PASS  fr) page management buttons present
+PASS  fr) no JS errors
+PASS  es) view direction is ltr  -> ltr/ltr
+PASS  es) counter localized "Página 1 de 1"  -> Página 1 de 1
+PASS  es) page management buttons present
+PASS  es) no JS errors
+PASS  tr) view direction is ltr  -> ltr/ltr
+PASS  tr) counter localized "Sayfa 1 / 1"  -> Sayfa 1 / 1
+PASS  tr) page management buttons present
+PASS  tr) no JS errors
+PASS  ru) view direction is ltr  -> ltr/ltr
+PASS  ru) counter localized "Страница 1 из 1"  -> Страница 1 из 1
+PASS  ru) page management buttons present
+PASS  ru) no JS errors
+PASS  de) view direction is ltr  -> ltr/ltr
+PASS  de) counter localized "Seite 1 von 1"  -> Seite 1 von 1
+PASS  de) page management buttons present
+PASS  de) no JS errors
+PASS  Desktop 1280) zero horizontal overflow  -> overflow=0
+PASS  Desktop 1280) page stays A4 (ratio ~1.414)  -> ratio=1.4149659863945578
+PASS  Desktop 1280) touch-friendly nav button  -> h=40 w=102
+PASS  Desktop 1280) counter visible  -> 2 of 2
+PASS  Desktop 1280) no JS errors
+PASS  Tablet 768) zero horizontal overflow  -> overflow=0
+PASS  Tablet 768) page stays A4 (ratio ~1.414)  -> ratio=1.4133333333333333
+PASS  Tablet 768) touch-friendly nav button  -> h=40 w=102
+PASS  Tablet 768) counter visible  -> 2 of 2
+PASS  Tablet 768) no JS errors
+PASS  iPhone 390) zero horizontal overflow  -> overflow=0
+PASS  iPhone 390) page stays A4 (ratio ~1.414)  -> ratio=1.414835164835165
+PASS  iPhone 390) touch-friendly nav button  -> h=40 w=44
+PASS  iPhone 390) counter visible  -> 2 of 2
+PASS  iPhone 390) no JS errors
+PASS  Android 360) zero horizontal overflow  -> overflow=0
+PASS  Android 360) page stays A4 (ratio ~1.414)  -> ratio=1.4131736526946108
+PASS  Android 360) touch-friendly nav button  -> h=40 w=44
+PASS  Android 360) counter visible  -> 2 of 2
+PASS  Android 360) no JS errors
+PASS  55) No JS errors on load
+PASS  56) Back returns to Smart Documents home  -> cards=4
+PASS  57) Reopening starts from ONE page (no stale pages)  -> {"pc":1}
+PASS  58) No persistence of page state across sessions
+PASS  59) Calculator works (7*6=42)  -> 42
+PASS  60) History works
+PASS  61) Notes works
+PASS  62) No alert()/confirm()/prompt() anywhere  -> {"alert":0,"confirm":0,"prompt":0}
+PASS  63) Zero JS errors in the whole safety run
+
+TOTAL=115 PASS=115 FAIL=0

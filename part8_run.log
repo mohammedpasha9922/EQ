@@ -1,0 +1,75 @@
+PASS  PART1 regression: Smart Docs modal opens
+PASS  PART6 regression: home hidden when editor active
+PASS  PART3 regression: reaches Step 2  -> step=2
+PASS  Editor workspace is visible  -> editorVisible=true
+PASS  No feature outside Smart Documents opened
+PASS  Editor header is present
+PASS  Back button is present
+PASS  Back returns label is present
+PASS  Back label shows Smart Documents  -> label=Smart Documents
+PASS  Document name is shown  -> name=New Document
+PASS  Step indicator shows 2 of 4 active  -> {"header":true,"backBtn":true,"hasBackLabel":true,"backLabel":"Smart Documents","name":"New Document","step2active":true}
+PASS  Toolbar role=toolbar exists
+PASS  Toolbar is flex (visible)  -> display=flex
+PASS  Toolbar has 7 tools  -> count=7
+PASS  Toolbar tools in expected order  -> ["undo","redo","add","text","table","signature","more"]
+PASS  Toolbar buttons are focusable/clickable
+PASS  A4 canvas element exists
+PASS  Canvas is white  -> color=rgb(255, 255, 255)
+PASS  A4 aspect ratio ~0.707  -> ratio=0.707
+PASS  Content surface exists
+PASS  Content surface is the editable marker
+PASS  Content surface lives inside the canvas
+PASS  Opening editor opens no external tool
+PASS  No JS errors while on editor
+PASS  Back: returns to Smart Documents Home
+PASS  Back: editor hidden
+PASS  Back: Smart Docs modal stays open (calculator not closed)
+PASS  Back: workflow resets to Step 1  -> step=1
+PASS  RTL: document direction is rtl  -> dir=rtl
+PASS  RTL: body language marker = ar  -> lang=ar
+PASS  RTL: name is Arabic (?????????? ????????)  -> name=?????????? ????????
+PASS  RTL: back label is Arabic  -> label=?????????????????? ????????????
+PASS  RTL: no English string leaked in toolbar  -> undo=??????????
+PASS  RTL: no JS errors
+PASS  LTR: document direction is ltr  -> dir=ltr
+PASS  LTR: name is English  -> name=New Document
+PASS  LTR: back label is English  -> label=Smart Documents
+PASS  LTR: no JS errors
+PASS  Desktop: no horizontal overflow  -> overflow=0
+PASS  Desktop: canvas inside viewport  -> left=420 right=861 inner=1280
+PASS  Desktop: editor visible
+PASS  Desktop: toolbar present
+PASS  Desktop: no JS errors
+PASS  Tablet 768: no horizontal overflow  -> overflow=0
+PASS  Tablet 768: canvas inside viewport  -> left=84 right=684 inner=768
+PASS  Tablet 768: editor visible
+PASS  Tablet 768: toolbar present
+PASS  Tablet 768: no JS errors
+PASS  iPhone 390: no horizontal overflow  -> overflow=0
+PASS  iPhone 390: canvas inside viewport  -> left=13 right=377 inner=390
+PASS  iPhone 390: editor visible
+PASS  iPhone 390: toolbar present
+PASS  iPhone 390: no JS errors
+PASS  Android 360: no horizontal overflow  -> overflow=0
+PASS  Android 360: canvas inside viewport  -> left=13 right=347 inner=360
+PASS  Android 360: editor visible
+PASS  Android 360: toolbar present
+PASS  Android 360: no JS errors
+PASS  PART1: Smart Docs opens
+PASS  PART1: home grid cards present  -> cards=4
+PASS  PART3: smart steps indicator present  -> steps=4
+PASS  PART4: scan card present
+PASS  PART5: import card present
+PASS  PART7: templates card present
+PASS  Regressions: no external tool opened
+PASS  Regressions: no JS errors
+PASS  PART6 regression: blank doc still 1 page  -> pages=1 size=A4
+PASS  PART6 regression: no overflow after toolbar change  -> overflow=0
+PASS  PART6 regression: no JS errors
+PASS  PART1 regression: Calculator still works (pressed 7)  -> display=7
+PASS  PART1 regression: History still opens
+PASS  PART1 regression: Notes manager still opens
+PASS  Regressions: no JS errors
+
+ALL PASS  (73 checks)

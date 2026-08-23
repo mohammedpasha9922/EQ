@@ -1,0 +1,73 @@
+PASS  1) ▦ toolbar button opens the Rows × Columns launcher  -> {"open":true,"hidden":"false"}
+PASS  2) Size preview shows default 4 × 4  -> 4 × 4
+PASS  3) Confirm creates a 4 × 4 table  -> rows=4 cols=4
+PASS  4) Table lives inside #smartDocumentContent
+PASS  5) Table tools (contextual toolbar) appear after creation
+PASS  6) Launcher closes after confirming
+PASS  7) No page-level horizontal overflow on creation  -> overflow=0
+PASS  Table creation: no JS errors
+PASS  8) Cell [0][0] keeps its own text  -> Alpha
+PASS  9) Cell [0][1] keeps its own text  -> Beta
+PASS  10) Cell [1][0] keeps its own text  -> Gamma
+PASS  11) Cell [2][2] keeps its own text  -> Delta
+PASS  12) Cells are independent (no cross-talk)
+PASS  13) Re-editing one cell leaves the others unchanged
+PASS  Cells: no JS errors + no overflow
+PASS  14) Add row increases row count by 1  -> rows 4->5
+PASS  15) Add row keeps every existing column count  -> cols=4
+PASS  16) Data preserved after Add row  -> keep0 / keep1
+PASS  17) New row cells are editable
+PASS  18) Delete row decreases row count by 1  -> rows 5->4
+PASS  19) Data preserved after Delete row  -> keep0
+PASS  20) Cannot delete the last row  -> rows=1
+PASS  Rows: no JS errors
+PASS  21) Add column increases column count by 1  -> cols 4->5
+PASS  22) Add column keeps all rows intact  -> rows=4
+PASS  23) Data preserved after Add column  -> A0 / B1
+PASS  24) Delete column decreases column count by 1  -> cols 5->4
+PASS  25) Data preserved after Delete column  -> A0
+PASS  26) Cannot delete the last column  -> cols=1
+PASS  Columns: no JS errors
+PASS  27) Alignment applies left to the selected cell  -> left
+PASS  28) Alignment applies center to the selected cell  -> center
+PASS  29) Alignment applies right to the selected cell  -> right
+PASS  30) Alignment is per-cell (neighbor cell untouched)  -> left
+PASS  31) Alignment does not change whole-document alignment  -> scoped=start
+PASS  Alignment: no JS errors
+PASS  32) No alert() used by the table flow  -> alert=0
+PASS  33) No JS errors
+PASS  34) No superfluous modal opened  -> modals=0
+PASS  35) No page-level horizontal overflow  -> overflow=0
+PASS  36) Table tools stay inside the viewport  -> {"left":343,"right":938,"vw":1280}
+PASS  37) Main toolbar unchanged (▦ is still the entry point)  -> undo,redo,add,text,table,signature,image,logo,divider,border,page,page-number,page-settings,more
+PASS  38) ar: table launcher is rtl (dir attr + computed)  -> {"dirAttr":"rtl","dirComputed":"rtl","labels":["الصفوف","الأعمدة","إنشاء الجدول"]}
+PASS  38.b) ar: launcher labels fully localized (no English leakage)  -> الصفوف, الأعمدة, إنشاء الجدول
+PASS  38.c) ar: table + cells follow rtl  -> {"tableDir":"rtl","cellDir":"rtl","cellDirection":"rtl","defaultAlign":"right","toolsDir":"rtl","toolLabels":["إضافة صف","حذف صف","إضافة عمود","حذف عمود","محاذاة لليسار","وسط","محاذاة لليمين"]}
+PASS  38.d) ar: cell default alignment respects direction  -> right
+PASS  38.e) ar: table tools is rtl  -> rtl
+PASS  38.f) ar: toolbar button labels localized  -> إضافة صف, حذف صف, إضافة عمود, حذف عمود, محاذاة لليسار, وسط, محاذاة لليمين
+PASS  39) en: table launcher is ltr (dir attr + computed)  -> {"dirAttr":"ltr","dirComputed":"ltr","labels":["Rows","Columns","Create table"]}
+PASS  39.b) en: launcher labels fully localized (no English leakage)  -> Rows, Columns, Create table
+PASS  39.c) en: table + cells follow ltr  -> {"tableDir":"ltr","cellDir":"ltr","cellDirection":"ltr","defaultAlign":"left","toolsDir":"ltr","toolLabels":["Add row","Delete row","Add column","Delete column","Align left","Center","Align right"]}
+PASS  39.d) en: cell default alignment respects direction  -> left
+PASS  39.e) en: table tools is ltr  -> ltr
+PASS  39.f) en: toolbar button labels localized  -> Add row, Delete row, Add column, Delete column, Align left, Center, Align right
+PASS  50) Desktop 1280: 8×6 table created  -> rows=8 cols=6
+PASS  50.b) Desktop 1280: no page-level horizontal overflow  -> overflow=0
+PASS  50.c) Desktop 1280: wide table handled inside Smart Documents (internal scroll)  -> scrollable=0
+PASS  50.d) Desktop 1280: table tools visible and inside viewport  -> {"open":true,"left":343,"right":938,"vw":1280}
+PASS  51) Tablet 768: 8×6 table created  -> rows=8 cols=6
+PASS  51.b) Tablet 768: no page-level horizontal overflow  -> overflow=0
+PASS  51.c) Tablet 768: wide table handled inside Smart Documents (internal scroll)  -> scrollable=0
+PASS  51.d) Tablet 768: table tools visible and inside viewport  -> {"open":true,"left":87,"right":682,"vw":768}
+PASS  52) iPhone 390: 8×6 table created  -> rows=8 cols=6
+PASS  52.b) iPhone 390: no page-level horizontal overflow  -> overflow=0
+PASS  52.c) iPhone 390: wide table handled inside Smart Documents (internal scroll)  -> scrollable=0
+PASS  52.d) iPhone 390: table tools visible and inside viewport  -> {"open":true,"left":13,"right":377,"vw":390}
+PASS  53) Android 360: 8×6 table created  -> rows=8 cols=6
+PASS  53.b) Android 360: no page-level horizontal overflow  -> overflow=0
+PASS  53.c) Android 360: wide table handled inside Smart Documents (internal scroll)  -> scrollable=0
+PASS  53.d) Android 360: table tools visible and inside viewport  -> {"open":true,"left":13,"right":347,"vw":360}
+
+PART 12: 70/70 checks passed
+FINAL: ALL PASS

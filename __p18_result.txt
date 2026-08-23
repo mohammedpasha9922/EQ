@@ -1,0 +1,22 @@
+STARTED
+PASS  1) Smart Documents editor opens
+PASS  2) Unsigned doc: status none, no signature yet  -> {"status":"none","baseline":null,"text":"✓ Signed","inv":0,"cnt":0,"resign":false,"fp":"1e409f0"}
+PASS  3) After inserting a signature the status becomes signed  -> {"status":"signed","baseline":"k6ojol","text":"✓ Signed","inv":0,"cnt":1,"resign":false,"fp":"k6ojol"}
+PASS  4) Signed status label is shown (localized)  -> text=✓ Signed
+PASS  5) A content baseline was created  -> bl=k6ojol
+PASS  6) Signature exists inside the document
+PASS  7) Selecting the signature does NOT invalidate  -> {"status":"signed","baseline":"k6ojol","text":"✓ Signed","inv":0,"cnt":1,"resign":false,"fp":"k6ojol"}
+PASS  8) No horizontal overflow
+PASS  9) No JS errors so far
+PASS  10) Opening/interacting with the toolbar does not invalidate  -> {"status":"signed","baseline":"1cc1jrb","text":"✓ Signed","inv":0,"cnt":1,"resign":false,"fp":"1cc1jrb"}
+PASS  11) Opening the Add menu does not invalidate
+PASS  12) Selecting an element does not invalidate
+PASS  13) Opening/closing the Signature UI does not invalidate  -> opened=true closed=true
+PASS  14) Baseline unchanged after UI-only activity  -> bl=1cc1jrb fp=1cc1jrb
+PASS  15) No JS errors during UI-only activity
+PASS  16) Editing text after signing invalidates  -> {"status":"modified","baseline":"1cc1jrb","text":"⚠ The document was changed after signing","inv":1,"cnt":1,"resign":true,"fp":"y78k1o"}
+PASS  17) Modified message is shown + Re-sign button appears  -> text=⚠ The document was changed after signing
+PASS  18) Previous signature stays visible but is invalid inside EQ  -> cnt=1 inv=1
+PASS  19) No JS errors after invalidation
+PASS  20) Adding text after signing invalidates  -> {"pre":"signed","after":"modified","inv":1,"cnt":1,"overflow":true,"errs":0}
+PASS  21) Deleting text after signing invalidates  -> {"pre":"signed","after":"modified","inv":1,"cnt":1,"overflow":true,"errs":0}

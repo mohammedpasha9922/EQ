@@ -1,0 +1,48 @@
+PASS  1) Smart Documents editor opens
+PASS  2) Image tool button exists in toolbar
+PASS  3) Clicking the image tool opens the File Picker
+PASS  4) Selected image is inserted inside #smartDocumentContent  -> {"inContent":true,"isPng":true,"visible":true,"wrapped":true}
+PASS  5) Inserted image is visible and wrapped for interaction
+PASS  6) Clicking the image selects it (border + handles + delete)  -> {"selected":true,"cls":true,"aria":"true","handles":4,"delBtn":true}
+PASS  7) Selection state exposed (window.__smartImage)
+PASS  8) Dragging SE handle enlarges the image  -> 196x196 -> 256x256
+PASS  9) Aspect ratio preserved while resizing  -> ratio 1.000 -> 1.000
+PASS  10) Dragging SE handle inward shrinks the image  -> 256x256 -> 206x206
+PASS  11) Dragging the image moves it inside the canvas  -> {"tx":70,"ty":40}
+PASS  12) Clicking outside the image removes selection
+PASS  13) Delete control removes the (selected) image only  -> count 2 -> 1
+PASS  14) Multiple images: selecting one never corrupts the other state  -> {"total":3,"firstStillSelected":false,"secondSelected":true,"onlyOne":true,"firstWasSelected":true}
+PASS  No JS errors in desktop flow
+PASS  No alert() used in desktop flow
+PASS  15a) Arabic UI is RTL with localized image label (no English leakage)  -> {"docDir":"rtl","viewDir":"rtl","label":"صورة"}
+PASS  15b) RTL does not block free image movement  -> {"tx":-24,"ty":30}
+PASS  RTL flow has no JS errors
+PASS  16) English UI stays LTR with "Image" label  -> {"docDir":"ltr","label":"Image"}
+PASS  17-Desktop 1280px) No page-level horizontal overflow  -> overflow=0
+PASS  17-Desktop 1280px) Toolbar intact + canvas usable + image present  -> {"overflowX":0,"toolbarVisible":true,"toolbarScrollable":true,"canvasUsable":true,"imgInDoc":true}
+PASS  17-Desktop 1280px) No JS errors
+PASS  17-Tablet 768px) No page-level horizontal overflow  -> overflow=0
+PASS  17-Tablet 768px) Toolbar intact + canvas usable + image present  -> {"overflowX":0,"toolbarVisible":true,"toolbarScrollable":true,"canvasUsable":true,"imgInDoc":true}
+PASS  17-Tablet 768px) No JS errors
+PASS  17-iPhone 390px) No page-level horizontal overflow  -> overflow=0
+PASS  17-iPhone 390px) Toolbar intact + canvas usable + image present  -> {"overflowX":0,"toolbarVisible":true,"toolbarScrollable":true,"canvasUsable":true,"imgInDoc":true}
+PASS  17-iPhone 390px) No JS errors
+PASS  17-Mobile 360px) No page-level horizontal overflow  -> overflow=0
+PASS  17-Mobile 360px) Toolbar intact + canvas usable + image present  -> {"overflowX":0,"toolbarVisible":true,"toolbarScrollable":true,"canvasUsable":true,"imgInDoc":true}
+PASS  17-Mobile 360px) No JS errors
+PASS  18a) Touch pointer sequence moves the image (Pointer Events)  -> {"tx":40,"ty":25,"selected":true,"scrolled":false,"touchActionWhileIdle":"pan-y"}
+PASS  18b) Touch drag does not hijack page scrolling
+PASS  18c) Wrap exposes touch-friendly touch-action when idle  -> pan-y
+PASS  18d) Touch resize through a corner handle works  -> 196 -> 236
+PASS  Touch flow has no JS errors
+PASS  19a) Calculator regression: keypad still works  -> display=7
+PASS  19b) Notes regression: notes manager still opens
+PASS  20a) PART 6/8 regression: editor + A4 + content surface
+PASS  20b) PART 9 regression: toolbar order unchanged  -> undo,redo,add,text,table,signature,image,logo,divider,border,page,page-number,page-settings,more
+PASS  20c) PART 10 regression: Add menu items unchanged  -> text,heading,table,image,divider,new-page
+PASS  Regression pass has no JS errors
+PASS  No alert() anywhere in the run
+
+========================================
+PART 14: 44/44 checks passed
+FINAL: ALL PASS

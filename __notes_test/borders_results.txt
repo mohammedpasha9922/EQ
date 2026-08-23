@@ -1,0 +1,38 @@
+PASS  CREATE: table inserted  -> tables=1
+PASS  UI: border select control present in table toolbar
+PASS  UI: default border style is "all"  -> value=all
+PASS  ALL BORDERS: renders with default all-borders look (attr null or "all")  -> attr=null
+PASS  ALL BORDERS: every cell edge has a visible border  -> borders=[{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1}]
+PASS  AUTO-SAVE: table block stored  -> rows=3
+PASS  AUTO-SAVE: "all" is the default (borderStyle undefined or "all")  -> borderStyle=undefined
+PASS  AUTO-SAVE: "outside" border style persisted in bodyBlocks  -> borderStyle=outside
+PASS  REOPEN: outside border style persisted in DOM  -> attr=outside
+PASS  REOPEN: outside borders render (table outline present, inner cell borders removed)  -> outline=1 cells=[{"top":0,"right":0,"bottom":0,"left":0},{"top":0,"right":0,"bottom":0,"left":0},{"top":0,"right":0,"bottom":0,"left":0},{"top":0,"right":0,"bottom":0,"left":0},{"top":0,"right":0,"bottom":0,"left":0},{"top":0,"right":0,"bottom":0,"left":0},{"top":0,"right":0,"bottom":0,"left":0},{"top":0,"right":0,"bottom":0,"left":0},{"top":0,"right":0,"bottom":0,"left":0}]
+PASS  REOPEN: cell text preserved  -> cells=[["Arabic: مرحبا","English: Hello","12345"],["Mixed: سلام hello 99","",""],["","",""]]
+PASS  REOPEN: B/I/U formatting preserved  -> fmt=[[["B:مرحبا"],["I:Hello"],["U:12345"]],[[],[],[]],[[],[],[]]]
+PASS  REOPEN: cell background color preserved  -> bg=rgb(255, 255, 0)
+PASS  REFRESH: outside border style persisted  -> attr=outside
+PASS  REFRESH: cell text preserved  -> cells=[["Arabic: مرحبا","English: Hello","12345"],["Mixed: سلام hello 99","",""],["","",""]]
+PASS  REFRESH: cell background color preserved  -> bg=rgb(255, 255, 0)
+PASS  OUTSIDE BORDERS: attribute set to outside  -> attr=outside
+PASS  NO BORDERS: attribute set to none  -> attr=none
+PASS  NO BORDERS: no visible borders anywhere  -> outline=0 cells=[{"top":0,"right":0,"bottom":0,"left":0},{"top":0,"right":0,"bottom":0,"left":0},{"top":0,"right":0,"bottom":0,"left":0},{"top":0,"right":0,"bottom":0,"left":0},{"top":0,"right":0,"bottom":0,"left":0},{"top":0,"right":0,"bottom":0,"left":0},{"top":0,"right":0,"bottom":0,"left":0},{"top":0,"right":0,"bottom":0,"left":0},{"top":0,"right":0,"bottom":0,"left":0}]
+PASS  INSIDE BORDERS: attribute set to inside  -> attr=inside
+PASS  INSIDE BORDERS: table has no outer border  -> outline=0
+PASS  INSIDE BORDERS: interior grid lines present, outer edges absent  -> cells=[{"top":0,"right":1,"bottom":1,"left":0},{"top":0,"right":1,"bottom":1,"left":1},{"top":0,"right":0,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":0},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":0,"bottom":1,"left":1},{"top":1,"right":1,"bottom":0,"left":0},{"top":1,"right":1,"bottom":0,"left":1},{"top":1,"right":0,"bottom":0,"left":1}]
+PASS  POST-BORDERS: text unchanged (Arabic/English/numbers/mixed)  -> cells=[["Arabic: مرحبا","English: Hello","12345"],["Mixed: سلام hello 99","",""],["","",""]]
+PASS  POST-BORDERS: B/I/U unchanged  -> fmt=[[["B:مرحبا"],["I:Hello"],["U:12345"]],[[],[],[]],[[],[],[]]]
+PASS  POST-BORDERS: cell background color unchanged  -> bg=rgb(255, 255, 0)
+PASS  MERGE: merge still works while a border style is applied  -> info=[[{"text":"Arabic: مرحبا\nEnglish: Hello","colspan":2,"rowspan":1},{"text":"12345","colspan":1,"rowspan":1}],[{"text":"Mixed: سلام hello 99","colspan":1,"rowspan":1},{"text":"","colspan":1,"rowspan":1},{"text":"","colspan":1,"rowspan":1}],[{"text":"","colspan":1,"rowspan":1},{"text":"","colspan":1,"rowspan":1},{"text":"","colspan":1,"rowspan":1}]]
+PASS  MERGE: borders still render around merged cell  -> cells=[{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1}]
+PASS  SPLIT: split still works while a border style is applied  -> info=[[{"text":"Arabic: مرحبا\nEnglish: Hello","colspan":1,"rowspan":1},{"text":"","colspan":1,"rowspan":1},{"text":"12345","colspan":1,"rowspan":1}],[{"text":"Mixed: سلام hello 99","colspan":1,"rowspan":1},{"text":"","colspan":1,"rowspan":1},{"text":"","colspan":1,"rowspan":1}],[{"text":"","colspan":1,"rowspan":1},{"text":"","colspan":1,"rowspan":1},{"text":"","colspan":1,"rowspan":1}]]
+PASS  SPLIT: borders still render after split  -> cells=[{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1}]
+PASS  FINAL: Arabic/English/Numbers/Mixed content intact  -> texts=[["Arabic: مرحبا\nEnglish: Hello","","12345"],["Mixed: سلام hello 99","",""],["","",""]]
+PASS  LEGACY: table without borderStyle renders with no data-border-style attribute  -> attr=null
+PASS  LEGACY: table without border metadata still shows default all-borders look  -> cells=[{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1},{"top":1,"right":1,"bottom":1,"left":1}]
+PASS  LEGACY: legacy table content preserved  -> cells=[["Legacy Cell",""],["",""]]
+PASS  RUNTIME: no uncaught page/console errors  -> errors=none
+
+==== RESULT: 34 passed, 0 failed, 34 total ====
+
+FINAL: 34/34 passed

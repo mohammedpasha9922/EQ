@@ -1,0 +1,44 @@
+PASS  NO DUPLICATE RESIZE: exactly one resize layer per table  -> [{"layers":1,"colHandles":2,"rowHandles":2,"fixed":false}]
+PASS  HANDLES: (cols-1) col handles + (rows-1) row handles  -> [{"layers":1,"colHandles":2,"rowHandles":2,"fixed":false}]
+PASS  RESIZE COLUMN: table enters fixed-layout mode after a column drag  -> [{"layers":1,"colHandles":2,"rowHandles":2,"fixed":true}]
+PASS  RESIZE COLUMN: auto-saved colWidths array (length 3, bounded ints)  -> [515,388,417]
+PASS  RESIZE ROW: auto-saved rowHeights array (length 3, bounded ints)  -> [100,90,40]
+PASS  MULTIPLE COLUMNS: both resized column widths increased  -> cw=[515,388,417] before=[446,336,457]
+PASS  MULTIPLE ROWS: both resized row heights increased  -> rh=[100,90,40] before=[40,40,40]
+PASS  NO DATA LOSS: cell text unchanged after resize  -> [["مرحبا","Hello","12345"],["سلام hello 99","Plain text","X86 mixed 42"],["","",""]] vs [["مرحبا","Hello","12345"],["سلام hello 99","Plain text","X86 mixed 42"],["","",""]]
+PASS  B/I/U PRESERVED after resize
+PASS  TEXT COLOR PRESERVED after resize  -> fmt=[{"start":0,"end":5,"bold":false,"italic":true,"underline":false,"color":"#ff0000"}]
+PASS  BACKGROUND COLOR PRESERVED after resize  -> bg=#00ffff
+PASS  H-ALIGN PRESERVED after resize  -> cell={"text":"مرحبا","formatting":[{"start":0,"end":5,"bold":true,"italic":false,"underline":false}],"alignH":"center","alignV":"middle"}
+PASS  V-ALIGN PRESERVED after resize  -> cell={"text":"مرحبا","formatting":[{"start":0,"end":5,"bold":true,"italic":false,"underline":false}],"alignH":"center","alignV":"middle"}
+PASS  BORDER PRESERVED after resize  -> border=outside
+PASS  PERSISTENCE (current editor): stored colWidths match rendered width (within tolerance)  -> stored=[515,388,417] rendered=[483,365,392]
+PASS  REOPEN: same column sizes after close->reopen  -> rendered=[483,365,392] pre-close=[483,365,392]
+PASS  REOPEN: same row sizes after close->reopen  -> rendered=[100,90,40] pre-close=[100,90,40]
+PASS  REOPEN: content + B/I/U + text color preserved
+PASS  REFRESH: same column sizes after full page refresh  -> rendered=[483,365,392] pre-refresh=[483,365,392]
+PASS  REFRESH: same row sizes after full page refresh  -> rendered=[100,90,40] pre-refresh=[100,90,40]
+PASS  REFRESH: content + formatting + colors + align preserved  -> {"text":true,"b":true,"i":true,"u":true,"color":true} attrs={"h":"center","v":"middle","bg":"background-color:#00ffff;"}
+PASS  LEGACY: no colWidths stored when never resized  -> block={"type":"table","header":false,"rows":[[{"text":"legacy text","formatting":[]},{"text":"","formatting":[]}],[{"text":"","formatting":[]},{"text":"","formatting":[]}]]}
+PASS  LEGACY: no rowHeights stored when never resized
+PASS  LEGACY: legacy table still opens and renders (2x2)  -> 2x2
+PASS  SECURITY: tampered resize values never become HTML/CSS or JS  -> <colgroup><col><col style="width:800px;"><col style="width:60px;"></colgroup>
+PASS  SECURITY: tampered widths normalized + bounded (60..800)  -> [109,800,60]
+PASS  SECURITY + NO DATA LOSS: table still renders with all content  -> [["مرحبا","Hello","12345"],["سلام hello 99","Plain text","X86 mixed 42"],["","",""]]
+PASS  SECURITY: no uncaught JS error after tampering resize values
+PASS  MERGE PRECONDITION: resize data present before merge
+PASS  MERGE COMPAT: merged cell is colspan 2 + rowspan 1  -> {"colspan":2,"rowspan":1,"text":"A\nB","rowCells":2}
+PASS  MERGE COMPAT: merged text preserved (no data loss)  -> A
+B
+PASS  MERGE COMPAT: colWidths preserved after merge  -> [513,413,413]
+PASS  MERGE COMPAT: rowHeights preserved after merge  -> [101,41,41]
+PASS  SPLIT COMPAT: merged cell split back + grid valid (3x3)  -> {"colspan":1,"rowspan":1,"text":"A\nB","totalRows":3,"firstRowCells":3}
+PASS  SPLIT COMPAT: content preserved after split (anchor keeps text)  -> A
+B
+PASS  SPLIT COMPAT: colWidths still present after split  -> [513,413,413]
+PASS  SPLIT COMPAT: rowHeights still present after split  -> [101,41,41]
+PASS  RUNTIME: no uncaught page errors  -> clean
+
+==== RESULT: 38 passed, 0 failed, 38 total ====
+
+FINAL: 38/38 passed

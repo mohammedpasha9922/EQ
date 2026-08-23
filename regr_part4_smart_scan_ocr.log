@@ -1,0 +1,82 @@
+PASS  Smart Documents opens
+PASS  Scan card exists
+PASS  Scan card title present  -> Scan a Document
+PASS  No JS errors on open
+PASS  Scan interface opens
+PASS  Scan view is visible
+PASS  Home view hidden while scanning
+PASS  State step stays at 1 on scan start  -> step=1
+PASS  No JS errors during scan open
+PASS  Camera fallback does not crash
+PASS  Blocked mode lands on camera stage
+PASS  Permission-denied fallback message shown  -> Camera permission was denied.
+PASS  Image upload fallback offered
+PASS  Auto camera path lands on camera stage  -> stage=camera
+PASS  No JS errors on real camera attempt
+PASS  Processing progress items present  -> detect,correct,improve,read
+PASS  Processing progress has detect/correct/improve/read  -> detect,correct,improve,read
+PASS  Capture -> processing pipeline runs
+PASS  No JS errors during capture/processing
+PASS  Invalid image handled gracefully
+PASS  No JS errors on invalid image
+PASS  Review stage shown after OCR  -> stage=review
+PASS  Review textarea contains recognized text  -> Hello scanned document
+
+This is the seco
+PASS  Review textarea editable
+PASS  Review image preview has src
+PASS  Workflow step at Review (3) on review screen  -> step=3
+PASS  No JS errors at review
+PASS  No Document Editor opened automatically
+PASS  No accepted result before Accept (OCR not auto-accepted)  -> null
+PASS  No JS errors during review hold
+PASS  Rescan returns to camera stage  -> stage=camera
+PASS  Rescan resets workflow step to 1  -> step=1
+PASS  No JS errors on rescan
+PASS  Accept does not open an editor
+PASS  Accept stores result internally (status=accepted)  -> {"text":"Accepted content for PART 4 only","status":"accepted"}
+PASS  Accept shows ready-for-editing info
+PASS  Step stays at Review (3), not entering Edit/Export PART 5  -> step=3
+PASS  No JS errors on accept
+PASS  Live mock starts with an active stream  -> live
+PASS  Camera tracks stopped after capture
+PASS  Stream stopped after capture
+PASS  No JS errors (tracks)
+PASS  Smart Documents closed on leave
+PASS  Camera stream stopped on leave
+PASS  No JS errors on leave
+PASS  Back returns to Smart Documents home
+PASS  Camera stream stopped on back
+PASS  No JS errors on back
+PASS  Arabic sets html dir=rtl  -> rtl
+PASS  Scan title translated (Arabic, no English word)  -> 📸 مسح مستند
+PASS  Error message translated (Arabic)  -> تم رفض إذن الكاميرا.
+PASS  No JS errors (Arabic RTL)
+PASS  English sets html dir=ltr  -> ltr
+PASS  Scan title translated (English)  -> 📸 Scan a Document
+PASS  No JS errors (English LTR)
+PASS  Mobile 390: no horizontal overflow  -> {"doc":0,"view":0}
+PASS  Mobile 390: scan view visible
+PASS  No JS errors (390px)
+PASS  Mobile 360: no horizontal overflow  -> {"doc":0,"frameW":334}
+PASS  Mobile 360: camera frame not broken  -> {"doc":0,"frameW":334}
+PASS  No JS errors (360px)
+PASS  Desktop: no horizontal overflow  -> {"doc":0}
+PASS  No JS errors (desktop)
+PASS  PART1: Drawer item open-smart-docs exists  -> 📄
+          📄 Smart Documents
+PASS  PART1: Drawer item label contains emoji
+PASS  PART1: No JS errors on boot
+PASS  PART1: Smart Docs opens
+PASS  PART1: Back button closes
+PASS  PART2: Heading present (Arabic)  -> heading=ماذا تريد أن تفعل؟
+PASS  PART2: Four cards intact  -> count=4
+PASS  PART2: Card titles correct  -> مسح مستند/استيراد ملف/مستند جديد/القوالب
+PASS  PART2: No JS errors
+PASS  PART3: state smartDocsStep = 1  -> state=1
+PASS  PART3: track data-step = 1  -> track=1
+PASS  PART3: Indicator ● ○ ○ ○  -> ● ○ ○ ○
+PASS  PART3: Only 4 steps on home stepper  -> len=4
+PASS  PART3: No JS errors
+
+ALL PASS  (77 checks)

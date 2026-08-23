@@ -1,0 +1,38 @@
+### calculatorBrowser.test.mjs
+PASS  16b. Repeated equals does not double-apply (3+4=7 stays 7)  -> after1=7 after2=7
+PASS  17. No uncaught page errors after interactions  -> clean
+==== RESULT: 19/19 passed ====
+### clipboardToast.test.mjs
+Gä¦ pass 4
+Gä¦ fail 0
+### currencyRoundTrip.test.mjs
+(node:15596) Warning: Failed to load the ES module: C:\Users\SHCH-HR\Desktop\EQ\currencyService.js. Make sure to set "type": "module" in the nearest package.json file or use the .mjs extension.
+SyntaxError: Unexpected token 'export'
+### currencyService.test.mjs
+(node:7608) Warning: Failed to load the ES module: C:\Users\SHCH-HR\Desktop\EQ\currencyService.js. Make sure to set "type": "module" in the nearest package.json file or use the .mjs extension.
+SyntaxError: Unexpected token 'export'
+### formatNumber.test.mjs
+SyntaxError: Named export 'getDisplayRenderer' not found. The requested module '../src/core/DisplayRenderer.js' is a CommonJS module, which may not support all module.exports as named exports.
+### largeNumberExpression.test.mjs
+SyntaxError: Named export 'getResultScreen' not found. The requested module '../src/core/ResultScreen.js' is a CommonJS module, which may not support all module.exports as named exports.
+### localeSync.test.mjs
+(node:44784) Warning: Failed to load the ES module: C:\Users\SHCH-HR\Desktop\EQ\src\modes\StandardCalculator.js. Make sure to set "type": "module" in the nearest package.json file or use the .mjs extension.
+SyntaxError: Cannot use import statement outside a module
+### notesMobileUx.test.mjs
+PASS  createMobileTableToolbar dedupes (no duplicate toolbar)
+Gä¦ pass 15
+Gä¦ fail 0
+### notesPdfExport.test.mjs
+PASS  sendNoteBtn still present
+Gä¦ pass 22
+Gä¦ fail 0
+### notesSend.test.mjs
+PASS  buildNoteShareText exists
+Gä¦ pass 18
+Gä¦ fail 0
+### notesUi.test.mjs
+SyntaxError: Named export 'getQuickNoteLabels' not found. The requested module '../app.js' is a CommonJS module, which may not support all module.exports as named exports.
+### numberToWords.test.mjs
+SyntaxError: Named export 'numberToWords' not found. The requested module '../numberToWords.js' is a CommonJS module, which may not support all module.exports as named exports.
+### scientificMath.test.mjs
+SyntaxError: Named export 'evaluateExpression' not found. The requested module '../src/core/ExpressionEvaluator.js' is a CommonJS module, which may not support all module.exports as named exports.

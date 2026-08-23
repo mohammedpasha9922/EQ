@@ -1,0 +1,9 @@
+commit 0504e451716a438ae9b52d15534b1b267e08e350
+Author: mohammedpasha9922 <mohammedpasha9922@gmail.com>
+Date:   Thu Aug 6 00:36:45 2026 +0300
+
+    إضافة تعديلات جديدة
+
+ app.js     | 204 ++++++++++++++++++++++++++++++++++++++++++++++++-------------
+ styles.css | 147 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 307 insertions(+), 44 deletions(-)

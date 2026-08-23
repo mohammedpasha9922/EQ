@@ -1,0 +1,43 @@
+
+=== VIEWPORT 1440x900 ===
+HTTP 404 http://127.0.0.1:8197/apple-touch-icon.png
+after goto url=http://127.0.0.1:8197/
+HTTP 404 http://127.0.0.1:8197/apple-touch-icon.png
+PASS  Manager covers full viewport (w/h/x/y) -> box=0,0 1440x900 vp=1440x900 cssW=1440px cssH=900px tr=matrix(1, 0, 0, 1, 0, 0) settled=true
+PASS  Manager has no rounded window corners -> radius=0px
+PASS  Editor covers full viewport -> box=0,0 1440x900 cssW=1440px cssH=900px tr=matrix(1, 0, 0, 1, 0, 0) settled=true
+PASS  Editor has no rounded window corners -> radius=0px
+PASS  CREATE+auto-save works (stored note)
+PASS  Close editor returns to Manager
+PASS  Close Manager returns to previous screen
+PASS  No uncaught page errors (full-screen flow) -> clean
+
+=== VIEWPORT 820x1180 ===
+HTTP 404 http://127.0.0.1:8197/apple-touch-icon.png
+after goto url=http://127.0.0.1:8197/
+HTTP 404 http://127.0.0.1:8197/apple-touch-icon.png
+PASS  Manager covers full viewport (w/h/x/y) -> box=0,0 820x1180 vp=820x1180 cssW=820px cssH=1180px tr=matrix(1, 0, 0, 1, 0, 0) settled=true
+PASS  Manager has no rounded window corners -> radius=0px
+PASS  Editor covers full viewport -> box=0,0 820x1180 cssW=820px cssH=1180px tr=matrix(1, 0, 0, 1, 0, 0) settled=true
+PASS  Editor has no rounded window corners -> radius=0px
+PASS  CREATE+auto-save works (stored note)
+PASS  Close editor returns to Manager
+PASS  Close Manager returns to previous screen
+PASS  No uncaught page errors (full-screen flow) -> clean
+
+=== VIEWPORT 390x844 ===
+HTTP 404 http://127.0.0.1:8197/apple-touch-icon.png
+after goto url=http://127.0.0.1:8197/
+HTTP 404 http://127.0.0.1:8197/apple-touch-icon.png
+PASS  Manager covers full viewport (w/h/x/y) -> box=0,0.1 390x843.9 vp=390x844 cssW=390px cssH=844px tr=matrix(0.99993, 0, 0, 0.99993, 0, 0.055964) settled=true
+PASS  Manager has no rounded window corners -> radius=0px
+PASS  Editor covers full viewport -> box=0,0 390x844 cssW=390px cssH=844px tr=matrix(1, 0, 0, 1, 0, 0) settled=true
+PASS  Editor has no rounded window corners -> radius=0px
+PASS  CREATE+auto-save works (stored note)
+PASS  Close editor returns to Manager
+PASS  Close Manager returns to previous screen
+PASS  No uncaught page errors (full-screen flow) -> clean
+PASS  EDIT persists after reopening existing note (id/auto-save) -> id=note-msvmskh8
+PASS  Notes from all three viewports persisted (no data loss) -> desk=true tab=true mob=true
+
+==== RESULT: 26 passed, 0 failed, 26 total ====

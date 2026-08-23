@@ -1,0 +1,63 @@
+PASS  1) Smart Documents editor opens
+PASS  2) Logo tool button exists in the existing toolbar
+PASS  3) Clicking the Logo tool opens the image File Picker
+PASS  3a) Logo File Picker accepts only images
+PASS  4) Chosen image is inserted as a logo inside the document  -> {"count":1,"srcType":"data","inHolder":true,"visible":true,"holderOpen":true}
+PASS  4a) Logo is visible inside the A4 page
+PASS  4b) Logo position selector becomes available
+PASS  4c) A4 canvas survives logo insertion
+PASS  5a) Logo keeps a square aspect ratio (icon is 192x192)  -> aspect=1
+PASS  5b) Logo stays inside the A4 page  -> {"position":"top-right","srcType":"data","width":96,"height":96,"withinPage":true,"aspect":1}
+PASS  6) Choosing Top-left repositions the logo
+PASS  7) Choosing Top-right repositions the logo
+PASS  8) Choosing Center horizontally centres the logo  -> {"l":173,"r":173,"active":"center"}
+PASS  9) Desktop LTR: no page-level horizontal overflow  -> overflow=0
+PASS  Desktop LTR flow has no JS errors
+PASS  No alert() during LTR flow
+PASS  11) RTL: editor is in rtl direction  -> rtl
+PASS  12) RTL: logo can be inserted into the document  -> {"editorVisible":true,"position":"top-right","activePosition":"top-right","count":1,"viewDir":"rtl","logos":[{"position":"top-right","srcType":"data","width":96,"height":96,"withinPage":true,"aspect":1}]}
+PASS  13) RTL: choosing Top-left works
+PASS  14) Arabic position label is localized  -> موضع الشعار
+PASS  14a) Arabic top-right option localized  -> أعلى اليمين
+PASS  RTL: no page-level horizontal overflow  -> overflow=0
+PASS  RTL flow has no JS errors
+PASS  AR: logo inserted + position bar localized (no English leak)  -> {"lbl":"موضع الشعار","tr":"أعلى اليمين","count":1}
+PASS  AR: no JS errors
+PASS  EN: logo inserted + position bar localized (no English leak)  -> {"lbl":"Logo position","tr":"Top right","count":1}
+PASS  EN: no JS errors
+PASS  FR: logo inserted + position bar localized (no English leak)  -> {"lbl":"Position du logo","tr":"En haut à droite","count":1}
+PASS  FR: no JS errors
+PASS  ES: logo inserted + position bar localized (no English leak)  -> {"lbl":"Posición del logotipo","tr":"Arriba a la derecha","count":1}
+PASS  ES: no JS errors
+PASS  TR: logo inserted + position bar localized (no English leak)  -> {"lbl":"Logo konumu","tr":"Sağ üst","count":1}
+PASS  TR: no JS errors
+PASS  RU: logo inserted + position bar localized (no English leak)  -> {"lbl":"Положение логотипа","tr":"Вверху справа","count":1}
+PASS  RU: no JS errors
+PASS  DE: logo inserted + position bar localized (no English leak)  -> {"lbl":"Logo-Position","tr":"Oben rechts","count":1}
+PASS  DE: no JS errors
+PASS  16Tablet 768: no page horizontal overflow  -> overflow=0
+PASS  16.1 Tablet 768: logo inside A4 + aspect preserved  -> {"overflow":0,"inside":true,"aspectOk":true,"pickerUsable":true,"pickerInViewport":true,"canvasLeft":84,"vw":768}
+PASS  16.2 Tablet 768: position picker usable & inside viewport
+PASS  16.3 Tablet 768: A4 canvas not broken  -> left=84
+PASS  16.4 Tablet 768: no JS errors
+PASS  17iPhone 390: no page horizontal overflow  -> overflow=0
+PASS  17.1 iPhone 390: logo inside A4 + aspect preserved  -> {"overflow":0,"inside":true,"aspectOk":true,"pickerUsable":true,"pickerInViewport":true,"canvasLeft":13,"vw":390}
+PASS  17.2 iPhone 390: position picker usable & inside viewport
+PASS  17.3 iPhone 390: A4 canvas not broken  -> left=13
+PASS  17.4 iPhone 390: no JS errors
+PASS  18Android 360: no page horizontal overflow  -> overflow=0
+PASS  18.1 Android 360: logo inside A4 + aspect preserved  -> {"overflow":0,"inside":true,"aspectOk":true,"pickerUsable":true,"pickerInViewport":true,"canvasLeft":13,"vw":360}
+PASS  18.2 Android 360: position picker usable & inside viewport
+PASS  18.3 Android 360: A4 canvas not broken  -> left=13
+PASS  18.4 Android 360: no JS errors
+PASS  17a) Logo does not open Notes  -> {"notesModal":false,"historyOpen":false,"alertCount":0,"editorVisible":true}
+PASS  17b) Logo does not open History
+PASS  17c) Editor remains open (no feature switch)
+PASS  17d) No alert() triggered
+PASS  17e) No JS errors
+PASS  18) Multiple logos coexist without conflict  -> {"editorVisible":true,"position":"top-right","activePosition":"top-right","count":2,"viewDir":"ltr","logos":[{"position":"top-right","srcType":"data","width":96,"height":96,"withinPage":true,"aspect":1},{"position":"top-right","srcType":"data","width":96,"height":96,"withinPage":true,"aspect":1}]}
+PASS  18a) Position applies to all logos together
+
+========================================
+PART 15: 59/59 checks passed
+FINAL: ALL PASS

@@ -1,0 +1,70 @@
+PASS  Templates: section becomes visible  -> visible=true
+PASS  Templates: home page is hidden  -> homeShown=false
+PASS  Templates: Smart Docs modal stays open  -> modalShow=true
+PASS  Templates: display is flex  -> display=flex
+PASS  Templates: workflow step stays at 1  -> step=1
+PASS  Templates: no JS errors
+PASS  Templates: 3 category headings  -> groups=["Business","Personal","Custom"]
+PASS  Templates: Business heading  -> Business|Personal|Custom
+PASS  Templates: Personal heading  -> Business|Personal|Custom
+PASS  Templates: Custom heading  -> Business|Personal|Custom
+PASS  Templates: business group has 5 items  -> business=5
+PASS  Templates: personal group has 3 items  -> personal=3
+PASS  Templates: custom group has 1 item  -> custom=1
+PASS  Templates: total = 9 (V1 only)  -> total=9
+PASS  Templates: id set matches V1 exactly  -> invoice,my-templates,payment-agreement,payment-receipt,quote,rental-agreement,service-contract,simple-agreement
+PASS  Templates: every template has a localized name
+PASS  Templates: every template is clickable & selectable
+PASS  Templates: selection recorded in state  -> {"id":"my-templates","group":"custom"}
+PASS  Templates: stays on templates view
+PASS  Templates: does NOT open scan
+PASS  Templates: does NOT open import
+PASS  Templates: does NOT open editor
+PASS  Templates: does NOT open blank doc
+PASS  Templates: does NOT open History
+PASS  Templates: does NOT open Notes
+PASS  Templates: Smart Docs modal still open (no extra window)
+PASS  Templates: calculator display untouched  -> display=0
+PASS  Templates: no JS errors on selection
+PASS  Back: Smart Docs home shown again  -> homeShown=true
+PASS  Back: templates view hidden  -> visible=false
+PASS  Back: Smart Docs modal stays open (calculator not opened)  -> modalShow=true
+PASS  Back: workflow step resets to 1  -> step=1
+PASS  Back: selection cleared  -> null
+PASS  Back: no JS errors
+PASS  RTL: document direction is rtl  -> dir=rtl
+PASS  RTL: body language marker = ar  -> lang=ar
+PASS  RTL: Business heading is Arabic  -> الأعمال|الشخصية|مخصصة
+PASS  RTL: Personal heading is Arabic  -> الأعمال|الشخصية|مخصصة
+PASS  RTL: Custom heading is Arabic  -> الأعمال|الشخصية|مخصصة
+PASS  RTL: template names are Arabic
+PASS  RTL: no JS errors
+PASS  LTR: document direction is ltr  -> dir=ltr
+PASS  LTR: Business/Personal/Custom in English  -> Business|Personal|Custom
+PASS  LTR: template names are English
+PASS  LTR: no JS errors
+PASS  Desktop: no horizontal overflow  -> overflow=0/0
+PASS  Desktop: templates visible
+PASS  Desktop: no JS errors
+PASS  Tablet: no horizontal overflow  -> overflow=0/0
+PASS  Tablet: templates visible
+PASS  Tablet: 3 groups present
+PASS  Tablet: no JS errors
+PASS  Mobile 390: no horizontal overflow  -> overflow=0/0
+PASS  Mobile 390: templates visible
+PASS  Mobile 390: no JS errors
+PASS  Mobile 360: no horizontal overflow  -> overflow=0/0
+PASS  Mobile 360: templates visible
+PASS  Mobile 360: no JS errors
+PASS  Reopen: home page is shown (no stale template state)  -> homeShown=true
+PASS  Reopen: templates view hidden
+PASS  Reopen: selection cleared  -> null
+PASS  Reopen: no JS errors
+PASS  Regression: Calculator still works (pressed 7)  -> display=7
+PASS  Regression: no JS errors (calculator)
+PASS  Regression: History still opens
+PASS  Regression: no JS errors (history)
+PASS  Regression: Notes manager still opens
+PASS  Regression: no JS errors (notes)
+
+ALL PASS  (68 checks)

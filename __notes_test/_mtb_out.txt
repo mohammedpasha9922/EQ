@@ -1,0 +1,26 @@
+PASS  coarse pointer detected
+PASS  table inserted
+PASS  toolbar not visible before focus
+PASS  toolbar visible on focus
+PASS  only one toolbar
+PASS  outside editable content
+PASS  all five buttons  -> buttons=add-row,add-col,del-row,del-col,merge-cells
+PASS  border + halign + valign selects
+PASS  horizontal flex row, no wrap
+PASS  horizontally scrollable
+PASS  not position fixed
+PASS  no body scroll lock
+PASS  docked below editable body  -> tbTop=804 bodyBottom=804
+PASS  add-row works (4 rows)  -> rows=4
+PASS  add-col works (4 cols)  -> cols=4
+PASS  del-row works (3 rows)  -> rows=3
+PASS  del-col works (3 cols)  -> cols=3
+PASS  halign select applies
+PASS  valign select applies
+PASS  merge works (colspan 2)  -> colspan=2
+PASS  border select applies
+PASS  toolbar hides when leaving table
+PASS  RTL direction active
+PASS  toolbar visible in RTL
+PASS  all actions in RTL
+PASS  no uncaught page errors

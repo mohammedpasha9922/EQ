@@ -1,0 +1,43 @@
+server on :8840
+! HEADLESS MODE: native color picker UI and virtual keyboard CANNOT be shown. Picker-open facts below use the REAL showPicker() impl; the on-screen dialog is UNVERIFIABLE in this environment.
+==== Desktop : A (Text Color) ====
+PASS  Desktop A: "Hello" selected (real DOM selection)  -> got=Hello
+shot: diag_Desktop_A_before_click.png
+PASS  Desktop A: button physically clicked
+PASS  Desktop A: showPicker invoked (real impl)  -> calls=1
+PASS  Desktop A: showPicker did NOT throw  -> threw=null result=ok
+Desktop A: input at call = {"id":"noteTextColorInput","type":"color","display":"block","visibility":"visible","opacity":"0","offsetParentNull":false,"rect":{"w":6,"h":4,"x":13,"y":91}}
+Desktop A: native events after click = []
+shot: diag_Desktop_A_after_click.png
+FAIL  Desktop A: cancel/input event on Escape (native picker actually open?)  -> events=[]
+==== Desktop : B (Cell Background Color) ====
+PASS  Desktop B: a table cell is focused
+shot: diag_Desktop_B_before_click.png
+PASS  Desktop B: button physically clicked
+PASS  Desktop B: showPicker invoked (real impl)  -> calls=1
+PASS  Desktop B: showPicker did NOT throw  -> threw=null result=ok
+Desktop B: input at call = {"id":"noteCellBgColorInput","type":"color","display":"block","visibility":"visible","opacity":"0","offsetParentNull":false,"rect":{"w":6,"h":4,"x":13,"y":91}}
+Desktop B: native events after click = []
+shot: diag_Desktop_B_after_click.png
+FAIL  Desktop B: cancel/input event on Escape (native picker actually open?)  -> events=[]
+==== Mobile : A (Text Color) ====
+PASS  Mobile A: "Hello" selected (real DOM selection)  -> got=Hello
+shot: diag_Mobile_A_before_click.png
+PASS  Mobile A: button physically clicked
+PASS  Mobile A: showPicker invoked (real impl)  -> calls=1
+PASS  Mobile A: showPicker did NOT throw  -> threw=null result=ok
+Mobile A: input at call = {"id":"noteTextColorInput","type":"color","display":"block","visibility":"visible","opacity":"0","offsetParentNull":false,"rect":{"w":6,"h":4,"x":13,"y":91}}
+Mobile A: native events after click = []
+shot: diag_Mobile_A_after_click.png
+FAIL  Mobile A: cancel/input event on Escape (native picker actually open?)  -> events=[]
+==== Mobile : B (Cell Background Color) ====
+PASS  Mobile B: a table cell is focused
+shot: diag_Mobile_B_before_click.png
+PASS  Mobile B: button physically clicked
+PASS  Mobile B: showPicker invoked (real impl)  -> calls=1
+PASS  Mobile B: showPicker did NOT throw  -> threw=null result=ok
+Mobile B: input at call = {"id":"noteCellBgColorInput","type":"color","display":"block","visibility":"visible","opacity":"0","offsetParentNull":false,"rect":{"w":6,"h":4,"x":13,"y":91}}
+Mobile B: native events after click = []
+shot: diag_Mobile_B_after_click.png
+FAIL  Mobile B: cancel/input event on Escape (native picker actually open?)  -> events=[]
+==== C : Mobile Table Toolbar ====

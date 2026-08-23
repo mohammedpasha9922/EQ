@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<!-- Replicate the app's dark theme so the parent document has color-scheme: dark like the real EQ app -->
+<!-- (see styles.css :root { color-scheme: dark } and body { color: var(--text) = #f8fafc }) -->
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; min-height: 100vh; background: #07111f; color: #f8fafc;
+         font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+  #out { color: #f8fafc; font-family: monospace; white-space: pre-wrap; padding: 16px; }
+</style>
+<script src="vendor/h2pdf.js"></script>
+<script src="vendor/h2canvas.js"></script>
+<script src="vendor/pdf.min.js"></script>
+</head>
+<body>
+<div id="out">running…</div>
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'vendor/pdf.worker.min.js';
+
+function escapeHtml(str) {
+  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+     .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+// ---- EXACT copy of the report HTML built inside buildHistoryPdfBlob (app.js 2540-2598) ----
+function buildReportHtml(entries, exportedAt) {
+  const rows = entries.map((entry, i) => {
+    const desc = String(entry.note || '').trim();
+    return `<tr>
+        <td class="col-num">${i + 1}</td>
+        <td class="col-desc" dir="auto">${desc ? escapeHtml(desc) : '&nbsp;'}</td>
+        <td class="col-expr" dir="auto">${escapeHtml(entry.expression)}</td>
+        <td class="col-result" dir="auto">${escapeHtml(entry.result)}</td>
+      </tr>`;
+  }).join('');
+
+  const brandTitle = 'EQ Calculator';
+  const brandSub = 'Calculation History';
+  const footerNote = 'Created with EQ Calculator';
+  const footerTagline = 'Smart calculations. Simple results.';
+  const APP_DOMAIN = '';
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Tahoma, Arial, sans-serif; color: #000000; background: #ffffff; }
+  .report { width: 794px; padding: 36px 40px; }
+  .report-header { border-bottom: 3px solid #0891b2; padding-bottom: 14px; margin-bottom: 20px; }
+  .report-header h1 { font-size: 26px; color: #000000; margin-bottom: 2px; letter-spacing: .5px; }
+  .report-header .sub { font-size: 14px; color: #000000; font-weight: 700; margin-bottom: 6px; }
+  .report-header .meta { font-size: 10px; color: #000000; }
+  table.history-table { width: 100%; border-collapse: collapse; }
+  table.history-table thead { display: table-header-group; }
+  table.history-table th,
+  table.history-table td { border: 1px solid #cbd5e1; padding: 8px 10px; text-align: left; vertical-align: top; }
+  table.history-table thead th { background: #0d9488; color: #000000; font-size: 12px; text-transform: uppercase; letter-spacing: .4px; }
+  table.history-table tbody tr { page-break-inside: avoid; break-inside: avoid; }
+  table.history-table td.col-num { width: 40px; text-align: center; color: #000000; font-weight: 700; }
+  table.history-table td.col-desc { width: 200px; color: #000000; }
+  table.history-table td.col-expr { color: #000000; font-weight: 600; }
+  table.history-table td.col-result { width: 150px; color: #000000; font-weight: 800; }
+  table.history-table tbody tr:nth-child(even) { background: #f1f5f9; }
+  .report-footer { margin-top: 24px; padding-top: 12px; border-top: 2px solid #0891b2; text-align: center; }
+  .report-footer .footer-brand { font-size: 12px; color: #000000; font-weight: 700; }
+  .report-footer .footer-tagline { font-size: 11px; color: #000000; font-style: italic; }
+  .report-footer .footer-domain { display: inline-block; margin-top: 8px; font-size: 12px; color: #000000; }
+  .report-footer .footer-domain-sub { font-size: 10px; color: #000000; }
+</style>
+</head>
+<body>
+  <div class="report" id="report">
+    <div class="report-header">
+      <h1>${escapeHtml(brandTitle)}</h1>
+      <div class="sub">${escapeHtml(brandSub)}</div>
+      <div class="meta">${escapeHtml(exportedAt)}</div>
+    </div>
+    <table class="history-table">
+      <thead>
+        <tr>
+          <th class="col-num">#</th>
+          <th class="col-desc">Description</th>
+          <th class="col-expr">Expression</th>
+          <th class="col-result">Result</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${rows}
+      </tbody>
+    </table>
+    <div class="report-footer">
+      <div class="footer-brand">${escapeHtml(footerNote)}</div>
+      <div class="footer-tagline">${escapeHtml(footerTagline)}</div>
+    </div>
+  </div>
+</body>
+</html>`;
+}
+
+function pixelStats(canvas) {
+  const ctx = canvas.getContext('2d');
+  const { width, height } = canvas;
+  const data = ctx.getImageData(0, 0, width, height).data;
+  let minLum = 255, maxLum = 0, nonWhite = 0;
+  for (let i = 0; i < data.length; i += 4) {
+    const lum = 0.2126*data[i] + 0.7152*data[i+1] + 0.0722*data[i+2];
+    if (lum < minLum) minLum = lum;
+    if (lum > maxLum) maxLum = lum;
+    if (lum < 245) nonWhite++;
+  }
+  return { width, height, minLum: Math.round(minLum), maxLum: Math.round(maxLum),
+           nonWhitePx: nonWhite, totalPx: width*height,
+           allWhite: nonWhite === 0 };
+}
+// Deep clone mirroring html2pdf utils.cloneNode + re-parenting into the PARENT document
+// (this is what html2pdf worker.toContainer does to this.prop.src).
+function reparentCloneIntoParent(originEl) {
+  const container = document.createElement('div');
+  const overlay = document.createElement('div');
+  Object.assign(overlay.style, { position:'fixed', overflow:'hidden', zIndex:'1000',
+    left:'0', right:'0', bottom:'0', top:'0', opacity:'0' });
+  Object.assign(container.style, { position:'absolute', width:'794px', left:'0', right:'0',
+    top:'0', height:'auto', margin:'auto', backgroundColor:'white' });
+  overlay.appendChild(container);
+  document.body.appendChild(overlay);
+  container.appendChild(originEl.cloneNode(true));
+  return { container, overlay, clone: container.firstChild };
+}
+
+function pixelStats2(canvas) {
+  const s = pixelStats(canvas);
+  const ctx = canvas.getContext('2d');
+  const { width, height } = canvas;
+  const data = ctx.getImageData(0, 0, width, height).data;
+  let blackish = 0;
+  for (let i = 0; i < data.length; i += 4) {
+    const lum = 0.2126*data[i] + 0.7152*data[i+1] + 0.0722*data[i+2];
+    if (lum < 80) blackish++;
+  }
+  return { ...s, blackishPx: blackish };
+}
+
+// Build one PDF from a real History entry, exactly mirroring buildHistoryPdfBlob.
+// mode 'original' = current behavior (report CSS only in iframe, lost on re-parent).
+// mode 'fixed'   = inject report CSS into the MAIN document (the fix), then remove it.
+async function buildPdf(mode) {
+  const entries = [
+    { id: 'e1', note: 'Monthly groceries', expression: '2 + 3', result: '5' },
+    { id: 'e2', note: '', expression: '15 x 4 / 3', result: '20' }
+  ];
+  const exportedAt = 'Aug 12 2026, 10:00:00 PM';
+  const html = buildReportHtml(entries, exportedAt);
+
+  const frame = document.createElement('iframe');
+  frame.setAttribute('aria-hidden', 'true');
+  frame.style.cssText = 'position:fixed;left:-10000px;top:0;width:794px;height:1123px;border:0;pointer-events:none;';
+  document.body.appendChild(frame);
+  const doc = frame.contentDocument;
+  doc.open(); doc.write(html); doc.close();
+
+  let mainStyle = null;
+  if (mode === 'fixed') {
+    mainStyle = document.createElement('style');
+    mainStyle.id = 'eq-pdf-report-style';
+    mainStyle.textContent = '#report{color:#000000;background:#ffffff;}' +
+      (doc.querySelector('style') ? doc.querySelector('style').textContent : '');
+    document.head.appendChild(mainStyle);
+  }
+
+  await new Promise(r => setTimeout(r, 120));
+  const el = doc.getElementById('report');
+  try {
+    const blob = await window.html2pdf()
+      .set({
+        margin: 16, filename: 'eq-history.pdf',
+        image: { type: 'png' },
+        html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
+        jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' },
+        pagebreak: { mode: ['css', 'legacy'] }
+      })
+      .from(el).toPdf().output('blob');
+    return blob;
+  } finally {
+    if (mainStyle) { try { document.head.removeChild(mainStyle); } catch (e) {} }
+    try { document.body.removeChild(frame); } catch (e) {}
+  }
+}
+
+async function analyzeBlob(blob) {
+  const buf = new Uint8Array(await blob.arrayBuffer());
+  const bytes = Array.from(buf.slice(0, 8));
+  const pdfMagic = buf[0] === 0x25 && buf[1] === 0x50 && buf[2] === 0x44 && buf[3] === 0x46 && buf[4] === 0x2d;
+  let pixels = null, pages = null;
+  try {
+    const pdf = await pdfjsLib.getDocument({ data: buf.slice() }).promise;
+    pages = pdf.numPages;
+    const page = await pdf.getPage(1);
+    const viewport = page.getViewport({ scale: 1.5 });
+    const cv = document.createElement('canvas');
+    cv.width = viewport.width; cv.height = viewport.height;
+    await page.render({ canvasContext: cv.getContext('2d'), viewport }).promise;
+    pixels = pixelStats2(cv);
+  } catch (e) { pixels = { error: String(e && e.message || e) }; }
+  const CH = 8000; let bin = '';
+  for (let i = 0; i < buf.length; i += CH) {
+    bin += String.fromCharCode.apply(null, buf.subarray(i, i + CH));
+  }
+  return {
+    sizeBytes: buf.length,
+    mime: blob.type || 'application/pdf',
+    header: String.fromCharCode(...buf.slice(0, 8)),
+    pdfMagic,
+    pages,
+    pixels,
+    base64: btoa(bin)
+  };
+}
+
+window.__runVerify = async function () {
+  const out = {};
+  const bOrig = await buildPdf('original');
+  out.original = await analyzeBlob(bOrig);
+  const bFixed = await buildPdf('fixed');
+  out.fixed = await analyzeBlob(bFixed);
+  return out;
+};
+</script>
+</body>
+</html>

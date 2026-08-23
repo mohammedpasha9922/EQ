@@ -1,0 +1,37 @@
+PASS  1) Smart Documents editor is open
+PASS  2) Content surface exists
+PASS  3) Existing signature button present (no duplicate)
+PASS  4) Clicking the button opens the signature menu
+PASS  5) Exactly THREE methods: draw/type/image
+PASS  6) Draw stage shows the canvas
+PASS  7) Drawing really changes the canvas pixels
+PASS  8) hasInk state reflects real drawing
+PASS  9) Clear empties the canvas and ink state
+PASS  10) Drawn signature inserted inside the document
+PASS  11) Signature UI fully closed after insert
+PASS  12) Empty draw never inserts an empty signature
+PASS  13) Typed name shows live visual preview
+PASS  14) Limited style switching works (3 styles)
+PASS  15) Typed signature inserted into the document
+PASS  16) Image method uses a file input accepting images only
+PASS  17) Chosen image appears in the preview
+PASS  18) Image signature inserted into the document
+PASS  19) Multiple signatures insert without conflict
+PASS  20) Existing text/table/divider remain intact
+PASS  21) PART 14 image system untouched by signatures
+PASS  22) Signature selectable + Escape deselects
+PASS  23) PART 16 page design still applies with signatures
+PASS  24) No JS errors so far
+PASS  25) No alert() used
+PASS  26) Reopening the editor leaves no stale signature UI/state
+PASS  27) Cancel closes the tool without inserting
+PASS  28) Outside click closes the signature menu
+PASS  29) History/Notes features not opened by the signature flow
+PASS  30) Arabic UI is RTL for the whole document
+PASS  31) LTR locales (en/fr/es/tr/ru/de) with localized labels
+PASS  32) Arabic RTL with localized signature labels (no English leakage)
+PASS  33) No horizontal overflow in RTL
+PASS  34) Responsive 1280/768/390/360 — usable draw, clamped UI, zero overflow
+
+========================================
+PART 17: 34/34 checks passed

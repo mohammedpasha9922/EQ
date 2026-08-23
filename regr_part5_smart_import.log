@@ -1,0 +1,77 @@
+PASS  File Picker: Import card exists
+PASS  File Picker: Import card title present  -> Import a File
+PASS  File Picker: clicking Import opens the file picker
+PASS  File Picker: view visible after cancel
+PASS  File Picker: no editor after cancel
+PASS  File Picker: stays on pick stage after cancel  -> stage=pick
+PASS  File Picker: no JS errors on cancel
+PASS  Cancel: no editor opened  -> editor=false
+PASS  Cancel: no error shown  -> stage=pick
+PASS  Cancel: no JS error
+PASS  Cancel: back returns to Smart Documents home
+PASS  Cancel: view hidden after back
+PASS  Text PDF: Preparing state was shown during analysis  -> first=preparing
+PASS  Text PDF: enters editor after successful analysis
+PASS  Text PDF: detected as text type  -> type=text
+PASS  Text PDF: parsed as text (not scanned)  -> parsed=text
+PASS  Text PDF: extracted text length > 0  -> len=238
+PASS  Text PDF: workflow step = Edit(2)  -> step=2
+PASS  Text PDF: editor holds extracted content  -> Quarterly Business Report  Revenue incre
+PASS  Text PDF: no JS errors
+PASS  Scanned PDF: detected as scanned  -> parsed=scanned
+PASS  Scanned PDF: OCR decision message shown  -> stage=scanned
+PASS  Scanned PDF: does NOT enter editor before decision
+PASS  Scanned PDF: Use OCR button present
+PASS  Scanned PDF: Keep Pages as Images button present
+PASS  Scanned PDF: scanned-title/message text present  -> Scanned Document Detected
+            It looks like this doc
+PASS  Scanned PDF: no JS errors
+PASS  OCR path: OCR Processing stage shown
+PASS  OCR path: enters editor after OCR completes
+PASS  OCR path: result type is ocr  -> type=ocr
+PASS  OCR path: recognized text inserted  -> len=41
+PASS  OCR path: editor holds recognized text  -> Recognized line one. Recognized line two
+PASS  OCR path: no JS errors
+PASS  Image path: enters editor
+PASS  Image path: result type is images  -> type=images
+PASS  Image path: pages inserted as images  -> img=2
+PASS  Image path: OCR was NOT run  -> text=
+PASS  Image path: image elements rendered in editor  -> nodes=2
+PASS  Image path: no JS errors
+PASS  Error: invalid file shows error state  -> stage=error
+PASS  Error: editor not opened on invalid file
+PASS  Error: Retry button present
+PASS  Error: no JS errors on invalid file
+PASS  Error: corrupt PDF shows error state  -> stage=error
+PASS  Error: corrupt PDF does not open editor  -> editor=false
+PASS  Error: an in-UI error message is shown  -> The PDF appears to be corrupted or could
+PASS  Error: no JS errors on corrupt PDF
+PASS  OCR failure: error state shown  -> stage=error
+PASS  OCR failure: editor not opened
+PASS  OCR failure: retry button available
+PASS  OCR failure: no JS errors
+PASS  Retry: recovers and imports a valid PDF  -> type=text
+PASS  Retry: no JS errors
+PASS  RTL: document dir is rtl  -> rtl
+PASS  RTL: Use OCR localized (Arabic)  -> استخدام OCR
+PASS  RTL: Keep Pages as Images localized (Arabic)  -> إبقاء الصفحات كصور
+PASS  RTL: import title localized (Arabic)  -> 📂 استيراد ملف
+PASS  RTL: no JS errors
+PASS  LTR: document dir is ltr  -> ltr
+PASS  LTR: import title localized (English)  -> 📂 Import a File
+PASS  LTR: no JS errors
+PASS  Mobile: no horizontal overflow  -> overflow=0
+PASS  Mobile: no JS errors
+PASS  Regression: Calculator still works (1 then 2 = 12)  -> display=12
+PASS  Regression: no JS errors (calculator)
+PASS  Regression: History entry intact
+PASS  Regression: Notes entry intact
+PASS  Regression: Smart Documents entry intact
+PASS  Regression: no JS errors (drawer)
+PASS  Regression: Smart Docs opens (P1)
+PASS  Regression: four cards intact (P2)  -> cards=4
+PASS  Regression: four workflow steps intact (P3)  -> steps=4
+PASS  Regression: PART 4 scan workflow still opens
+PASS  Regression: no JS errors
+
+ALL PASS  (74 checks)

@@ -1,0 +1,101 @@
+PASS  1) Editor opens from PART 6 (New Document)
+PASS  2) Toolbar exists
+PASS  3) Tool undo exists  -> undo,redo,add,text,table,signature,image,logo,divider,border,page,page-number,page-settings,more
+PASS  4) Tool redo exists  -> undo,redo,add,text,table,signature,image,logo,divider,border,page,page-number,page-settings,more
+PASS  5) Tool add exists  -> undo,redo,add,text,table,signature,image,logo,divider,border,page,page-number,page-settings,more
+PASS  6) Tool text exists  -> undo,redo,add,text,table,signature,image,logo,divider,border,page,page-number,page-settings,more
+PASS  7) Tool table exists  -> undo,redo,add,text,table,signature,image,logo,divider,border,page,page-number,page-settings,more
+PASS  8) Tool signature exists  -> undo,redo,add,text,table,signature,image,logo,divider,border,page,page-number,page-settings,more
+PASS  9) Tool image exists  -> undo,redo,add,text,table,signature,image,logo,divider,border,page,page-number,page-settings,more
+PASS  10) Tool logo exists  -> undo,redo,add,text,table,signature,image,logo,divider,border,page,page-number,page-settings,more
+PASS  11) Tool divider exists  -> undo,redo,add,text,table,signature,image,logo,divider,border,page,page-number,page-settings,more
+PASS  12) Tool border exists  -> undo,redo,add,text,table,signature,image,logo,divider,border,page,page-number,page-settings,more
+PASS  13) Tool page exists  -> undo,redo,add,text,table,signature,image,logo,divider,border,page,page-number,page-settings,more
+PASS  14) Tool page-number exists  -> undo,redo,add,text,table,signature,image,logo,divider,border,page,page-number,page-settings,more
+PASS  15) Tool page-settings exists  -> undo,redo,add,text,table,signature,image,logo,divider,border,page,page-number,page-settings,more
+PASS  16) Tool more exists  -> undo,redo,add,text,table,signature,image,logo,divider,border,page,page-number,page-settings,more
+PASS  Toolbar has all 14 tools in order  -> ["undo","redo","add","text","table","signature","image","logo","divider","border","page","page-number","page-settings","more"]
+PASS  Toolbar buttons are <button> and focusable
+PASS  Structure: no JS errors
+PASS  17) Undo visible without scroll
+PASS  18) Redo visible without scroll
+PASS  19) Add visible without scroll
+PASS  20) Text visible without scroll
+PASS  21) Table visible without scroll
+PASS  22) Signature visible without scroll
+PASS  Primary tools require no horizontal scroll  -> scrollLeft=0
+PASS  Basic visibility: no JS errors
+PASS  23) Toolbar has internal horizontal overflow  -> scrollW=1327 clientW=388
+PASS  24) Page itself has NO horizontal overflow  -> overflow=0
+PASS  25) Secondary tools reachable after scroll
+PASS  26) image reachable after scroll
+PASS  27) logo reachable after scroll
+PASS  28) divider reachable after scroll
+PASS  29) border reachable after scroll
+PASS  30) page reachable after scroll
+PASS  31) page-number reachable after scroll
+PASS  32) page-settings reachable after scroll
+PASS  33) more reachable after scroll
+PASS  Scroll behavior: no JS errors
+PASS  34) Clicking PART 9 tools opens no feature
+PASS  35) No fake alerts  -> alert=0
+PASS  36) No fake dialogs/confirms/prompts  -> confirm=0 prompt=0
+PASS  37) No JS errors during interaction
+PASS  38) Back returns to Smart Documents home
+PASS  39) Smart Documents Home still works (cards present)
+PASS  Interaction: no JS errors after back
+PASS  40) Arabic (RTL): dir=rtl  -> dir=rtl
+PASS  40.1 Arabic (RTL): image tool localized  -> label=صورة
+PASS  40.2 Arabic (RTL): no hardcoded-English leakage  -> label=صورة
+PASS  40.3 Arabic (RTL): no JS errors
+PASS  41) English (LTR): dir=ltr  -> dir=ltr
+PASS  41.1 English (LTR): image tool localized  -> label=Image
+PASS  41.2 English (LTR): no hardcoded-English leakage  -> label=Image
+PASS  41.3 English (LTR): no JS errors
+PASS  42) French: dir=ltr  -> dir=ltr
+PASS  42.1 French: image tool localized  -> label=Image
+PASS  42.2 French: no hardcoded-English leakage  -> label=Image
+PASS  42.3 French: no JS errors
+PASS  43) Spanish: dir=ltr  -> dir=ltr
+PASS  43.1 Spanish: image tool localized  -> label=Imagen
+PASS  43.2 Spanish: no hardcoded-English leakage  -> label=Imagen
+PASS  43.3 Spanish: no JS errors
+PASS  44) Turkish: dir=ltr  -> dir=ltr
+PASS  44.1 Turkish: image tool localized  -> label=Resim
+PASS  44.2 Turkish: no hardcoded-English leakage  -> label=Resim
+PASS  44.3 Turkish: no JS errors
+PASS  45) Russian: dir=ltr  -> dir=ltr
+PASS  45.1 Russian: image tool localized  -> label=Изображение
+PASS  45.2 Russian: no hardcoded-English leakage  -> label=Изображение
+PASS  45.3 Russian: no JS errors
+PASS  46) German: dir=ltr  -> dir=ltr
+PASS  46.1 German: image tool localized  -> label=Bild
+PASS  46.2 German: no hardcoded-English leakage  -> label=Bild
+PASS  46.3 German: no JS errors
+PASS  47) Desktop 1280: no page horizontal overflow  -> overflow=0
+PASS  47.1 Desktop 1280: toolbar usable
+PASS  47.2 Desktop 1280: canvas stays inside viewport  -> left=420 right=861
+PASS  47.3 Desktop 1280: no JS errors
+PASS  48) Tablet 768: no page horizontal overflow  -> overflow=0
+PASS  48.1 Tablet 768: toolbar usable
+PASS  48.2 Tablet 768: canvas stays inside viewport  -> left=84 right=684
+PASS  48.3 Tablet 768: no JS errors
+PASS  49) iPhone 390: no page horizontal overflow  -> overflow=0
+PASS  49.1 iPhone 390: toolbar usable
+PASS  49.2 iPhone 390: canvas stays inside viewport  -> left=13 right=377
+PASS  49.3 iPhone 390: no JS errors
+PASS  50) Android 360: no page horizontal overflow  -> overflow=0
+PASS  50.1 Android 360: toolbar usable
+PASS  50.2 Android 360: canvas stays inside viewport  -> left=13 right=347
+PASS  50.3 Android 360: no JS errors
+PASS  52) Toolbar alone scrolls horizontally at mobile width  -> scrollW=1327 clientW=388
+PASS  56) PART6 regression: editor opens as A4, 1 page
+PASS  58) PART8 regression: content surface present
+PASS  55) PART5 regression: import card present
+PASS  57) PART7 regression: templates card present
+PASS  54) PART3 regression: 4 workflow steps present
+PASS  54) PART1 regression: calculator works  -> display=7
+PASS  54) PART1 regression: notes still opens
+PASS  Regressions: no JS errors
+
+ALL PASS  (99 checks)

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { evaluateExpression } from '../app.js';
+import { evaluateExpression } from '../src/core/ExpressionEvaluator.js';
 
 test('supports square roots, powers, and parentheses', () => {
   assert.equal(evaluateExpression('sqrt(9)'), '3');

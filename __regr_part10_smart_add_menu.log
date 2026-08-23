@@ -1,0 +1,17 @@
+file:///C:/Users/SHCH-HR/Desktop/EQ/node_modules/puppeteer-core/lib/puppeteer/common/CallbackRegistry.js:108
+    #error = new ProtocolError();
+             ^
+
+ProtocolError: Runtime.callFunctionOn timed out. Increase the 'protocolTimeout' setting in launch/connect calls for a higher timeout if needed.
+    at <instance_members_initializer> (file:///C:/Users/SHCH-HR/Desktop/EQ/node_modules/puppeteer-core/lib/puppeteer/common/CallbackRegistry.js:108:14)
+    at new Callback (file:///C:/Users/SHCH-HR/Desktop/EQ/node_modules/puppeteer-core/lib/puppeteer/common/CallbackRegistry.js:112:16)
+    at CallbackRegistry.create (file:///C:/Users/SHCH-HR/Desktop/EQ/node_modules/puppeteer-core/lib/puppeteer/common/CallbackRegistry.js:27:26)
+    at Connection._rawSend (file:///C:/Users/SHCH-HR/Desktop/EQ/node_modules/puppeteer-core/lib/puppeteer/cdp/Connection.js:125:26)
+    at CdpCDPSession.send (file:///C:/Users/SHCH-HR/Desktop/EQ/node_modules/puppeteer-core/lib/puppeteer/cdp/CdpSession.js:72:14)
+    at #evaluate (file:///C:/Users/SHCH-HR/Desktop/EQ/node_modules/puppeteer-core/lib/puppeteer/cdp/ExecutionContext.js:374:50)
+    at ExecutionContext.evaluate (file:///C:/Users/SHCH-HR/Desktop/EQ/node_modules/puppeteer-core/lib/puppeteer/cdp/ExecutionContext.js:288:36)
+    at IsolatedWorld.evaluate (file:///C:/Users/SHCH-HR/Desktop/EQ/node_modules/puppeteer-core/lib/puppeteer/cdp/IsolatedWorld.js:104:30)
+    at CdpFrame.evaluate (file:///C:/Users/SHCH-HR/Desktop/EQ/node_modules/puppeteer-core/lib/puppeteer/api/Frame.js:364:43)
+    at CdpFrame.<anonymous> (file:///C:/Users/SHCH-HR/Desktop/EQ/node_modules/puppeteer-core/lib/puppeteer/util/decorators.js:101:27)
+
+Node.js v24.15.0

@@ -1,14 +1,27 @@
-const CACHE_NAME = 'eq-calculator-v2';
+const CACHE_NAME = 'eq-calculator-v3';
 const APP_SHELL = [
   './',
   './index.html',
   './styles.css',
   './app.js',
   './numberToWords.js',
+  './currencyService.js',
   './manifest.json',
   './favicon.ico',
   './apple-touch-icon.png',
-  './icon-192.png'
+  './icon-192.png',
+  './src/core/index.js',
+  './src/core/Decimal.js',
+  './src/core/NumberToWords.js',
+  './src/core/DisplayRenderer.js',
+  './src/core/SpeechEngine.js',
+  './src/core/ClipboardEngine.js',
+  './src/core/HistoryEngine.js',
+  './src/core/KeyboardHandler.js',
+  './src/core/ResultScreen.js',
+  './src/core/ExpressionEvaluator.js',
+  './src/CalculatorManager.js',
+  './src/modes/StandardCalculator.js'
 ];
 
 self.addEventListener('install', (event) => {

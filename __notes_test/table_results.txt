@@ -1,0 +1,37 @@
+PASS  CREATE 2x2: table inserted into editor  -> tables=1
+PASS  CREATE 2x2: dimensions 2x2  -> dims=2x2
+PASS  FORMAT: Bold applied inside a cell  -> fmt=[[["B:مرحبا"],["I:Hello"]],[["U:12345"],[]]]
+PASS  FORMAT: Italic applied inside a cell  -> fmt=[[["B:مرحبا"],["I:Hello"]],[["U:12345"],[]]]
+PASS  FORMAT: Underline applied inside a cell  -> fmt=[[["B:مرحبا"],["I:Hello"]],[["U:12345"],[]]]
+PASS  AUTO-SAVE: note persisted with bodyBlocks  -> keys=id,title,body,folderId,createdAt,updatedAt,bodyBlocks
+PASS  AUTO-SAVE: table block stored  -> rows=2
+PASS  AUTO-SAVE: cell text round-trips (Arabic/English/Numbers/Mixed)  -> cells=[["Arabic: مرحبا","English: Hello"],["12345","Mixed: سلام hello 99"]]
+PASS  AUTO-SAVE: bold run persisted in cell  -> fmt=[{"start":8,"end":13,"bold":true,"italic":false,"underline":false}]
+PASS  REOPEN: table still present  -> tables=1
+PASS  REOPEN: cell content preserved  -> cells=[["Arabic: مرحبا","English: Hello"],["12345","Mixed: سلام hello 99"]]
+PASS  REOPEN: bold formatting preserved inside cell  -> fmt=[[["B:مرحبا"],["I:Hello"]],[["U:12345"],[]]]
+PASS  REFRESH: table still present  -> tables=1
+PASS  REFRESH: cell content preserved  -> cells=[["Arabic: مرحبا","English: Hello"],["12345","Mixed: سلام hello 99"]]
+PASS  ADD ROW: rows increased to 3  -> rows=3
+PASS  DELETE ROW: rows back to 2  -> rows=2
+PASS  ADD COL: columns increased to 3  -> cols=3
+PASS  DELETE COL: columns back to 2  -> cols=2
+PASS  AUTO-SAVE: structural changes persisted
+PASS  CREATE 3x4 + HEADER: table dimensions 3x4  -> dims=3x4
+PASS  CREATE 3x4 + HEADER: header class applied  -> headerClass=true
+PASS  CREATE 3x4 + HEADER: persisted with header=true  -> header=true
+PASS  FOLDERS: table note keeps the same folderId  -> before=personal after=personal
+PASS  LEGACY: old note opens, renders <b> formatting, no table  -> html=<b>plain</b> legacy text
+PASS  LEGACY: stays in legacy model (no bodyBlocks) after save; body preserved  -> stored={"hasBodyBlocks":false,"body":"plain legacy text","hasFmt":true}
+PASS  XSS: typed markup stored as inert text (no live nodes)  -> html=&lt;img src=x onerror=window.__xss_cell=1&gt;
+FAIL  XSS: no inline handler/script ran on edit  -> val=1
+PASS  SECURITY: tampered bodyBlocks cell text rendered inert (no script element)  -> html=&lt;script&gt;window.__xss_t=1&lt;/script&gt;
+PASS  SECURITY: tampered script payload never executed  -> val=undefined
+PASS  DELETE: table note soft-trashed (deletedAt set) and left active list  -> trashed=true, activeLeft=true
+PASS  DELETE: table note permanently purged from storage  -> remaining=1
+PASS  DELETE: no leftover table in storage from deleted note
+PASS  RUNTIME: no uncaught page/console errors  -> clean
+
+==== RESULT: 32 passed, 1 failed, 33 total ====
+
+FINAL: 32/33 passed

@@ -1,0 +1,73 @@
+��[console] Error: <path> attribute d: Expected number, "���a2 2 2 0 0 0-2 2v14a2 2 0 0 0 2 ���".
+[console] Failed to load resource: the server responded with a status of 404 (Not Found)
+[console] Error while trying to use the following icon from the Manifest: http://127.0.0.1:8255/apple-touch-icon.png (Download error or resource isn't a valid image)
+[console] Failed to load resource: the server responded with a status of 404 (Not Found)
+BEFORE {
+ "wrapRect": {
+  "x": 445.953125,
+  "y": 192.0625,
+  "width": 196,
+  "height": 196,
+  "top": 192.0625,
+  "right": 641.953125,
+  "bottom": 388.0625,
+  "left": 445.953125
+ },
+ "imgRect": {
+  "x": 445.953125,
+  "y": 192.0625,
+  "width": 196,
+  "height": 196,
+  "top": 192.0625,
+  "right": 641.953125,
+  "bottom": 388.0625,
+  "left": 445.953125
+ },
+ "holderRect": {
+  "x": 293,
+  "y": 151,
+  "width": 694,
+  "height": 567,
+  "top": 151,
+  "right": 987,
+  "bottom": 718,
+  "left": 293
+ },
+ "wrapStyleW": "(none)",
+ "imgNatural": [
+  196,
+  196
+ ]
+}
+step 1 {"w":206,"h":206,"styleW":"206px","styleH":"206px","imgW":206}
+step 2 {"w":216,"h":216,"styleW":"216px","styleH":"216px","imgW":216}
+step 3 {"w":226,"h":226,"styleW":"226px","styleH":"226px","imgW":226}
+step 4 {"w":236,"h":236,"styleW":"236px","styleH":"236px","imgW":236}
+step 5 {"w":246,"h":246,"styleW":"246px","styleH":"246px","imgW":246}
+step 6 {"w":256,"h":256,"styleW":"256px","styleH":"256px","imgW":256}
+AFTER {
+ "wrapRect": {
+  "x": 445.953125,
+  "y": 192.0625,
+  "width": 256,
+  "height": 256,
+  "top": 192.0625,
+  "right": 701.953125,
+  "bottom": 448.0625,
+  "left": 445.953125
+ },
+ "imgRect": {
+  "x": 445.953125,
+  "y": 192.0625,
+  "width": 256,
+  "height": 256,
+  "top": 192.0625,
+  "right": 701.953125,
+  "bottom": 448.0625,
+  "left": 445.953125
+ },
+ "styleW": "256px",
+ "styleH": "256px",
+ "imgStyleW": "100%",
+ "imgStyleH": "100%"
+}

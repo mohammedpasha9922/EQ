@@ -1,0 +1,21 @@
+C: toolbar in DOM BEFORE cell focus? => false
+C: toolbar in DOM AFTER cell focus? => true
+PASS  C: visible (display:flex)  -> display=flex
+PASS  C: horizontal flex row  -> fd=row
+PASS  C: nowrap  -> wrap=nowrap
+PASS  C: horizontally scrollable overflow  -> cW=388 sW=536
+PASS  C: NOT position:fixed  -> pos=static
+PASS  C: no body scroll-lock  -> bodyLock=
+PASS  C: docked below body (above-keyboard slot)  -> tbTop=804 bodyBottom=804
+PASS  C: outside contenteditable  -> insideBody
+C: state = {"display":"flex","position":"static","flexDir":"row","wrap":"nowrap","dir":"ltr","bodyLock":"","tbTop":804,"tbBottom":843,"bodyBottom":804,"innerH":844,"clientW":388,"scrollW":536,"scrollable":true,"insideBody":false}
+shot: C_visible.png
+shot: C_scrolled.png
+PASS  C: toolbar stays inside viewport after keyboard push  -> tbBottom=523 innerH=524
+PASS  C: toolbar still visible after keyboard push  -> display=flex
+shot: C_keyboard.png
+FAIL  C: RTL reflected  -> dir=ltr
+shot: C_rtl.png
+PASS  C: toolbar hides when focus leaves table  -> display=none
+
+C SUMMARY done

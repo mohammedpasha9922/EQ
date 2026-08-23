@@ -1,0 +1,60 @@
+PASS  New Document: blank view is visible  -> visible=true
+PASS  New Document: home is hidden  -> homeShown=false
+PASS  New Document: Smart Docs modal stays open (no extra tool)  -> modalShow=true
+PASS  New Document: reaches Step 2  -> step=2
+PASS  New Document: document type = blank  -> type=blank
+PASS  No JS errors opening blank document
+PASS  One page only (state pageCount = 1)  -> pageCount=1
+PASS  Page counter shows "1 / 1"  -> counter=1 / 1
+PASS  Page size = A4  -> pageSize=A4
+PASS  Empty content (content length 0)  -> len=0
+PASS  Page is white  -> color=rgb(255, 255, 255)
+PASS  Page preserves A4 ratio (~0.707)  -> ratio=0.707
+PASS  Default name = New Document  -> title=New Document
+PASS  State default name = New Document  -> name=New Document
+PASS  No JS errors (state/page checks)
+PASS  Toolbar is visible  -> display=flex
+PASS  Toolbar has tool buttons  -> tools=7
+PASS  Navigation bar is visible  -> display=flex
+PASS  Navigation has prev/next controls  -> navBtns=2
+PASS  No JS errors (toolbar/nav)
+PASS  Back: home is shown again  -> homeShown=true
+PASS  Back: blank view is hidden  -> blankVisible=false
+PASS  Back: Smart Docs modal stays open (calculator not closed)  -> modalShow=true
+PASS  Back: returns to Smart Docs home step  -> step=1
+PASS  Back: no JS errors
+PASS  RTL: document direction is rtl  -> dir=rtl
+PASS  RTL: body language marker = ar  -> lang=ar
+PASS  RTL: default name is Arabic (مستند جديد)  -> title=مستند جديد
+PASS  RTL: state name is Arabic  -> name=مستند جديد
+PASS  RTL: no JS errors
+PASS  LTR: document direction is ltr  -> dir=ltr
+PASS  LTR: default name is English  -> title=New Document
+PASS  LTR: no JS errors
+PASS  Desktop: no horizontal overflow  -> overflow=0
+PASS  Desktop: canvas inside viewport  -> left=420 right=861 inner=1280
+PASS  Desktop: blank visible
+PASS  Desktop: no JS errors
+PASS  Tablet: no horizontal overflow  -> overflow=0
+PASS  Tablet: canvas inside viewport  -> left=84 right=684 inner=768
+PASS  Tablet: blank visible
+PASS  Tablet: no JS errors
+PASS  iPhone 390: no horizontal overflow  -> overflow=0
+PASS  iPhone 390: canvas inside viewport  -> left=13 right=377 inner=390
+PASS  iPhone 390: toolbar present
+PASS  iPhone 390: blank visible
+PASS  iPhone 390: no JS errors
+PASS  Android 360: no horizontal overflow  -> overflow=0
+PASS  Android 360: canvas inside viewport  -> left=13 right=347 inner=360
+PASS  Android 360: toolbar present
+PASS  Android 360: nav present
+PASS  Android 360: blank visible
+PASS  Android 360: no JS errors
+PASS  Regression: Calculator still works (pressed 7)  -> display=7
+PASS  Regression: no JS errors (calculator)
+PASS  Regression: History still opens
+PASS  Regression: no JS errors (history)
+PASS  Regression: Notes manager still opens
+PASS  Regression: no JS errors (notes)
+
+ALL PASS  (58 checks)

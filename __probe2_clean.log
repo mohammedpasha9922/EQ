@@ -1,0 +1,11 @@
+��step 1 {"tx":12,"ty":7,"dbg":{"viewDown":1,"wrapMove":2,"docMove":2,"wrapUp":0,"cancel":0},"underCursor":"smart-doc-image"}
+step 2 {"tx":24,"ty":14,"dbg":{"viewDown":1,"wrapMove":3,"docMove":3,"wrapUp":0,"cancel":0},"underCursor":"smart-doc-image"}
+step 3 {"tx":36,"ty":21,"dbg":{"viewDown":1,"wrapMove":4,"docMove":4,"wrapUp":0,"cancel":0},"underCursor":"smart-doc-image"}
+step 4 {"tx":48,"ty":28,"dbg":{"viewDown":1,"wrapMove":5,"docMove":5,"wrapUp":0,"cancel":0},"underCursor":"smart-doc-image"}
+step 5 {"tx":60,"ty":35,"dbg":{"viewDown":1,"wrapMove":6,"docMove":6,"wrapUp":0,"cancel":0},"underCursor":"smart-doc-image"}
+step 6 {"tx":72,"ty":42,"dbg":{"viewDown":1,"wrapMove":7,"docMove":7,"wrapUp":0,"cancel":0},"underCursor":"smart-doc-image"}
+FINAL {
+  tx: '72',
+  ty: '42',
+  dbg: { viewDown: 1, wrapMove: 7, docMove: 7, wrapUp: 1, cancel: 0 }
+}

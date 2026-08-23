@@ -1,0 +1,7 @@
+server :8842
+clicking VISIBLE color button...
+--- events captured ---
+(none)
+VISIBLE cancel fired? false
+HIDDEN cancel fired? false
+==> If BOTH false, headless CANNOT render the native picker (env limit).

@@ -1,0 +1,16 @@
+PASS  Drawer item open-smart-docs exists  -> 📄
+          📄 Smart Documents
+PASS  Drawer item label contains emoji
+PASS  No JS errors on boot
+PASS  Smart Docs label translates across locales  -> ar:html=ar|hist=السجل|sd="📄 المستندات الذكية" en:html=en|hist=History|sd="📄 Smart Documents" fr:html=fr|hist=Historique|sd="📄 Documents intelligents" es:html=es|hist=Historial|sd="📄 Documentos inteligentes" tr:html=tr|hist=Geçmiş|sd="📄 Akıllı Belgeler" ru:html=ru|hist=История|sd="📄 Умные документы" 
+PASS  Clicking Smart Docs opens its home page
+PASS  No other editor/tool opened
+PASS  Drawer closed after selecting item
+PASS  No JS errors during open
+PASS  Back button closes Smart Docs home
+PASS  Calculator still functional (pressed 7)  -> display=7
+PASS  History still opens
+PASS  Notes manager still opens
+PASS  No JS errors after Calculator/History/Notes
+
+ALL PASS  (13 checks)

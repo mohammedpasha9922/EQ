@@ -1,0 +1,20 @@
+PASS  COLOR: Arabic selected text recolors only the selected text  -> html=Arabic <span style="color: rgb(255, 0, 0);">مرحبا</span>
+PASS  COLOR: English selected text is blue  -> html=English <span style="color: rgb(0, 0, 255);">Hello</span>
+PASS  COLOR: numeric selected text is green  -> html=<span style="color: rgb(0, 170, 0);">12345</span>
+PASS  COLOR: mixed Arabic/English/Numbers cell allows multiple colors in the same cell  -> html=Mixed سلام <span style="color: rgb(153, 0, 204);">hello</span> 99
+PASS  COLOR: Bold + color stays independent  -> html=Arabic <span style="font-weight: bold; color: rgb(255, 102, 0);">مرحبا</span>
+PASS  COLOR: Italic + color stays independent  -> html=English <span style="font-style: italic; color: rgb(51, 102, 255);">Hello</span>
+PASS  COLOR: Underline + color stays independent  -> html=<span style="text-decoration-line: underline; color: rgb(0, 204, 153);">12345</span>
+PASS  COLOR: full-cell selection applies color to the full selected text  -> html=<span style="color: rgb(17, 17, 17);">Arabic <span style="font-weight: bold;">مرحبا</span></span>
+PASS  COLOR: auto-save stores color in formatting model  -> fmt=[{"start":7,"end":12,"bold":false,"italic":false,"underline":false,"color":"#ff0000"}]
+PASS  COLOR: reload preserves cell color  -> html=<span style="color:#111111;">Arabic </span><b><span style="color:#111111;">مرحبا</span></b>
+PASS  COLOR: XSS/inert text remains inert and not executed  -> html=<span style="color: rgb(255, 0, 153);">&lt;script&gt;alert(1)&lt;/script&gt;hello</span>
+PASS  COLOR: no JS errors during color flow  -> errors=none
+
+TEXT COLOR CHECK SUMMARY
+{
+  "totals": {
+    "pass": 12,
+    "fail": 0
+  }
+}
