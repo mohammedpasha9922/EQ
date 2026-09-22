@@ -361,13 +361,31 @@ await assertSub('29) Changing the page design after signing invalidates', seedTe
   const esc = await protState(page);
   check('41) Escape does not corrupt PART 18 state', esc.status === 'signed', JSON.stringify(esc));
   // Leave Smart Documents and confirm Calculator works again.
+  // PART 20 regression handling: signing makes the document dirty, so Back
+  // opens the Unsaved Changes dialog — answer it with "Exit without saving"
+  // (the intent here IS to leave Smart Documents), then verify the app.
   await page.evaluate(() => document.getElementById('smartBlankBack').click()); await sleep(350);
+  const dlgShown = await page.evaluate(() =>
+    !!document.querySelector('#smartUnsavedModal.show'));
+  if (dlgShown) {
+    await page.evaluate(() => document.getElementById('smartUnsavedExitBtn').click());
+    await sleep(350);
+  }
   const calcOk = await page.evaluate(() => ({
     editorHidden: !window.__smartBlank.getState().editorVisible,
     card: !!document.querySelector('main.calculator-card')
   }));
+  // Real calculator sanity: 7 × 6 = 42.
+  await page.evaluate(() => document.querySelector('.keypad-btn.number[data-value="7"]').click());
+  await page.evaluate(() => document.querySelector('.keypad-btn.operator[data-value="*"]').click());
+  await page.evaluate(() => document.querySelector('.keypad-btn.number[data-value="6"]').click());
+  await page.evaluate(() => document.querySelector('.keypad-btn.equals').click());
+  await sleep(250);
+  const calcDisplay = await page.evaluate(() =>
+    document.querySelector('#primaryDisplay').textContent.trim());
   check('42) Calculator still works after leaving Smart Documents',
-    calcOk.editorHidden && calcOk.card, JSON.stringify(calcOk));
+    calcOk.editorHidden && calcOk.card && calcDisplay === '42',
+    JSON.stringify({ ...calcOk, display: calcDisplay }));
   // History and Notes still open and work.
   await openDrawer(page);
   await page.evaluate(() => document.querySelector('.drawer-menu-item[data-action="open-history"]').click());

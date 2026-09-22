@@ -1,0 +1,356 @@
+{
+ "editor": {
+  "rect": {
+   "l": 1,
+   "r": 1279,
+   "t": 107,
+   "w": 1278
+  },
+  "dir": "rtl",
+  "align": "start",
+  "bidi": "plaintext",
+  "pl": "18px",
+  "pr": "18px",
+  "dirAttr": "auto"
+ },
+ "lines": [
+  {
+   "kind": "inline",
+   "label": "br",
+   "ink": {
+    "l": 1159,
+    "r": 1261,
+    "t": 125,
+    "w": 102
+   }
+  },
+  {
+   "kind": "inline",
+   "label": "br",
+   "ink": {
+    "l": 19,
+    "r": 181,
+    "t": 151,
+    "w": 162
+   }
+  },
+  {
+   "kind": "inline",
+   "label": "br",
+   "ink": {
+    "l": 1113,
+    "r": 1261,
+    "t": 176,
+    "w": 148
+   }
+  },
+  {
+   "kind": "inline",
+   "label": "before:UL",
+   "ink": {
+    "l": 19,
+    "r": 139,
+    "t": 202,
+    "w": 120
+   }
+  },
+  {
+   "kind": "inline",
+   "label": "before:UL",
+   "ink": {
+    "l": 1137,
+    "r": 1261,
+    "t": 311,
+    "w": 124
+   }
+  },
+  {
+   "kind": "inline",
+   "label": "before:UL",
+   "ink": {
+    "l": 1141,
+    "r": 1261,
+    "t": 419,
+    "w": 120
+   }
+  },
+  {
+   "kind": "inline",
+   "label": "before:OL",
+   "ink": {
+    "l": 1131,
+    "r": 1261,
+    "t": 528,
+    "w": 130
+   }
+  }
+ ],
+ "lists": [
+  {
+   "tag": "UL",
+   "dir": "rtl",
+   "align": "start",
+   "bidi": "isolate",
+   "pl": "0px",
+   "pr": "20px",
+   "rect": {
+    "l": 19,
+    "r": 1261,
+    "t": 241,
+    "w": 1242
+   },
+   "dirAttr": "auto",
+   "items": [
+    {
+     "text": "بند عربي واحد",
+     "ink": {
+      "l": 1149,
+      "r": 1241,
+      "t": 243,
+      "w": 92
+     },
+     "rect": {
+      "l": 19,
+      "r": 1241,
+      "t": 241,
+      "w": 1222
+     },
+     "dir": "rtl",
+     "align": "start",
+     "bidi": "plaintext",
+     "pl": "0px",
+     "pr": "0px",
+     "dirAttr": null
+    },
+    {
+     "text": "بند عربي اثنان",
+     "ink": {
+      "l": 1149,
+      "r": 1241,
+      "t": 269,
+      "w": 92
+     },
+     "rect": {
+      "l": 19,
+      "r": 1241,
+      "t": 267,
+      "w": 1222
+     },
+     "dir": "rtl",
+     "align": "start",
+     "bidi": "plaintext",
+     "pl": "0px",
+     "pr": "0px",
+     "dirAttr": null
+    }
+   ]
+  },
+  {
+   "tag": "UL",
+   "dir": "ltr",
+   "align": "start",
+   "bidi": "isolate",
+   "pl": "20px",
+   "pr": "0px",
+   "rect": {
+    "l": 19,
+    "r": 1261,
+    "t": 350,
+    "w": 1242
+   },
+   "dirAttr": "auto",
+   "items": [
+    {
+     "text": "English bullet one",
+     "ink": {
+      "l": 39,
+      "r": 165,
+      "t": 352,
+      "w": 126
+     },
+     "rect": {
+      "l": 39,
+      "r": 1261,
+      "t": 350,
+      "w": 1222
+     },
+     "dir": "ltr",
+     "align": "start",
+     "bidi": "plaintext",
+     "pl": "0px",
+     "pr": "0px",
+     "dirAttr": null
+    },
+    {
+     "text": "English bullet two",
+     "ink": {
+      "l": 39,
+      "r": 164,
+      "t": 378,
+      "w": 125
+     },
+     "rect": {
+      "l": 39,
+      "r": 1261,
+      "t": 376,
+      "w": 1222
+     },
+     "dir": "ltr",
+     "align": "start",
+     "bidi": "plaintext",
+     "pl": "0px",
+     "pr": "0px",
+     "dirAttr": null
+    }
+   ]
+  },
+  {
+   "tag": "UL",
+   "dir": "rtl",
+   "align": "start",
+   "bidi": "isolate",
+   "pl": "0px",
+   "pr": "20px",
+   "rect": {
+    "l": 19,
+    "r": 1261,
+    "t": 459,
+    "w": 1242
+   },
+   "dirAttr": "auto",
+   "items": [
+    {
+     "text": "بند مختلط mixed",
+     "ink": {
+      "l": 1128,
+      "r": 1241,
+      "t": 461,
+      "w": 113
+     },
+     "rect": {
+      "l": 19,
+      "r": 1241,
+      "t": 459,
+      "w": 1222
+     },
+     "dir": "rtl",
+     "align": "start",
+     "bidi": "plaintext",
+     "pl": "0px",
+     "pr": "0px",
+     "dirAttr": null
+    },
+    {
+     "text": "mixed بند English first",
+     "ink": {
+      "l": 19,
+      "r": 170,
+      "t": 487,
+      "w": 151
+     },
+     "rect": {
+      "l": 19,
+      "r": 1241,
+      "t": 485,
+      "w": 1222
+     },
+     "dir": "rtl",
+     "align": "start",
+     "bidi": "plaintext",
+     "pl": "0px",
+     "pr": "0px",
+     "dirAttr": null
+    }
+   ]
+  },
+  {
+   "tag": "OL",
+   "dir": "rtl",
+   "align": "start",
+   "bidi": "isolate",
+   "pl": "0px",
+   "pr": "20px",
+   "rect": {
+    "l": 19,
+    "r": 1261,
+    "t": 568,
+    "w": 1242
+   },
+   "dirAttr": "auto",
+   "items": [
+    {
+     "text": "العنصر الأول",
+     "ink": {
+      "l": 1159,
+      "r": 1241,
+      "t": 570,
+      "w": 82
+     },
+     "rect": {
+      "l": 19,
+      "r": 1241,
+      "t": 568,
+      "w": 1222
+     },
+     "dir": "rtl",
+     "align": "start",
+     "bidi": "plaintext",
+     "pl": "0px",
+     "pr": "0px",
+     "dirAttr": null
+    },
+    {
+     "text": "Second numbered item",
+     "ink": {
+      "l": 19,
+      "r": 184,
+      "t": 595,
+      "w": 165
+     },
+     "rect": {
+      "l": 19,
+      "r": 1241,
+      "t": 593,
+      "w": 1222
+     },
+     "dir": "rtl",
+     "align": "start",
+     "bidi": "plaintext",
+     "pl": "0px",
+     "pr": "0px",
+     "dirAttr": null
+    },
+    {
+     "text": "مرحبا hello numbered",
+     "ink": {
+      "l": 1090,
+      "r": 1241,
+      "t": 621,
+      "w": 151
+     },
+     "rect": {
+      "l": 19,
+      "r": 1241,
+      "t": 619,
+      "w": 1222
+     },
+     "dir": "rtl",
+     "align": "start",
+     "bidi": "plaintext",
+     "pl": "0px",
+     "pr": "0px",
+     "dirAttr": null
+    }
+   ]
+  }
+ ],
+ "overflowX": 0,
+ "probe": {
+  "lang": "en",
+  "variant": "2",
+  "errors": [
+   "Failed to load resource: the server responded with a status of 404 (Not Found)",
+   "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ]
+ }
+}

@@ -1,21 +1,21 @@
-PASS  CREATE: body stored as plain text  -> body=[This is an important text]
-PASS  BOLD: only selected word is bold  -> runs=[{"start":11,"end":20,"bold":true,"italic":false,"underline":false}]
+FAIL  CREATE: body stored as plain text  -> missing
+FAIL  BOLD: only selected word is bold  -> runs=undefined
 PASS  BOLD: body text unchanged  -> This is an important text
-PASS  BOLD: exactly one formatting run (only bold)  -> count=1
+FAIL  BOLD: exactly one formatting run (only bold)  -> count=0
 PASS  BOLD: editor renders <b> around selection  -> This is an <b>important</b> text
-PASS  ITALIC: only selected word is italic  -> runs=[{"start":0,"end":4,"bold":false,"italic":true,"underline":false},{"start":11,"end":20,"bold":true,"italic":false,"underline":false}]
-PASS  ITALIC: prior bold run still intact  -> runs=[{"start":0,"end":4,"bold":false,"italic":true,"underline":false},{"start":11,"end":20,"bold":true,"italic":false,"underline":false}]
+FAIL  ITALIC: only selected word is italic  -> runs=[{"start":11,"end":20,"bold":true,"italic":false,"underline":false}]
+PASS  ITALIC: prior bold run still intact  -> runs=[{"start":11,"end":20,"bold":true,"italic":false,"underline":false}]
 PASS  ITALIC: body text unchanged  -> This is an important text
-PASS  UNDERLINE: only selected word underlined  -> runs=[{"start":0,"end":4,"bold":false,"italic":true,"underline":false},{"start":11,"end":20,"bold":true,"italic":false,"underline":false},{"start":21,"end":25,"bold":false,"italic":false,"underline":true}]
+PASS  UNDERLINE: only selected word underlined  -> runs=[{"start":11,"end":20,"bold":true,"italic":false,"underline":false},{"start":21,"end":25,"bold":false,"italic":false,"underline":true}]
 PASS  UNDERLINE: body text unchanged  -> This is an important text
-PASS  COMBO: word has BOTH bold+italic  -> runs=[{"start":0,"end":4,"bold":false,"italic":true,"underline":false},{"start":8,"end":10,"bold":true,"italic":true,"underline":false},{"start":11,"end":20,"bold":true,"italic":false,"underline":false},{"start":21,"end":25,"bold":false,"italic":false,"underline":true}]
+FAIL  COMBO: word has BOTH bold+italic  -> runs=[{"start":8,"end":10,"bold":false,"italic":true,"underline":false},{"start":11,"end":20,"bold":true,"italic":false,"underline":false},{"start":21,"end":25,"bold":false,"italic":false,"underline":true}]
 PASS  COMBO: body text unchanged  -> This is an important text
-PASS  REOPEN: rich DOM restored (bold/italic/underline present)  -> <i>This</i> is <i><b>an</b></i> <b>important</b> <u>text</u>
-PASS  REOPEN: id unchanged  -> id0=note-msvmj9v8 id=note-msvmj9v8
-PASS  REOPEN: folder unchanged  -> folder=personal
-PASS  REOPEN: formatting persisted after close/reopen  -> runs=[{"start":0,"end":4,"bold":false,"italic":true,"underline":false},{"start":8,"end":10,"bold":true,"italic":true,"underline":false},{"start":11,"end":20,"bold":true,"italic":false,"underline":false},{"start":21,"end":25,"bold":false,"italic":false,"underline":true}]
-PASS  REFRESH: formatting persisted  -> runs=[{"start":0,"end":4,"bold":false,"italic":true,"underline":false},{"start":8,"end":10,"bold":true,"italic":true,"underline":false},{"start":11,"end":20,"bold":true,"italic":false,"underline":false},{"start":21,"end":25,"bold":false,"italic":false,"underline":true}]
+PASS  REOPEN: rich DOM restored (bold/italic/underline present)  -> This is <i>an</i> <b>important</b> <u>text</u>
+FAIL  REOPEN: id unchanged  -> id0=null id=note-mtimhhfl
+FAIL  REOPEN: folder unchanged  -> folder=personal
+FAIL  REOPEN: formatting persisted after close/reopen  -> runs=[{"start":8,"end":10,"bold":false,"italic":true,"underline":false},{"start":11,"end":20,"bold":true,"italic":false,"underline":false},{"start":21,"end":25,"bold":false,"italic":false,"underline":true}]
+PASS  REFRESH: formatting persisted  -> runs=[{"start":8,"end":10,"bold":false,"italic":true,"underline":false},{"start":11,"end":20,"bold":true,"italic":false,"underline":false},{"start":21,"end":25,"bold":false,"italic":false,"underline":true}]
 PASS  LEGACY: old plain-text note opens with same content  -> got=[old plain note]
 PASS  SECURITY: editor renders untrusted body as inert text (no img/script/event-handlers)  -> hasImg=false hasScript=false handlers=0 text=[<img src=x onerror="window.__xss=1"><script>window.__xss=2</script>]
 PASS  RUNTIME: no uncaught page errors  -> clean
-==== RESULT: 20/20 passed ====
+==== RESULT: 12/20 passed ====

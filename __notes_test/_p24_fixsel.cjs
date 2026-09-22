@@ -1,0 +1,11 @@
+const fs = require('fs');
+const p = 'd:/Programs EQ7/EQ/app.js';
+let s = fs.readFileSync(p, 'utf8');
+const n1 = s.split('.smart-pdf-ov-comment[data-id').length - 1;
+s = s.replace('.smart-pdf-ov-comment[data-id="', '.smart-pdf-ov-mark-comment[data-id="');
+const n2 = s.split('.smart-pdf-ov-comment .smart-pdf-mkdot').length - 1;
+s = s.replace('.smart-pdf-ov-comment .smart-pdf-mkdot', '.smart-pdf-ov-mark-comment .smart-pdf-mkdot');
+fs.writeFileSync(p, s);
+console.log('replaced data-id selector count=', n1, 'dot selector count=', n2);
+console.log('remaining .smart-pdf-ov-comment:', s.split('.smart-pdf-ov-comment').length - 1);
+console.log('mark-comment now:', s.split('smart-pdf-ov-mark-comment').length - 1);

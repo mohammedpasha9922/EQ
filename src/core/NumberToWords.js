@@ -21,7 +21,7 @@ export function numberToWords(value, locale = 'en') {
  * @returns {string[]} Array of supported locale codes.
  */
 export function getSupportedLocales() {
-  return ['en', 'es', 'ar', 'fr', 'ru', 'de', 'tr'];
+  return ['en', 'es', 'ar', 'fr', 'ru', 'de', 'tr', 'ku'];
 }
 
 export default {

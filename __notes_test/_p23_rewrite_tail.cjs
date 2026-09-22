@@ -1,0 +1,28 @@
+const fs = require('fs');
+const p = 'd:/Programs EQ7/EQ/__notes_test/p23_harness.mjs';
+let s = fs.readFileSync(p, 'utf8');
+const cut = "// rebuild a 4x5 custom table via row+/col+ and fill it";
+const i = s.indexOf(cut);
+if (i < 0) { console.log('CUT NOT FOUND'); process.exit(1); }
+const T = [];
+T.push("// --- rebuild a 3x3 working table from the 1x1 minimum ---");
+T.push("await tbar('row+'); await tbar('row+');");
+T.push("await tbar('col+'); await tbar('col+');");
+T.push("await sleep(250);");
+T.push("m1 = await tableModel();");
+T.push("check('P23-15 rebuilt to 3x3 (rows/cols ops compose)', m1.rows.length === 3 && m1.rows.every((r) => r.length === 3), m1.rows.length + 'x' + (m1.rows[0] || []).length);");
+T.push("for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) await setCell(r, c, (r === 0 ? ['Item', 'Quantity', 'Price'][c] : r === 1 ? ['Item A', '10', '50'][c] : ['Item B', '5', '25'][c]));");
+T.push("await setCell(2, 0, '\\u0639\\u0631\\u0628\\u064a Mixed');");
+T.push("await sleep(250);");
+T.push("m1 = await tableModel();");
+T.push("check('P23-16 all cells editable incl. mixed Arabic/English', m1.rows[0][2].text === 'Price' && m1.rows[1][2].text === '50' && /\\u0639\\u0631\\u0628\\u064a/.test(m1.rows[2][0].text), JSON.stringify(m1.rows).slice(0, 100));");
+T.push("// --- resize via the existing corner grip; min size enforced ---");
+T.push("const wBefore = m1.w || 0;");
+T.push("await resizeGrip(80); await sleep(250);");
+T.push("m1 = await tableModel();");
+T.push("check('P23-17 resize grows the table width', m1.w >= wBefore + 50, { before: wBefore, after: m1.w });");
+T.push("await resizeGrip(-100000); await sleep(250);");
+T.push("m1 = await tableModel();");
+T.push("check('P23-18 resize never collapses below the minimum width', m1.w >= 100, m1.w);");
+fs.writeFileSync(p, s.slice(0, i) + T.join('\n') + '\n');
+console.log('TAIL PART1 OK');

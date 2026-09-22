@@ -1,9 +1,0 @@
-part15_smart_logo: exit=0 pass=59 fail=0
-part14_smart_images: exit=124 pass=44 fail=0
-part12_smart_tables: exit=124 pass=70 fail=0
-part11_smart_text_tool: exit=124 pass=63 fail=0
-part10_smart_add_menu: exit=124 pass=69 fail=0
-part9_smart_toolbar_scroll: exit=0 pass=99 fail=0
-part8_smart_document_editor: exit=0 pass=73 fail=0
-
-FINAL: 4 SUITE(S) FAILED

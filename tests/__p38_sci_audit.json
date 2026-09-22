@@ -1,0 +1,428 @@
+{
+  "checks": [
+    {
+      "name": "boot display=0",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "toggle exists",
+      "ok": true,
+      "detail": "Scientific"
+    },
+    {
+      "name": "panel exists",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "panel hidden initially",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "toggle opens panel",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "sqrt btn wraps to sqrt(9)",
+      "ok": true,
+      "detail": "sqrt(9*)"
+    },
+    {
+      "name": "sqrt(9)=3",
+      "ok": false,
+      "detail": "display=sqrt(9*) words=nine"
+    },
+    {
+      "name": "x2 btn appends ^2",
+      "ok": true,
+      "detail": "4^2"
+    },
+    {
+      "name": "4^2=16",
+      "ok": true,
+      "detail": "display=16"
+    },
+    {
+      "name": "(2+3)*4=20",
+      "ok": true,
+      "detail": "display=20 expr=(2+3)*4 ="
+    },
+    {
+      "name": "(2^2)=4 free-expr power",
+      "ok": false,
+      "detail": "display=2"
+    },
+    {
+      "name": "((2+3)*4)/2=10",
+      "ok": true,
+      "detail": "display=10"
+    },
+    {
+      "name": "sqrt(2.25)=1.5",
+      "ok": false,
+      "detail": "display=sqrt(2.25*)"
+    },
+    {
+      "name": "sqrt(0)=0",
+      "ok": false,
+      "detail": "display=sqrt(0)"
+    },
+    {
+      "name": "keyboard (7+8)=15",
+      "ok": true,
+      "detail": "display=15"
+    },
+    {
+      "name": "keyboard letters ignored",
+      "ok": true,
+      "detail": "display=0"
+    },
+    {
+      "name": "unbalanced (2+3 => Error",
+      "ok": true,
+      "detail": "display=Error"
+    },
+    {
+      "name": "(-5)+3=-2",
+      "ok": true,
+      "detail": "display=-2"
+    },
+    {
+      "name": "5++2=7 operator replace",
+      "ok": true,
+      "detail": "display=7"
+    },
+    {
+      "name": "repeated equals stable",
+      "ok": true,
+      "detail": "7/7"
+    },
+    {
+      "name": "backspace in free-expr recorded",
+      "ok": true,
+      "detail": "display=("
+    },
+    {
+      "name": "AC resets 0",
+      "ok": true,
+      "detail": "display=0"
+    },
+    {
+      "name": "history logged sci calc",
+      "ok": true,
+      "detail": "{\"count\":8,\"text\":\"\\n      \\n        \\n          \\n            \\n            #h-mt\\n          \\n          \\n            \\n          \\n        \\n        3 + 4\\n        \\n          = 7\\n        \\n        \\n          2026-09-12\\n          15:36:27\\n        \\n  \"}"
+    },
+    {
+      "name": "sci result words=three",
+      "ok": false,
+      "detail": "words=nine"
+    },
+    {
+      "name": "speech button exists",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "evaluator probe ok",
+      "ok": true,
+      "detail": "{\"sqrt(9)\":\"3\",\"2^3\":\"8\",\"(2+3)*4\":\"20\",\"sqrt(2+7)\":\"ERROR: Missing ) after sqrt\",\"2^2\":\"4\",\"sqrt(0)\":\"0\",\"9^0.5\":\"3\",\"((2+3)*4)/2\":\"10\",\"-sqrt(9)\":\"-3\",\"2^(-2)\":\"0.25\",\"(2+3\":\"ERROR: Missing closing parenthesis\",\"2+3)\":\"ERROR: Unexpected tokens at end of expr"
+    }
+  ],
+  "pageErrors": [],
+  "inventory": {
+    "toggle": true,
+    "toggleText": "Scientific",
+    "panel": true,
+    "btns": [
+      {
+        "label": "√",
+        "sci": "sqrt("
+      },
+      {
+        "label": "x²",
+        "sci": "^2"
+      },
+      {
+        "label": "(",
+        "sci": "("
+      },
+      {
+        "label": ")",
+        "sci": ")"
+      }
+    ],
+    "openInit": false
+  },
+  "sqrtWords": "sixteen only",
+  "backspaceState": "(",
+  "history": {
+    "count": 8,
+    "text": "\n      \n        \n          \n            \n            #h-mt\n          \n          \n            \n          \n        \n        3 + 4\n        \n          = 7\n        \n        \n          2026-09-12\n          15:36:27\n        \n  "
+  },
+  "speechBtn": true,
+  "langs": {
+    "en": {
+      "toggle": "Scientific",
+      "lang": "en",
+      "dir": "ltr"
+    },
+    "ar": {
+      "toggle": "علمية",
+      "lang": "ar",
+      "dir": "rtl"
+    },
+    "ku": {
+      "toggle": "زانستی",
+      "lang": "ku",
+      "dir": "rtl"
+    },
+    "fr": {
+      "toggle": "Scientifique",
+      "lang": "fr",
+      "dir": "ltr"
+    },
+    "de": {
+      "toggle": "Wissenschaftlich",
+      "lang": "de",
+      "dir": "ltr"
+    },
+    "es": {
+      "toggle": "Científica",
+      "lang": "es",
+      "dir": "ltr"
+    },
+    "ru": {
+      "toggle": "Научный",
+      "lang": "ru",
+      "dir": "ltr"
+    },
+    "tr": {
+      "toggle": "Bilimsel",
+      "lang": "tr",
+      "dir": "ltr"
+    }
+  },
+  "responsive": {
+    "ltr_360": {
+      "overflow": false,
+      "btns": [
+        {
+          "label": "√",
+          "w": 72,
+          "h": 41,
+          "vis": true
+        },
+        {
+          "label": "x²",
+          "w": 72,
+          "h": 41,
+          "vis": true
+        },
+        {
+          "label": "(",
+          "w": 72,
+          "h": 41,
+          "vis": true
+        },
+        {
+          "label": ")",
+          "w": 72,
+          "h": 41,
+          "vis": true
+        }
+      ]
+    },
+    "ltr_390": {
+      "overflow": false,
+      "btns": [
+        {
+          "label": "√",
+          "w": 79,
+          "h": 41,
+          "vis": true
+        },
+        {
+          "label": "x²",
+          "w": 79,
+          "h": 41,
+          "vis": true
+        },
+        {
+          "label": "(",
+          "w": 79,
+          "h": 41,
+          "vis": true
+        },
+        {
+          "label": ")",
+          "w": 79,
+          "h": 41,
+          "vis": true
+        }
+      ]
+    },
+    "ltr_768": {
+      "overflow": false,
+      "btns": [
+        {
+          "label": "√",
+          "w": 125,
+          "h": 41,
+          "vis": true
+        },
+        {
+          "label": "x²",
+          "w": 125,
+          "h": 41,
+          "vis": true
+        },
+        {
+          "label": "(",
+          "w": 125,
+          "h": 41,
+          "vis": true
+        },
+        {
+          "label": ")",
+          "w": 125,
+          "h": 41,
+          "vis": true
+        }
+      ]
+    },
+    "ltr_1024": {
+      "overflow": false,
+      "btns": [
+        {
+          "label": "√",
+          "w": 123,
+          "h": 41,
+          "vis": true
+        },
+        {
+          "label": "x²",
+          "w": 123,
+          "h": 41,
+          "vis": true
+        },
+        {
+          "label": "(",
+          "w": 123,
+          "h": 41,
+          "vis": true
+        },
+        {
+          "label": ")",
+          "w": 123,
+          "h": 41,
+          "vis": true
+        }
+      ]
+    },
+    "ltr_1280": {
+      "overflow": false,
+      "btns": [
+        {
+          "label": "√",
+          "w": 123,
+          "h": 41,
+          "vis": true
+        },
+        {
+          "label": "x²",
+          "w": 123,
+          "h": 41,
+          "vis": true
+        },
+        {
+          "label": "(",
+          "w": 123,
+          "h": 41,
+          "vis": true
+        },
+        {
+          "label": ")",
+          "w": 123,
+          "h": 41,
+          "vis": true
+        }
+      ]
+    },
+    "rtl_360": {
+      "dir": "rtl",
+      "overflow": false,
+      "btns": [
+        {
+          "label": "√",
+          "w": 72,
+          "h": 41
+        },
+        {
+          "label": "x²",
+          "w": 72,
+          "h": 41
+        },
+        {
+          "label": "(",
+          "w": 72,
+          "h": 41
+        },
+        {
+          "label": ")",
+          "w": 72,
+          "h": 41
+        }
+      ]
+    },
+    "rtl_390": {
+      "dir": "rtl",
+      "overflow": false,
+      "btns": [
+        {
+          "label": "√",
+          "w": 79,
+          "h": 41
+        },
+        {
+          "label": "x²",
+          "w": 79,
+          "h": 41
+        },
+        {
+          "label": "(",
+          "w": 79,
+          "h": 41
+        },
+        {
+          "label": ")",
+          "w": 79,
+          "h": 41
+        }
+      ]
+    }
+  },
+  "evaluator": {
+    "sqrt(9)": "3",
+    "2^3": "8",
+    "(2+3)*4": "20",
+    "sqrt(2+7)": "ERROR: Missing ) after sqrt",
+    "2^2": "4",
+    "sqrt(0)": "0",
+    "9^0.5": "3",
+    "((2+3)*4)/2": "10",
+    "-sqrt(9)": "-3",
+    "2^(-2)": "0.25",
+    "(2+3": "ERROR: Missing closing parenthesis",
+    "2+3)": "ERROR: Unexpected tokens at end of expression",
+    "sqrt9": "ERROR: Expected ( after sqrt",
+    "3^^2": "ERROR: Unexpected token: POWER",
+    "sin(30)": "ERROR: Unknown function: sin",
+    "cos(0)": "ERROR: Unknown function: cos",
+    "log(10)": "ERROR: Unknown function: log",
+    "pi": "ERROR: Unknown function: pi",
+    "5!": "ERROR: Unexpected character: !"
+  }
+}

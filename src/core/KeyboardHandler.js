@@ -27,7 +27,7 @@ class KeyboardHandler {
    */
   handleKeydown(event) {
     const key = event.key;
-    const activeEl = document.activeElement;
+    const activeEl = typeof document !== 'undefined' ? document.activeElement : null;
     const activeTag = activeEl ? activeEl.tagName : '';
     if (activeTag === 'INPUT' || activeTag === 'TEXTAREA' || activeTag === 'SELECT' || (activeEl && activeEl.isContentEditable)) {
       return;
@@ -42,6 +42,10 @@ class KeyboardHandler {
       if (mode.appendDigit) mode.appendDigit('.');
     } else if (key === '+' || key === '-' || key === '*' || key === '/') {
       if (mode.applyOperator) mode.applyOperator(key);
+    } else if (key === '(' || key === ')') {
+      // PHASE 37G (Test Point 8): keyboard parentheses route to the same
+      // free-expression buffer as the ( ) buttons.
+      if (mode.appendParenthesis) mode.appendParenthesis(key);
     } else if (key === '%') {
       if (mode.handlePercent) mode.handlePercent();
     } else if (key === 'Enter' || key === '=') {

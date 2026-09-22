@@ -1,4 +1,4 @@
-const CACHE_NAME = 'eq-calculator-v3';
+const CACHE_NAME = 'eq-calculator-v4';
 const APP_SHELL = [
   './',
   './index.html',
@@ -30,10 +30,33 @@ self.addEventListener('install', (event) => {
   );
 });
 
+// PART 21 — Offline-first warmup (best effort only).
+// The two CDN resources below (Font Awesome icons, Decimal.js) are external and
+// must NEVER block installation. We cache them opportunistically while online so
+// subsequent offline launches keep the exact same UI/behaviour; if the fetch
+// fails, the app already falls back gracefully (system fonts / local math), so
+// each entry is cached individually with its own catch.
+// PART 35 — Notes PDF offline support: the html2pdf bundle (Generate/Save)
+// and the pdf.js lib + worker (Preview) are CDN resources exactly like the two
+// PART 21 entries below. They are cached opportunistically while online and
+// then served from this cache by the fetch handler when offline. Best effort
+// only — must NEVER block installation, each entry has its own catch.
+const CDN_WARMUP_URLS = [
+  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css',
+  'https://cdn.jsdelivr.net/npm/decimal.js@10.4.3/decimal.min.js',
+  'https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'
+];
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => Promise.all(keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))))
       .then(() => self.clients.claim())
+      .then(() => caches.open(CACHE_NAME).then((cache) =>
+        Promise.all(CDN_WARMUP_URLS.map((url) =>
+          cache.add(new Request(url, { mode: 'no-cors' })).catch(() => { /* best effort */ })
+        ))
+      ))
   );
 });
 

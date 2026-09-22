@@ -1,0 +1,1653 @@
+{
+  "node": "v24.15.0",
+  "url": "http://127.0.0.1:8788/index.html",
+  "chrome": "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+  "combos": [
+    {
+      "lang": "en",
+      "width": 1280,
+      "pageErrs": [],
+      "consoleErrs": [
+        {
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "url": "http://127.0.0.1:8788/apple-touch-icon.png"
+        },
+        {
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "url": "http://127.0.0.1:8788/favicon.ico"
+        },
+        {
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "url": "http://127.0.0.1:8788/icon-192.png"
+        },
+        {
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "url": "http://127.0.0.1:8788/icon-192.png"
+        }
+      ],
+      "langApplied": {
+        "lang": "en",
+        "dir": "ltr",
+        "sel": "en"
+      },
+      "notesManagerOpened": true,
+      "editorOpened": true,
+      "measure": {
+        "lang": "en",
+        "dir": "ltr",
+        "vw": 1280,
+        "cpButton": false,
+        "cpModal": false,
+        "barCount": 4,
+        "barIds": [
+          "saveFullScreenNote",
+          "sendNoteBtn",
+          "notePreviewPdfBtn",
+          "exportNotePdfBtn"
+        ],
+        "btnWidths": [
+          42,
+          42,
+          42,
+          42
+        ],
+        "btnHeights": [
+          42,
+          42,
+          42,
+          42
+        ],
+        "deltas": [
+          52,
+          52,
+          52
+        ],
+        "gaps": [
+          10,
+          10,
+          10
+        ],
+        "evenSpread": 0,
+        "minGap": 10,
+        "linked": 0,
+        "barOverflow": 0,
+        "insideBar": true,
+        "sameRow": true,
+        "barRect": {
+          "left": 537,
+          "width": 206
+        },
+        "pageOverflow": 0,
+        "bodyOverflow": 0,
+        "titleRow": {
+          "width": 305.5,
+          "height": 42
+        },
+        "titleBits": {
+          "closeFullScreenNote": {
+            "left": 487.2,
+            "right": 529.2,
+            "width": 42,
+            "height": 42
+          },
+          "noteTitleInput": {
+            "left": 537.2,
+            "right": 740.2,
+            "width": 203,
+            "height": 39
+          },
+          "noteSavedIndicator": {
+            "left": 748.2,
+            "right": 792.8,
+            "width": 44.5,
+            "height": 15
+          }
+        },
+        "toolbar": {
+          "exists": true,
+          "buttons": 11,
+          "scrollWidth": 1278,
+          "clientWidth": 1278,
+          "overflowX": "visible"
+        }
+      }
+    },
+    {
+      "lang": "en",
+      "width": 768,
+      "pageErrs": [],
+      "consoleErrs": [
+        {
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "url": "http://127.0.0.1:8788/apple-touch-icon.png"
+        },
+        {
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "url": "http://127.0.0.1:8788/icon-192.png"
+        }
+      ],
+      "langApplied": {
+        "lang": "en",
+        "dir": "ltr",
+        "sel": "en"
+      },
+      "notesManagerOpened": true,
+      "editorOpened": true,
+      "measure": {
+        "lang": "en",
+        "dir": "ltr",
+        "vw": 768,
+        "cpButton": false,
+        "cpModal": false,
+        "barCount": 4,
+        "barIds": [
+          "saveFullScreenNote",
+          "sendNoteBtn",
+          "notePreviewPdfBtn",
+          "exportNotePdfBtn"
+        ],
+        "btnWidths": [
+          42,
+          42,
+          42,
+          42
+        ],
+        "btnHeights": [
+          42,
+          42,
+          42,
+          42
+        ],
+        "deltas": [
+          52,
+          52,
+          52
+        ],
+        "gaps": [
+          10,
+          10,
+          10
+        ],
+        "evenSpread": 0,
+        "minGap": 10,
+        "linked": 0,
+        "barOverflow": 0,
+        "insideBar": true,
+        "sameRow": true,
+        "barRect": {
+          "left": 281,
+          "width": 206
+        },
+        "pageOverflow": 0,
+        "bodyOverflow": 0,
+        "titleRow": {
+          "width": 305.5,
+          "height": 42
+        },
+        "titleBits": {
+          "closeFullScreenNote": {
+            "left": 231.2,
+            "right": 273.2,
+            "width": 42,
+            "height": 42
+          },
+          "noteTitleInput": {
+            "left": 281.2,
+            "right": 484.2,
+            "width": 203,
+            "height": 39
+          },
+          "noteSavedIndicator": {
+            "left": 492.2,
+            "right": 536.8,
+            "width": 44.5,
+            "height": 15
+          }
+        },
+        "toolbar": {
+          "exists": true,
+          "buttons": 11,
+          "scrollWidth": 766,
+          "clientWidth": 766,
+          "overflowX": "visible"
+        }
+      }
+    },
+    {
+      "lang": "en",
+      "width": 430,
+      "pageErrs": [],
+      "consoleErrs": [
+        {
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "url": "http://127.0.0.1:8788/apple-touch-icon.png"
+        },
+        {
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "url": "http://127.0.0.1:8788/icon-192.png"
+        }
+      ],
+      "langApplied": {
+        "lang": "en",
+        "dir": "ltr",
+        "sel": "en"
+      },
+      "notesManagerOpened": true,
+      "editorOpened": true,
+      "measure": {
+        "lang": "en",
+        "dir": "ltr",
+        "vw": 430,
+        "cpButton": false,
+        "cpModal": false,
+        "barCount": 4,
+        "barIds": [
+          "saveFullScreenNote",
+          "sendNoteBtn",
+          "notePreviewPdfBtn",
+          "exportNotePdfBtn"
+        ],
+        "btnWidths": [
+          42,
+          42,
+          42,
+          42
+        ],
+        "btnHeights": [
+          42,
+          42,
+          42,
+          42
+        ],
+        "deltas": [
+          52,
+          52,
+          52
+        ],
+        "gaps": [
+          10,
+          10,
+          10
+        ],
+        "evenSpread": 0,
+        "minGap": 10,
+        "linked": 0,
+        "barOverflow": 0,
+        "insideBar": true,
+        "sameRow": true,
+        "barRect": {
+          "left": 112,
+          "width": 206
+        },
+        "pageOverflow": 0,
+        "bodyOverflow": 0,
+        "titleRow": {
+          "width": 305.5,
+          "height": 42
+        },
+        "titleBits": {
+          "closeFullScreenNote": {
+            "left": 62.2,
+            "right": 104.2,
+            "width": 42,
+            "height": 42
+          },
+          "noteTitleInput": {
+            "left": 112.2,
+            "right": 315.2,
+            "width": 203,
+            "height": 39
+          },
+          "noteSavedIndicator": {
+            "left": 323.2,
+            "right": 367.8,
+            "width": 44.5,
+            "height": 15
+          }
+        },
+        "toolbar": {
+          "exists": true,
+          "buttons": 11,
+          "scrollWidth": 449,
+          "clientWidth": 428,
+          "overflowX": "visible"
+        }
+      }
+    },
+    {
+      "lang": "en",
+      "width": 390,
+      "pageErrs": [],
+      "consoleErrs": [
+        {
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "url": "http://127.0.0.1:8788/apple-touch-icon.png"
+        },
+        {
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "url": "http://127.0.0.1:8788/icon-192.png"
+        }
+      ],
+      "langApplied": {
+        "lang": "en",
+        "dir": "ltr",
+        "sel": "en"
+      },
+      "notesManagerOpened": true,
+      "editorOpened": true,
+      "measure": {
+        "lang": "en",
+        "dir": "ltr",
+        "vw": 390,
+        "cpButton": false,
+        "cpModal": false,
+        "barCount": 4,
+        "barIds": [
+          "saveFullScreenNote",
+          "sendNoteBtn",
+          "notePreviewPdfBtn",
+          "exportNotePdfBtn"
+        ],
+        "btnWidths": [
+          38,
+          38,
+          38,
+          38
+        ],
+        "btnHeights": [
+          38,
+          38,
+          38,
+          38
+        ],
+        "deltas": [
+          44,
+          44,
+          44
+        ],
+        "gaps": [
+          6,
+          6,
+          6
+        ],
+        "evenSpread": 0,
+        "minGap": 6,
+        "linked": 0,
+        "barOverflow": 0,
+        "insideBar": true,
+        "sameRow": true,
+        "barRect": {
+          "left": 108,
+          "width": 174
+        },
+        "pageOverflow": 0,
+        "bodyOverflow": 0,
+        "titleRow": {
+          "width": 286.5,
+          "height": 38
+        },
+        "titleBits": {
+          "closeFullScreenNote": {
+            "left": 51.7,
+            "right": 89.7,
+            "width": 38,
+            "height": 38
+          },
+          "noteTitleInput": {
+            "left": 95.7,
+            "right": 285.7,
+            "width": 190,
+            "height": 34
+          },
+          "noteSavedIndicator": {
+            "left": 293.7,
+            "right": 338.3,
+            "width": 44.5,
+            "height": 15
+          }
+        },
+        "toolbar": {
+          "exists": true,
+          "buttons": 11,
+          "scrollWidth": 388,
+          "clientWidth": 388,
+          "overflowX": "visible"
+        }
+      }
+    },
+    {
+      "lang": "en",
+      "width": 360,
+      "pageErrs": [],
+      "consoleErrs": [
+        {
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "url": "http://127.0.0.1:8788/apple-touch-icon.png"
+        },
+        {
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "url": "http://127.0.0.1:8788/icon-192.png"
+        }
+      ],
+      "langApplied": {
+        "lang": "en",
+        "dir": "ltr",
+        "sel": "en"
+      },
+      "notesManagerOpened": true,
+      "editorOpened": true,
+      "measure": {
+        "lang": "en",
+        "dir": "ltr",
+        "vw": 360,
+        "cpButton": false,
+        "cpModal": false,
+        "barCount": 4,
+        "barIds": [
+          "saveFullScreenNote",
+          "sendNoteBtn",
+          "notePreviewPdfBtn",
+          "exportNotePdfBtn"
+        ],
+        "btnWidths": [
+          38,
+          38,
+          38,
+          38
+        ],
+        "btnHeights": [
+          38,
+          38,
+          38,
+          38
+        ],
+        "deltas": [
+          44,
+          44,
+          44
+        ],
+        "gaps": [
+          6,
+          6,
+          6
+        ],
+        "evenSpread": 0,
+        "minGap": 6,
+        "linked": 0,
+        "barOverflow": 0,
+        "insideBar": true,
+        "sameRow": true,
+        "barRect": {
+          "left": 93,
+          "width": 174
+        },
+        "pageOverflow": 0,
+        "bodyOverflow": 0,
+        "titleRow": {
+          "width": 286.5,
+          "height": 38
+        },
+        "titleBits": {
+          "closeFullScreenNote": {
+            "left": 36.7,
+            "right": 74.7,
+            "width": 38,
+            "height": 38
+          },
+          "noteTitleInput": {
+            "left": 80.7,
+            "right": 270.7,
+            "width": 190,
+            "height": 34
+          },
+          "noteSavedIndicator": {
+            "left": 278.7,
+            "right": 323.3,
+            "width": 44.5,
+            "height": 15
+          }
+        },
+        "toolbar": {
+          "exists": true,
+          "buttons": 11,
+          "scrollWidth": 363,
+          "clientWidth": 358,
+          "overflowX": "visible"
+        }
+      }
+    },
+    {
+      "lang": "ar",
+      "width": 1280,
+      "pageErrs": [],
+      "consoleErrs": [
+        {
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "url": "http://127.0.0.1:8788/apple-touch-icon.png"
+        },
+        {
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "url": "http://127.0.0.1:8788/icon-192.png"
+        }
+      ],
+      "langApplied": {
+        "lang": "ar",
+        "dir": "rtl",
+        "sel": "ar"
+      },
+      "notesManagerOpened": true,
+      "editorOpened": true,
+      "measure": {
+        "lang": "ar",
+        "dir": "rtl",
+        "vw": 1280,
+        "cpButton": false,
+        "cpModal": false,
+        "barCount": 4,
+        "barIds": [
+          "saveFullScreenNote",
+          "sendNoteBtn",
+          "notePreviewPdfBtn",
+          "exportNotePdfBtn"
+        ],
+        "btnWidths": [
+          42,
+          42,
+          42,
+          42
+        ],
+        "btnHeights": [
+          42,
+          42,
+          42,
+          42
+        ],
+        "deltas": [
+          -52,
+          -52,
+          -52
+        ],
+        "gaps": [
+          -94,
+          -94,
+          -94
+        ],
+        "evenSpread": 0,
+        "minGap": -94,
+        "linked": 0,
+        "barOverflow": 0,
+        "insideBar": true,
+        "sameRow": true,
+        "barRect": {
+          "left": 1061,
+          "width": 206
+        },
+        "pageOverflow": 0,
+        "bodyOverflow": 0,
+        "titleRow": {
+          "width": 1040,
+          "height": 42
+        },
+        "titleBits": {
+          "closeFullScreenNote": {
+            "left": 1011,
+            "right": 1053,
+            "width": 42,
+            "height": 42
+          },
+          "noteTitleInput": {
+            "left": 75.9,
+            "right": 1003,
+            "width": 927.1,
+            "height": 39
+          },
+          "noteSavedIndicator": {
+            "left": 13,
+            "right": 67.9,
+            "width": 54.9,
+            "height": 15
+          }
+        },
+        "toolbar": {
+          "exists": true,
+          "buttons": 11,
+          "scrollWidth": 1278,
+          "clientWidth": 1278,
+          "overflowX": "visible"
+        }
+      }
+    },
+    {
+      "lang": "ar",
+      "width": 768,
+      "pageErrs": [],
+      "consoleErrs": [
+        {
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "url": "http://127.0.0.1:8788/apple-touch-icon.png"
+        },
+        {
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "url": "http://127.0.0.1:8788/icon-192.png"
+        }
+      ],
+      "langApplied": {
+        "lang": "ar",
+        "dir": "rtl",
+        "sel": "ar"
+      },
+      "notesManagerOpened": true,
+      "editorOpened": true,
+      "measure": {
+        "lang": "ar",
+        "dir": "rtl",
+        "vw": 768,
+        "cpButton": false,
+        "cpModal": false,
+        "barCount": 4,
+        "barIds": [
+          "saveFullScreenNote",
+          "sendNoteBtn",
+          "notePreviewPdfBtn",
+          "exportNotePdfBtn"
+        ],
+        "btnWidths": [
+          42,
+          42,
+          42,
+          42
+        ],
+        "btnHeights": [
+          42,
+          42,
+          42,
+          42
+        ],
+        "deltas": [
+          -52,
+          -52,
+          -52
+        ],
+        "gaps": [
+          -94,
+          -94,
+          -94
+        ],
+        "evenSpread": 0,
+        "minGap": -94,
+        "linked": 0,
+        "barOverflow": 0,
+        "insideBar": true,
+        "sameRow": true,
+        "barRect": {
+          "left": 549,
+          "width": 206
+        },
+        "pageOverflow": 0,
+        "bodyOverflow": 0,
+        "titleRow": {
+          "width": 528,
+          "height": 42
+        },
+        "titleBits": {
+          "closeFullScreenNote": {
+            "left": 499,
+            "right": 541,
+            "width": 42,
+            "height": 42
+          },
+          "noteTitleInput": {
+            "left": 75.9,
+            "right": 491,
+            "width": 415.1,
+            "height": 39
+          },
+          "noteSavedIndicator": {
+            "left": 13,
+            "right": 67.9,
+            "width": 54.9,
+            "height": 15
+          }
+        },
+        "toolbar": {
+          "exists": true,
+          "buttons": 11,
+          "scrollWidth": 766,
+          "clientWidth": 766,
+          "overflowX": "visible"
+        }
+      }
+    },
+    {
+      "lang": "ar",
+      "width": 430,
+      "pageErrs": [],
+      "consoleErrs": [
+        {
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "url": "http://127.0.0.1:8788/apple-touch-icon.png"
+        },
+        {
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "url": "http://127.0.0.1:8788/icon-192.png"
+        }
+      ],
+      "langApplied": {
+        "lang": "ar",
+        "dir": "rtl",
+        "sel": "ar"
+      },
+      "notesManagerOpened": true,
+      "editorOpened": true,
+      "measure": {
+        "lang": "ar",
+        "dir": "rtl",
+        "vw": 430,
+        "cpButton": false,
+        "cpModal": false,
+        "barCount": 4,
+        "barIds": [
+          "saveFullScreenNote",
+          "sendNoteBtn",
+          "notePreviewPdfBtn",
+          "exportNotePdfBtn"
+        ],
+        "btnWidths": [
+          42,
+          42,
+          42,
+          42
+        ],
+        "btnHeights": [
+          42,
+          42,
+          42,
+          42
+        ],
+        "deltas": [
+          -52,
+          -52,
+          -52
+        ],
+        "gaps": [
+          -94,
+          -94,
+          -94
+        ],
+        "evenSpread": 0,
+        "minGap": -94,
+        "linked": 0,
+        "barOverflow": 0,
+        "insideBar": true,
+        "sameRow": true,
+        "barRect": {
+          "left": 211,
+          "width": 206
+        },
+        "pageOverflow": 0,
+        "bodyOverflow": 0,
+        "titleRow": {
+          "width": 190,
+          "height": 42
+        },
+        "titleBits": {
+          "closeFullScreenNote": {
+            "left": 161,
+            "right": 203,
+            "width": 42,
+            "height": 42
+          },
+          "noteTitleInput": {
+            "left": 75.9,
+            "right": 153,
+            "width": 77.1,
+            "height": 39
+          },
+          "noteSavedIndicator": {
+            "left": 13,
+            "right": 67.9,
+            "width": 54.9,
+            "height": 15
+          }
+        },
+        "toolbar": {
+          "exists": true,
+          "buttons": 11,
+          "scrollWidth": 449,
+          "clientWidth": 428,
+          "overflowX": "visible"
+        }
+      }
+    },
+    {
+      "lang": "ar",
+      "width": 390,
+      "pageErrs": [],
+      "consoleErrs": [
+        {
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "url": "http://127.0.0.1:8788/apple-touch-icon.png"
+        },
+        {
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "url": "http://127.0.0.1:8788/icon-192.png"
+        }
+      ],
+      "langApplied": {
+        "lang": "ar",
+        "dir": "rtl",
+        "sel": "ar"
+      },
+      "notesManagerOpened": true,
+      "editorOpened": true,
+      "measure": {
+        "lang": "ar",
+        "dir": "rtl",
+        "vw": 390,
+        "cpButton": false,
+        "cpModal": false,
+        "barCount": 4,
+        "barIds": [
+          "saveFullScreenNote",
+          "sendNoteBtn",
+          "notePreviewPdfBtn",
+          "exportNotePdfBtn"
+        ],
+        "btnWidths": [
+          38,
+          38,
+          38,
+          38
+        ],
+        "btnHeights": [
+          38,
+          38,
+          38,
+          38
+        ],
+        "deltas": [
+          -44,
+          -44,
+          -44
+        ],
+        "gaps": [
+          -82,
+          -82,
+          -82
+        ],
+        "evenSpread": 0,
+        "minGap": -82,
+        "linked": 0,
+        "barOverflow": 0,
+        "insideBar": true,
+        "sameRow": true,
+        "barRect": {
+          "left": 205,
+          "width": 174
+        },
+        "pageOverflow": 0,
+        "bodyOverflow": 0,
+        "titleRow": {
+          "width": 188,
+          "height": 38
+        },
+        "titleBits": {
+          "closeFullScreenNote": {
+            "left": 161,
+            "right": 199,
+            "width": 38,
+            "height": 38
+          },
+          "noteTitleInput": {
+            "left": 73.9,
+            "right": 155,
+            "width": 81.1,
+            "height": 34
+          },
+          "noteSavedIndicator": {
+            "left": 11,
+            "right": 65.9,
+            "width": 54.9,
+            "height": 15
+          }
+        },
+        "toolbar": {
+          "exists": true,
+          "buttons": 11,
+          "scrollWidth": 388,
+          "clientWidth": 388,
+          "overflowX": "visible"
+        }
+      }
+    },
+    {
+      "lang": "ar",
+      "width": 360,
+      "pageErrs": [],
+      "consoleErrs": [
+        {
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "url": "http://127.0.0.1:8788/apple-touch-icon.png"
+        },
+        {
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "url": "http://127.0.0.1:8788/icon-192.png"
+        }
+      ],
+      "langApplied": {
+        "lang": "ar",
+        "dir": "rtl",
+        "sel": "ar"
+      },
+      "notesManagerOpened": true,
+      "editorOpened": true,
+      "measure": {
+        "lang": "ar",
+        "dir": "rtl",
+        "vw": 360,
+        "cpButton": false,
+        "cpModal": false,
+        "barCount": 4,
+        "barIds": [
+          "saveFullScreenNote",
+          "sendNoteBtn",
+          "notePreviewPdfBtn",
+          "exportNotePdfBtn"
+        ],
+        "btnWidths": [
+          38,
+          38,
+          38,
+          38
+        ],
+        "btnHeights": [
+          38,
+          38,
+          38,
+          38
+        ],
+        "deltas": [
+          -44,
+          -44,
+          -44
+        ],
+        "gaps": [
+          -82,
+          -82,
+          -82
+        ],
+        "evenSpread": 0,
+        "minGap": -82,
+        "linked": 0,
+        "barOverflow": 0,
+        "insideBar": true,
+        "sameRow": true,
+        "barRect": {
+          "left": 175,
+          "width": 174
+        },
+        "pageOverflow": 0,
+        "bodyOverflow": 0,
+        "titleRow": {
+          "width": 158,
+          "height": 38
+        },
+        "titleBits": {
+          "closeFullScreenNote": {
+            "left": 131,
+            "right": 169,
+            "width": 38,
+            "height": 38
+          },
+          "noteTitleInput": {
+            "left": 73.9,
+            "right": 125,
+            "width": 51.1,
+            "height": 34
+          },
+          "noteSavedIndicator": {
+            "left": 11,
+            "right": 65.9,
+            "width": 54.9,
+            "height": 15
+          }
+        },
+        "toolbar": {
+          "exists": true,
+          "buttons": 11,
+          "scrollWidth": 363,
+          "clientWidth": 358,
+          "overflowX": "visible"
+        }
+      }
+    },
+    {
+      "lang": "ku",
+      "width": 1280,
+      "pageErrs": [],
+      "consoleErrs": [
+        {
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "url": "http://127.0.0.1:8788/apple-touch-icon.png"
+        },
+        {
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "url": "http://127.0.0.1:8788/icon-192.png"
+        }
+      ],
+      "langApplied": {
+        "lang": "ku",
+        "dir": "rtl",
+        "sel": "ku"
+      },
+      "notesManagerOpened": true,
+      "editorOpened": true,
+      "measure": {
+        "lang": "ku",
+        "dir": "rtl",
+        "vw": 1280,
+        "cpButton": false,
+        "cpModal": false,
+        "barCount": 4,
+        "barIds": [
+          "saveFullScreenNote",
+          "sendNoteBtn",
+          "notePreviewPdfBtn",
+          "exportNotePdfBtn"
+        ],
+        "btnWidths": [
+          42,
+          42,
+          42,
+          42
+        ],
+        "btnHeights": [
+          42,
+          42,
+          42,
+          42
+        ],
+        "deltas": [
+          -52,
+          -52,
+          -52
+        ],
+        "gaps": [
+          -94,
+          -94,
+          -94
+        ],
+        "evenSpread": 0,
+        "minGap": -94,
+        "linked": 0,
+        "barOverflow": 0,
+        "insideBar": true,
+        "sameRow": true,
+        "barRect": {
+          "left": 537,
+          "width": 206
+        },
+        "pageOverflow": 0,
+        "bodyOverflow": 0,
+        "titleRow": {
+          "width": 328.8,
+          "height": 42
+        },
+        "titleBits": {
+          "closeFullScreenNote": {
+            "left": 762.4,
+            "right": 804.4,
+            "width": 42,
+            "height": 42
+          },
+          "noteTitleInput": {
+            "left": 551.4,
+            "right": 754.4,
+            "width": 203,
+            "height": 39
+          },
+          "noteSavedIndicator": {
+            "left": 475.6,
+            "right": 543.4,
+            "width": 67.8,
+            "height": 15
+          }
+        },
+        "toolbar": {
+          "exists": true,
+          "buttons": 11,
+          "scrollWidth": 1278,
+          "clientWidth": 1278,
+          "overflowX": "visible"
+        }
+      }
+    },
+    {
+      "lang": "ku",
+      "width": 768,
+      "pageErrs": [],
+      "consoleErrs": [
+        {
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "url": "http://127.0.0.1:8788/apple-touch-icon.png"
+        },
+        {
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "url": "http://127.0.0.1:8788/icon-192.png"
+        }
+      ],
+      "langApplied": {
+        "lang": "ku",
+        "dir": "rtl",
+        "sel": "ku"
+      },
+      "notesManagerOpened": true,
+      "editorOpened": true,
+      "measure": {
+        "lang": "ku",
+        "dir": "rtl",
+        "vw": 768,
+        "cpButton": false,
+        "cpModal": false,
+        "barCount": 4,
+        "barIds": [
+          "saveFullScreenNote",
+          "sendNoteBtn",
+          "notePreviewPdfBtn",
+          "exportNotePdfBtn"
+        ],
+        "btnWidths": [
+          42,
+          42,
+          42,
+          42
+        ],
+        "btnHeights": [
+          42,
+          42,
+          42,
+          42
+        ],
+        "deltas": [
+          -52,
+          -52,
+          -52
+        ],
+        "gaps": [
+          -94,
+          -94,
+          -94
+        ],
+        "evenSpread": 0,
+        "minGap": -94,
+        "linked": 0,
+        "barOverflow": 0,
+        "insideBar": true,
+        "sameRow": true,
+        "barRect": {
+          "left": 281,
+          "width": 206
+        },
+        "pageOverflow": 0,
+        "bodyOverflow": 0,
+        "titleRow": {
+          "width": 328.8,
+          "height": 42
+        },
+        "titleBits": {
+          "closeFullScreenNote": {
+            "left": 506.4,
+            "right": 548.4,
+            "width": 42,
+            "height": 42
+          },
+          "noteTitleInput": {
+            "left": 295.4,
+            "right": 498.4,
+            "width": 203,
+            "height": 39
+          },
+          "noteSavedIndicator": {
+            "left": 219.6,
+            "right": 287.4,
+            "width": 67.8,
+            "height": 15
+          }
+        },
+        "toolbar": {
+          "exists": true,
+          "buttons": 11,
+          "scrollWidth": 766,
+          "clientWidth": 766,
+          "overflowX": "visible"
+        }
+      }
+    },
+    {
+      "lang": "ku",
+      "width": 430,
+      "pageErrs": [],
+      "consoleErrs": [
+        {
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "url": "http://127.0.0.1:8788/apple-touch-icon.png"
+        },
+        {
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "url": "http://127.0.0.1:8788/icon-192.png"
+        }
+      ],
+      "langApplied": {
+        "lang": "ku",
+        "dir": "rtl",
+        "sel": "ku"
+      },
+      "notesManagerOpened": true,
+      "editorOpened": true,
+      "measure": {
+        "lang": "ku",
+        "dir": "rtl",
+        "vw": 430,
+        "cpButton": false,
+        "cpModal": false,
+        "barCount": 4,
+        "barIds": [
+          "saveFullScreenNote",
+          "sendNoteBtn",
+          "notePreviewPdfBtn",
+          "exportNotePdfBtn"
+        ],
+        "btnWidths": [
+          42,
+          42,
+          42,
+          42
+        ],
+        "btnHeights": [
+          42,
+          42,
+          42,
+          42
+        ],
+        "deltas": [
+          -52,
+          -52,
+          -52
+        ],
+        "gaps": [
+          -94,
+          -94,
+          -94
+        ],
+        "evenSpread": 0,
+        "minGap": -94,
+        "linked": 0,
+        "barOverflow": 0,
+        "insideBar": true,
+        "sameRow": true,
+        "barRect": {
+          "left": 112,
+          "width": 206
+        },
+        "pageOverflow": 0,
+        "bodyOverflow": 0,
+        "titleRow": {
+          "width": 328.8,
+          "height": 42
+        },
+        "titleBits": {
+          "closeFullScreenNote": {
+            "left": 337.4,
+            "right": 379.4,
+            "width": 42,
+            "height": 42
+          },
+          "noteTitleInput": {
+            "left": 126.4,
+            "right": 329.4,
+            "width": 203,
+            "height": 39
+          },
+          "noteSavedIndicator": {
+            "left": 50.6,
+            "right": 118.4,
+            "width": 67.8,
+            "height": 15
+          }
+        },
+        "toolbar": {
+          "exists": true,
+          "buttons": 11,
+          "scrollWidth": 449,
+          "clientWidth": 428,
+          "overflowX": "visible"
+        }
+      }
+    },
+    {
+      "lang": "ku",
+      "width": 390,
+      "pageErrs": [],
+      "consoleErrs": [
+        {
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "url": "http://127.0.0.1:8788/apple-touch-icon.png"
+        },
+        {
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "url": "http://127.0.0.1:8788/icon-192.png"
+        }
+      ],
+      "langApplied": {
+        "lang": "ku",
+        "dir": "rtl",
+        "sel": "ku"
+      },
+      "notesManagerOpened": true,
+      "editorOpened": true,
+      "measure": {
+        "lang": "ku",
+        "dir": "rtl",
+        "vw": 390,
+        "cpButton": false,
+        "cpModal": false,
+        "barCount": 4,
+        "barIds": [
+          "saveFullScreenNote",
+          "sendNoteBtn",
+          "notePreviewPdfBtn",
+          "exportNotePdfBtn"
+        ],
+        "btnWidths": [
+          38,
+          38,
+          38,
+          38
+        ],
+        "btnHeights": [
+          38,
+          38,
+          38,
+          38
+        ],
+        "deltas": [
+          -44,
+          -44,
+          -44
+        ],
+        "gaps": [
+          -82,
+          -82,
+          -82
+        ],
+        "evenSpread": 0,
+        "minGap": -82,
+        "linked": 0,
+        "barOverflow": 0,
+        "insideBar": true,
+        "sameRow": true,
+        "barRect": {
+          "left": 108,
+          "width": 174
+        },
+        "pageOverflow": 0,
+        "bodyOverflow": 0,
+        "titleRow": {
+          "width": 309.8,
+          "height": 38
+        },
+        "titleBits": {
+          "closeFullScreenNote": {
+            "left": 311.9,
+            "right": 349.9,
+            "width": 38,
+            "height": 38
+          },
+          "noteTitleInput": {
+            "left": 115.9,
+            "right": 305.9,
+            "width": 190,
+            "height": 34
+          },
+          "noteSavedIndicator": {
+            "left": 40.1,
+            "right": 107.9,
+            "width": 67.8,
+            "height": 15
+          }
+        },
+        "toolbar": {
+          "exists": true,
+          "buttons": 11,
+          "scrollWidth": 388,
+          "clientWidth": 388,
+          "overflowX": "visible"
+        }
+      }
+    },
+    {
+      "lang": "ku",
+      "width": 360,
+      "pageErrs": [],
+      "consoleErrs": [
+        {
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "url": "http://127.0.0.1:8788/apple-touch-icon.png"
+        },
+        {
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "url": "http://127.0.0.1:8788/icon-192.png"
+        }
+      ],
+      "langApplied": {
+        "lang": "ku",
+        "dir": "rtl",
+        "sel": "ku"
+      },
+      "notesManagerOpened": true,
+      "editorOpened": true,
+      "measure": {
+        "lang": "ku",
+        "dir": "rtl",
+        "vw": 360,
+        "cpButton": false,
+        "cpModal": false,
+        "barCount": 4,
+        "barIds": [
+          "saveFullScreenNote",
+          "sendNoteBtn",
+          "notePreviewPdfBtn",
+          "exportNotePdfBtn"
+        ],
+        "btnWidths": [
+          38,
+          38,
+          38,
+          38
+        ],
+        "btnHeights": [
+          38,
+          38,
+          38,
+          38
+        ],
+        "deltas": [
+          -44,
+          -44,
+          -44
+        ],
+        "gaps": [
+          -82,
+          -82,
+          -82
+        ],
+        "evenSpread": 0,
+        "minGap": -82,
+        "linked": 0,
+        "barOverflow": 0,
+        "insideBar": true,
+        "sameRow": true,
+        "barRect": {
+          "left": 93,
+          "width": 174
+        },
+        "pageOverflow": 0,
+        "bodyOverflow": 0,
+        "titleRow": {
+          "width": 309.8,
+          "height": 38
+        },
+        "titleBits": {
+          "closeFullScreenNote": {
+            "left": 296.9,
+            "right": 334.9,
+            "width": 38,
+            "height": 38
+          },
+          "noteTitleInput": {
+            "left": 100.9,
+            "right": 290.9,
+            "width": 190,
+            "height": 34
+          },
+          "noteSavedIndicator": {
+            "left": 25.1,
+            "right": 92.9,
+            "width": 67.8,
+            "height": 15
+          }
+        },
+        "toolbar": {
+          "exists": true,
+          "buttons": 11,
+          "scrollWidth": 363,
+          "clientWidth": 358,
+          "overflowX": "visible"
+        }
+      }
+    }
+  ],
+  "behavior": [
+    {
+      "lang": "en",
+      "steps": {
+        "save": {
+          "ok": true,
+          "value": {
+            "indicator": "Saved ✓",
+            "notesStored": 0,
+            "toast": null
+          },
+          "newPageErrors": []
+        },
+        "previewPdf": {
+          "ok": false,
+          "error": "Waiting failed: 12000ms exceeded",
+          "newPageErrors": []
+        },
+        "exportPdfDialog": {
+          "ok": false,
+          "error": "Waiting failed: 12000ms exceeded",
+          "newPageErrors": []
+        },
+        "send": {
+          "ok": true,
+          "value": {
+            "toast": null,
+            "editorStillOpen": false,
+            "shareSupported": true
+          },
+          "newPageErrors": []
+        },
+        "back": {
+          "ok": true,
+          "value": {
+            "editorOpen": false
+          },
+          "newPageErrors": []
+        }
+      }
+    },
+    {
+      "lang": "ar",
+      "steps": {
+        "save": {
+          "ok": true,
+          "value": {
+            "indicator": "تم الحفظ ✓",
+            "notesStored": 0,
+            "toast": null
+          },
+          "newPageErrors": []
+        },
+        "previewPdf": {
+          "ok": false,
+          "error": "Waiting failed: 12000ms exceeded",
+          "newPageErrors": []
+        },
+        "exportPdfDialog": {
+          "ok": false,
+          "error": "Waiting failed: 12000ms exceeded",
+          "newPageErrors": []
+        },
+        "send": {
+          "ok": true,
+          "value": {
+            "toast": null,
+            "editorStillOpen": false,
+            "shareSupported": true
+          },
+          "newPageErrors": []
+        },
+        "back": {
+          "ok": true,
+          "value": {
+            "editorOpen": false
+          },
+          "newPageErrors": []
+        }
+      }
+    },
+    {
+      "lang": "ku",
+      "steps": {
+        "save": {
+          "ok": true,
+          "value": {
+            "indicator": "پاشەکەوتکرا ✓",
+            "notesStored": 0,
+            "toast": null
+          },
+          "newPageErrors": []
+        },
+        "previewPdf": {
+          "ok": false,
+          "error": "Waiting failed: 12000ms exceeded",
+          "newPageErrors": []
+        },
+        "exportPdfDialog": {
+          "ok": false,
+          "error": "Waiting failed: 12000ms exceeded",
+          "newPageErrors": []
+        },
+        "send": {
+          "ok": true,
+          "value": {
+            "toast": null,
+            "editorStillOpen": false,
+            "shareSupported": true
+          },
+          "newPageErrors": []
+        },
+        "back": {
+          "ok": true,
+          "value": {
+            "editorOpen": false
+          },
+          "newPageErrors": []
+        }
+      }
+    }
+  ],
+  "summary": {}
+}

@@ -1,0 +1,10 @@
+const fs=require('fs');
+const js=fs.readFileSync('app.js','utf8');
+const pats=['smartBlank','smartDoc','smart-doc','smartImport','smartScan','smartTable','smartSignature','smartLogo','smartAdd','smartDraft','smartTemplate','smartPdf','smartExport','smartReview'];
+const lines=js.split('\n');
+const out=[];
+out.push('totalLines='+lines.length);
+pats.forEach(p=>{let c=0;lines.forEach(l=>{if(l.includes(p))c++;});out.push(p+'_lines='+c);});
+['function openSmartDocs','function closeSmartDocs','function smartBlankOpen','function smartActivePageContent','smartDocsModal','closeSmartDocsButton'].forEach(p=>{let c=0;lines.forEach(l=>{if(l.includes(p))c++;});out.push(p.replace(/ /g,'_')+'='+c);});
+fs.writeFileSync('_SCOPE_OUT.txt',out.join('\n')+'\n');
+console.log('wrote scope');

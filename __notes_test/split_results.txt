@@ -1,32 +1,6 @@
-PASS  2x2 MERGE: produced one merged cell (colspan=2,rowspan=2)  -> info=[[{"text":"A1 مرحبا\nHello 2\nعربي 3\nMixed سلام 4","colspan":2,"rowspan":2}],[]]
-PASS  2x2: Split Cell visible when merged cell is selected  -> {"hidden":false,"label":"Split Cell"}
-PASS  2x2 SPLIT: table back to 2 rows x 2 cols, no spans  -> info=[[{"text":"A1 مرحبا\nHello 2\nعربي 3\nMixed سلام 4","colspan":1,"rowspan":1},{"text":"","colspan":1,"rowspan":1}],[{"text":"","colspan":1,"rowspan":1},{"text":"","colspan":1,"rowspan":1}]]
-PASS  2x2 SPLIT: merged content preserved in anchor cell (all 4 texts)  -> anchorText="A1 مرحبا\nHello 2\nعربي 3\nMixed سلام 4"
-PASS  2x2 SPLIT: Bold preserved  -> fmt=["B:مرحبا,I:سلام","","",""]
-PASS  2x2 SPLIT: Italic preserved  -> fmt=["B:مرحبا,I:سلام","","",""]
-PASS  2x2 SPLIT: AUTO-SAVE stored structure has no spans  -> rows=[[{"text":"A1 مرحبا\nHello 2\nعربي 3\nMixed سلام 4","formatting":[{"start":3,"end":8,"bold":true,"italic":false,"underline":false},{"start":30,"end":34,"bold":false,"italic":true,"underline":false}]},{"text":"","formatting":[]}],[{"text":"","formatting":[]},{"text":"","formatting":[]}]]
-PASS  2x2 SPLIT: REOPEN still split (2x2, no spans)  -> info=[[{"text":"A1 مرحبا\nHello 2\nعربي 3\nMixed سلام 4","colspan":1,"rowspan":1},{"text":"","colspan":1,"rowspan":1}],[{"text":"","colspan":1,"rowspan":1},{"text":"","colspan":1,"rowspan":1}]]
-PASS  2x2 SPLIT: control hidden on reopen (no merged cell selected)  -> {"hidden":true,"label":"Split Cell"}
-PASS  2x2 SPLIT: REFRESH still split (2x2, no spans)  -> info=[[{"text":"A1 مرحبا\nHello 2\nعربي 3\nMixed سلام 4","colspan":1,"rowspan":1},{"text":"","colspan":1,"rowspan":1}],[{"text":"","colspan":1,"rowspan":1},{"text":"","colspan":1,"rowspan":1}]]
-PASS  HORIZONTAL MERGE: row0 colspan=2, row1 unaffected (2 cells)  -> info=[[{"text":"Arabic مرحبا\nEnglish Hello","colspan":2,"rowspan":1}],[{"text":"","colspan":1,"rowspan":1},{"text":"","colspan":1,"rowspan":1}]]
-PASS  HORIZONTAL SPLIT: back to 2 cols in row0, row1 unchanged  -> info=[[{"text":"Arabic مرحبا\nEnglish Hello","colspan":1,"rowspan":1},{"text":"","colspan":1,"rowspan":1}],[{"text":"","colspan":1,"rowspan":1},{"text":"","colspan":1,"rowspan":1}]]
-PASS  HORIZONTAL SPLIT: both texts preserved  -> text="Arabic مرحبا\nEnglish Hello"
-PASS  HORIZONTAL SPLIT: row1 text unaffected  -> row1=[{"text":"","colspan":1,"rowspan":1},{"text":"","colspan":1,"rowspan":1}]
-PASS  VERTICAL MERGE: col0 rowspan=2, row1=1 cell  -> info=[[{"text":"12345\nMixed سلام 99","colspan":1,"rowspan":2},{"text":"","colspan":1,"rowspan":1}],[{"text":"","colspan":1,"rowspan":1}]]
-PASS  VERTICAL SPLIT: back to 2 rows in col0, col1 restored  -> info=[[{"text":"12345\nMixed سلام 99","colspan":1,"rowspan":1},{"text":"","colspan":1,"rowspan":1}],[{"text":"","colspan":1,"rowspan":1},{"text":"","colspan":1,"rowspan":1}]]
-PASS  VERTICAL SPLIT: numbers + mixed preserved  -> text="12345\nMixed سلام 99"
-PASS  INVALID: Split control hidden for a non-merged cell  -> {"hidden":true,"label":"Split Cell"}
-PASS  INVALID: table unchanged (still 2x2, no spans)  -> info=[[{"text":"not merged","colspan":1,"rowspan":1},{"text":"","colspan":1,"rowspan":1}],[{"text":"","colspan":1,"rowspan":1},{"text":"","colspan":1,"rowspan":1}]]
-PASS  INVALID: content unchanged  -> text="not merged"
-PASS  INVALID: a clear message is shown  -> toast="Select a merged cell to split."
-PASS  INVALID: storage unchanged (no spans)  -> rows=[[{"text":"not merged","formatting":[]},{"text":"","formatting":[]}],[{"text":"","formatting":[]},{"text":"","formatting":[]}]]
-PASS  REMERGE: first horizontal merge produced colspan=2  -> info=[[{"text":"AA\nBB","colspan":2,"rowspan":1}],[{"text":"","colspan":1,"rowspan":1},{"text":"","colspan":1,"rowspan":1}]]
-PASS  REMERGE SPLIT: back to 2x2, no spans  -> info=[[{"text":"AA\nBB","colspan":1,"rowspan":1},{"text":"","colspan":1,"rowspan":1}],[{"text":"","colspan":1,"rowspan":1},{"text":"","colspan":1,"rowspan":1}]]
-PASS  REMERGE SPLIT: merged content preserved  -> text="AA\nBB"
-PASS  BACKWARD: plain table (no spans) still works  -> hasBlocks=true
-PASS  RUNTIME: no uncaught page errors  -> clean
+FAIL  HARNESS  -> Node is either not clickable or not an Element
 PASS  RUNTIME: no uncaught page/console errors  -> clean
 
-==== RESULT: 28 passed, 0 failed, 28 total ====
+==== RESULT: 1 passed, 1 failed, 2 total ====
 
-FINAL: 28/28 passed
+FINAL: 1/2 passed

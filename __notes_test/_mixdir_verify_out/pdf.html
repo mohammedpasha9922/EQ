@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>EQ7 Note PDF</title>
+<style>
+  .eq-note-report { color:#000000; background:#ffffff; font-family:"Segoe UI", Tahoma, "Noto Sans", "Noto Naskh Arabic", Arial, sans-serif; font-size:13px; line-height:1.6; }
+  .eq-note-header { border-bottom:2px solid #0891b2; padding-bottom:8px; margin-bottom:14px; page-break-after:avoid; break-after:avoid; }
+  .eq-note-header h1 { margin:0; font-size:18px; color:#000000; letter-spacing:0.3px; }
+  .eq-note-header .sub { font-size:12px; color:#000000; margin-top:2px; }
+  .eq-note-header .meta { font-size:11px; color:#000000; margin-top:3px; }
+  .eq-note-title { font-size:20px; color:#000000; margin:14px 0 10px; line-height:1.4; white-space:normal; word-break:break-word; overflow-wrap:anywhere; page-break-after:avoid; break-after:avoid; }
+  .eq-pdf-text-block { color:#000000; margin:0 0 12px; font-size:13px; line-height:1.6; word-break:break-word; overflow-wrap:anywhere; white-space:pre-wrap; unicode-bidi:plaintext; text-align:start; }
+  .eq-pdf-text-block:last-child { margin-bottom:0; }
+  /* PHASE 03 — headings/lists flow from buildNoteBodyHTML into the PDF via the
+     existing pipeline; only presentation CSS for the block tags is added. */
+  .eq-note-body h1, .eq-note-body h2, .eq-note-body h3 { color:#000000; margin:14px 0 6px; line-height:1.35; word-break:break-word; overflow-wrap:anywhere; page-break-after:avoid; break-after:avoid; }
+  .eq-note-body h1:first-child, .eq-note-body h2:first-child, .eq-note-body h3:first-child { margin-top:0; }
+  .eq-note-body h1 { font-size:19px; font-weight:700; }
+  .eq-note-body h2 { font-size:16.5px; font-weight:700; }
+  .eq-note-body h3 { font-size:14.5px; font-weight:700; }
+  .eq-note-body ul, .eq-note-body ol { margin:6px 0 12px; padding-inline-start:24px; padding-inline-end:0; }
+  .eq-note-body li { margin:2px 0; line-height:1.6; word-break:break-word; overflow-wrap:anywhere; text-align:start; unicode-bidi:plaintext; }
+  .eq-pdf-table-wrap { margin:12px 0; max-width:100%; }
+  .eq-pdf-image-block { margin:8px 0; max-width:100%; }
+  .eq-pdf-image-block .eq-pdf-image { display:block; height:auto; max-width:100%; }
+  .eq-pdf-image-block[data-image-align="left"] .eq-pdf-image { margin-right:auto; }
+  .eq-pdf-image-block[data-image-align="center"] .eq-pdf-image { margin-left:auto; margin-right:auto; }
+  .eq-pdf-image-block[data-image-align="right"] .eq-pdf-image { margin-left:auto; }
+  /* Watermark/background (behind) images: one stacked element with the text so
+     html2canvas collects both layers into the same PDF tile at the stored opacity. */
+  .eq-pdf-watermark-block { position:relative; margin:8px 0; min-height:32px; max-width:100%; }
+  .eq-pdf-watermark-block .eq-pdf-watermark { display:block; height:auto; max-width:100%; }
+  .eq-pdf-watermark-block .eq-pdf-text-on-watermark { word-break:break-word; overflow-wrap:anywhere; white-space:pre-wrap; }
+  .eq-pdf-image-block { margin:8px 0; max-width:100%; }
+  .eq-pdf-note-table.eq-pdf-fixed { table-layout:fixed; width:100%; max-width:100%; }
+  .eq-pdf-note-table th, .eq-pdf-note-table td { border:1px solid #cbd5e1; padding:6px 8px; font-size:12px; line-height:1.45; color:#000000; }
+  .eq-pdf-note-table thead { display:table-header-group; }
+  .eq-pdf-note-table thead { break-inside:avoid; page-break-inside:avoid; }
+  .eq-pdf-note-table thead th { background:#0d9488; color:#ffffff; font-weight:700; font-size:12px; line-height:1.4; text-align:center; vertical-align:middle; }
+    .eq-pdf-note-table tbody tr { page-break-inside:avoid; break-inside:avoid; page-break-after:auto; }
+  /* A single row taller than one page would otherwise overflow A4 (the avoid rule
+     above forces it whole). Allow a forced break inside such a row so long tables
+     never clip or push content off the page — only applies at genuine page height. */
+  .eq-pdf-note-table tbody tr.tall { page-break-inside:auto; break-inside:auto; page-break-after:auto; }
+  .eq-pdf-note-table { page-break-inside:auto; break-inside:auto; }
+  .eq-pdf-note-table [dir="rtl"] { direction:rtl; }
+  .eq-pdf-note-table[data-border-style="none"] th,
+  .eq-pdf-note-table[data-border-style="none"] td { border:none; }
+  .eq-pdf-note-table[data-border-style="outside"] th,
+  .eq-pdf-note-table[data-border-style="outside"] td { border:none; }
+  .eq-pdf-note-table[data-border-style="outside"] { border:1px solid #cbd5e1; }
+  .eq-pdf-note-table[data-border-style="inside"] { border:none; }
+  .eq-pdf-note-table[data-border-style="inside"] th,
+  .eq-pdf-note-table[data-border-style="inside"] td { border:1px solid #cbd5e1; }
+  .eq-pdf-note-table[data-border-style="inside"] tr:first-child th,
+  .eq-pdf-note-table[data-border-style="inside"] tr:first-child td { border-top:none; }
+  .eq-pdf-note-table[data-border-style="inside"] tr:last-child th,
+  .eq-pdf-note-table[data-border-style="inside"] tr:last-child td { border-bottom:none; }
+  .eq-pdf-note-table[data-border-style="inside"] th:first-child,
+  .eq-pdf-note-table[data-border-style="inside"] td:first-child { border-left:none; }
+  .eq-pdf-note-table[data-border-style="inside"] th:last-child,
+  .eq-pdf-note-table[data-border-style="inside"] td:last-child { border-right:none; }
+  .eq-note-footer { margin-top:24px; padding-top:10px; border-top:2px solid #0891b2; text-align:center; page-break-inside:avoid; break-inside:avoid; line-height:1.6; }
+  .eq-note-footer .fb { display:block; font-size:12px; line-height:1.6; color:#000000; font-weight:700; margin:0 0 2px; padding:0; }
+  .eq-note-footer .ft { display:block; font-size:11px; line-height:1.6; color:#000000; font-style:italic; margin-top:2px; padding:0; }
+  .eq-note-footer .fmt { display:block; font-size:11px; line-height:1.6; color:#334155; margin-top:2px; padding:0; }
+  .eq-note-report { position:relative; }
+  .eq-pdf-watermark { position:absolute; top:45%; left:0; right:0; text-align:center; transform:rotate(-25deg); font-size:52px; font-weight:700; color:#000; letter-spacing:2px; white-space:nowrap; pointer-events:none; z-index:0; }
+  .eq-note-header, .eq-note-title, .eq-note-body { position:relative; z-index:1; }
+  .eq-pdf-header-note { font-size:12px; color:#334155; margin-top:3px; word-break:break-word; overflow-wrap:anywhere; }
+  .eq-note-report.eq-pdf-tpl-invoice .eq-note-header { border-bottom-color:#0d9488; }
+  .eq-note-report.eq-pdf-tpl-invoice .eq-note-header h1, .eq-note-report.eq-pdf-tpl-invoice .eq-note-title { color:#0d9488; }
+  .eq-note-report.eq-pdf-tpl-receipt .eq-note-header { border-bottom-color:#2563eb; }
+  .eq-note-report.eq-pdf-tpl-receipt .eq-note-header h1, .eq-note-report.eq-pdf-tpl-receipt .eq-note-title { color:#2563eb; }
+  .eq-note-report.eq-pdf-tpl-contract .eq-note-header { border-bottom-color:#334155; }
+  .eq-note-report.eq-pdf-tpl-contract .eq-note-header h1, .eq-note-report.eq-pdf-tpl-contract .eq-note-title { color:#1e293b; }
+  .eq-note-report.eq-pdf-tpl-cv .eq-note-header { border-bottom-color:#0891b2; }
+  .eq-note-report.eq-pdf-tpl-cv .eq-note-header h1, .eq-note-report.eq-pdf-tpl-cv .eq-note-title { color:#0e7490; }
+  .eq-note-report.eq-pdf-tpl-business .eq-note-header { border-bottom-color:#4f46e5; }
+  .eq-note-report.eq-pdf-tpl-business .eq-note-header h1, .eq-note-report.eq-pdf-tpl-business .eq-note-title { color:#4338ca; }
+  .eq-note-report.eq-pdf-tpl-engineering .eq-note-header { border-bottom-color:#ea580c; }
+  .eq-note-report.eq-pdf-tpl-engineering .eq-note-header h1, .eq-note-report.eq-pdf-tpl-engineering .eq-note-title { color:#c2410c; }
+  .eq-note-report.eq-pdf-tpl-letter .eq-note-header { border-bottom-color:#7c3aed; }
+  .eq-note-report.eq-pdf-tpl-letter .eq-note-header h1, .eq-note-report.eq-pdf-tpl-letter .eq-note-title { color:#6d28d9; }
+  /* PART 08 — Note Styles: zero-specificity (:where) starting-design rules so
+     every manual inline format in the body always wins. Same visual language
+     as the editor surface. */
+  :where(.eq-note-report.note-style-simple) .eq-note-body { font-family:Georgia,'Times New Roman',serif; line-height:1.7; }
+  :where(.eq-note-report.note-style-simple) .eq-note-body h1 { font-size:19px; letter-spacing:0.01em; }
+  :where(.eq-note-report.note-style-simple) .eq-note-body h2 { font-size:16px; }
+  :where(.eq-note-report.note-style-academic) .eq-note-body { font-family:'Segoe UI',system-ui,sans-serif; line-height:1.75; color:#1f2933; }
+  :where(.eq-note-report.note-style-academic) .eq-note-body h1 { font-size:19px; border-bottom:2px solid #94a3b8; padding-bottom:4px; }
+  :where(.eq-note-report.note-style-academic) .eq-note-body h2 { font-size:16.5px; color:#0f766e; }
+  :where(.eq-note-report.note-style-academic) .eq-note-body h3 { font-size:14.5px; color:#334155; }
+  :where(.eq-note-report.note-style-academic) .eq-pdf-note-table th { background:#e2e8f0; color:#1e293b; }
+  :where(.eq-note-report.note-style-business) .eq-note-body { font-family:'Segoe UI',system-ui,sans-serif; line-height:1.65; color:#1e293b; }
+  :where(.eq-note-report.note-style-business) .eq-note-body h1 { font-size:19px; color:#1e3a5f; }
+  :where(.eq-note-report.note-style-business) .eq-note-body h2 { font-size:16.5px; color:#2c5282; }
+  :where(.eq-note-report.note-style-business) .eq-pdf-note-table th { background:#1e3a5f; color:#ffffff; }
+  :where(.eq-note-report.note-style-business) .eq-pdf-note-table td { border-color:#cbd5e1; }
+  :where(.eq-note-report.note-style-engineering) .eq-note-body { font-family:Consolas,'Cascadia Mono',monospace; line-height:1.6; color:#263238; }
+  :where(.eq-note-report.note-style-engineering) .eq-note-body h1 { font-size:18px; color:#b45309; }
+  :where(.eq-note-report.note-style-engineering) .eq-note-body h2 { font-size:16px; color:#c2410c; }
+  :where(.eq-note-report.note-style-engineering) .eq-pdf-note-table th { background:#455a64; color:#ffffff; }
+  :where(.eq-note-report.note-style-engineering) .eq-pdf-note-table td { border-color:#90a4ae; }
+  :where(.eq-note-report.note-style-modern) .eq-note-body { font-family:system-ui,-apple-system,'Segoe UI',sans-serif; line-height:1.7; color:#0f172a; }
+  :where(.eq-note-report.note-style-modern) .eq-note-body h1 { font-size:20px; font-weight:800; }
+  :where(.eq-note-report.note-style-modern) .eq-note-body h2 { font-size:17px; font-weight:700; color:#0d9488; }
+  :where(.eq-note-report.note-style-modern) .eq-pdf-note-table th { background:#0d9488; color:#ffffff; }
+  /* PART 08 — Frames: simple page treatments on the PDF report container. */
+  :where(.eq-note-report.note-frame-classic) .eq-note-body { border:1px solid #cbd5e1; border-radius:8px; padding:14px; }
+  :where(.eq-note-report.note-frame-dashed) .eq-note-body { border:2px dashed rgba(13,148,136,0.55); border-radius:10px; padding:14px; }
+  :where(.eq-note-report.note-frame-soft) .eq-note-body { border:none; border-radius:12px; padding:14px; background:rgba(13,148,136,0.05); }
+</style>
+</head>
+<body>
+  <div class="eq-note-report" id="note-report">
+    
+    <div class="eq-note-header">
+      <h1>EQ7 Calculator</h1>
+      <div class="sub">Note</div>
+      <div class="eq-pdf-header-note" dir="auto">Mixed Direction Note</div>
+      <div class="meta" dir="rtl">9/18/2026, 7:27:59 PM</div>
+    </div>
+    <h2 class="eq-note-title" dir="auto">Mixed Direction Note</h2>
+    <div class="eq-note-body"><div class="eq-pdf-text-block">فقرة عربية فقط<br>English paragraph only<br>مرحبا hello world 123<ul dir="auto"><li dir="auto">Hello مرحبا worldبند عربي واحد</li><li dir="auto">بند عربي اثنان</li><li dir="auto">فاصل نصيEnglish bullet one</li><li dir="auto">English bullet two</li><li dir="auto">فاصلبند مختلط mixed</li><li dir="auto">mixed بند English first</li></ul><ol dir="auto"><li dir="auto">فاصل ثانٍالعنصر الأول</li><li dir="auto">Second numbered item</li><li dir="auto">مرحبا hello numbered</li></ol></div></div>
+    <div class="eq-note-footer">
+      <div class="fb">Created with EQ7 Calculator</div>
+      <div class="fmt">9/18/2026 · 7:27:59 PM · Friday</div>
+      <div class="ft">Smart calculations. Simple results.</div>
+    </div>
+  </div>
+</body>
+</html>

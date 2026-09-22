@@ -20,18 +20,21 @@ class ResultScreen {
 
   /**
    * Update all display layers.
-   * @param {object} options - { primary, expression, secondary, locale }
+   * @param {object} options - { primary, expression, secondary, locale, round }
+   *   `round` marks a COMPUTED RESULT: primary is rounded (max 4 decimals) and
+   *   the secondary words use a rounded parts-of-100 input (max 2 decimals).
    */
-  update({ primary, expression, secondary, locale }) {
-    this.display.updateAll({ primary, expression, secondary, locale });
+  update({ primary, expression, secondary, locale, round }) {
+    this.display.updateAll({ primary, expression, secondary, locale, round });
   }
 
   /**
    * Update the primary (numeric) display.
    * @param {string} value - The value to display.
+   * @param {boolean} [round] - Round the value for display (result path).
    */
-  updatePrimary(value) {
-    this.display.updatePrimary(value);
+  updatePrimary(value, round = false) {
+    this.display.updatePrimary(value, round);
   }
 
   /**
@@ -46,9 +49,10 @@ class ResultScreen {
    * Update the secondary (words) display.
    * @param {string} value - The numeric value.
    * @param {string} locale - The locale.
+   * @param {boolean} [round] - Round input to parts-of-100 before conversion.
    */
-  updateSecondary(value, locale) {
-    this.display.updateSecondary(value, locale);
+  updateSecondary(value, locale, round = false) {
+    this.display.updateSecondary(value, locale, round);
   }
 
   /**

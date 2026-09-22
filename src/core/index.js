@@ -11,4 +11,6 @@ export { getClipboardEngine, default as ClipboardEngine } from './ClipboardEngin
 export { getHistoryEngine, default as HistoryEngine } from './HistoryEngine.js';
 export { getKeyboardHandler, default as KeyboardHandler } from './KeyboardHandler.js';
 export { getResultScreen, default as ResultScreen } from './ResultScreen.js';
+export { roundDisplayValue, formatRounded, roundWordsInput, resultNumberToWords, default as DisplayFormat } from './DisplayFormat.js';
 export { evaluateExpression, default as evaluateExpressionDefault } from './ExpressionEvaluator.js';
+export { getAngleMode, setAngleMode } from './ExpressionEvaluator.js';

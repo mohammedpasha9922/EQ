@@ -60,7 +60,15 @@ const numberMaps = {
     hundred: 'yüz',
     scales: ['', 'bin', 'milyon', 'milyar', 'trilyon'],
     negative: 'eksi',
-    decimal: 'virgül'
+    decimal: 'virgül'},
+  ku: {
+    ones: ['سفر','یەک','دوو','سێ','چوار','پێنج','شەش','حەوت','هەشت','نۆ'],
+    teens: ['دە','یازدە','دوازدە','سیانزە','چواردە','پازدە','شازدە','حەفدە','هەژدە','نۆزدە'],
+    tens: ['','','بیست','سی','چل','پەنجا','شەست','حەفتا','هەشتا','نەوەد'],
+    hundred: 'سەد',
+    scales: ['','هەزار','ملیۆن','ملیار','تریلیۆن'],
+    negative: 'نێگەتیڤ',
+    decimal: 'خاڵ'
   }
 };
 
@@ -110,10 +118,47 @@ function convertTurkishChunk(value, map) {
   return rem === 0 ? base : `${base} ${convertTurkishChunk(rem, map)}`.trim();
 }
 
+function convertKurdishChunk(value) {
+  const ones = ['سفر','یەک','دوو','سێ','چوار','پێنج','شەش','حەوت','هەشت','نۆ'];
+  const teens = ['دە','یازدە','دوازدە','سیانزە','چواردە','پازدە','شازدە','حەفدە','هەژدە','نۆزدە'];
+  const tens = ['','','بیست','سی','چل','پەنجا','شەست','حەفتا','هەشتا','نەوەد'];
+  if (value < 10) return ones[value];
+  if (value < 20) return teens[value - 10];
+  if (value < 100) {
+    const t = Math.floor(value / 10);
+    const r = value % 10;
+    return r === 0 ? tens[t] : `${tens[t]} و ${ones[r]}`;
+  }
+  const h = Math.floor(value / 100);
+  const r = value % 100;
+  const base = h === 1 ? 'سەد' : `${ones[h]} سەد`;
+  return r === 0 ? base : `${base} و ${convertKurdishChunk(r)}`;
+}
+
+function convertKurdishIntegerToWords(integerValue) {
+  const scales = ['', 'هەزار', 'ملیۆن', 'ملیار', 'تریلیۆن'];
+  if (integerValue === 0n) return 'سفر';
+  const groups = [];
+  let remaining = integerValue;
+  while (remaining > 0n) { groups.unshift(Number(remaining % 1000n)); remaining = remaining / 1000n; }
+  const parts = [];
+  groups.forEach((group, index) => {
+    const scaleIndex = groups.length - index - 1;
+    const scaleName = scales[scaleIndex] || '';
+    if (group === 0) return;
+    const groupWords = group < 1000 ? convertKurdishChunk(group) : convertKurdishIntegerToWords(BigInt(group));
+    if (!scaleName) parts.push(groupWords);
+    else if (group === 1 && scaleName === 'هەزار') parts.push('هەزار');
+    else parts.push(`${groupWords} ${scaleName}`.trim());
+  });
+  return parts.join(' و ');
+}
+
 function convertChunk(value, locale) {
   const map = numberMaps[locale] || numberMaps.en;
   if (locale === 'ar') return convertArabicChunk(value);
   if (locale === 'tr') return convertTurkishChunk(value, map);
+  if (locale === 'ku') return convertKurdishChunk(value);
   if (value < 10) return map.ones[value];
   if (value < 20) return map.teens[value - 10];
   if (value < 100) {
@@ -163,6 +208,7 @@ function convertIntegerToWords(integerValue, locale) {
   if (integerValue === 0n) return map.ones[0];
 
   if (locale === 'ar') return convertArabicIntegerToWords(integerValue);
+  if (locale === 'ku') return convertKurdishIntegerToWords(integerValue);
 
   const groups = [];
   let remaining = integerValue;
@@ -204,7 +250,7 @@ export function numberToWords(value, locale = 'en') {
   const map = numberMaps[locale] || numberMaps.en;
 
   if (!/^\d+$/.test(integerPart)) {
-    return locale === 'es' ? 'número inválido' : locale === 'ar' ? 'رقم غير صالح' : locale === 'fr' ? 'nombre invalide' : locale === 'ru' ? 'недопустимое число' : locale === 'tr' ? 'geçersiz sayı' : 'ungültige Zahl';
+    return locale === 'es' ? 'número inválido' : locale === 'ar' ? 'رقم غير صالح' : locale === 'fr' ? 'nombre invalide' : locale === 'ru' ? 'недопустимое число' : locale === 'tr' ? 'geçersiz sayı' : locale === 'ku' ? 'ژمارەی نادروست' : 'ungültige Zahl';
   }
 
   const wholeNumber = BigInt(integerPart);

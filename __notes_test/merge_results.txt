@@ -1,34 +1,6 @@
-PASS  HORIZONTAL: highlight cleared after merge  -> sel=[0]
-PASS  HORIZONTAL: merged into one cell (row0 colspan=2)  -> info=[[{"text":"Arabic: مرحبا\nEnglish: Hello","colspan":2,"rowspan":1,"selCount":0}],[{"text":"","colspan":1,"rowspan":1,"selCount":0},{"text":"","colspan":1,"rowspan":1,"selCount":0}]]
-PASS  HORIZONTAL: other row unaffected (row1=2 cells)  -> row1len=2
-PASS  HORIZONTAL: both texts preserved (Arabic+English)  -> text="Arabic: مرحبا\nEnglish: Hello"
-PASS  HORIZONTAL: Bold preserved  -> fmt=["B:مرحبا,I:Hello","",""]
-PASS  HORIZONTAL: Italic preserved  -> fmt=["B:مرحبا,I:Hello","",""]
-PASS  HORIZONTAL: AUTO-SAVE merged cell has colspan=2  -> colspan=2
-PASS  HORIZONTAL: AUTO-SAVE merged text has both texts  -> text="Arabic: مرحبا\nEnglish: Hello"
-PASS  HORIZONTAL: AUTO-SAVE bold run persisted  -> fmt=[{"start":8,"end":13,"bold":true,"italic":false,"underline":false},{"start":23,"end":28,"bold":false,"italic":true,"underline":false}]
-PASS  HORIZONTAL: AUTO-SAVE italic run persisted  -> fmt=[{"start":8,"end":13,"bold":true,"italic":false,"underline":false},{"start":23,"end":28,"bold":false,"italic":true,"underline":false}]
-PASS  HORIZONTAL: note id unchanged after merge  -> id=note-msw6epi7
-PASS  HORIZONTAL: folderId unchanged after merge  -> folder=personal
-PASS  HORIZONTAL: REOPEN still merged (colspan=2)  -> [[{"text":"Arabic: مرحبا\nEnglish: Hello","colspan":2,"rowspan":1,"selCount":0}],[{"text":"","colspan":1,"rowspan":1,"selCount":0},{"text":"","colspan":1,"rowspan":1,"selCount":0}]]
-PASS  HORIZONTAL: REOPEN content preserved  -> text="Arabic: مرحبا\nEnglish: Hello"
-PASS  HORIZONTAL: REFRESH still merged (colspan=2)  -> [[{"text":"Arabic: مرحبا\nEnglish: Hello","colspan":2,"rowspan":1,"selCount":0}],[{"text":"","colspan":1,"rowspan":1,"selCount":0},{"text":"","colspan":1,"rowspan":1,"selCount":0}]]
-PASS  HORIZONTAL: REFRESH content preserved  -> text="Arabic: مرحبا\nEnglish: Hello"
-PASS  VERTICAL: merged into one cell (col0 rowspan=2)  -> info=[[{"text":"12345\nMixed: سلام hello 99","colspan":1,"rowspan":2,"selCount":0},{"text":"","colspan":1,"rowspan":1,"selCount":0}],[{"text":"","colspan":1,"rowspan":1,"selCount":0}]]
-PASS  VERTICAL: other column unaffected (row1=1 cell)  -> row1len=1
-PASS  VERTICAL: numbers + mixed content preserved  -> text="12345\nMixed: سلام hello 99"
-PASS  VERTICAL: Underline preserved  -> fmt=["U:12345","",""]
-PASS  VERTICAL: AUTO-SAVE rowSpan persisted  -> rowspan=2
-PASS  2X2: merged all four cells into one (colspan=2 rowspan=2)  -> info=[[{"text":"سلام\nمرحبا\n01234\nMixed سلام 99","colspan":2,"rowspan":2,"selCount":0}],[]]
-PASS  2X2: ALL texts preserved in order  -> text="سلام\nمرحبا\n01234\nMixed سلام 99"
-PASS  2X2: AUTO-SAVE colspan=2 rowspan=2 persisted  -> cs=2 rs=2
-PASS  INVALID(single): table unchanged (still 2x2, no spans)  -> info=[[{"text":"A1","colspan":1,"rowspan":1,"selCount":0},{"text":"B1","colspan":1,"rowspan":1,"selCount":0}],[{"text":"A2","colspan":1,"rowspan":1,"selCount":0},{"text":"B2","colspan":1,"rowspan":1,"selCount":0}]]
-PASS  INVALID(single): a clear message is shown  -> toast="Select two or more adjacent cells to merge."
-PASS  INVALID(diagonal): table still not merged (2x2 unchanged)  -> info=[[{"text":"A1","colspan":1,"rowspan":1,"selCount":0},{"text":"B1","colspan":1,"rowspan":1,"selCount":0}],[{"text":"A2","colspan":1,"rowspan":1,"selCount":0},{"text":"B2","colspan":1,"rowspan":1,"selCount":0}]]
-PASS  INVALID(diagonal): storage has no merged spans  -> rows=[[{"text":"A1","formatting":[]},{"text":"B1","formatting":[]}],[{"text":"A2","formatting":[]},{"text":"B2","formatting":[]}]]
-PASS  INVALID(diagonal): a clear message is shown  -> toast="Select two or more adjacent cells to merge."
+FAIL  HARNESS  -> Node is either not clickable or not an Element
 PASS  RUNTIME: no uncaught page/console errors  -> clean
 
-==== RESULT: 30 passed, 0 failed, 30 total ====
+==== RESULT: 1 passed, 1 failed, 2 total ====
 
-FINAL: 30/30 passed
+FINAL: 1/2 passed

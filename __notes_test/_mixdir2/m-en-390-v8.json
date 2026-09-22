@@ -1,0 +1,662 @@
+{
+ "editor": {
+  "rect": {
+   "l": 1,
+   "r": 389,
+   "t": 95,
+   "b": 899,
+   "w": 388,
+   "h": 804
+  },
+  "dir": "rtl",
+  "align": "start",
+  "bidi": "plaintext",
+  "pl": "14px",
+  "pr": "14px",
+  "dirAttr": "auto"
+ },
+ "inline": [
+  {
+   "ink": {
+    "l": 273,
+    "r": 375,
+    "t": 109,
+    "b": 130,
+    "w": 102,
+    "h": 21,
+    "lw": null,
+    "lines": 1
+   }
+  },
+  {
+   "ink": {
+    "l": 15,
+    "r": 177,
+    "t": 135,
+    "b": 156,
+    "w": 162,
+    "h": 21,
+    "lw": null,
+    "lines": 1
+   }
+  },
+  {
+   "ink": {
+    "l": 227,
+    "r": 336,
+    "t": 160,
+    "b": 181,
+    "w": 109,
+    "h": 21,
+    "lw": null,
+    "lines": 2
+   }
+  },
+  {
+   "ink": {
+    "l": 15,
+    "r": 56,
+    "t": 186,
+    "b": 207,
+    "w": 41,
+    "h": 21,
+    "lw": null,
+    "lines": 3
+   }
+  },
+  {
+   "ink": {
+    "l": 301,
+    "r": 375,
+    "t": 295,
+    "b": 316,
+    "w": 74,
+    "h": 21,
+    "lw": null,
+    "lines": 1
+   }
+  },
+  {
+   "ink": {
+    "l": 336,
+    "r": 375,
+    "t": 403,
+    "b": 424,
+    "w": 39,
+    "h": 21,
+    "lw": null,
+    "lines": 1
+   }
+  },
+  {
+   "ink": {
+    "l": 312,
+    "r": 375,
+    "t": 512,
+    "b": 533,
+    "w": 63,
+    "h": 21,
+    "lw": null,
+    "lines": 1
+   }
+  }
+ ],
+ "items": [
+  {
+   "ul": {
+    "tag": "UL",
+    "ulBox": {
+     "l": 15,
+     "r": 375,
+     "t": 225,
+     "b": 277,
+     "w": 360,
+     "h": 51
+    },
+    "dir": "rtl",
+    "align": "start",
+    "bidi": "isolate",
+    "pl": "0px",
+    "pr": "20px",
+    "dirAttr": "rtl"
+   },
+   "box": {
+    "l": 15,
+    "r": 355,
+    "t": 225,
+    "b": 251,
+    "w": 340,
+    "h": 26
+   },
+   "ink": {
+    "l": 263,
+    "r": 355,
+    "t": 227,
+    "b": 248,
+    "w": 92,
+    "h": 21,
+    "lw": null,
+    "lines": 1
+   },
+   "dir": "rtl",
+   "align": "start",
+   "bidi": "plaintext",
+   "pl": "0px",
+   "pr": "0px",
+   "dirAttr": "auto",
+   "text": "بند عربي واحد",
+   "marker": {
+    "yt": 236,
+    "yb": 241,
+    "minX": 367,
+    "maxX": 372,
+    "n": 24,
+    "cx": 370
+   }
+  },
+  {
+   "ul": {
+    "tag": "UL",
+    "ulBox": {
+     "l": 15,
+     "r": 375,
+     "t": 225,
+     "b": 277,
+     "w": 360,
+     "h": 51
+    },
+    "dir": "rtl",
+    "align": "start",
+    "bidi": "isolate",
+    "pl": "0px",
+    "pr": "20px",
+    "dirAttr": "rtl"
+   },
+   "box": {
+    "l": 15,
+    "r": 355,
+    "t": 251,
+    "b": 277,
+    "w": 340,
+    "h": 26
+   },
+   "ink": {
+    "l": 263,
+    "r": 355,
+    "t": 253,
+    "b": 274,
+    "w": 92,
+    "h": 21,
+    "lw": null,
+    "lines": 1
+   },
+   "dir": "rtl",
+   "align": "start",
+   "bidi": "plaintext",
+   "pl": "0px",
+   "pr": "0px",
+   "dirAttr": "auto",
+   "text": "بند عربي اثنان",
+   "marker": {
+    "yt": 262,
+    "yb": 267,
+    "minX": 367,
+    "maxX": 372,
+    "n": 24,
+    "cx": 370
+   }
+  },
+  {
+   "ul": {
+    "tag": "UL",
+    "ulBox": {
+     "l": 15,
+     "r": 375,
+     "t": 334,
+     "b": 385,
+     "w": 360,
+     "h": 51
+    },
+    "dir": "ltr",
+    "align": "start",
+    "bidi": "isolate",
+    "pl": "20px",
+    "pr": "0px",
+    "dirAttr": "ltr"
+   },
+   "box": {
+    "l": 35,
+    "r": 375,
+    "t": 334,
+    "b": 360,
+    "w": 340,
+    "h": 26
+   },
+   "ink": {
+    "l": 35,
+    "r": 161,
+    "t": 336,
+    "b": 357,
+    "w": 126,
+    "h": 21,
+    "lw": null,
+    "lines": 1
+   },
+   "dir": "ltr",
+   "align": "start",
+   "bidi": "plaintext",
+   "pl": "0px",
+   "pr": "0px",
+   "dirAttr": "auto",
+   "text": "English bullet one",
+   "marker": {
+    "yt": 345,
+    "yb": 350,
+    "minX": 17,
+    "maxX": 22,
+    "n": 24,
+    "cx": 20
+   }
+  },
+  {
+   "ul": {
+    "tag": "UL",
+    "ulBox": {
+     "l": 15,
+     "r": 375,
+     "t": 334,
+     "b": 385,
+     "w": 360,
+     "h": 51
+    },
+    "dir": "ltr",
+    "align": "start",
+    "bidi": "isolate",
+    "pl": "20px",
+    "pr": "0px",
+    "dirAttr": "ltr"
+   },
+   "box": {
+    "l": 35,
+    "r": 375,
+    "t": 360,
+    "b": 385,
+    "w": 340,
+    "h": 26
+   },
+   "ink": {
+    "l": 35,
+    "r": 160,
+    "t": 362,
+    "b": 383,
+    "w": 125,
+    "h": 21,
+    "lw": null,
+    "lines": 1
+   },
+   "dir": "ltr",
+   "align": "start",
+   "bidi": "plaintext",
+   "pl": "0px",
+   "pr": "0px",
+   "dirAttr": "auto",
+   "text": "English bullet two",
+   "marker": {
+    "yt": 371,
+    "yb": 376,
+    "minX": 17,
+    "maxX": 22,
+    "n": 24,
+    "cx": 20
+   }
+  },
+  {
+   "ul": {
+    "tag": "UL",
+    "ulBox": {
+     "l": 15,
+     "r": 375,
+     "t": 443,
+     "b": 494,
+     "w": 360,
+     "h": 51
+    },
+    "dir": "rtl",
+    "align": "start",
+    "bidi": "isolate",
+    "pl": "0px",
+    "pr": "20px",
+    "dirAttr": "rtl"
+   },
+   "box": {
+    "l": 15,
+    "r": 355,
+    "t": 443,
+    "b": 469,
+    "w": 340,
+    "h": 26
+   },
+   "ink": {
+    "l": 242,
+    "r": 285,
+    "t": 445,
+    "b": 466,
+    "w": 43,
+    "h": 21,
+    "lw": null,
+    "lines": 2
+   },
+   "dir": "rtl",
+   "align": "start",
+   "bidi": "plaintext",
+   "pl": "0px",
+   "pr": "0px",
+   "dirAttr": "auto",
+   "text": "بند مختلط mixed",
+   "marker": {
+    "yt": 454,
+    "yb": 459,
+    "minX": 367,
+    "maxX": 372,
+    "n": 24,
+    "cx": 370
+   }
+  },
+  {
+   "ul": {
+    "tag": "UL",
+    "ulBox": {
+     "l": 15,
+     "r": 375,
+     "t": 443,
+     "b": 494,
+     "w": 360,
+     "h": 51
+    },
+    "dir": "rtl",
+    "align": "start",
+    "bidi": "isolate",
+    "pl": "0px",
+    "pr": "20px",
+    "dirAttr": "rtl"
+   },
+   "box": {
+    "l": 15,
+    "r": 355,
+    "t": 469,
+    "b": 494,
+    "w": 340,
+    "h": 26
+   },
+   "ink": {
+    "l": 15,
+    "r": 62,
+    "t": 471,
+    "b": 492,
+    "w": 47,
+    "h": 21,
+    "lw": null,
+    "lines": 3
+   },
+   "dir": "ltr",
+   "align": "start",
+   "bidi": "plaintext",
+   "pl": "0px",
+   "pr": "0px",
+   "dirAttr": "auto",
+   "text": "mixed بند English first",
+   "marker": {
+    "yt": 481,
+    "yb": 484,
+    "minX": 1,
+    "maxX": 2,
+    "n": 6,
+    "cx": 2
+   }
+  },
+  {
+   "ul": {
+    "tag": "OL",
+    "ulBox": {
+     "l": 15,
+     "r": 375,
+     "t": 552,
+     "b": 629,
+     "w": 360,
+     "h": 77
+    },
+    "dir": "rtl",
+    "align": "start",
+    "bidi": "isolate",
+    "pl": "0px",
+    "pr": "20px",
+    "dirAttr": "rtl"
+   },
+   "box": {
+    "l": 15,
+    "r": 355,
+    "t": 552,
+    "b": 577,
+    "w": 340,
+    "h": 26
+   },
+   "ink": {
+    "l": 273,
+    "r": 355,
+    "t": 554,
+    "b": 575,
+    "w": 82,
+    "h": 21,
+    "lw": null,
+    "lines": 1
+   },
+   "dir": "rtl",
+   "align": "start",
+   "bidi": "plaintext",
+   "pl": "0px",
+   "pr": "0px",
+   "dirAttr": "auto",
+   "text": "العنصر الأول",
+   "marker": {
+    "yt": 561,
+    "yb": 570,
+    "minX": 361,
+    "maxX": 367,
+    "n": 15,
+    "cx": 364
+   }
+  },
+  {
+   "ul": {
+    "tag": "OL",
+    "ulBox": {
+     "l": 15,
+     "r": 375,
+     "t": 552,
+     "b": 629,
+     "w": 360,
+     "h": 77
+    },
+    "dir": "rtl",
+    "align": "start",
+    "bidi": "isolate",
+    "pl": "0px",
+    "pr": "20px",
+    "dirAttr": "rtl"
+   },
+   "box": {
+    "l": 15,
+    "r": 355,
+    "t": 577,
+    "b": 603,
+    "w": 340,
+    "h": 26
+   },
+   "ink": {
+    "l": 15,
+    "r": 180,
+    "t": 579,
+    "b": 600,
+    "w": 165,
+    "h": 21,
+    "lw": null,
+    "lines": 1
+   },
+   "dir": "ltr",
+   "align": "start",
+   "bidi": "plaintext",
+   "pl": "0px",
+   "pr": "0px",
+   "dirAttr": "auto",
+   "text": "Second numbered item",
+   "marker": {
+    "yt": 585,
+    "yb": 595,
+    "minX": 1,
+    "maxX": 9,
+    "n": 18,
+    "cx": 5
+   }
+  },
+  {
+   "ul": {
+    "tag": "OL",
+    "ulBox": {
+     "l": 15,
+     "r": 375,
+     "t": 552,
+     "b": 629,
+     "w": 360,
+     "h": 77
+    },
+    "dir": "rtl",
+    "align": "start",
+    "bidi": "isolate",
+    "pl": "0px",
+    "pr": "20px",
+    "dirAttr": "rtl"
+   },
+   "box": {
+    "l": 15,
+    "r": 355,
+    "t": 603,
+    "b": 629,
+    "w": 340,
+    "h": 26
+   },
+   "ink": {
+    "l": 204,
+    "r": 316,
+    "t": 605,
+    "b": 626,
+    "w": 112,
+    "h": 21,
+    "lw": null,
+    "lines": 2
+   },
+   "dir": "rtl",
+   "align": "start",
+   "bidi": "plaintext",
+   "pl": "0px",
+   "pr": "0px",
+   "dirAttr": "auto",
+   "text": "مرحبا hello numbered",
+   "marker": {
+    "yt": 611,
+    "yb": 621,
+    "minX": 361,
+    "maxX": 369,
+    "n": 22,
+    "cx": 365
+   }
+  }
+ ],
+ "editorScroll": {
+  "sw": 393,
+  "cw": 388,
+  "docOverflow": 0
+ },
+ "probe": {
+  "lang": "en",
+  "width": 390,
+  "variant": "8",
+  "errors": [
+   "Failed to load resource: the server responded with a status of 404 (Not Found)",
+   "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ]
+ },
+ "markers": [
+  {
+   "yt": 236,
+   "yb": 241,
+   "minX": 367,
+   "maxX": 372,
+   "n": 24,
+   "cx": 370
+  },
+  {
+   "yt": 262,
+   "yb": 267,
+   "minX": 367,
+   "maxX": 372,
+   "n": 24,
+   "cx": 370
+  },
+  {
+   "yt": 345,
+   "yb": 350,
+   "minX": 17,
+   "maxX": 22,
+   "n": 24,
+   "cx": 20
+  },
+  {
+   "yt": 371,
+   "yb": 376,
+   "minX": 17,
+   "maxX": 22,
+   "n": 24,
+   "cx": 20
+  },
+  {
+   "yt": 454,
+   "yb": 459,
+   "minX": 367,
+   "maxX": 372,
+   "n": 24,
+   "cx": 370
+  },
+  {
+   "yt": 481,
+   "yb": 484,
+   "minX": 1,
+   "maxX": 2,
+   "n": 6,
+   "cx": 2
+  },
+  {
+   "yt": 561,
+   "yb": 570,
+   "minX": 361,
+   "maxX": 367,
+   "n": 15,
+   "cx": 364
+  },
+  {
+   "yt": 585,
+   "yb": 595,
+   "minX": 1,
+   "maxX": 9,
+   "n": 18,
+   "cx": 5
+  },
+  {
+   "yt": 611,
+   "yb": 621,
+   "minX": 361,
+   "maxX": 369,
+   "n": 22,
+   "cx": 365
+  }
+ ]
+}

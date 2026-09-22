@@ -1,0 +1,17 @@
+const fs = require('fs');
+const html = fs.readFileSync('index.html', 'utf8');
+const js = fs.readFileSync('app.js', 'utf8');
+const css = fs.readFileSync('styles.css', 'utf8');
+const out = [];
+out.push('modal=' + (html.includes('id="smartDocsModal"') ? 'PASS' : 'FAIL'));
+out.push('title=' + (html.includes('id="smartDocsTitle"') ? 'PASS' : 'FAIL'));
+out.push('closeBtn=' + (html.includes('id="closeSmartDocs"') ? 'PASS' : 'FAIL'));
+out.push('workspaceEmpty=' + (html.includes('smart-workspace-empty') ? 'PASS' : 'FAIL'));
+const oldIds = ['smartBlankCanvasHolder','smartDocumentContent','smartBlankCanvas','smartAddMenu','smartLogoBar','smartSigResignBtn','smartSigStatusText','data-toolbar="blank-doc"'];
+oldIds.forEach(id => out.push('no_' + id.replace(/[^A-Za-z0-9]+/g,'_') + '=' + (!html.includes(id) ? 'PASS' : 'FAIL')));
+out.push('openFn=' + (js.includes('function openSmartDocs()') ? 'PASS' : 'FAIL'));
+out.push('closeFn=' + (js.includes('function closeSmartDocs()') ? 'PASS' : 'FAIL'));
+out.push('noSmartBlankOpenLogic=' + (!js.includes('smartBlankDoc') || js.includes('smartBlankOpen') ? 'CHECK' : 'CHECK'));
+['openCalculator','currencyConverter','notesManagerModal','pdfReportsWorkspace','serviceWorker','manifest'].forEach(k => out.push('intact_' + k + '=' + (js.includes(k) || html.includes(k) ? 'PASS' : 'CHECK')));
+fs.writeFileSync('_VERIFY_OUT.txt', out.join('\n') + '\n');
+console.log(out.join('\n'));

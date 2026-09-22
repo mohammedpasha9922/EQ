@@ -1,0 +1,63 @@
+{
+  "checks": [
+    {
+      "name": "fresh sqrt display recorded",
+      "ok": true,
+      "detail": "sqrt(0)"
+    },
+    {
+      "name": "fresh sqrt then = recorded",
+      "ok": true,
+      "detail": "sqrt(0) words=zero"
+    },
+    {
+      "name": "paren9 then sqrt then = recorded",
+      "ok": true,
+      "detail": "(9) | sqrt((9)*) | 9"
+    },
+    {
+      "name": "fresh ^2 recorded",
+      "ok": true,
+      "detail": "0^2 => 0^2"
+    },
+    {
+      "name": "implicit 2(3)=6",
+      "ok": false,
+      "detail": "Error"
+    },
+    {
+      "name": "history items recorded",
+      "ok": true,
+      "detail": "[\" #h-mt (9) = 9 2026-09-12 15:37:46 23h 59m 59s remaining \"]"
+    },
+    {
+      "name": "evaluator extra ok",
+      "ok": true,
+      "detail": "{\"sqrt(9)+1\":\"4\",\"2*sqrt(9)\":\"6\",\"sqrt(16)+sqrt(9)\":\"7\",\"sqrt(2.25)\":\"1.5\",\"sqrt(-9)\":\"NaN\",\"(2^2)\":\"4\",\"2^(3)\":\"8\",\"2^3^2\":\"64\",\"10/0\":\"Infinity\",\"3.5*2\":\"7\"}"
+    }
+  ],
+  "pageErrors": [],
+  "freshSqrtDisplay": "sqrt(0)",
+  "freshSqrtEq": "sqrt(0)",
+  "paren9": "(9)",
+  "afterSqrtOnParen": "sqrt((9)*)",
+  "afterSqrtOnParenEq": "9",
+  "freshPow": "0^2",
+  "freshPowEq": "0^2",
+  "implicit": "Error",
+  "histItems": [
+    " #h-mt (9) = 9 2026-09-12 15:37:46 23h 59m 59s remaining "
+  ],
+  "evaluator": {
+    "sqrt(9)+1": "4",
+    "2*sqrt(9)": "6",
+    "sqrt(16)+sqrt(9)": "7",
+    "sqrt(2.25)": "1.5",
+    "sqrt(-9)": "NaN",
+    "(2^2)": "4",
+    "2^(3)": "8",
+    "2^3^2": "64",
+    "10/0": "Infinity",
+    "3.5*2": "7"
+  }
+}

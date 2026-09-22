@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0" />
+    <meta name="theme-color" content="#0f172a" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="description" content="Advanced EQ Calculator with precision math, word conversion, history, and PWA support." />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="EQ" />
+    <title>EQ</title>
+    <link rel="icon" type="image/x-icon" href="./favicon.ico" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png" />
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/decimal.js@10.4.3/decimal.min.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <div id="adPlaceholder" class="ad-placeholder" aria-hidden="true"></div>
+
+      <header class="top-bar">
+        <div>
+          <h1 class="app-logo" dir="ltr"><span class="logo-e">E</span><span class="logo-q">Q</span></h1>
+        </div>
+        <div class="top-bar-actions">
+          <select id="topBarLanguageSelect" class="lang-switch" aria-label="Select language">
+            <option value="ar" data-i18n="languageArabic">العربية</option>
+            <option value="en" data-i18n="languageEnglish">English</option>
+            <option value="es" data-i18n="languageSpanish">Español</option>
+            <option value="fr" data-i18n="languageFrench">Français</option>
+            <option value="ru" data-i18n="languageRussian">Русский</option>
+            <option value="de" data-i18n="languageGerman">Deutsch</option>
+            <option value="tr" data-i18n="languageTurkish">Türkçe</option>
+          </select>
+          <div id="currencyMenuWrap" class="currency-menu-wrap">
+            <button id="currencyMenuButton" class="ghost-btn icon-btn" type="button" aria-label="Currency Menu" aria-expanded="false">
+              <i class="fa-solid fa-coins"></i>
+            </button>
+            <div id="currencyMenuPopover" class="currency-popover" aria-hidden="true">
+              <button class="currency-popover-item" data-action="search" type="button">
+                <span data-i18n="currencyOptionSearch">Search Currency</span>
+              </button>
+              <button class="currency-popover-item" data-action="prices" type="button">
+                <span data-i18n="currencyOptionPrices">Live Currency Prices</span>
+              </button>
+              <button class="currency-popover-item" data-action="customRate" type="button">
+                <span data-i18n="currencyOptionCustomRate">Convert at Custom Rate</span>
+              </button>
+              <button class="currency-popover-item" data-action="favorites" type="button">
+                <span data-i18n="currencyOptionFavorites">Favorite Currencies</span>
+              </button>
+            </div>
+          </div>
+          <button id="drawerToggle" class="ghost-btn icon-btn" type="button" aria-label="Open EQ Tools">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </header>
+
+      <div class="mode-switcher" role="tablist" aria-label="Calculator modes">
+        <button class="mode-switch active" data-mode="general" type="button" data-i18n="modeGeneral">General Calculator</button>
+      </div>
+
+      <div id="generalCalculatorPanel" class="view-panel active">
+        <main class="calculator-card">
+          <section class="display-section">
+            <button id="speechButton" class="speech-btn" type="button" aria-label="Speak result">🔊</button>
+            <div id="primaryDisplay" class="primary-display">0</div>
+            <div id="expressionDisplay" class="expression-display" aria-live="polite"></div>
+            <div id="secondaryDisplay" class="secondary-display">Zero</div>
+          </section>
+
+          <div id="percentPanel" class="percent-panel" aria-hidden="true">
+            <div class="percent-panel-header">
+              <h4 data-i18n="percentTitle">Percentage Calculator</h4>
+              <div class="percent-header-actions">
+                <button id="percentRefreshButton" class="percent-refresh-btn" type="button" aria-label="Refresh percentage calculator">
+                  <i class="fa-solid fa-rotate"></i>
+                </button>
+                <button id="percentBackButton" class="percent-back-btn" type="button" aria-label="Back to calculator">
+                  <i class="fa-solid fa-arrow-left"></i>
+                  <span data-i18n="percentBack">Back</span>
+                </button>
+              </div>
+            </div>
+            <div class="percent-panel-body">
+              <label class="field">
+                <span data-i18n="amountLabel">Amount</span>
+                <input id="percentAmount" type="number" inputmode="decimal" placeholder="0" />
+              </label>
+              <label class="field">
+                <span data-i18n="rateLabel">Percentage Rate</span>
+                <input id="percentRate" type="number" inputmode="decimal" placeholder="0" />
+              </label>
+            </div>
+          </div>
+
+          <div class="scientific-toggle-row">
+            <button id="scientificToggle" class="scientific-toggle" type="button" aria-expanded="false" data-i18n="scientificToggle">Scientific</button>
+            <button id="percentToggle" class="scientific-toggle" type="button" aria-expanded="false" data-i18n="percentTab">Percentage</button>
+          </div>
+          <div id="scientificPanel" class="scientific-panel" aria-label="Scientific calculator tools">
+            <button class="scientific-btn" data-scientific="sqrt(" type="button">√</button>
+            <button class="scientific-btn" data-scientific="^2" type="button">x²</button>
+            <button class="scientific-btn" data-scientific="(" type="button">(</button>
+            <button class="scientific-btn" data-scientific=")" type="button">)</button>
+          </div>
+
+          <section class="control-row">
+            <button class="control-btn" data-action="clear" type="button">AC</button>
+            <button class="control-btn" data-action="backspace" type="button">⌫</button>
+            <button class="control-btn" data-action="copy" type="button"><i class="fa-regular fa-copy"></i></button>
+            <button class="control-btn" data-action="paste" type="button"><i class="fa-solid fa-paste"></i></button>
+          </section>
+
+          <div class="keypad-area">
+            <section class="keypad-grid" aria-label="Calculator keypad">
+              <button class="keypad-btn number" data-value="7" type="button">7</button>
+              <button class="keypad-btn number" data-value="8" type="button">8</button>
+              <button class="keypad-btn number" data-value="9" type="button">9</button>
+              <button class="keypad-btn operator" data-value="+" type="button">+</button>
+
+              <button class="keypad-btn number" data-value="4" type="button">4</button>
+              <button class="keypad-btn number" data-value="5" type="button">5</button>
+              <button class="keypad-btn number" data-value="6" type="button">6</button>
+              <button class="keypad-btn operator" data-value="-" type="button">-</button>
+
+              <button class="keypad-btn number" data-value="1" type="button">1</button>
+              <button class="keypad-btn number" data-value="2" type="button">2</button>
+              <button class="keypad-btn number" data-value="3" type="button">3</button>
+              <button class="keypad-btn operator" data-value="*" type="button">×</button>
+
+              <button class="keypad-btn number" data-value="0" type="button">0</button>
+              <button class="keypad-btn number" data-value="." type="button">.</button>
+              <button class="keypad-btn operator" data-value="/" type="button">÷</button>
+              <button class="keypad-btn equals" data-action="equals" type="button">=</button>
+            </section>
+          </div>
+        </main>
+      </div>
+
+      <div id="historyPanel" class="history-panel" aria-hidden="true">
+        <div class="history-screen">
+          <header class="history-screen-header">
+            <button id="historyBackButton" class="ghost-btn history-back-btn" type="button" aria-label="Back">
+              <i class="fa-solid fa-arrow-left"></i>
+              <span data-i18n="historyBack">Back</span>
+            </button>
+            <h3 class="history-screen-title" data-i18n="historyTitle">24-Hour History</h3>
+            <div class="top-bar-actions">
+              <button id="selectAllHistory" class="ghost-btn small" type="button" data-i18n="selectAll">Select All</button>
+              <button id="exportHistory" class="ghost-btn small" type="button" data-i18n="exportButton">Share / Export</button>
+            </div>
+          </header>
+          <ul id="historyList" class="history-list"></ul>
+        </div>
+      </div>
+
+    <div id="currencyConverterModal" class="currency-modal-backdrop" aria-hidden="true">
+      <div class="currency-modal currency-converter-modal" role="dialog" aria-modal="true" aria-labelledby="currencyConverterTitle">
+        <header class="currency-converter-header">
+          <button id="currencyConverterCloseButton" class="currency-converter-icon-btn currency-converter-back" type="button" aria-label="Back" title="Back">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <h3 id="currencyConverterTitle" class="currency-converter-title" data-i18n="currencyConverterTitle">Convert Currencies</h3>
+          <button id="refreshRatesButton" class="currency-converter-icon-btn currency-converter-refresh" type="button" aria-label="Refresh rates" title="Refresh rates">
+            <i class="fa-solid fa-rotate"></i>
+          </button>
+        </header>
+
+        <div class="converter-card">
+          <div class="converter-card-strip">
+            <span id="converterFromFlag" class="converter-flag"></span>
+            <span id="converterFromLabel" class="converter-label"></span>
+            <span class="converter-strip-spacer"></span>
+            <i class="fa-solid fa-chevron-down converter-chevron" aria-hidden="true"></i>
+            <select id="currencyFromSelect" class="converter-strip-select" aria-label="From currency"></select>
+            <button id="favoriteFromButton" class="converter-fav-btn" type="button" aria-label="Add to favorites">
+              <i class="fa-regular fa-star"></i>
+            </button>
+          </div>
+          <label class="converter-amount-field">
+            <input id="currencyFromAmount" class="converter-amount-input" type="number" inputmode="decimal" placeholder="100" aria-label="Amount" />
+          </label>
+        </div>
+
+        <div class="converter-swap-row">
+          <button id="swapCurrenciesButton" class="converter-swap-btn" type="button" title="Swap currencies" aria-label="Swap currencies">
+            <i class="fa-solid fa-right-left"></i>
+          </button>
+        </div>
+
+        <div class="converter-card">
+          <div class="converter-card-strip">
+            <span id="converterToFlag" class="converter-flag"></span>
+            <span id="converterToLabel" class="converter-label"></span>
+            <span class="converter-strip-spacer"></span>
+            <i class="fa-solid fa-chevron-down converter-chevron" aria-hidden="true"></i>
+            <select id="currencyToSelect" class="converter-strip-select" aria-label="To currency"></select>
+            <button id="favoriteToButton" class="converter-fav-btn" type="button" aria-label="Add to favorites">
+              <i class="fa-regular fa-star"></i>
+            </button>
+          </div>
+          <div class="converter-card-output">
+            <div class="converter-output-row">
+              <div id="currencyToAmount" class="converter-output">0</div>
+              <button id="currencySpeakButton" class="converter-speak-btn" type="button" aria-label="Speak result" title="Speak result">
+                <i class="fa-solid fa-volume-high"></i>
+              </button>
+            </div>
+            <div id="currencyWords" class="currency-words"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="customRateModal" class="currency-modal-backdrop" aria-hidden="true">
+      <div class="currency-modal currency-converter-modal custom-rate-modal" role="dialog" aria-modal="true" aria-labelledby="customRateTitle">
+        <header class="currency-converter-header">
+          <button id="customRateBackButton" class="currency-converter-icon-btn currency-converter-back" type="button" aria-label="Back" title="Back">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <h3 id="customRateTitle" class="currency-converter-title" data-i18n="customRateTitle">Convert at Custom Rate</h3>
+          <button id="customRateResetButton" class="currency-converter-icon-btn currency-converter-refresh" type="button" aria-label="Reset" title="Reset">
+            <i class="fa-solid fa-rotate"></i>
+          </button>
+        </header>
+
+        <div class="converter-card">
+          <label class="converter-amount-field">
+            <span class="custom-rate-field-label" data-i18n="customRateFieldLabel">Exchange Rate</span>
+            <input id="customRateInput" class="converter-amount-input" type="number" inputmode="decimal" placeholder="0" aria-label="Exchange rate" />
+          </label>
+        </div>
+
+        <div class="converter-card">
+          <label class="converter-amount-field">
+            <span class="custom-rate-field-label" data-i18n="amountLabel">Amount</span>
+            <input id="customAmountInput" class="converter-amount-input" type="number" inputmode="decimal" placeholder="0" aria-label="Amount" />
+          </label>
+        </div>
+
+        <div class="converter-card">
+          <div class="converter-card-output">
+            <div class="converter-output-row">
+              <div id="customRateResult" class="converter-output">0</div>
+              <button id="customRateSpeakButton" class="converter-speak-btn" type="button" aria-label="Speak result" title="Speak result">
+                <i class="fa-solid fa-volume-high"></i>
+              </button>
+            </div>
+            <div id="customRateWords" class="currency-words"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="currencyDirectoryModal" class="currency-modal-backdrop" aria-hidden="true">
+      <div class="currency-modal" role="dialog" aria-modal="true" aria-labelledby="currencyDirectoryTitle">
+        <div class="currency-modal-header">
+          <div>
+            <h3 id="currencyDirectoryTitle" data-i18n="currencyDirectoryTitle">Global Currencies Directory</h3>
+            <p class="currency-modal-subtitle" data-i18n="currencyDirectorySubtitle">Search paper currencies by country name or currency code.</p>
+          </div>
+          <button id="currencyCloseButton" class="modal-close-btn" type="button" aria-label="Close">×</button>
+        </div>
+        <div class="currency-modal-body">
+          <label class="field currency-search-field">
+            <input id="currencySearchInput" type="search" placeholder="Search country or code" data-i18n-placeholder="currencySearchPlaceholder" autocomplete="off" />
+          </label>
+          <ul id="currencyList" class="currency-list"></ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="currencyRatesModal" class="currency-modal-backdrop" aria-hidden="true">
+      <div class="currency-modal currency-rates-modal" role="dialog" aria-modal="true" aria-labelledby="currencyRatesTitle">
+        <header class="currency-rates-header">
+          <button id="currencyRatesBackButton" class="currency-rates-back-btn" type="button" aria-label="Back">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <h3 id="currencyRatesTitle" class="currency-rates-title" data-i18n="currencyRatesTitle">Currency Rates</h3>
+          <button id="currencyRatesCloseButton" class="modal-close-btn" type="button" aria-label="Close">×</button>
+        </header>
+        <div class="currency-rates-body">
+          <label class="field currency-search-field">
+            <input id="currencyRatesSearchInput" type="search" placeholder="Search currency or code" data-i18n-placeholder="currencyRatesSearchPlaceholder" autocomplete="off" />
+          </label>
+          <div id="currencyRatesStatus" class="currency-rates-status" hidden></div>
+          <ul id="currencyRatesList" class="currency-list currency-rates-list"></ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="currencyFavoritesModal" class="currency-modal-backdrop" aria-hidden="true">
+      <div class="currency-modal currency-favorites-modal" role="dialog" aria-modal="true" aria-labelledby="currencyFavoritesTitle">
+        <header class="currency-favorites-header">
+          <button id="currencyFavoritesBackButton" class="currency-favorites-back-btn" type="button" aria-label="Back">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <h3 id="currencyFavoritesTitle" class="currency-favorites-title" data-i18n="currencyFavoritesTitle">Favorites</h3>
+        </header>
+        <div class="currency-favorites-body">
+          <div id="currencyFavoritesStatus" class="currency-favorites-status" hidden></div>
+          <div id="currencyFavoritesEmpty" class="currency-favorites-empty" hidden>
+            <span class="currency-favorites-empty-icon"><i class="fa-regular fa-star"></i></span>
+            <p class="currency-favorites-empty-text" data-i18n="currencyFavoritesEmpty">No favorite currencies yet</p>
+            <span class="currency-favorites-empty-hint" data-i18n="currencyFavoritesEmptyHint">Tap the star on any currency to add it here</span>
+          </div>
+          <ul id="currencyFavoritesList" class="currency-list currency-favorites-list"></ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="settingsModal" class="settings-modal-backdrop" aria-hidden="true">
+      <div class="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle">
+        <div class="settings-modal-header">
+          <div>
+            <h3 id="settingsModalTitle" data-i18n="settingsTitle">Settings & Customization</h3>
+            <p class="settings-modal-subtitle" data-i18n="settingsSubtitle">Customize app language, theme and feedback.</p>
+          </div>
+          <button id="settingsCloseButton" class="modal-close-btn" type="button" aria-label="Close">×</button>
+        </div>
+        <div class="settings-modal-body">
+          <label class="field">
+            <span data-i18n="languageLabel">Language</span>
+            <select id="languageSelect">
+              <option value="ar" data-i18n="languageArabic">العربية</option>
+              <option value="en" data-i18n="languageEnglish">English</option>
+              <option value="es" data-i18n="languageSpanish">Español</option>
+              <option value="fr" data-i18n="languageFrench">Français</option>
+              <option value="ru" data-i18n="languageRussian">Русский</option>
+              <option value="de" data-i18n="languageGerman">Deutsch</option>
+              <option value="tr" data-i18n="languageTurkish">Türkçe</option>
+            </select>
+          </label>
+          <div class="theme-group">
+            <span data-i18n="themeLabel">Theme</span>
+            <div class="theme-options">
+              <button class="theme-option active" data-theme="dark" data-i18n="themeDark" type="button">Dark</button>
+              <button class="theme-option" data-theme="light" data-i18n="themeLight" type="button">Light</button>
+              <button class="theme-option" data-theme="violet" data-i18n="themeViolet" type="button">Violet</button>
+            </div>
+          </div>
+          <div class="app-sounds-group">
+            <div class="app-sounds-header">
+              <span class="app-sounds-title" data-i18n="appSoundsLabel">App Sounds</span>
+              <label class="switch">
+                <input id="appSoundToggle" type="checkbox" checked />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="app-sounds-modes" id="appSoundModes">
+              <!-- Existing app sound mode(s). Add new mode blocks here to extend the section. -->
+              <label class="field app-sound-mode">
+                <span data-i18n="soundHapticsLabel">Button sound & haptics</span>
+                <div class="switch-row">
+                  <span class="field-caption" data-i18n="soundHapticsCaption">Enable click sounds and vibration</span>
+                  <label class="switch">
+                    <input id="soundToggle" type="checkbox" checked />
+                    <span class="slider"></span>
+                  </label>
+                </div>
+              </label>
+              <label class="field app-sound-mode">
+                <span data-i18n="soundProfileLabel">Button Sound Profile</span>
+                <select id="soundProfileSelect">
+                  <option value="classic" data-i18n="profileClassic">Classic</option>
+                  <option value="soft" data-i18n="profileSoft">Soft</option>
+                  <option value="modern" data-i18n="profileModern">Modern</option>
+                  <option value="click" data-i18n="profileClick">Click</option>
+                  <option value="silent" data-i18n="profileSilent">Silent</option>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <div class="app-sounds-group">
+            <div class="app-sounds-header">
+              <span class="app-sounds-title" data-i18n="speakerLabel">Speaker / Voice Reading</span>
+              <label class="switch">
+                <input id="speakerToggle" type="checkbox" checked />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="app-sounds-modes">
+              <span class="field-caption speaker-caption" data-i18n="speakerCaption">When ON, the result is read aloud automatically after pressing = . When OFF, reading is manual via the speaker button only.</span>
+            </div>
+          </div>
+
+          <button class="help-about-item" id="helpAboutButton" type="button" aria-haspopup="dialog" aria-label="Help">
+            <span class="help-about-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
+            <span class="help-about-text" data-i18n="helpTitle">Help &amp; About</span>
+            <span class="help-about-chevron" aria-hidden="true"><i class="fa-solid fa-chevron-right"></i></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="helpModal" class="help-modal-backdrop" aria-hidden="true">
+      <div class="help-modal" role="dialog" aria-modal="true" aria-labelledby="helpModalTitle">
+        <header class="help-modal-header">
+          <button id="helpBackButton" class="help-back-btn" type="button" aria-label="Back">
+            <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+          </button>
+          <div class="help-heading">
+            <h3 id="helpModalTitle" data-i18n="helpTitle">Help &amp; About</h3>
+            <p class="help-modal-subtitle" data-i18n="helpSubtitle">Learn how to use EQ and discover its features.</p>
+          </div>
+          <button id="helpCloseButton" class="modal-close-btn" type="button" aria-label="Close">×</button>
+        </header>
+        <div class="help-modal-body">
+
+          <section class="help-card">
+            <h4 class="help-card-title"><i class="fa-solid fa-circle-info help-dot" aria-hidden="true"></i><span data-i18n="helpAboutTitle">About the App</span></h4>
+            <p class="help-card-text" data-i18n="helpAboutDesc">EQ is a smart, all-in-one calculator that combines everyday math, scientific and percentage tools, currency conversion and much more in one simple, easy-to-use app.</p>
+          </section>
+
+          <section class="help-card">
+            <h4 class="help-card-title"><i class="fa-solid fa-lightbulb help-dot" aria-hidden="true"></i><span data-i18n="helpWhyTitle">Why was EQ created?</span></h4>
+            <p class="help-card-text" data-i18n="helpWhyDesc">The idea is simple: one calculator instead of many, built for speed, clarity and everyday use.</p>
+            <ul class="help-list">
+              <li><span class="help-bullet" aria-hidden="true">•</span><span data-i18n="helpWhyL1">Fast everyday calculations</span></li>
+              <li><span class="help-bullet" aria-hidden="true">•</span><span data-i18n="helpWhyL2">Scientific tools such as square root, powers and parentheses</span></li>
+              <li><span class="help-bullet" aria-hidden="true">•</span><span data-i18n="helpWhyL3">Easy percentage calculations</span></li>
+              <li><span class="help-bullet" aria-hidden="true">•</span><span data-i18n="helpWhyL4">Currency conversion and live rates</span></li>
+              <li><span class="help-bullet" aria-hidden="true">•</span><span data-i18n="helpWhyL5">Notes and calculation history</span></li>
+              <li><span class="help-bullet" aria-hidden="true">•</span><span data-i18n="helpWhyL6">Simple, clear and quick to use</span></li>
+              <li><span class="help-bullet" aria-hidden="true">•</span><span data-i18n="helpWhyL7">Works as an installable app (PWA) on different devices</span></li>
+            </ul>
+          </section>
+
+          <section class="help-card">
+            <h4 class="help-card-title"><i class="fa-solid fa-layer-group help-dot" aria-hidden="true"></i><span data-i18n="helpSectionsTitle">Explaining the App Sections</span></h4>
+
+            <div class="help-subsection">
+              <span class="help-subsection-title" data-i18n="helpSecGeneralTitle">General Calculator</span>
+              <p class="help-card-text" data-i18n="helpSecGeneralDesc">The main calculator for everyday operations: add, subtract, multiply and divide.</p>
+              <p class="help-example" data-i18n="helpSecGeneralEx">Example: 12 + 7 = 19.</p>
+            </div>
+
+            <div class="help-divider"></div>
+
+            <div class="help-subsection">
+              <span class="help-subsection-title" data-i18n="helpSecScientificTitle">Scientific Tools</span>
+              <p class="help-card-text" data-i18n="helpSecScientificDesc">Tap "Scientific" to use the square root, square and parentheses buttons inside the same calculator.</p>
+              <p class="help-example" data-i18n="helpSecScientificEx">Example: √9 = 3, 2^3 = 8.</p>
+            </div>
+
+            <div class="help-divider"></div>
+
+            <div class="help-subsection">
+              <span class="help-subsection-title" data-i18n="helpSecPercentTitle">Percentage Calculator</span>
+              <p class="help-card-text" data-i18n="helpSecPercentDesc">Quickly work out a percentage of an amount without extra steps.</p>
+              <p class="help-example" data-i18n="helpSecPercentEx">Example: 15% of 200 = 30.</p>
+            </div>
+
+            <div class="help-divider"></div>
+
+            <div class="help-subsection">
+              <span class="help-subsection-title" data-i18n="helpSecHistoryTitle">History</span>
+              <p class="help-card-text" data-i18n="helpSecHistoryDesc">EQ remembers what you calculated in the last 24 hours so you can review or share it.</p>
+            </div>
+
+            <div class="help-divider"></div>
+
+            <div class="help-subsection">
+              <span class="help-subsection-title" data-i18n="helpSecNotesTitle">Notes</span>
+              <p class="help-card-text" data-i18n="helpSecNotesDesc">Save quick notes, organize them in folders, and edit them in a full-screen editor.</p>
+            </div>
+
+            <div class="help-divider"></div>
+
+            <div class="help-subsection">
+              <span class="help-subsection-title" data-i18n="helpSecCurrencyTitle">Currency Tools</span>
+              <p class="help-card-text" data-i18n="helpSecCurrencyDesc">Search currencies, see live rates, convert between currencies, use a custom rate, and keep your favorites.</p>
+            </div>
+
+            <div class="help-divider"></div>
+
+            <div class="help-subsection">
+              <span class="help-subsection-title" data-i18n="helpSecSettingsTitle">Settings</span>
+              <p class="help-card-text" data-i18n="helpSecSettingsDesc">Change the language, the theme and the sound feedback exactly how you like.</p>
+            </div>
+          </section>
+
+          <section class="help-card">
+            <h4 class="help-card-title"><i class="fa-solid fa-keyboard help-dot" aria-hidden="true"></i><span data-i18n="helpButtonsTitle">How to Use the Calculator</span></h4>
+            <div class="help-btn-row"><span class="help-btn-key">0–9</span><span data-i18n="helpBtnNumbers">Tap to type digits.</span></div>
+            <div class="help-btn-row"><span class="help-btn-key">+</span><span data-i18n="helpBtnAdd">Adds the next number.</span></div>
+            <div class="help-btn-row"><span class="help-btn-key">−</span><span data-i18n="helpBtnSub">Subtracts the next number.</span></div>
+            <div class="help-btn-row"><span class="help-btn-key">×</span><span data-i18n="helpBtnMul">Multiplies by the next number.</span></div>
+            <div class="help-btn-row"><span class="help-btn-key">÷</span><span data-i18n="helpBtnDiv">Divides by the next number.</span></div>
+            <div class="help-btn-row"><span class="help-btn-key">=</span><span data-i18n="helpBtnEquals">Shows the result.</span></div>
+            <div class="help-btn-row"><span class="help-btn-key">AC</span><span data-i18n="helpBtnAc">Clears everything and starts fresh.</span></div>
+            <div class="help-btn-row"><span class="help-btn-key">⌫</span><span data-i18n="helpBtnBack">Deletes the last digit you typed.</span></div>
+            <div class="help-btn-row"><span class="help-btn-key">.</span><span data-i18n="helpBtnDecimal">Adds a decimal point.</span></div>
+            <div class="help-btn-row"><span class="help-btn-key">Sci</span><span data-i18n="helpBtnScientific">Scientific / Percentage: switches the extra tools on and off.</span></div>
+            <div class="help-btn-row"><span class="help-btn-key">🔊</span><span data-i18n="helpBtnSpeak">Speaks the current result aloud.</span></div>
+          </section>
+
+          <section class="help-card">
+            <h4 class="help-card-title"><i class="fa-solid fa-sliders help-dot" aria-hidden="true"></i><span data-i18n="helpSettingsExplainTitle">Settings</span></h4>
+            <p class="help-card-text" data-i18n="helpSetLanguage">Language: switches the whole app between the available languages.</p>
+            <p class="help-card-text" data-i18n="helpSetTheme">Theme: choose Dark, Light or Violet appearance.</p>
+            <p class="help-card-text" data-i18n="helpSetSoundsTitle">App Sounds: the master switch for sound and haptic feedback.</p>
+            <p class="help-card-text" data-i18n="helpSetSoundsDesc">When App Sounds is ON, button sound and haptics are allowed. Turn it OFF to silence that feedback, and ON again to allow it.</p>
+            <p class="help-card-text" data-i18n="helpSetSoundsSpeech">Speech/TTS is separate from App Sounds and is not turned off by App Sounds.</p>
+          </section>
+
+          <section class="help-card">
+            <h4 class="help-card-title"><i class="fa-solid fa-money-bill-transfer help-dot" aria-hidden="true"></i><span data-i18n="helpCurrencyTitle">Currency Converter</span></h4>
+            <p class="help-card-text" data-i18n="helpCurrencyDesc">Pick the currency you have (From) and the one you want (To), then type an amount.</p>
+            <p class="help-card-text" data-i18n="helpCurrencySwap">Use the swap button to reverse the two currencies.</p>
+            <p class="help-card-text" data-i18n="helpCurrencyFavorites">Use the star to mark a currency as a favorite, and open Favorite Currencies from the currency menu.</p>
+            <p class="help-card-text" data-i18n="helpCurrencyCustomRate">Convert at Custom Rate lets you enter your own exchange rate.</p>
+            <p class="help-card-text" data-i18n="helpCurrencyLive">Live prices come from the online service; if it is unavailable, cached rates may be used.</p>
+          </section>
+
+          <section class="help-card">
+            <h4 class="help-card-title"><i class="fa-solid fa-download help-dot" aria-hidden="true"></i><span data-i18n="helpInstallTitle">Install &amp; Offline</span></h4>
+            <p class="help-card-text" data-i18n="helpInstallDesc1">You can install EQ as an app on supported devices.</p>
+            <p class="help-card-text" data-i18n="helpInstallDesc2">Some features work offline using stored resources, but live currency rates and app updates need an internet connection.</p>
+          </section>
+
+          <section class="help-card">
+            <h4 class="help-card-title"><i class="fa-solid fa-star help-dot" aria-hidden="true"></i><span data-i18n="helpBenefitsTitle">Why Use EQ?</span></h4>
+            <ul class="help-list">
+              <li><span class="help-bullet" aria-hidden="true">•</span><span data-i18n="helpBenefit1">All-in-one calculator</span></li>
+              <li><span class="help-bullet" aria-hidden="true">•</span><span data-i18n="helpBenefit2">Fast everyday calculations</span></li>
+              <li><span class="help-bullet" aria-hidden="true">•</span><span data-i18n="helpBenefit3">Scientific and percentage tools</span></li>
+              <li><span class="help-bullet" aria-hidden="true">•</span><span data-i18n="helpBenefit4">Currency conversion</span></li>
+              <li><span class="help-bullet" aria-hidden="true">•</span><span data-i18n="helpBenefit5">History and notes</span></li>
+              <li><span class="help-bullet" aria-hidden="true">•</span><span data-i18n="helpBenefit6">Multi-language interface</span></li>
+              <li><span class="help-bullet" aria-hidden="true">•</span><span data-i18n="helpBenefit7">Responsive design and PWA support</span></li>
+            </ul>
+          </section>
+
+          <section class="help-card">
+            <h4 class="help-card-title"><i class="fa-solid fa-globe help-dot" aria-hidden="true"></i><span data-i18n="helpLangTitle">Languages</span></h4>
+            <p class="help-card-text" data-i18n="helpLangDesc">EQ is fully translated. Choose your language in the top bar or in Settings, and the whole app — including this help page — updates instantly.</p>
+          </section>
+
+        </div>
+      </div>
+    </div>
+
+    <div id="iosInstallModal" class="install-modal-backdrop" aria-hidden="true">
+      <div class="install-modal" role="dialog" aria-modal="true" aria-labelledby="iosInstallTitle">
+        <div class="install-modal-header">
+          <div class="install-modal-icon">📲</div>
+          <div class="install-modal-heading">
+            <h3 id="iosInstallTitle" data-i18n="installModalTitle">Install on iPhone</h3>
+            <p id="iosInstallSubtitle" class="install-modal-subtitle" data-i18n="installModalSubtitle">Add it to your Home Screen</p>
+          </div>
+          <button id="closeIosInstallModal" class="modal-close-btn" type="button" aria-label="Close">×</button>
+        </div>
+        <ol class="install-modal-steps">
+          <li id="iosInstallStep1" data-i18n="installModalStep1">Step 1: Tap the Share button (⎘ / ⇡) at the bottom or top of the browser.</li>
+          <li id="iosInstallStep2" data-i18n="installModalStep2">Step 2: Choose "Add to Home Screen" from the menu.</li>
+        </ol>
+        <button id="dismissIosInstallModal" class="accent-btn" type="button" data-i18n="installModalClose">Got it</button>
+      </div>
+    </div>
+
+    <div id="notesManagerModal" class="notes-manager-backdrop" aria-hidden="true">
+      <div class="notes-manager" role="dialog" aria-modal="true" aria-labelledby="notesManagerTitle">
+        <div class="notes-manager-header">
+          <button id="closeNotesManager" class="notes-back-btn icon-btn" type="button" aria-label="Back">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          </button>
+          <h3 id="notesManagerTitle" data-i18n="notesManagerTitle">Notes</h3>
+          <button id="openNewNoteButton" class="notes-add-btn icon-btn" type="button" aria-label="New Note">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>
+          </button>
+        </div>
+        <div class="notes-folder-tabs" id="folderTabsContainer">
+          <div class="folder-tabs-scroll" id="folderTabsScroll"></div>
+          <button id="addFolderButton" class="folder-tab-add" type="button" aria-label="New Folder">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+        </div>
+        <div class="notes-manager-body">
+          <div class="notes-list-panel" id="notesListPanel">
+            <ul id="notesList" class="notes-list"></ul>
+            <div id="notesEmptyState" class="notes-empty-state hidden">
+              <div class="notes-empty-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              </div>
+              <p data-i18n="emptyNotesText">No notes yet</p>
+              <button id="emptyNewNoteBtn" class="notes-empty-btn" type="button" data-i18n="emptyNotesAction">+ New Note</button>
+            </div>
+          </div>
+          <div class="notes-list-panel hidden" id="deletedListPanel">
+            <ul id="deletedNotesList" class="notes-list"></ul>
+            <div id="deletedEmptyState" class="notes-empty-state hidden">
+              <div class="notes-empty-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+              </div>
+              <p data-i18n="emptyDeletedText">No deleted notes</p>
+            </div>
+          </div>
+        </div>
+        <nav class="notes-bottom-nav">
+          <button class="notes-nav-btn active" id="navNotesBtn" data-panel="notes" type="button">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <span data-i18n="notesTitle">Notes</span>
+          </button>
+          <button class="notes-nav-btn" id="navDeletedBtn" data-panel="deleted" type="button">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            <span data-i18n="recentlyDeletedTitle">Recently Deleted</span>
+          </button>
+        </nav>
+      </div>
+    </div>
+
+    <div id="deleteConfirmModal" class="delete-confirm-backdrop" aria-hidden="true">
+      <div class="delete-confirm-modal" role="dialog" aria-modal="true">
+        <p class="delete-confirm-title" data-i18n="deleteConfirmTitle">Delete permanently?</p>
+        <p class="delete-confirm-text" data-i18n="deleteConfirmText">This action cannot be undone.</p>
+        <div class="delete-confirm-actions">
+          <button id="deleteConfirmCancel" class="delete-cancel-btn" type="button" data-i18n="cancelBtn">Cancel</button>
+          <button id="deleteConfirmOk" class="delete-ok-btn" type="button" data-i18n="deletePermanentBtn">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="fullScreenNoteModal" class="full-screen-note-backdrop" aria-hidden="true">
+      <div class="full-screen-note" role="dialog" aria-modal="true" aria-labelledby="fullScreenNoteTitle">
+        <div class="full-screen-note-header">
+          <button id="closeFullScreenNote" class="notes-back-btn icon-btn" type="button" aria-label="Back">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          </button>
+          <div class="full-screen-note-title-wrap">
+            <input id="noteTitleInput" class="note-title-input" type="text" maxlength="80" placeholder="Title" data-i18n-placeholder="noteTitlePlaceholder" />
+          </div>
+          <button id="saveFullScreenNote" class="notes-save-btn" type="button" aria-label="Save note" title="Save">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </button>
+          <button id="sendNoteBtn" class="notes-send-btn" type="button" aria-label="Send note" title="Send">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L12 12l-3-3 5-5"/><path d="M18 6l6 6m-6-6l6-6"/></svg>
+          </button>
+          <button id="exportNotePdfBtn" class="notes-send-btn" type="button" aria-label="Export note as PDF" title="Export PDF">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 16.5L16.5 21l-5-5L3 14l6-6 5 5.1L12 2l9 9z"/></svg>
+          </button>
+        </div>
+        <div class="full-screen-note-body">
+          <div class="note-format-toolbar" role="toolbar" aria-label="Text formatting">
+            <button type="button" class="note-format-btn" id="noteBoldBtn" data-format="bold" aria-label="Bold" title="Bold"><span class="fmt-bold">B</span></button>
+            <button type="button" class="note-format-btn" id="noteItalicBtn" data-format="italic" aria-label="Italic" title="Italic"><span class="fmt-italic">I</span></button>
+            <button type="button" class="note-format-btn" id="noteUnderlineBtn" data-format="underline" aria-label="Underline" title="Underline"><span class="fmt-underline">U</span></button>
+            <button type="button" class="note-format-btn" id="noteTableBtn" aria-label="Table" title="Table">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg>
+            </button>
+          </div>
+          <div id="noteTablePanel" class="note-table-panel hidden">
+            <div class="note-table-panel-label" data-i18n="noteTableInsertPopupTitle">Insert Table</div>
+            <div class="note-table-panel-fields">
+              <label class="note-table-panel-field">
+                <span data-i18n="noteTableRowsLabel">Rows</span>
+                <input type="number" id="noteTableRows" min="1" max="20" value="3" aria-label="Rows" />
+              </label>
+              <label class="note-table-panel-field">
+                <span data-i18n="noteTableColsLabel">Cols</span>
+                <input type="number" id="noteTableCols" min="1" max="20" value="3" aria-label="Columns" />
+              </label>
+              <label class="note-table-panel-field note-table-panel-check">
+                <input type="checkbox" id="noteTableHeader" aria-label="Header row" />
+                <span data-i18n="noteTableHeaderRowLabel">Header row</span>
+              </label>
+            </div>
+            <div class="note-table-panel-actions">
+              <button type="button" id="noteTableInsertBtn" class="note-table-insert-btn" data-i18n="noteTableInsertBtnLabel">Insert Table</button>
+              <button type="button" id="noteTableCancelBtn" class="note-table-cancel-btn" data-i18n="cancelBtn">Cancel</button>
+            </div>
+          </div>
+          <div id="noteBodyInput" class="note-body-input" contenteditable="true" placeholder="Start writing..." data-i18n-placeholder="noteBodyPlaceholder" spellcheck="true"></div>
+          <button id="deleteCurrentNote" class="note-delete-float-btn" type="button" aria-label="Delete note" data-i18n="deleteNoteBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="smartDocsModal" class="smart-docs-backdrop" aria-hidden="true">
+      <div class="smart-docs-home" role="dialog" aria-modal="true" aria-labelledby="smartDocsTitle">
+        <header class="smart-docs-header">
+          <button id="closeSmartDocs" class="notes-back-btn icon-btn" type="button" aria-label="Back">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          </button>
+          <h3 id="smartDocsTitle" data-i18n="smartDocsTitle">📄 Smart Documents</h3>
+        </header>
+        <nav class="smart-steps" data-widget="smart-steps" aria-label="Document workflow steps">
+          <div class="smart-steps-track" data-step="1">
+            <div class="smart-step is-active" data-step="1">
+              <span class="smart-step-dot" aria-hidden="true"></span>
+              <span class="smart-step-label" data-i18n="smartDocsStep1">Start</span>
+            </div>
+            <div class="smart-step" data-step="2">
+              <span class="smart-step-dot" aria-hidden="true"></span>
+              <span class="smart-step-label" data-i18n="smartDocsStep2">Edit</span>
+            </div>
+            <div class="smart-step" data-step="3">
+              <span class="smart-step-dot" aria-hidden="true"></span>
+              <span class="smart-step-label" data-i18n="smartDocsStep3">Review</span>
+            </div>
+            <div class="smart-step" data-step="4">
+              <span class="smart-step-dot" aria-hidden="true"></span>
+              <span class="smart-step-label" data-i18n="smartDocsStep4">Export</span>
+            </div>
+          </div>
+        </nav>
+        <div class="smart-docs-body">
+          <h2 class="smart-docs-heading" data-i18n="smartDocsHeading">What would you like to do?</h2>
+          <div class="smart-docs-grid">
+            <button type="button" class="smart-doc-card" data-action="smart-scan-doc">
+              <span class="smart-doc-card-icon" aria-hidden="true">📸</span>
+              <span class="smart-doc-card-content">
+                <span class="smart-doc-card-title" data-i18n="smartDocsCardScanTitle">Scan a Document</span>
+                <span class="smart-doc-card-desc" data-i18n="smartDocsCardScanDesc">Take a photo of a paper or a contract and turn it into editable content.</span>
+              </span>
+            </button>
+            <button type="button" class="smart-doc-card" data-action="smart-import-file">
+              <span class="smart-doc-card-icon" aria-hidden="true">📂</span>
+              <span class="smart-doc-card-content">
+                <span class="smart-doc-card-title" data-i18n="smartDocsCardImportTitle">Import a File</span>
+                <span class="smart-doc-card-desc" data-i18n="smartDocsCardImportDesc">Choose a PDF or a supported file from your device.</span>
+              </span>
+            </button>
+            <button type="button" class="smart-doc-card" data-action="smart-new-doc">
+              <span class="smart-doc-card-icon" aria-hidden="true">📄</span>
+              <span class="smart-doc-card-content">
+                <span class="smart-doc-card-title" data-i18n="smartDocsCardNewTitle">New Document</span>
+                <span class="smart-doc-card-desc" data-i18n="smartDocsCardNewDesc">A blank page to start from scratch.</span>
+              </span>
+            </button>
+            <button type="button" class="smart-doc-card" data-action="smart-templates">
+              <span class="smart-doc-card-icon" aria-hidden="true">📑</span>
+              <span class="smart-doc-card-content">
+                <span class="smart-doc-card-title" data-i18n="smartDocsCardTemplatesTitle">Templates</span>
+                <span class="smart-doc-card-desc" data-i18n="smartDocsCardTemplatesDesc">Ready-made templates to get started quickly.</span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PART 4 — Smart Scan / OCR workflow view (inside Smart Documents) -->
+      <section class="smart-scan-view" id="smartScanView" aria-hidden="true">
+        <header class="smart-scan-header">
+          <button id="smartScanBack" class="notes-back-btn icon-btn" type="button" aria-label="Back">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          </button>
+          <h3 id="smartScanTitle" data-i18n="smartScanTitle">📸 Scan a Document</h3>
+                </header>
+        <nav class="smart-steps" data-widget="smart-scan-steps" aria-label="Scan workflow steps">
+          <div class="smart-steps-track" data-step="1">
+            <div class="smart-step is-active" data-step="1">
+              <span class="smart-step-dot" aria-hidden="true"></span>
+              <span class="smart-step-label" data-i18n="smartDocsStep1">Start</span>
+            </div>
+            <div class="smart-step" data-step="2">
+              <span class="smart-step-dot" aria-hidden="true"></span>
+              <span class="smart-step-label" data-i18n="smartDocsStep2">Edit</span>
+            </div>
+            <div class="smart-step" data-step="3">
+              <span class="smart-step-dot" aria-hidden="true"></span>
+              <span class="smart-step-label" data-i18n="smartDocsStep3">Review</span>
+            </div>
+            <div class="smart-step" data-step="4">
+              <span class="smart-step-dot" aria-hidden="true"></span>
+              <span class="smart-step-label" data-i18n="smartDocsStep4">Export</span>
+            </div>
+          </div>
+        </nav>
+
+        <div class="smart-scan-stage" id="scanStageCamera">
+          <div class="scan-camera-frame" id="scanCameraFrame">
+            <video id="scanVideo" autoplay playsinline muted></video>
+            <div class="scan-camera-shade" aria-hidden="true"></div>
+          </div>
+          <div class="scan-camera-error" id="scanCameraError" hidden>
+            <span id="scanCameraErrorText"></span>
+          </div>
+          <div class="scan-capture-bar">
+            <button id="scanCaptureBtn" class="scan-primary-btn" type="button" data-i18n="smartScanCapture" disabled>Capture</button>
+          </div>
+          <p class="scan-upload-fallback" id="scanFilePick" >
+            <label for="scanFileInput">
+              <span data-i18n="smartScanUploadFallback">Choose an image from your device instead</span>
+            </label>
+            <input id="scanFileInput" type="file" accept="image/*" hidden />
+          </p>
+          <div class="scan-info" id="scanCameraHint" hidden></div>
+        </div>
+
+        <div class="smart-scan-stage" id="scanStageProcessing">
+          <div class="scan-progress" id="scanProcessingProgress">
+            <div class="scan-proc-item" data-proc="detect">
+              <span class="scan-proc-dot" aria-hidden="true"></span>
+              <span data-i18n="smartScanDetecting">Detecting document</span>
+            </div>
+            <div class="scan-proc-item" data-proc="correct">
+              <span class="scan-proc-dot" aria-hidden="true"></span>
+              <span data-i18n="smartScanCorrecting">Correcting image</span>
+            </div>
+            <div class="scan-proc-item" data-proc="improve">
+              <span class="scan-proc-dot" aria-hidden="true"></span>
+              <span data-i18n="smartScanImproving">Improving image</span>
+            </div>
+            <div class="scan-proc-item" data-proc="read">
+              <span class="scan-proc-dot" aria-hidden="true"></span>
+              <span data-i18n="smartScanReading">Reading text</span>
+            </div>
+          </div>
+          <div class="scan-info" id="scanProcessingInfo" data-i18n="smartScanProcessing">Processing…</div>
+          <canvas id="scanProcessingCanvas" hidden></canvas>
+        </div>
+
+        <div class="smart-scan-stage" id="scanStageReview">
+          <div class="scan-review-grid">
+            <div class="scan-review-col">
+              <span class="scan-review-label" data-i18n="smartScanPreviewLabel">Processed document</span>
+              <div class="scan-review-preview">
+                <img id="scanReviewImage" alt="Processed scanned document" />
+              </div>
+            </div>
+            <div class="scan-review-col">
+              <span class="scan-review-label" id="scanReviewHeading" data-i18n="smartScanReviewTitle">Review OCR result</span>
+              <div class="scan-review-text">
+                <textarea id="scanReviewText" rows="12" spellcheck="false" data-i18n-placeholder="smartScanEditHint"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="scan-info" id="scanAcceptInfo" hidden></div>
+          <div class="scan-review-actions">
+            <button id="scanRescanBtn" class="scan-ghost-btn" type="button" data-i18n="smartScanRescan">Rescan</button>
+            <button id="scanAcceptBtn" class="scan-primary-btn" type="button" data-i18n="smartScanAccept">Accept Result</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- PART 5 — Smart Import / PDF workflow view (inside Smart Documents) -->
+      <section class="smart-import-view" id="smartImportView" aria-hidden="true">
+        <header class="smart-scan-header">
+          <button id="smartImportBack" class="notes-back-btn icon-btn" type="button" aria-label="Back">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          </button>
+          <h3 id="smartImportTitle" data-i18n="smartImportTitle">📂 Import a File</h3>
+        </header>
+        <nav class="smart-steps" data-widget="smart-import-steps" aria-label="Import workflow steps">
+          <div class="smart-steps-track" data-step="1">
+            <div class="smart-step is-active" data-step="1">
+              <span class="smart-step-dot" aria-hidden="true"></span>
+              <span class="smart-step-label" data-i18n="smartDocsStep1">Start</span>
+            </div>
+            <div class="smart-step" data-step="2">
+              <span class="smart-step-dot" aria-hidden="true"></span>
+              <span class="smart-step-label" data-i18n="smartDocsStep2">Edit</span>
+            </div>
+            <div class="smart-step" data-step="3">
+              <span class="smart-step-dot" aria-hidden="true"></span>
+              <span class="smart-step-label" data-i18n="smartDocsStep3">Review</span>
+            </div>
+            <div class="smart-step" data-step="4">
+              <span class="smart-step-dot" aria-hidden="true"></span>
+              <span class="smart-step-label" data-i18n="smartDocsStep4">Export</span>
+            </div>
+          </div>
+        </nav>
+        <input id="smartImportFileInput" type="file" accept="application/pdf,.pdf" hidden />
+
+        <div class="smart-import-stage" id="importStagePick">
+          <p class="import-pick-prompt" data-i18n="smartImportPickPrompt">Choose a PDF file from your device.</p>
+          <div class="import-actions">
+            <button id="smartImportChooseBtn" class="scan-primary-btn" type="button" data-i18n="smartImportChoose">Choose File</button>
+          </div>
+        </div>
+
+        <div class="smart-import-stage" id="importStagePreparing" hidden>
+          <div class="scan-progress">
+            <div class="scan-proc-item proc-active" data-proc="prepare">
+              <span class="scan-proc-dot" aria-hidden="true"></span>
+              <span data-i18n="smartImportPreparing">Preparing Document…</span>
+            </div>
+            <div class="scan-proc-item" data-proc="analyze">
+              <span class="scan-proc-dot" aria-hidden="true"></span>
+              <span data-i18n="smartImportAnalyzing">Analyzing the document…</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="smart-import-stage" id="importStageScanned" hidden>
+          <div class="import-decision">
+            <h4 data-i18n="smartImportScannedTitle">Scanned Document Detected</h4>
+            <p data-i18n="smartImportScannedMsg">It looks like this document contains scanned pages. Would you like to use text recognition?</p>
+          </div>
+          <div class="import-actions">
+            <button id="importUseOcrBtn" class="scan-primary-btn" type="button" data-i18n="smartImportUseOcr">Use OCR</button>
+            <button id="importKeepImagesBtn" class="scan-ghost-btn" type="button" data-i18n="smartImportKeepImages">Keep Pages as Images</button>
+          </div>
+        </div>
+
+        <div class="smart-import-stage" id="importStageOcr" hidden>
+          <div class="scan-progress">
+            <div class="scan-proc-item proc-active" data-proc="ocr">
+              <span class="scan-proc-dot" aria-hidden="true"></span>
+              <span data-i18n="smartImportOcrProcessing">OCR Processing…</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="smart-import-stage" id="importStageError" hidden>
+          <div class="import-decision import-error">
+            <h4 data-i18n="smartImportFailed">Failed to Import</h4>
+            <p id="importErrorText"></p>
+          </div>
+          <div class="import-actions">
+            <button id="importRetryBtn" class="scan-primary-btn" type="button" data-i18n="smartImportRetry">Retry</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- PART 5 — Smart Documents editor destination for imported content -->
+      <section class="smart-editor-view" id="smartEditorView" aria-hidden="true">
+        <header class="smart-scan-header">
+          <button id="smartEditorBack" class="notes-back-btn icon-btn" type="button" aria-label="Back">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          </button>
+          <h3 id="smartEditorTitle" data-i18n="smartEditorTitle">Editor</h3>
+        </header>
+        <div class="smart-editor-body">
+          <div id="smartEditorImages" class="smart-editor-images"></div>
+          <span class="scan-review-label" data-i18n="smartEditorHint">Document content</span>
+          <textarea id="smartEditorText" class="smart-editor-text" rows="14" spellcheck="false" data-i18n-placeholder="smartEditorPlaceholder"></textarea>
+        </div>
+      </section>
+<!-- PART 6 — Smart Documents blank document workspace (A4 page as canvas) -->
+      <section class="smart-blank-view" id="smartBlankView" aria-hidden="true">
+        <header class="smart-scan-header">
+          <button id="smartBlankBack" class="notes-back-btn icon-btn" type="button" aria-label="Back">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          </button>
+          <span class="smart-blank-back-label" data-i18n="smartDocumentBackLabel">Smart Documents</span>
+          <h2 id="smartBlankDocTitle" class="smart-blank-title" data-i18n="smartToolbarDefault">New Document</h2>
+        </header>
+        <div class="smart-blank-toolbar" data-toolbar="blank-doc" role="toolbar">
+          <button type="button" class="smart-tool-btn" data-tool="undo">
+            <span class="smart-btn-ico" aria-hidden="true">&#8636;</span>
+            <span data-i18n="smartToolbarUndo">Undo</span>
+          </button>
+          <button type="button" class="smart-tool-btn" data-tool="redo">
+            <span class="smart-btn-ico" aria-hidden="true">&#8637;</span>
+            <span data-i18n="smartToolbarRedo">Redo</span>
+          </button>
+          <span class="smart-tool-sep" aria-hidden="true"></span>
+          <button type="button" class="smart-tool-btn" data-tool="add">
+            <span class="smart-btn-ico smart-btn-ico-letter" aria-hidden="true">+</span>
+            <span data-i18n="smartToolbarAdd">Add</span>
+          </button>
+          <button type="button" class="smart-tool-btn" data-tool="text">
+            <span class="smart-btn-ico smart-btn-ico-letter" aria-hidden="true"><b>T</b></span>
+            <span data-i18n="smartToolbarText">Text</span>
+          </button>
+          <button type="button" class="smart-tool-btn" data-tool="table">
+            <span class="smart-btn-ico" aria-hidden="true">▦</span>
+            <span data-i18n="smartToolbarTable">Table</span>
+          </button>
+          <button type="button" class="smart-tool-btn" data-tool="signature">
+            <span class="smart-btn-ico" aria-hidden="true">✍</span>
+            <span data-i18n="smartToolbarSignature">Signature</span>
+          </button>
+          <span class="smart-tool-sep" aria-hidden="true"></span>
+          <button type="button" class="smart-tool-btn" data-tool="image">
+            <span class="smart-btn-ico" aria-hidden="true">🖼</span>
+            <span data-i18n="smartToolbarImage">Image</span>
+          </button>
+          <button type="button" class="smart-tool-btn" data-tool="logo">
+            <span class="smart-btn-ico" aria-hidden="true">◉</span>
+            <span data-i18n="smartToolbarLogo">Logo</span>
+          </button>
+          <button type="button" class="smart-tool-btn" data-tool="divider">
+            <span class="smart-btn-ico" aria-hidden="true">━</span>
+            <span data-i18n="smartToolbarDivider">Divider</span>
+          </button>
+          <button type="button" class="smart-tool-btn" data-tool="border">
+            <span class="smart-btn-ico" aria-hidden="true">▭</span>
+            <span data-i18n="smartToolbarBorder">Border</span>
+          </button>
+          <button type="button" class="smart-tool-btn" data-tool="page">
+            <span class="smart-btn-ico" aria-hidden="true">📄</span>
+            <span data-i18n="smartToolbarPage">Page</span>
+          </button>
+          <button type="button" class="smart-tool-btn" data-tool="page-number">
+            <span class="smart-btn-ico smart-btn-ico-letter" aria-hidden="true">#</span>
+            <span data-i18n="smartToolbarPageNumber">Page number</span>
+          </button>
+          <button type="button" class="smart-tool-btn" data-tool="page-settings">
+            <span class="smart-btn-ico" aria-hidden="true">⚙</span>
+            <span data-i18n="smartToolbarPageSettings">Page settings</span>
+          </button>
+          <button type="button" class="smart-tool-btn" data-tool="more">
+            <span class="smart-btn-ico" aria-hidden="true">…</span>
+            <span data-i18n="smartToolbarMore">More</span>
+          </button>
+        </div>
+<!-- PART 18 — Signature protection status (حالة حماية التوقيع).
+             "EQ Signature Status": EQ only checks whether the document's
+             substantial content changed after its last in-system signature.
+             It is NOT a legal / certified electronic signature. Session-only
+             (no persistence). Hidden until a signature exists; small, RTL-safe
+             and never causes horizontal overflow. -->
+        <div class="smart-sig-status" id="smartSigStatus" role="status" aria-hidden="true" hidden>
+          <span class="smart-sig-status-text" id="smartSigStatusText" data-i18n="smartSigStatusSigned"></span>
+          <button type="button" class="smart-sig-resign" id="smartSigResignBtn" data-i18n="smartSigResign" hidden>Re-sign</button>
+        </div>
+        <!-- PART 15 — Logo position control (shown only while a logo exists) -->
+        <div class="smart-logo-bar" id="smartLogoBar" role="toolbar" aria-hidden="true" data-smart-logo-tools>
+          <span class="smart-logo-bar-label" data-i18n="smartLogoPosition">Logo position</span>
+          <button type="button" class="smart-logo-pos" data-logo-pos="top-right" data-i18n="smartLogoTopRight">Top right</button>
+          <button type="button" class="smart-logo-pos" data-logo-pos="top-left" data-i18n="smartLogoTopLeft">Top left</button>
+          <button type="button" class="smart-logo-pos" data-logo-pos="center" data-i18n="smartLogoCenter">Center</button>
+        </div>
+        <!-- PART 11 — Text Formatting Controls (shown only while a text block is active) -->
+        <div class="smart-text-format-bar" id="smartTextFormatBar" role="toolbar" aria-hidden="true" data-smart-text-tools>
+          <label class="smart-text-field"><span data-i18n="smartTextFont">Font</span>
+            <select id="smartTextFontFamily" class="smart-text-ctl">
+              <option value="">Default</option>
+              <option value="Arial, sans-serif">Arial</option>
+              <option value="Georgia, serif">Georgia</option>
+              <option value="'Times New Roman', serif">Times New Roman</option>
+              <option value="'Courier New', monospace">Courier New</option>
+              <option value="Tahoma, sans-serif">Tahoma</option>
+              <option value="Verdana, sans-serif">Verdana</option>
+            </select>
+          </label>
+          <label class="smart-text-field"><span data-i18n="smartTextSize">Size</span>
+            <select id="smartTextFontSize" class="smart-text-ctl">
+              <option value="14px">14</option><option value="16px" selected>16</option>
+              <option value="18px">18</option><option value="20px">20</option>
+              <option value="24px">24</option><option value="28px">28</option><option value="32px">32</option>
+            </select>
+          </label>
+          <button type="button" class="smart-text-btn" data-textfmt="bold" title="Bold" data-i18n="smartTextBold">B</button>
+          <button type="button" class="smart-text-btn" data-textfmt="italic" title="Italic" data-i18n="smartTextItalic">I</button>
+          <button type="button" class="smart-text-btn" data-textfmt="underline" title="Underline" data-i18n="smartTextUnderline">U</button>
+          <button type="button" class="smart-text-btn" data-textalign="left" title="Align left" data-i18n="smartTextAlignLeft">&#8676;</button>
+          <button type="button" class="smart-text-btn" data-textalign="center" title="Center" data-i18n="smartTextAlignCenter">&#8544;</button>
+          <button type="button" class="smart-text-btn" data-textalign="right" title="Align right" data-i18n="smartTextAlignRight">&#8677;</button>
+          <label class="smart-text-field"><span data-i18n="smartTextDirection">Direction</span>
+            <select id="smartTextDirection" class="smart-text-ctl">
+              <option value="auto" data-i18n="smartTextDirAuto">Auto</option>
+              <option value="ltr" data-i18n="smartTextDirLtr">LTR</option>
+              <option value="rtl" data-i18n="smartTextDirRtl">RTL</option>
+            </select>
+          </label>
+          <label class="smart-text-field"><span data-i18n="smartTextSpacing">Line spacing</span>
+            <select id="smartTextLineSpacing" class="smart-text-ctl">
+              <option value="1" selected>1.0</option>
+              <option value="1.15">1.15</option>
+              <option value="1.5">1.5</option>
+              <option value="2">2.0</option>
+            </select>
+          </label>
+        </div>
+        <!-- PART 12 — Table size launcher (opened only by the ▦ toolbar button) -->
+        <div class="smart-table-create" id="smartTableCreate" role="dialog" aria-hidden="true" aria-label="Table size">
+          <div class="smart-table-create-cols">
+            <label class="stc-field"><span data-i18n="smartTableRows">Rows</span>
+              <input type="number" id="smartTableRows" value="4" min="1" max="20" />
+            </label>
+            <label class="stc-field"><span data-i18n="smartTableColumns">Columns</span>
+              <input type="number" id="smartTableCols" value="4" min="1" max="20" />
+            </label>
+          </div>
+          <div class="smart-table-create-size"><span id="smartTableCreateSize" aria-live="polite">4 × 4</span></div>
+          <button type="button" class="smart-table-create-btn" data-table-create="confirm">
+            <span data-i18n="smartTableCreate">Create table</span>
+          </button>
+        </div>
+        <!-- PART 12 — Contextual Table Tools (shown only while a cell is active) -->
+        <div class="smart-table-tools" id="smartTableToolbar" role="toolbar" aria-hidden="true" data-smart-table-tools>
+          <button type="button" class="smart-text-btn" data-tablecmd="add-row" data-i18n="smartTableAddRow">Add row</button>
+          <button type="button" class="smart-text-btn" data-tablecmd="del-row" data-i18n="smartTableDelRow">Delete row</button>
+          <button type="button" class="smart-text-btn" data-tablecmd="add-col" data-i18n="smartTableAddCol">Add column</button>
+          <button type="button" class="smart-text-btn" data-tablecmd="del-col" data-i18n="smartTableDelCol">Delete column</button>
+          <span class="smart-table-sep" aria-hidden="true"></span>
+          <button type="button" class="smart-text-btn" data-tablealign="left" title="Align left" data-i18n="smartTableAlignLeft">&#8676;</button>
+          <button type="button" class="smart-text-btn" data-tablealign="center" title="Center" data-i18n="smartTableAlignCenter">&#8544;</button>
+          <button type="button" class="smart-text-btn" data-tablealign="right" title="Align right" data-i18n="smartTableAlignRight">&#8677;</button>
+        </div>
+        <!-- PART 10 — Smart Add menu (opened by the toolbar "+" button only) -->
+        <div class="smart-add-menu" id="smartAddMenu" role="menu" aria-hidden="true">
+          <button type="button" class="smart-add-item" data-add="text" role="menuitem">
+            <span class="smart-add-ico" aria-hidden="true">T</span>
+            <span data-i18n="smartToolbarText">Text</span>
+          </button>
+          <button type="button" class="smart-add-item" data-add="heading" role="menuitem">
+            <span class="smart-add-ico" aria-hidden="true">H</span>
+            <span data-i18n="smartAddHeading">Heading</span>
+          </button>
+          <button type="button" class="smart-add-item" data-add="table" role="menuitem">
+            <span class="smart-add-ico" aria-hidden="true">▦</span>
+            <span data-i18n="smartToolbarTable">Table</span>
+          </button>
+          <button type="button" class="smart-add-item" data-add="image" role="menuitem">
+            <span class="smart-add-ico" aria-hidden="true">🖼</span>
+            <span data-i18n="smartToolbarImage">Image</span>
+          </button>
+          <button type="button" class="smart-add-item" data-add="divider" role="menuitem">
+            <span class="smart-add-ico" aria-hidden="true">━</span>
+            <span data-i18n="smartToolbarDivider">Divider</span>
+          </button>
+          <button type="button" class="smart-add-item" data-add="new-page" role="menuitem">
+            <span class="smart-add-ico" aria-hidden="true">+</span>
+            <span data-i18n="smartAddNewPage">New Page</span>
+          </button>
+        </div>
+        <!-- PART 16 — Page Design menu (opened by the toolbar ⚙ button only).
+             Exactly 5 fixed frame presets. No advanced customization in V1. -->
+        <div class="smart-add-menu smart-page-design-menu" id="smartPageDesignMenu" role="menu" aria-hidden="true">
+          <button type="button" class="smart-add-item smart-design-item" data-design="none" role="menuitem">
+            <span class="smart-add-ico smart-design-ico smart-design-ico-none" aria-hidden="true"></span>
+            <span data-i18n="smartPageDesignNone">No border</span>
+          </button>
+          <button type="button" class="smart-add-item smart-design-item" data-design="simple" role="menuitem">
+            <span class="smart-add-ico smart-design-ico smart-design-ico-simple" aria-hidden="true"></span>
+            <span data-i18n="smartPageDesignSimple">Simple</span>
+          </button>
+          <button type="button" class="smart-add-item smart-design-item" data-design="classic" role="menuitem">
+            <span class="smart-add-ico smart-design-ico smart-design-ico-classic" aria-hidden="true"></span>
+            <span data-i18n="smartPageDesignClassic">Classic</span>
+          </button>
+          <button type="button" class="smart-add-item smart-design-item" data-design="formal" role="menuitem">
+            <span class="smart-add-ico smart-design-ico smart-design-ico-formal" aria-hidden="true"></span>
+            <span data-i18n="smartPageDesignFormal">Formal</span>
+          </button>
+          <button type="button" class="smart-add-item smart-design-item" data-design="modern" role="menuitem">
+            <span class="smart-add-ico smart-design-ico smart-design-ico-modern" aria-hidden="true"></span>
+            <span data-i18n="smartPageDesignModern">Modern</span>
+          </button>
+        </div>
+        <!-- PART 17 — Signature tool (opened by the toolbar ✍ button only).
+             Exactly 3 methods: Draw / Type / Image. No advanced features. -->
+        <div class="smart-add-menu smart-signature-menu" id="smartSignatureMenu" role="menu" aria-hidden="true">
+          <button type="button" class="smart-add-item smart-sig-item" data-sig-method="draw" role="menuitem">
+            <span class="smart-add-ico" aria-hidden="true">✎</span>
+            <span data-i18n="smartSigDraw">Draw</span>
+          </button>
+          <button type="button" class="smart-add-item smart-sig-item" data-sig-method="type" role="menuitem">
+            <span class="smart-add-ico" aria-hidden="true">Aa</span>
+            <span data-i18n="smartSigType">Type</span>
+          </button>
+          <button type="button" class="smart-add-item smart-sig-item" data-sig-method="image" role="menuitem">
+            <span class="smart-add-ico" aria-hidden="true">🖼</span>
+            <span data-i18n="smartSigImage">Image</span>
+          </button>
+        </div>
+        <div class="smart-signature-panel" id="smartSignaturePanel" role="dialog" aria-label="Signature" aria-hidden="true">
+          <!-- Draw stage -->
+          <div class="smart-sig-stage" id="sigStageDraw" hidden>
+            <canvas id="signatureCanvas" class="smart-sig-canvas"></canvas>
+            <div class="smart-sig-actions">
+              <button type="button" class="smart-text-btn smart-sig-clear" data-i18n="smartSigClear">Clear</button>
+              <button type="button" class="smart-table-create-btn smart-sig-insert" data-i18n="smartSigInsert">Insert</button>
+              <button type="button" class="smart-text-btn smart-sig-cancel" data-i18n="smartSigCancel">Cancel</button>
+            </div>
+          </div>
+          <!-- Type stage -->
+          <div class="smart-sig-stage" id="sigStageType" hidden>
+            <input type="text" id="signatureNameInput" class="smart-text-ctl smart-sig-name" autocomplete="off" />
+            <div class="smart-sig-style-row" id="signatureStyleRow">
+              <button type="button" class="smart-text-btn smart-sig-style-btn active" data-sig-style="0">Aa</button>
+              <button type="button" class="smart-text-btn smart-sig-style-btn" data-sig-style="1">Aa</button>
+              <button type="button" class="smart-text-btn smart-sig-style-btn" data-sig-style="2">Aa</button>
+            </div>
+            <div class="smart-sig-preview" id="signatureTypePreview" aria-hidden="true"></div>
+            <div class="smart-sig-actions">
+              <button type="button" class="smart-table-create-btn smart-sig-insert" data-i18n="smartSigInsert">Insert</button>
+              <button type="button" class="smart-text-btn smart-sig-cancel" data-i18n="smartSigCancel">Cancel</button>
+            </div>
+          </div>
+          <!-- Image stage -->
+          <div class="smart-sig-stage" id="sigStageImage" hidden>
+            <img id="signatureImagePreview" class="smart-sig-img-preview" alt="" hidden />
+            <p class="smart-sig-hint" id="signatureImageHint"><span data-i18n="smartSigChoose">Choose an image of your signature</span></p>
+            <div class="smart-sig-actions">
+              <button type="button" class="smart-table-create-btn smart-sig-insert" data-i18n="smartSigInsert" disabled>Insert</button>
+              <button type="button" class="smart-text-btn smart-sig-cancel" data-i18n="smartSigCancel">Cancel</button>
+            </div>
+          </div>
+        </div>
+        <!-- PART 17 — hidden file picker used by the Signature Image option -->
+        <input type="file" id="smartSignatureImageInput" accept="image/*" hidden>
+        <!-- PART 10 — hidden file picker used by the Image option -->
+        <input type="file" id="smartAddImageInput" accept="image/*" hidden>
+        <!-- PART 15 — hidden file picker used by the Logo tool -->
+        <input type="file" id="smartAddLogoInput" accept="image/*" hidden>
+        <div class="smart-blank-stage">
+          <div class="smart-blank-canvas-holder" id="smartBlankCanvasHolder">
+            <div class="smart-blank-canvas smart-document-canvas" id="smartBlankCanvas" data-canvas="document">
+              <div class="smart-document-content" id="smartDocumentContent" data-canvas-content="document"></div>
+            </div>
+          </div>
+        </div>
+        <nav class="smart-blank-nav" data-widget="smart-blank-nav" aria-label="Page navigation">
+          <!-- PART 19 — real page management: navigate + add/copy/delete/reorder.
+               Uses the SAME page model as PART 6/10/16 (A4 canvases in the holder). -->
+          <button id="smartBlankPrevPage" class="smart-nav-btn" type="button" aria-label="Previous page">
+            <span class="smart-nav-ico" aria-hidden="true">&#8249;</span>
+            <span data-i18n="smartBlankNavPrev">Previous</span>
+          </button>
+          <span class="smart-page-counter">
+            <span class="smart-page-counter-label" data-i18n="smartBlankNavPage">Page</span>
+            <strong id="smartPageCount">1 / 1</strong>
+          </span>
+          <button id="smartBlankNextPage" class="smart-nav-btn" type="button" aria-label="Next page">
+            <span data-i18n="smartBlankNavNext">Next</span>
+            <span class="smart-nav-ico" aria-hidden="true">&#8250;</span>
+          </button>
+          <span class="smart-nav-sep" aria-hidden="true"></span>
+          <button id="smartPageAddBtn" class="smart-nav-btn" type="button" aria-label="Add page">
+            <span class="smart-nav-ico" aria-hidden="true">＋</span>
+            <span data-i18n="smartPageAdd">Add page</span>
+          </button>
+          <button id="smartPageCopyBtn" class="smart-nav-btn" type="button" aria-label="Duplicate page">
+            <span class="smart-nav-ico" aria-hidden="true">⧉</span>
+            <span data-i18n="smartPageCopy">Copy page</span>
+          </button>
+          <button id="smartPageDeleteBtn" class="smart-nav-btn" type="button" aria-label="Delete page">
+            <span class="smart-nav-ico" aria-hidden="true">🗑</span>
+            <span data-i18n="smartPageDelete">Delete page</span>
+          </button>
+          <button id="smartPageMoveUpBtn" class="smart-nav-btn smart-nav-icon-btn" type="button" aria-label="Move page up">
+            <span class="smart-nav-ico smart-nav-move-up" aria-hidden="true">↑</span>
+          </button>
+          <button id="smartPageMoveDownBtn" class="smart-nav-btn smart-nav-icon-btn" type="button" aria-label="Move page down">
+            <span class="smart-nav-ico smart-nav-move-down" aria-hidden="true">↓</span>
+          </button>
+        </nav>
+      </section>
+
+      <!-- PART 7 — Smart Documents templates (categories + template items) -->
+      <section class="smart-templates-view" id="smartTemplatesView" aria-hidden="true">
+        <header class="smart-scan-header">
+          <button id="smartTemplatesBack" class="notes-back-btn icon-btn" type="button" aria-label="Back">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          </button>
+          <h3 id="smartTemplatesTitle" data-i18n="smartDocsCardTemplatesTitle">Templates</h3>
+        </header>
+        <div class="smart-templates-body">
+          <section class="smart-template-group" data-template-group="business">
+            <h4 class="smart-template-group-title" data-i18n="smartTemplatesBusiness">Business</h4>
+            <div class="smart-template-list">
+              <button type="button" class="smart-template-item" data-template-id="invoice" data-template-group="business">
+                <span class="smart-template-item-icon" aria-hidden="true">🧾</span>
+                <span class="smart-template-item-name" data-i18n="smartTemplatesInvoice">Invoice</span>
+              </button>
+              <button type="button" class="smart-template-item" data-template-id="quote" data-template-group="business">
+                <span class="smart-template-item-icon" aria-hidden="true">📊</span>
+                <span class="smart-template-item-name" data-i18n="smartTemplatesQuote">Quote</span>
+              </button>
+              <button type="button" class="smart-template-item" data-template-id="payment-agreement" data-template-group="business">
+                <span class="smart-template-item-icon" aria-hidden="true">🤝</span>
+                <span class="smart-template-item-name" data-i18n="smartTemplatesPaymentAgreement">Payment Agreement</span>
+              </button>
+              <button type="button" class="smart-template-item" data-template-id="service-contract" data-template-group="business">
+                <span class="smart-template-item-icon" aria-hidden="true">📋</span>
+                <span class="smart-template-item-name" data-i18n="smartTemplatesServiceContract">Service Contract</span>
+              </button>
+              <button type="button" class="smart-template-item" data-template-id="simple-agreement" data-template-group="business">
+                <span class="smart-template-item-icon" aria-hidden="true">📄</span>
+                <span class="smart-template-item-name" data-i18n="smartTemplatesSimpleAgreement">Simple Agreement</span>
+              </button>
+            </div>
+          </section>
+          <section class="smart-template-group" data-template-group="personal">
+            <h4 class="smart-template-group-title" data-i18n="smartTemplatesPersonal">Personal</h4>
+            <div class="smart-template-list">
+              <button type="button" class="smart-template-item" data-template-id="payment-receipt" data-template-group="personal">
+                <span class="smart-template-item-icon" aria-hidden="true">🧾</span>
+                <span class="smart-template-item-name" data-i18n="smartTemplatesPaymentReceipt">Payment Receipt</span>
+              </button>
+              <button type="button" class="smart-template-item" data-template-id="rental-agreement" data-template-group="personal">
+                <span class="smart-template-item-icon" aria-hidden="true">🏠</span>
+                <span class="smart-template-item-name" data-i18n="smartTemplatesRentalAgreement">Rental Agreement</span>
+              </button>
+              <button type="button" class="smart-template-item" data-template-id="simple-agreement" data-template-group="personal">
+                <span class="smart-template-item-icon" aria-hidden="true">📄</span>
+                <span class="smart-template-item-name" data-i18n="smartTemplatesSimpleAgreement">Simple Agreement</span>
+              </button>
+            </div>
+          </section>
+          <section class="smart-template-group" data-template-group="custom">
+            <h4 class="smart-template-group-title" data-i18n="smartTemplatesCustom">Custom</h4>
+            <div class="smart-template-list">
+              <button type="button" class="smart-template-item" data-template-id="my-templates" data-template-group="custom">
+                <span class="smart-template-item-icon" aria-hidden="true">📁</span>
+                <span class="smart-template-item-name" data-i18n="smartTemplatesMyTemplates">My Templates</span>
+              </button>
+            </div>
+          </section>
+        </div>
+      </section>
+    </div>
+
+
+    <div id="drawerOverlay" class="drawer-overlay"></div>
+    <aside id="drawer" class="drawer side" aria-label="EQ tools drawer">
+      <div class="drawer-header">
+        <div>
+          <h2 class="app-logo" dir="ltr"><span class="logo-e">E</span><span class="logo-q">Q</span></h2>
+        </div>
+        <button id="drawerCloseButton" class="modal-close-btn" type="button" aria-label="Close drawer">×</button>
+      </div>
+      <nav class="drawer-menu">
+        <button class="drawer-menu-item" data-action="open-history" type="button">
+         <span class="item-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></span>
+          <span data-i18n="drawerHistory">History</span>
+        </button>
+        <button class="drawer-menu-item" data-action="open-notes" type="button">
+          <span class="item-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></span>
+          <span data-i18n="drawerNotes">Notes</span>
+        </button>
+        <button class="drawer-menu-item" data-action="open-smart-docs" type="button">
+          <span class="item-icon"><span class="smart-docs-icon">📄</span></span>
+          <span data-i18n="smartDocsTitle">📄 Smart Documents</span>
+        </button>
+        <button class="drawer-menu-item" data-action="open-install" type="button">
+          <span class="item-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg></span>
+          <span data-i18n="drawerInstall">Install App</span>
+        </button>
+        <button class="drawer-menu-item" data-action="open-settings" type="button">
+         <span class="item-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></span>
+          <span data-i18n="drawerSettings">Settings</span>
+        </button>
+      </nav>
+    </aside>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

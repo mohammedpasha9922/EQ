@@ -1,0 +1,2397 @@
+﻿           <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0" />
+    <meta name="theme-color" content="#000000" />
+    <style>html{background:#000000}body{background:#000000}</style>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="description" content="Advanced EQ7 Calculator with precision math, word conversion, history, and PWA support." />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="EQ7" />
+    <title>EQ7</title>
+    <link rel="icon" type="image/x-icon" href="./favicon.ico" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png" />
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" href="./styles.css" />
+    <style id="currency-dropdown-rtl-mobile-fix">
+      /* MINIMAL SCOPED FIX — Currency Dropdown RTL mobile only (plus base vertical defaults).
+         Does not touch calculator, drawer, modals, or other features. */
+      #currencyMenuWrap { position: relative !important; }
+      #currencyMenuPopover {
+        position: absolute !important;
+        top: calc(100% + 8px) !important;
+        right: 0 !important;
+        left: auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 2px !important;
+        width: max-content !important;
+        min-width: 200px !important;
+        max-width: min(420px, calc(100vw - 32px)) !important;
+        max-height: calc(100dvh - 120px) !important;
+        overflow-y: auto !important;
+        overflow-x: visible !important;
+        z-index: 60 !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+        transform: translateY(-6px) !important;
+        text-align: start !important;
+      }
+      #currencyMenuPopover.open {
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+        transform: translateY(0) !important;
+      }
+      #currencyMenuPopover .currency-popover-item {
+        display: flex !important;
+        align-items: center !important;
+        width: 100% !important;
+        flex: 0 0 auto !important;
+        white-space: normal !important;
+        text-overflow: clip !important;
+        overflow: visible !important;
+        min-width: 0 !important;
+      }
+      #currencyMenuPopover .currency-popover-item span {
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        overflow-wrap: break-word !important;
+        min-width: 0 !important;
+      }
+      @media (max-width: 480px) {
+        #currencyMenuPopover {
+          min-width: 190px !important;
+          max-width: min(260px, calc(100vw - 24px)) !important;
+        }
+        /* RTL mobile: anchor toward LEFT so the full menu stays inside the viewport. */
+        html[dir="rtl"] #currencyMenuPopover,
+        body[data-language="ar"] #currencyMenuPopover,
+        body[data-language="ku"] #currencyMenuPopover {
+          right: auto !important;
+          left: 0 !important;
+        }
+      }
+    </style>
+    <style id="feature-nav-bar-ui">
+      /* MINIMAL SCOPED FIX — Feature Navigation Bar only: ONE unified horizontal,
+         icon-only bar (History → Notes → Smart Documents → Currency → Settings).
+         Reuses the EXISTING #featureNavBar buttons and existing handlers; CSS only.
+         Does not touch calculator, drawer, currency logic/API, modals, or other CSS. */
+      #featureNavBar {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        margin: 8px auto 0;
+        padding: 8px 10px;
+        border-radius: 14px;
+        background: rgba(148, 163, 184, 0.12);
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        position: relative;
+        overflow: visible; /* keep the currency popover unclipped */
+      }
+      #featureNavBar .feature-nav-btn {
+        flex: 0 0 auto;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        padding: 0;
+        margin: 0;
+        border: none;
+        border-radius: 10px;
+        background: transparent;
+        color: inherit;
+        cursor: pointer;
+      }
+      #featureNavBar .feature-nav-btn:hover { background: rgba(148, 163, 184, 0.18); }
+      #featureNavBar .feature-nav-btn:focus-visible { outline: 2px solid #60a5fa; outline-offset: 2px; }
+      #featureNavBar .feature-nav-icon { display: inline-flex; align-items: center; justify-content: center; }
+      /* Icon-only bar: hide the text labels but keep them for screen readers. */
+      #featureNavBar .feature-nav-label {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+        border: 0;
+      }
+      /* Scoped: Coins/Currency button must visually match the other
+         Feature Navigation buttons (transparent, same size/radius/hover).
+         Only styling — the ids, popover and handlers are untouched. */
+      #featureNavBar .feature-nav-currency .ghost-btn {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        padding: 0;
+        margin: 0;
+        border: none;
+        border-radius: 10px;
+        background: transparent;
+        color: inherit;
+        box-shadow: none;
+      }
+      #featureNavBar .feature-nav-currency .ghost-btn:hover {
+        background: rgba(148, 163, 184, 0.18);
+        transform: none;
+      }
+      #featureNavBar .feature-nav-currency .ghost-btn:focus-visible {
+        outline: 2px solid #60a5fa;
+        outline-offset: 2px;
+      }
+      @media (max-width: 480px) {
+        #featureNavBar .feature-nav-currency .ghost-btn {
+          width: 38px;
+          height: 38px;
+          min-width: 38px;
+          border-radius: 10px;
+        }
+      }
+      @media (max-width: 480px) {
+        #featureNavBar { gap: 4px; padding: 6px 8px; margin-top: 6px; }
+        #featureNavBar .feature-nav-btn { width: 38px; height: 38px; min-width: 38px; }
+      }
+    </style>
+
+    <style id="side-drawer-rtl-mobile-fix">
+      /* MINIMAL SCOPED FIX — Side Navigation Drawer, mobile RTL only (Arabic + Kurdish).
+         The drawer previously inherited the LTR base width `min(75vw, 360px)` (too narrow for
+         full-width Arabic/Kurdish labels, causing clipped/truncated menu text) and the RTL rules
+         were keyed only to `body[data-language='ar']`, so Kurdish opened fully off-screen.
+         Here width is widened for mobile and the right-side anchoring is generalised to any RTL
+         (`html[dir="rtl"]`), which covers both `ar` and `ku`. LTR, desktop and tablet are untouched. */
+      html[dir="rtl"] .drawer.side.open {
+        left: auto !important;
+        right: 0 !important;
+      }
+      @media (max-width: 767px) {
+        html[dir="rtl"] .drawer.side.open {
+          width: min(78vw, 400px) !important;
+          max-width: min(78vw, 400px) !important;
+          left: auto !important;
+          right: 0 !important;
+        }
+      }
+      /* MINIMAL SCOPED FIX — hide the unstyled Notes PDF preview root when closed.
+         It lives as a direct flex item of body (display:flex) and currently has no
+         backdrop style, so it sits in-flow with .app-shell and pushes the whole app
+         (incl. #currencyMenuButton) off-screen at 390px. Closed by default via
+         [aria-hidden="true"]; shown only when app.js adds .show. Scoped to this one
+         ID only — every other feature is untouched. (The old Note → PDF export setup
+         dialog was removed with the instant-export phase, so only the read-only
+         preview workspace remains in this rule.) */
+      #notePdfPreviewModal[aria-hidden="true"] {
+        display: none !important;
+      }
+      #notePdfPreviewModal.show {
+        display: flex !important;
+        position: fixed !important;
+        inset: 0 !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 20px !important;
+        z-index: 30 !important;
+      }
+      /* MINIMAL SCOPED FIX — constrain the preview inner frame so it never overflows
+         the viewport. Without this the modal opens but the stacked header + canvas
+         stage + footer exceed the client height and the controls land off-screen
+         (blank-white-screen symptom). Scoped to the Notes PDF preview only. */
+      #notePdfPreviewModal.show > .note-pdf-preview {
+        display: flex !important;
+        flex-direction: column !important;
+        width: min(92vw, 960px) !important;
+        max-height: calc(100vh - 40px) !important;
+        max-width: min(92vw, 960px) !important;
+        background: var(--panel) !important;
+        border-radius: 12px !important;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5) !important;
+        overflow: hidden !important;
+      }
+      #notePdfPreviewModal.show > .note-pdf-preview > .note-pdf-preview-header {
+        flex: 0 0 auto !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 10px !important;
+        padding: 10px 14px !important;
+        border-bottom: 1px solid var(--border) !important;
+        background: var(--panel-header) !important;
+      }
+      #notePdfPreviewModal.show > .note-pdf-preview > .note-pdf-preview-stage {
+        flex: 1 1 auto !important;
+        min-height: 0 !important;
+        overflow: auto !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: var(--bg) !important;
+        padding: 12px !important;
+      }
+      #notePdfPreviewModal.show > .note-pdf-preview > .note-pdf-preview-stage > canvas {
+        max-width: 100% !important;
+        max-height: min(70vh, 600px) !important;
+        object-fit: contain !important;
+      }
+      #notePdfPreviewModal.show > .note-pdf-preview > .note-pdf-preview-controls {
+        flex: 0 0 auto !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        padding: 8px 14px !important;
+        border-top: 1px solid var(--border) !important;
+        background: var(--panel-header) !important;
+        flex-wrap: wrap !important;
+      }
+      #notePdfPreviewModal.show > .note-pdf-preview > .note-pdf-doc-options {
+        position: absolute !important;
+        top: 100% !important;
+        right: 0 !important;
+        z-index: 2 !important;
+        margin-top: 4px !important;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/decimal.js@10.4.3/decimal.min.js"></script>
+  </head>
+  <body data-theme="oled">
+    <div class="app-shell">
+      <div id="adPlaceholder" class="ad-placeholder" aria-hidden="true"></div>
+
+      <header class="top-bar">
+        <div>
+          <h1 class="app-logo" dir="ltr"><span class="logo-e">E</span><span class="logo-q">Q</span><span class="logo-7">7</span></h1>
+        </div>
+        <div class="top-bar-actions">
+          <select id="topBarLanguageSelect" class="lang-switch" aria-label="Select language">
+            <option value="ar" data-i18n="languageArabic">العربية</option>
+            <option value="en" data-i18n="languageEnglish">English</option>
+            <option value="es" data-i18n="languageSpanish">Español</option>
+            <option value="fr" data-i18n="languageFrench">Français</option>
+            <option value="ru" data-i18n="languageRussian">Русский</option>
+            <option value="de" data-i18n="languageGerman">Deutsch</option>
+            <option value="tr" data-i18n="languageTurkish">Türkçe</option>
+            <option value="ku" data-i18n="languageKurdish">کوردی</option>
+          </select>
+          <button id="topBarInstallButton" class="ghost-btn icon-btn" type="button" aria-label="Install App" data-i18n-title="drawerInstall">
+            <i class="fa-solid fa-download"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- PHASE 1 — Feature Navigation Bar: icon-only entry points that reuse
+           the SAME existing handlers as the old drawer menu items
+           (handleDrawerMenuItem). The currency popover keeps its existing
+           ids/handlers and was moved here unchanged. Calculator functions
+           (scientific/percentage/operators) are NOT part of this bar. -->
+      <nav id="featureNavBar" class="feature-nav" aria-label="EQ7 features">
+        <button class="feature-nav-btn" data-action="open-history" type="button" aria-label="History" data-i18n-title="drawerHistory">
+          <span class="feature-nav-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></span>
+          <span class="feature-nav-label" data-i18n="drawerHistory">History</span>
+        </button>
+        <button class="feature-nav-btn" data-action="open-notes" type="button" aria-label="Notes" data-i18n-title="drawerNotes">
+          <span class="feature-nav-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></span>
+          <span class="feature-nav-label" data-i18n="drawerNotes">Notes</span>
+        </button>
+        <button class="feature-nav-btn" data-action="open-smart-docs" type="button" aria-label="Smart Documents" data-i18n-title="smartDocsTitle">
+          <span class="feature-nav-icon feature-nav-icon-emoji" aria-hidden="true">📄</span>
+          <span class="feature-nav-label" data-i18n="smartDocsTitle">Smart Documents</span>
+        </button>
+        <div id="currencyMenuWrap" class="currency-menu-wrap feature-nav-currency">
+          <button id="currencyMenuButton" class="ghost-btn icon-btn" type="button" aria-label="Currency Menu" aria-expanded="false">
+            <i class="fa-solid fa-coins"></i>
+          </button>
+          <div id="currencyMenuPopover" class="currency-popover" aria-hidden="true">
+            <button class="currency-popover-item" data-action="search" type="button">
+              <span data-i18n="currencyOptionSearch">Search Currency</span>
+            </button>
+            <button class="currency-popover-item" data-action="prices" type="button">
+              <span data-i18n="currencyOptionPrices">Live Currency Prices</span>
+            </button>
+            <button class="currency-popover-item" data-action="customRate" type="button">
+              <span data-i18n="currencyOptionCustomRate">Convert at Custom Rate</span>
+            </button>
+            <button class="currency-popover-item" data-action="favorites" type="button">
+              <span data-i18n="currencyOptionFavorites">Favorite Currencies</span>
+            </button>
+          </div>
+        </div>
+        <button class="feature-nav-btn" data-action="open-settings" type="button" aria-label="Settings" data-i18n-title="drawerSettings">
+          <span class="feature-nav-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></span>
+          <span class="feature-nav-label" data-i18n="drawerSettings">Settings</span>
+        </button>
+      </nav>
+
+      <div id="generalCalculatorPanel" class="view-panel active">
+        <main class="calculator-card">
+          <section class="display-section">
+            <button id="speechButton" class="speech-btn" type="button" aria-label="Speak result">🔊</button>
+            <div id="primaryDisplay" class="primary-display">0</div>
+            <div id="expressionDisplay" class="expression-display" aria-live="polite"></div>
+            <div id="secondaryDisplay" class="secondary-display">Zero</div>
+          </section>
+
+          <div id="percentPanel" class="percent-panel" aria-hidden="true">
+            <div class="percent-panel-header">
+              <h4 data-i18n="percentTitle">Percentage Calculator</h4>
+              <div class="percent-header-actions">
+                <button id="percentRefreshButton" class="percent-refresh-btn" type="button" aria-label="Refresh percentage calculator">
+                  <i class="fa-solid fa-rotate"></i>
+                </button>
+                <button id="percentBackButton" class="percent-back-btn" type="button" aria-label="Back to calculator">
+                  <i class="fa-solid fa-arrow-left"></i>
+                  <span data-i18n="percentBack">Back</span>
+                </button>
+              </div>
+            </div>
+            <div class="percent-panel-body">
+              <label class="field">
+                <span data-i18n="amountLabel">Amount</span>
+                <input id="percentAmount" type="number" inputmode="decimal" placeholder="0" />
+              </label>
+              <label class="field">
+                <span data-i18n="rateLabel">Percentage Rate</span>
+                <input id="percentRate" type="number" inputmode="decimal" placeholder="0" />
+              </label>
+            </div>
+          </div>
+
+          <div class="scientific-toggle-row">
+            <button id="scientificToggle" class="scientific-toggle" type="button" aria-expanded="false" data-i18n="scientificToggle">Scientific</button>
+            <button id="percentToggle" class="scientific-toggle" type="button" aria-expanded="false" data-i18n="percentTab">Percentage</button>
+          </div>
+          <div id="scientificPanel" class="scientific-panel" aria-label="Scientific calculator tools">
+            <!-- SCIENTIFIC KEYPAD GRID (UI-only reorder, handlers unchanged).
+                 Flat 4-column grid order (LTR): row1 DEG|RAD|(|)  row2 sin|cos|tan|GRAD
+                 row3 x²|√|xʸ|π  row4 sin⁻¹|cos⁻¹|tan⁻¹|e  row5 ±|1/x|!|%.
+                 RTL mirrors automatically via the existing document dir — no new dir system. -->
+            <div class="angle-mode-selector">
+              <button class="angle-mode-btn active" data-angle-mode="DEG" type="button" aria-label="Degree mode">DEG</button>
+              <button class="angle-mode-btn" data-angle-mode="RAD" type="button" aria-label="Radian mode">RAD</button>
+              <button class="scientific-btn" data-scientific="(" type="button" aria-label="( ">(</button>
+              <button class="scientific-btn" data-scientific=")" type="button" aria-label=") ">)</button>
+            </div>
+            <div class="scientific-row">
+              <button class="scientific-btn" data-scientific="sin" type="button" aria-label="sine">sin</button>
+              <button class="scientific-btn" data-scientific="cos" type="button" aria-label="cosine">cos</button>
+              <button class="scientific-btn" data-scientific="tan" type="button" aria-label="tangent">tan</button>
+              <button class="angle-mode-btn" data-angle-mode="GRAD" type="button" aria-label="Gradian mode">GRAD</button>
+              <button class="scientific-btn" data-scientific="^2" type="button" aria-label="square">x²</button>
+              <button class="scientific-btn" data-scientific="sqrt(" type="button" aria-label="sqrt">√</button>
+              <button class="scientific-btn" data-scientific="^" type="button" aria-label="power">xʸ</button>
+              <button class="scientific-btn" data-scientific="pi" type="button" aria-label="pi">π</button>
+              <button class="scientific-btn" data-scientific="asin" type="button" aria-label="arcsine">sin⁻¹</button>
+              <button class="scientific-btn" data-scientific="acos" type="button" aria-label="arccosine">cos⁻¹</button>
+              <button class="scientific-btn" data-scientific="atan" type="button" aria-label="arctangent">tan⁻¹</button>
+              <button class="scientific-btn" data-scientific="e" type="button" aria-label="euler">e</button>
+              <button class="scientific-btn" data-scientific="negate" type="button" aria-label="plus-minus">±</button>
+              <button class="scientific-btn" data-scientific="reciprocal" type="button" aria-label="reciprocal">1/x</button>
+              <button class="scientific-btn" data-scientific="!" type="button" aria-label="factorial">!</button>
+              <button class="scientific-btn" data-scientific="%" type="button" aria-label="percent">%</button>
+            </div>
+          </div>
+
+          <!-- PHASE 1 — keypad visual reorganization (iOS-style reference).
+               Every button reuses the EXISTING handlers:
+               - AC / ⌫ / copy / paste  -> .control-btn data-action handlers
+               - ± and %               -> .scientific-btn data-scientific handlers
+               - digits/operators/=    -> .keypad-btn number/operator + equals
+               No logic, state or formula changes. -->
+          <section class="control-row control-row-3">
+            <button class="control-btn" data-action="backspace" type="button" aria-label="Backspace">⌫</button>
+            <button class="control-btn" data-action="copy" type="button" aria-label="Copy"><i class="fa-regular fa-copy"></i></button>
+            <button class="control-btn" data-action="paste" type="button" aria-label="Paste"><i class="fa-solid fa-paste"></i></button>
+          </section>
+
+          <div class="keypad-area">
+            <section class="keypad-grid" aria-label="Calculator keypad">
+              <button class="keypad-btn function control-btn" data-action="clear" type="button" aria-label="All clear">AC</button>
+              <button class="keypad-btn function scientific-btn" data-scientific="negate" type="button" aria-label="plus-minus">+/−</button>
+              <button class="keypad-btn function scientific-btn" data-scientific="%" type="button" aria-label="percent">%</button>
+              <button class="keypad-btn operator" data-value="/" type="button">÷</button>
+
+              <button class="keypad-btn number" data-value="7" type="button">7</button>
+              <button class="keypad-btn number" data-value="8" type="button">8</button>
+              <button class="keypad-btn number" data-value="9" type="button">9</button>
+              <button class="keypad-btn operator" data-value="*" type="button">×</button>
+
+              <button class="keypad-btn number" data-value="4" type="button">4</button>
+              <button class="keypad-btn number" data-value="5" type="button">5</button>
+              <button class="keypad-btn number" data-value="6" type="button">6</button>
+              <button class="keypad-btn operator" data-value="-" type="button">−</button>
+
+              <button class="keypad-btn number" data-value="1" type="button">1</button>
+              <button class="keypad-btn number" data-value="2" type="button">2</button>
+              <button class="keypad-btn number" data-value="3" type="button">3</button>
+              <button class="keypad-btn operator" data-value="+" type="button">+</button>
+
+              <div class="control-row control-row-3">
+                <button class="keypad-btn number" data-value="0" type="button">0</button>
+                <button class="keypad-btn number" data-value="." type="button">.</button>
+                <button class="keypad-btn equals" data-action="equals" type="button">=</button>
+              </div>
+            </section>
+          </div>
+        </main>
+      </div>
+      </div>
+
+      <div id="historyPanel" class="history-panel" aria-hidden="true">
+        <div class="history-screen">
+          <header class="history-screen-header">
+            <h3 class="history-screen-title" data-i18n="historyTitle">24-Hour History</h3>
+            <div class="top-bar-actions">
+              <button id="selectAllHistory" class="ghost-btn small" type="button" data-i18n="selectAll">Select All</button>
+              <button id="historyCompanyNameBtn" class="ghost-btn small" type="button" data-i18n="companyNameBtn">Company Name</button>
+              <button id="exportHistory" class="ghost-btn small" type="button" data-i18n="exportButton">Share / Export</button>
+            </div>
+            <button id="historyBackButton" class="ghost-btn history-back-btn" type="button" aria-label="Back">
+              <i class="fa-solid fa-arrow-left"></i>
+              <span data-i18n="historyBack">Back</span>
+            </button>
+          </header>
+          <ul id="historyList" class="history-list"></ul>
+        </div>
+      </div>
+
+    <div id="currencyConverterModal" class="currency-modal-backdrop" aria-hidden="true">
+      <div class="currency-modal currency-converter-modal" role="dialog" aria-modal="true" aria-labelledby="currencyConverterTitle">
+        <header class="currency-converter-header">
+          <button id="currencyConverterCloseButton" class="currency-converter-icon-btn currency-converter-back" type="button" aria-label="Back" title="Back">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <h3 id="currencyConverterTitle" class="currency-converter-title" data-i18n="currencyConverterTitle">Convert Currencies</h3>
+          <button id="refreshRatesButton" class="currency-converter-icon-btn currency-converter-refresh" type="button" aria-label="Refresh rates" title="Refresh rates">
+            <i class="fa-solid fa-rotate"></i>
+          </button>
+        </header>
+
+        <div class="converter-card">
+          <div class="converter-card-strip">
+            <span id="converterFromFlag" class="converter-flag"></span>
+            <span id="converterFromLabel" class="converter-label"></span>
+            <span class="converter-strip-spacer"></span>
+            <i class="fa-solid fa-chevron-down converter-chevron" aria-hidden="true"></i>
+            <select id="currencyFromSelect" class="converter-strip-select" aria-label="From currency"></select>
+            <button id="favoriteFromButton" class="converter-fav-btn" type="button" aria-label="Add to favorites">
+              <i class="fa-regular fa-star"></i>
+            </button>
+          </div>
+          <label class="converter-amount-field">
+            <input id="currencyFromAmount" class="converter-amount-input" type="number" inputmode="decimal" placeholder="100" aria-label="Amount" />
+          </label>
+        </div>
+
+        <div class="converter-swap-row">
+          <button id="swapCurrenciesButton" class="converter-swap-btn" type="button" title="Swap currencies" aria-label="Swap currencies">
+            <i class="fa-solid fa-right-left"></i>
+          </button>
+        </div>
+
+        <div class="converter-card">
+          <div class="converter-card-strip">
+            <span id="converterToFlag" class="converter-flag"></span>
+            <span id="converterToLabel" class="converter-label"></span>
+            <span class="converter-strip-spacer"></span>
+            <i class="fa-solid fa-chevron-down converter-chevron" aria-hidden="true"></i>
+            <select id="currencyToSelect" class="converter-strip-select" aria-label="To currency"></select>
+            <button id="favoriteToButton" class="converter-fav-btn" type="button" aria-label="Add to favorites">
+              <i class="fa-regular fa-star"></i>
+            </button>
+          </div>
+          <div class="converter-card-output">
+            <div class="converter-output-row">
+              <div id="currencyToAmount" class="converter-output">0</div>
+              <button id="currencySpeakButton" class="converter-speak-btn" type="button" aria-label="Speak result" title="Speak result">
+                <i class="fa-solid fa-volume-high"></i>
+              </button>
+            </div>
+            <div id="currencyWords" class="currency-words"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="customRateModal" class="currency-modal-backdrop" aria-hidden="true">
+      <div class="currency-modal currency-converter-modal custom-rate-modal" role="dialog" aria-modal="true" aria-labelledby="customRateTitle">
+        <header class="currency-converter-header">
+          <button id="customRateBackButton" class="currency-converter-icon-btn currency-converter-back" type="button" aria-label="Back" title="Back">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <h3 id="customRateTitle" class="currency-converter-title" data-i18n="customRateTitle">Convert at Custom Rate</h3>
+          <button id="customRateResetButton" class="currency-converter-icon-btn currency-converter-refresh" type="button" aria-label="Reset" title="Reset">
+            <i class="fa-solid fa-rotate"></i>
+          </button>
+        </header>
+
+        <div class="converter-card">
+          <label class="converter-amount-field">
+            <span class="custom-rate-field-label" data-i18n="customRateFieldLabel">Exchange Rate</span>
+            <input id="customRateInput" class="converter-amount-input" type="number" inputmode="decimal" placeholder="0" aria-label="Exchange rate" />
+          </label>
+        </div>
+
+        <div class="converter-card">
+          <label class="converter-amount-field">
+            <span class="custom-rate-field-label" data-i18n="amountLabel">Amount</span>
+            <input id="customAmountInput" class="converter-amount-input" type="number" inputmode="decimal" placeholder="0" aria-label="Amount" />
+          </label>
+        </div>
+
+        <div class="converter-card">
+          <div class="converter-card-output">
+            <div class="converter-output-row">
+              <div id="customRateResult" class="converter-output">0</div>
+              <button id="customRateSpeakButton" class="converter-speak-btn" type="button" aria-label="Speak result" title="Speak result">
+                <i class="fa-solid fa-volume-high"></i>
+              </button>
+            </div>
+            <div id="customRateWords" class="currency-words"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="currencyDirectoryModal" class="currency-modal-backdrop" aria-hidden="true">
+      <div class="currency-modal" role="dialog" aria-modal="true" aria-labelledby="currencyDirectoryTitle">
+        <div class="currency-modal-header">
+          <div>
+            <h3 id="currencyDirectoryTitle" data-i18n="currencyDirectoryTitle">Global Currencies Directory</h3>
+            <p class="currency-modal-subtitle" data-i18n="currencyDirectorySubtitle">Search paper currencies by country name or currency code.</p>
+          </div>
+          <button id="currencyCloseButton" class="modal-close-btn" type="button" aria-label="Close">×</button>
+        </div>
+        <div class="currency-modal-body">
+          <label class="field currency-search-field">
+            <input id="currencySearchInput" type="search" placeholder="Search country or code" data-i18n-placeholder="currencySearchPlaceholder" autocomplete="off" />
+          </label>
+          <ul id="currencyList" class="currency-list"></ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="currencyRatesModal" class="currency-modal-backdrop" aria-hidden="true">
+      <div class="currency-modal currency-rates-modal" role="dialog" aria-modal="true" aria-labelledby="currencyRatesTitle">
+        <header class="currency-rates-header">
+          <button id="currencyRatesBackButton" class="currency-rates-back-btn" type="button" aria-label="Back">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <h3 id="currencyRatesTitle" class="currency-rates-title" data-i18n="currencyRatesTitle">Currency Rates</h3>
+          <button id="currencyRatesCloseButton" class="modal-close-btn" type="button" aria-label="Close">×</button>
+        </header>
+        <div class="currency-rates-body">
+          <label class="field currency-search-field">
+            <input id="currencyRatesSearchInput" type="search" placeholder="Search currency or code" data-i18n-placeholder="currencyRatesSearchPlaceholder" autocomplete="off" />
+          </label>
+          <div id="currencyRatesStatus" class="currency-rates-status" hidden></div>
+          <ul id="currencyRatesList" class="currency-list currency-rates-list"></ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="currencyFavoritesModal" class="currency-modal-backdrop" aria-hidden="true">
+      <div class="currency-modal currency-favorites-modal" role="dialog" aria-modal="true" aria-labelledby="currencyFavoritesTitle">
+        <header class="currency-favorites-header">
+          <button id="currencyFavoritesBackButton" class="currency-favorites-back-btn" type="button" aria-label="Back">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <h3 id="currencyFavoritesTitle" class="currency-favorites-title" data-i18n="currencyFavoritesTitle">Favorites</h3>
+        </header>
+        <div class="currency-favorites-body">
+          <div id="currencyFavoritesStatus" class="currency-favorites-status" hidden></div>
+          <div id="currencyFavoritesEmpty" class="currency-favorites-empty" hidden>
+            <span class="currency-favorites-empty-icon"><i class="fa-regular fa-star"></i></span>
+            <p class="currency-favorites-empty-text" data-i18n="currencyFavoritesEmpty">No favorite currencies yet</p>
+            <span class="currency-favorites-empty-hint" data-i18n="currencyFavoritesEmptyHint">Tap the star on any currency to add it here</span>
+          </div>
+          <ul id="currencyFavoritesList" class="currency-list currency-favorites-list"></ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="settingsModal" class="settings-modal-backdrop" aria-hidden="true">
+      <div class="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle">
+        <div class="settings-modal-header">
+          <div>
+            <h3 id="settingsModalTitle" data-i18n="settingsTitle">Settings & Customization</h3>
+            <p class="settings-modal-subtitle" data-i18n="settingsSubtitle">Customize app language, theme and feedback.</p>
+          </div>
+          <button id="settingsCloseButton" class="modal-close-btn" type="button" aria-label="Close">×</button>
+        </div>
+        <div class="settings-modal-body">
+          <label class="field">
+            <span data-i18n="languageLabel">Language</span>
+            <select id="languageSelect">
+              <option value="ar" data-i18n="languageArabic">العربية</option>
+              <option value="en" data-i18n="languageEnglish">English</option>
+              <option value="es" data-i18n="languageSpanish">Español</option>
+              <option value="fr" data-i18n="languageFrench">Français</option>
+              <option value="ru" data-i18n="languageRussian">Русский</option>
+              <option value="de" data-i18n="languageGerman">Deutsch</option>
+              <option value="tr" data-i18n="languageTurkish">Türkçe</option>
+            <option value="ku" data-i18n="languageKurdish">کوردی</option>
+            </select>
+          </label>
+          <div class="theme-group">
+            <span data-i18n="themeLabel">Theme</span>
+            <div class="theme-options">
+              <button class="theme-option active" data-theme="oled" data-i18n="themeOled" type="button">OLED Black</button>
+              <button class="theme-option" data-theme="charcoal" data-i18n="themeCharcoal" type="button">Charcoal Dark</button>
+              <button class="theme-option" data-theme="titanium" data-i18n="themeTitanium" type="button">Titanium Slate</button>
+              <button class="theme-option" data-theme="light" data-i18n="themeLight" type="button">Minimal Light</button>
+            </div>
+          </div>
+          <div class="app-sounds-group">
+            <div class="app-sounds-header">
+              <span class="app-sounds-title" data-i18n="appSoundsLabel">App Sounds</span>
+              <label class="switch">
+                <input id="appSoundToggle" type="checkbox" checked />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="app-sounds-modes" id="appSoundModes">
+              <!-- Existing app sound mode(s). Add new mode blocks here to extend the section. -->
+              <label class="field app-sound-mode">
+                <span data-i18n="soundHapticsLabel">Button sound & haptics</span>
+                <div class="switch-row">
+                  <span class="field-caption" data-i18n="soundHapticsCaption">Enable click sounds and vibration</span>
+                  <label class="switch">
+                    <input id="soundToggle" type="checkbox" checked />
+                    <span class="slider"></span>
+                  </label>
+                </div>
+              </label>
+              <label class="field app-sound-mode">
+                <span data-i18n="soundProfileLabel">Button Sound Profile</span>
+                <select id="soundProfileSelect">
+                  <option value="classic" data-i18n="profileClassic">Classic</option>
+                  <option value="soft" data-i18n="profileSoft">Soft</option>
+                  <option value="modern" data-i18n="profileModern">Modern</option>
+                  <option value="click" data-i18n="profileClick">Click</option>
+                  <option value="silent" data-i18n="profileSilent">Silent</option>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <div class="app-sounds-group">
+            <div class="app-sounds-header">
+              <span class="app-sounds-title" data-i18n="speakerLabel">Speaker / Voice Reading</span>
+              <label class="switch">
+                <input id="speakerToggle" type="checkbox" checked />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="app-sounds-modes">
+              <span class="field-caption speaker-caption" data-i18n="speakerCaption">When ON, the result is read aloud automatically after pressing = . When OFF, reading is manual via the speaker button only.</span>
+            </div>
+          </div>
+
+          <button class="help-about-item" id="helpAboutButton" type="button" aria-haspopup="dialog" aria-label="Help">
+            <span class="help-about-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
+            <span class="help-about-text" data-i18n="helpTitle">Help &amp; About</span>
+            <span class="help-about-chevron" aria-hidden="true"><i class="fa-solid fa-chevron-right"></i></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="helpModal" class="help-modal-backdrop" aria-hidden="true">
+      <div class="help-modal" role="dialog" aria-modal="true" aria-labelledby="helpModalTitle">
+        <header class="help-modal-header">
+          <button id="helpBackButton" class="help-back-btn" type="button" aria-label="Back">
+            <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+          </button>
+          <div class="help-heading">
+            <h3 id="helpModalTitle" data-i18n="helpTitle">Help &amp; About</h3>
+            <p class="help-modal-subtitle" data-i18n="helpSubtitle">Learn how to use EQ7 and discover its features.</p>
+          </div>
+          <button id="helpCloseButton" class="modal-close-btn" type="button" aria-label="Close">×</button>
+        </header>
+        <div class="help-modal-body">
+
+          <section class="help-card">
+            <h4 class="help-card-title"><i class="fa-solid fa-circle-info help-dot" aria-hidden="true"></i><span data-i18n="helpAboutTitle">About the App</span></h4>
+            <p class="help-card-text" data-i18n="helpAboutDesc">EQ7 is a smart, all-in-one calculator that combines everyday math, scientific and percentage tools, currency conversion and much more in one simple, easy-to-use app.</p>
+          </section>
+
+          <section class="help-card">
+            <h4 class="help-card-title"><i class="fa-solid fa-lightbulb help-dot" aria-hidden="true"></i><span data-i18n="helpWhyTitle">Why was EQ7 created?</span></h4>
+            <p class="help-card-text" data-i18n="helpWhyDesc">The idea is simple: one calculator instead of many, built for speed, clarity and everyday use.</p>
+            <ul class="help-list">
+              <li><span class="help-bullet" aria-hidden="true">•</span><span data-i18n="helpWhyL1">Fast everyday calculations</span></li>
+              <li><span class="help-bullet" aria-hidden="true">•</span><span data-i18n="helpWhyL2">Scientific tools such as square root, powers and parentheses</span></li>
+              <li><span class="help-bullet" aria-hidden="true">•</span><span data-i18n="helpWhyL3">Easy percentage calculations</span></li>
+              <li><span class="help-bullet" aria-hidden="true">•</span><span data-i18n="helpWhyL4">Currency conversion and live rates</span></li>
+              <li><span class="help-bullet" aria-hidden="true">•</span><span data-i18n="helpWhyL5">Notes and calculation history</span></li>
+              <li><span class="help-bullet" aria-hidden="true">•</span><span data-i18n="helpWhyL6">Simple, clear and quick to use</span></li>
+              <li><span class="help-bullet" aria-hidden="true">•</span><span data-i18n="helpWhyL7">Works as an installable app (PWA) on different devices</span></li>
+            </ul>
+          </section>
+
+          <section class="help-card">
+            <h4 class="help-card-title"><i class="fa-solid fa-layer-group help-dot" aria-hidden="true"></i><span data-i18n="helpSectionsTitle">Explaining the App Sections</span></h4>
+
+            <div class="help-subsection">
+              <span class="help-subsection-title" data-i18n="helpSecGeneralTitle">General Calculator</span>
+              <p class="help-card-text" data-i18n="helpSecGeneralDesc">The main calculator for everyday operations: add, subtract, multiply and divide.</p>
+              <p class="help-example" data-i18n="helpSecGeneralEx">Example: 12 + 7 = 19.</p>
+            </div>
+
+            <div class="help-divider"></div>
+
+            <div class="help-subsection">
+              <span class="help-subsection-title" data-i18n="helpSecScientificTitle">Scientific Tools</span>
+              <p class="help-card-text" data-i18n="helpSecScientificDesc">Tap "Scientific" to use the square root, square and parentheses buttons inside the same calculator.</p>
+              <p class="help-example" data-i18n="helpSecScientificEx">Example: √9 = 3, 2^3 = 8.</p>
+            </div>
+
+            <div class="help-divider"></div>
+
+            <div class="help-subsection">
+              <span class="help-subsection-title" data-i18n="helpSecPercentTitle">Percentage Calculator</span>
+              <p class="help-card-text" data-i18n="helpSecPercentDesc">Quickly work out a percentage of an amount without extra steps.</p>
+              <p class="help-example" data-i18n="helpSecPercentEx">Example: 15% of 200 = 30.</p>
+            </div>
+
+            <div class="help-divider"></div>
+
+            <div class="help-subsection">
+              <span class="help-subsection-title" data-i18n="helpSecHistoryTitle">History</span>
+              <p class="help-card-text" data-i18n="helpSecHistoryDesc">EQ7 remembers what you calculated in the last 24 hours so you can review or share it.</p>
+            </div>
+
+            <div class="help-divider"></div>
+
+            <div class="help-subsection">
+              <span class="help-subsection-title" data-i18n="helpSecNotesTitle">Notes</span>
+              <p class="help-card-text" data-i18n="helpSecNotesDesc">Save quick notes, organize them in folders, and edit them in a full-screen editor.</p>
+            </div>
+
+            <div class="help-divider"></div>
+
+            <div class="help-subsection">
+              <span class="help-subsection-title" data-i18n="helpSecCurrencyTitle">Currency Tools</span>
+              <p class="help-card-text" data-i18n="helpSecCurrencyDesc">Search currencies, see live rates, convert between currencies, use a custom rate, and keep your favorites.</p>
+            </div>
+
+            <div class="help-divider"></div>
+
+            <div class="help-subsection">
+              <span class="help-subsection-title" data-i18n="helpSecSettingsTitle">Settings</span>
+              <p class="help-card-text" data-i18n="helpSecSettingsDesc">Change the language, the theme and the sound feedback exactly how you like.</p>
+            </div>
+          </section>
+
+          <section class="help-card">
+            <h4 class="help-card-title"><i class="fa-solid fa-keyboard help-dot" aria-hidden="true"></i><span data-i18n="helpButtonsTitle">How to Use the Calculator</span></h4>
+            <div class="help-btn-row"><span class="help-btn-key">0–9</span><span data-i18n="helpBtnNumbers">Tap to type digits.</span></div>
+            <div class="help-btn-row"><span class="help-btn-key">+</span><span data-i18n="helpBtnAdd">Adds the next number.</span></div>
+            <div class="help-btn-row"><span class="help-btn-key">−</span><span data-i18n="helpBtnSub">Subtracts the next number.</span></div>
+            <div class="help-btn-row"><span class="help-btn-key">×</span><span data-i18n="helpBtnMul">Multiplies by the next number.</span></div>
+            <div class="help-btn-row"><span class="help-btn-key">÷</span><span data-i18n="helpBtnDiv">Divides by the next number.</span></div>
+            <div class="help-btn-row"><span class="help-btn-key">=</span><span data-i18n="helpBtnEquals">Shows the result.</span></div>
+            <div class="help-btn-row"><span class="help-btn-key">AC</span><span data-i18n="helpBtnAc">Clears everything and starts fresh.</span></div>
+            <div class="help-btn-row"><span class="help-btn-key">⌫</span><span data-i18n="helpBtnBack">Deletes the last digit you typed.</span></div>
+            <div class="help-btn-row"><span class="help-btn-key">.</span><span data-i18n="helpBtnDecimal">Adds a decimal point.</span></div>
+            <div class="help-btn-row"><span class="help-btn-key">Sci</span><span data-i18n="helpBtnScientific">Scientific / Percentage: switches the extra tools on and off.</span></div>
+            <div class="help-btn-row"><span class="help-btn-key">🔊</span><span data-i18n="helpBtnSpeak">Speaks the current result aloud.</span></div>
+          </section>
+
+          <section class="help-card">
+            <h4 class="help-card-title"><i class="fa-solid fa-sliders help-dot" aria-hidden="true"></i><span data-i18n="helpSettingsExplainTitle">Settings</span></h4>
+            <p class="help-card-text" data-i18n="helpSetLanguage">Language: switches the whole app between the available languages.</p>
+            <p class="help-card-text" data-i18n="helpSetTheme">Theme: choose Dark, Light or Violet appearance.</p>
+            <p class="help-card-text" data-i18n="helpSetSoundsTitle">App Sounds: the master switch for sound and haptic feedback.</p>
+            <p class="help-card-text" data-i18n="helpSetSoundsDesc">When App Sounds is ON, button sound and haptics are allowed. Turn it OFF to silence that feedback, and ON again to allow it.</p>
+            <p class="help-card-text" data-i18n="helpSetSoundsSpeech">Speech/TTS is separate from App Sounds and is not turned off by App Sounds.</p>
+          </section>
+
+          <section class="help-card">
+            <h4 class="help-card-title"><i class="fa-solid fa-money-bill-transfer help-dot" aria-hidden="true"></i><span data-i18n="helpCurrencyTitle">Currency Converter</span></h4>
+            <p class="help-card-text" data-i18n="helpCurrencyDesc">Pick the currency you have (From) and the one you want (To), then type an amount.</p>
+            <p class="help-card-text" data-i18n="helpCurrencySwap">Use the swap button to reverse the two currencies.</p>
+            <p class="help-card-text" data-i18n="helpCurrencyFavorites">Use the star to mark a currency as a favorite, and open Favorite Currencies from the currency menu.</p>
+            <p class="help-card-text" data-i18n="helpCurrencyCustomRate">Convert at Custom Rate lets you enter your own exchange rate.</p>
+            <p class="help-card-text" data-i18n="helpCurrencyLive">Live prices come from the online service; if it is unavailable, cached rates may be used.</p>
+          </section>
+
+          <section class="help-card">
+            <h4 class="help-card-title"><i class="fa-solid fa-download help-dot" aria-hidden="true"></i><span data-i18n="helpInstallTitle">Install &amp; Offline</span></h4>
+            <p class="help-card-text" data-i18n="helpInstallDesc1">You can install EQ7 as an app on supported devices.</p>
+            <p class="help-card-text" data-i18n="helpInstallDesc2">Some features work offline using stored resources, but live currency rates and app updates need an internet connection.</p>
+          </section>
+
+          <section class="help-card">
+            <h4 class="help-card-title"><i class="fa-solid fa-star help-dot" aria-hidden="true"></i><span data-i18n="helpBenefitsTitle">Why Use EQ7?</span></h4>
+            <ul class="help-list">
+              <li><span class="help-bullet" aria-hidden="true">•</span><span data-i18n="helpBenefit1">All-in-one calculator</span></li>
+              <li><span class="help-bullet" aria-hidden="true">•</span><span data-i18n="helpBenefit2">Fast everyday calculations</span></li>
+              <li><span class="help-bullet" aria-hidden="true">•</span><span data-i18n="helpBenefit3">Scientific and percentage tools</span></li>
+              <li><span class="help-bullet" aria-hidden="true">•</span><span data-i18n="helpBenefit4">Currency conversion</span></li>
+              <li><span class="help-bullet" aria-hidden="true">•</span><span data-i18n="helpBenefit5">History and notes</span></li>
+              <li><span class="help-bullet" aria-hidden="true">•</span><span data-i18n="helpBenefit6">Multi-language interface</span></li>
+              <li><span class="help-bullet" aria-hidden="true">•</span><span data-i18n="helpBenefit7">Responsive design and PWA support</span></li>
+            </ul>
+          </section>
+
+          <section class="help-card">
+            <h4 class="help-card-title"><i class="fa-solid fa-globe help-dot" aria-hidden="true"></i><span data-i18n="helpLangTitle">Languages</span></h4>
+            <p class="help-card-text" data-i18n="helpLangDesc">EQ7 is fully translated. Choose your language in the top bar or in Settings, and the whole app — including this help page — updates instantly.</p>
+          </section>
+
+        </div>
+      </div>
+    </div>
+
+    <div id="iosInstallModal" class="install-modal-backdrop" aria-hidden="true">
+      <div class="install-modal" role="dialog" aria-modal="true" aria-labelledby="iosInstallTitle">
+        <div class="install-modal-header">
+          <div class="install-modal-icon">📲</div>
+          <div class="install-modal-heading">
+            <h3 id="iosInstallTitle" data-i18n="installModalTitle">Install on iPhone</h3>
+            <p id="iosInstallSubtitle" class="install-modal-subtitle" data-i18n="installModalSubtitle">Add it to your Home Screen</p>
+          </div>
+          <button id="closeIosInstallModal" class="modal-close-btn" type="button" aria-label="Close">×</button>
+        </div>
+        <ol class="install-modal-steps">
+          <li id="iosInstallStep1" data-i18n="installModalStep1">Step 1: Tap the Share button (⎘ / ⇡) at the bottom or top of the browser.</li>
+          <li id="iosInstallStep2" data-i18n="installModalStep2">Step 2: Choose "Add to Home Screen" from the menu.</li>
+        </ol>
+        <button id="dismissIosInstallModal" class="accent-btn" type="button" data-i18n="installModalClose">Got it</button>
+      </div>
+    </div>
+
+    <div id="notesManagerModal" class="notes-manager-backdrop" aria-hidden="true">
+      <div class="notes-manager" role="dialog" aria-modal="true" aria-labelledby="notesManagerTitle">
+        <div class="notes-manager-header">
+          <button id="closeNotesManager" class="notes-back-btn icon-btn" type="button" aria-label="Back">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          </button>
+          <h3 id="notesManagerTitle" data-i18n="notesManagerTitle">Notes</h3>
+          <button id="openNewNoteButton" class="notes-add-btn icon-btn" type="button" aria-label="New Note">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>
+          </button>
+        </div>
+        <div class="notes-toolbar">
+          <div class="notes-search-wrap">
+            <svg class="notes-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="search" id="notesSearchInput" class="notes-search-input" data-i18n-placeholder="searchNotesPlaceholder" placeholder="Search notes..." autocomplete="off">
+          </div>
+        </div>
+        <div class="notes-folder-tabs" id="folderTabsContainer">
+          <div class="folder-tabs-scroll" id="folderTabsScroll"></div>
+          <button id="addFolderButton" class="folder-tab-add" type="button" aria-label="New Folder">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+          <select id="notesSortSelect" class="notes-sort-select" aria-label="Sort notes">
+            <option value="newest" data-i18n="sortNewest">Newest</option>
+            <option value="oldest" data-i18n="sortOldest">Oldest</option>
+            <option value="az" data-i18n="sortAz">A–Z</option>
+          </select>
+        </div>
+        <div class="notes-manager-body">
+          <div class="notes-list-panel" id="notesListPanel">
+            <p class="notes-section-label" data-i18n="recentNotesLabel">Recent</p>
+            <ul id="notesList" class="notes-list"></ul>
+            <div id="notesEmptyState" class="notes-empty-state hidden">
+              <div class="notes-empty-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              </div>
+              <p data-i18n="emptyNotesText">No notes yet</p>
+              <p class="notes-empty-sub" data-i18n="createFirstNote">Create your first note</p>
+              <button id="emptyNewNoteBtn" class="notes-empty-btn" type="button" data-i18n="emptyNotesAction">+ New Note</button>
+            </div>
+            <div id="notesSearchEmpty" class="notes-empty-state hidden">
+              <div class="notes-empty-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              </div>
+              <p data-i18n="noNotesFound">No notes found</p>
+            </div>
+          </div>
+          <div class="notes-list-panel hidden" id="deletedListPanel">
+            <ul id="deletedNotesList" class="notes-list"></ul>
+            <div id="deletedEmptyState" class="notes-empty-state hidden">
+              <div class="notes-empty-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+              </div>
+              <p data-i18n="emptyDeletedText">No deleted notes</p>
+            </div>
+          </div>
+        </div>
+        <nav class="notes-bottom-nav">
+          <button class="notes-nav-btn active" id="navNotesBtn" data-panel="notes" type="button">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <span data-i18n="notesTitle">Notes</span>
+          </button>
+          <button class="notes-nav-btn" id="navDeletedBtn" data-panel="deleted" type="button">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            <span data-i18n="recentlyDeletedTitle">Recently Deleted</span>
+          </button>
+        </nav>
+      </div>
+    </div>
+
+    <div id="deleteConfirmModal" class="delete-confirm-backdrop" aria-hidden="true">
+      <div class="delete-confirm-modal" role="dialog" aria-modal="true">
+        <p class="delete-confirm-title" data-i18n="deleteConfirmTitle">Delete permanently?</p>
+        <p class="delete-confirm-text" data-i18n="deleteConfirmText">This action cannot be undone.</p>
+        <div class="delete-confirm-actions">
+          <button id="deleteConfirmCancel" class="delete-cancel-btn" type="button" data-i18n="cancelBtn">Cancel</button>
+          <button id="deleteConfirmOk" class="delete-ok-btn" type="button" data-i18n="deletePermanentBtn">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="fullScreenNoteModal" class="full-screen-note-backdrop" aria-hidden="true">
+      <div class="full-screen-note" role="dialog" aria-modal="true" aria-labelledby="fullScreenNoteTitle">
+
+           <!-- Row 1 — Title row: back button + title input (flex:1) + saved indicator -->
+                    <div class="full-screen-note-header">
+<div class="full-screen-note-title-row">
+             <button id="closeFullScreenNote" class="notes-back-btn icon-btn" type="button" aria-label="Back">
+               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+             </button>
+             <div class="full-screen-note-title-wrap">
+               <input id="noteTitleInput" class="note-title-input" type="text" maxlength="80" placeholder="Title" data-i18n-placeholder="noteTitlePlaceholder" />
+               <span id="noteSavedIndicator" class="note-saved-indicator" role="status" aria-live="polite" data-i18n="noteSavedLabel">Saved ✓</span>
+             </div>
+           </div>
+           <!-- Row 2 — Action bar: the remaining coloured circular buttons distributed evenly -->
+           <div class="full-screen-note-action-bar">
+             <button id="saveFullScreenNote" class="notes-save-btn" type="button" aria-label="Save note" title="Save">
+               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4Z"/></svg>
+             </button>
+             <button id="sendNoteBtn" class="notes-send-btn" type="button" aria-label="Send note" title="Send">
+               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+             </button>
+             <button id="notePreviewPdfBtn" class="notes-send-btn" type="button" aria-label="PDF preview" title="PDF preview">
+               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+             </button>
+             <button id="exportNotePdfBtn" class="notes-send-btn" type="button" aria-label="Export / Print PDF" title="Export / Print PDF">
+               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+             </button>
+           </div>
+         </div>
+<div class="full-screen-note-body">
+          <!-- Minimalist Notes UI (UI/layout only): ONE compact horizontal toolbar row.
+               Order: B I U | Text Style ▼ | Bullet list, Numbered list | Image, Table.
+               Every item below is a pre-existing Notes control (same id, same class, same
+               handler) — only their order/placement changed. Checklist / Divider / Cell
+               background keep their ids + handlers but are no longer shown in this row. -->
+          <div class="note-format-toolbar" role="toolbar" aria-label="Text formatting">
+            <!-- Formatting (relocated from the Aa panel — same ids/handlers) -->
+            <button type="button" class="note-format-btn" id="noteBoldBtn" data-format="bold" aria-label="Bold" title="Bold"><span class="fmt-bold">B</span></button>
+            <button type="button" class="note-format-btn" id="noteItalicBtn" data-format="italic" aria-label="Italic" title="Italic"><span class="fmt-italic">I</span></button>
+            <button type="button" class="note-format-btn" id="noteUnderlineBtn" data-format="underline" aria-label="Underline" title="Underline"><span class="fmt-underline">U</span></button>
+            <span class="note-aa-sep" aria-hidden="true"></span>
+            <!-- Text Style dropdown (the existing Aa toggle, now opening the compact
+                 Text Style panel: Normal/Text, H1, H2, H3 + the existing alignment row) -->
+            <button type="button" class="note-format-btn note-aa-btn" id="noteAaBtn" aria-label="Text style" title="Text style" aria-haspopup="true" aria-expanded="false"><span class="fmt-aa">Aa</span><svg class="note-aa-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+            <span class="note-aa-sep" aria-hidden="true"></span>
+            <!-- Lists -->
+            <button type="button" class="note-format-btn" id="noteBulletListBtn" aria-label="Bullet list" title="Bullet list">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="9" y1="6" x2="20" y2="6"/><line x1="9" y1="12" x2="20" y2="12"/><line x1="9" y1="18" x2="20" y2="18"/><circle cx="4.5" cy="6" r="1" fill="currentColor" stroke="none"/><circle cx="4.5" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="4.5" cy="18" r="1" fill="currentColor" stroke="none"/></svg>
+            </button>
+            <button type="button" class="note-format-btn" id="noteNumberListBtn" aria-label="Numbered list" title="Numbered list">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="10" y1="6" x2="20" y2="6"/><line x1="10" y1="12" x2="20" y2="12"/><line x1="10" y1="18" x2="20" y2="18"/><path d="M4 6h1v4"/><path d="M4 10h2"/><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+            </button>
+            <span class="note-aa-sep" aria-hidden="true"></span>
+            <!-- Insert -->
+            <button type="button" class="note-format-btn" id="noteImageBtn" aria-label="Image" title="Image" aria-haspopup="true" aria-expanded="false">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            </button>
+            <button type="button" class="note-format-btn" id="noteTableBtn" aria-label="Table" title="Table">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg>
+            </button>
+            <!-- Kept wired (same ids/handlers), not displayed in the compact row -->
+            <button type="button" class="note-format-btn" id="noteChecklistBtn" aria-label="Checklist" title="Checklist">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="7" height="7" rx="1"/><path d="m4.5 8 1.5 1.5L9 6.5"/><line x1="13" y1="8.5" x2="21" y2="8.5"/><rect x="3" y="14" width="7" height="7" rx="1"/><line x1="13" y1="17.5" x2="21" y2="17.5"/></svg>
+            </button>
+            <button type="button" class="note-format-btn" id="noteDividerBtn" aria-label="Divider" title="Divider">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="6" y1="6" x2="18" y2="6"/><line x1="6" y1="18" x2="18" y2="18"/></svg>
+            </button>
+            <button type="button" class="note-format-btn note-ui-hidden" id="noteCellBgColorBtn" aria-label="Cell background color" title="Cell background color">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 11-8-8-8.6 8.6a2 2 0 0 0 0 2.8l5.2 5.2c1 1 2.9 1 4 0Z"/><path d="m5 2 5 5"/><path d="M2 13h15"/><path d="M22 20a2 2 0 1 1-4 0c0-1.6 1.7-2.4 2-4 .3 1.6 2 2.4 2 4Z"/></svg>
+            </button>
+          </div>
+          <div id="noteImageMenu" class="note-image-popover hidden" role="menu" aria-label="Add image">
+            <button type="button" class="note-image-menu-item" data-source="upload" data-i18n="noteImageUpload">Upload</button>
+            <button type="button" class="note-image-menu-item" data-source="camera" data-i18n="noteImageCamera">Camera</button>
+          </div>
+          <input type="file" id="noteImageFileInput" accept="image/png,image/jpeg,image/webp,image/gif,image/*" hidden>
+          <!-- Minimalist Notes UI: the text-color palette is no longer displayed
+               (its container + input stay wired for the existing color handlers). -->
+          <div id="noteTextColorPalette" class="note-ui-hidden note-text-color-palette hidden" role="listbox" aria-label="Text colors"></div>
+<div id="noteAaPanel" class="note-aa-panel hidden" role="menu" aria-label="Text formatting panel">
+            <div class="note-aa-section" data-i18n="noteTextStyleLabel">Text Style</div>
+            <div class="note-aa-row">
+              <button type="button" class="note-aa-item note-aa-style" id="noteStyleNormalBtn" data-style="p" data-i18n="noteStyleNormalLabel">Text</button>
+              <button type="button" class="note-aa-item note-aa-style" id="noteStyleH1Btn" data-style="h1">H1</button>
+              <button type="button" class="note-aa-item note-aa-style" id="noteStyleH2Btn" data-style="h2">H2</button>
+              <button type="button" class="note-aa-item note-aa-style" id="noteStyleH3Btn" data-style="h3">H3</button>
+            </div>
+            <!-- Minimalist Notes UI: Bold / Italic / Underline now live in the single-row
+                 toolbar (same ids + handlers). The old in-panel "Basic" row is no longer
+                 rendered — the controls themselves were relocated, not removed. -->
+            <div class="note-aa-section" data-i18n="noteAlignLabel">Alignment</div>
+            <div class="note-aa-row">
+              <button type="button" class="note-format-btn note-aa-item" id="noteAlignLeftBtn" data-format="justifyLeft" aria-label="Align left" title="Align left">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="18" y2="18"/></svg>
+              </button>
+              <button type="button" class="note-format-btn note-aa-item" id="noteAlignCenterBtn" data-format="justifyCenter" aria-label="Align center" title="Align center">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="6" y1="12" x2="18" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+              </button>
+              <button type="button" class="note-format-btn note-aa-item" id="noteAlignRightBtn" data-format="justifyRight" aria-label="Align right" title="Align right">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="9" y1="12" x2="21" y2="12"/><line x1="6" y1="18" x2="21" y2="18"/></svg>
+              </button>
+            </div>
+            <!-- Minimalist Notes UI: the per-font-size controls are no longer rendered in
+                 the editor (fontSize handlers/buttons stay wired in app.js). -->
+            <div class="note-ui-hidden note-aa-section" data-i18n="noteFontSizeLabel">Font Size</div>
+            <div class="note-ui-hidden note-aa-row">
+              <button type="button" class="note-aa-item note-aa-font" id="noteFontSmallBtn" data-size="1" data-i18n="noteFontSmallLabel" title="Small">A</button>
+              <button type="button" class="note-aa-item note-aa-font" id="noteFontNormalBtn" data-size="3" data-i18n="noteFontNormalLabel" title="Normal">Aa</button>
+              <button type="button" class="note-aa-item note-aa-font" id="noteFontLargeBtn" data-size="5" data-i18n="noteFontLargeLabel" title="Large">A</button>
+            </div>
+            <!-- Minimalist Notes UI: Colors are no longer rendered in the editor. The
+                 buttons, palettes and color inputs below keep their ids and handlers. -->
+            <div class="note-ui-hidden note-aa-section" data-i18n="noteColorsLabel">Colors</div>
+            <div class="note-ui-hidden note-aa-row">
+              <button type="button" class="note-format-btn note-aa-item" id="noteTextColorBtn" aria-label="Text color" title="Text color"><span class="fmt-color">A</span></button>
+              <button type="button" class="note-format-btn note-aa-item" id="noteHighlightBtn" aria-label="Highlight" title="Highlight"><span class="fmt-highlight">A</span></button>
+            </div>
+            <div id="noteHighlightPalette" class="note-ui-hidden note-aa-highlight-palette hidden" role="listbox" aria-label="Highlight colors"></div>
+            <!-- Minimalist Notes UI: Color Presets (templates) are no longer rendered.
+                 The row keeps its id, so the existing preset builder/handlers still work. -->
+            <div class="note-ui-hidden note-aa-section note-aa-presets-section" data-i18n="notePresetsLabel">Presets</div>
+            <div class="note-ui-hidden note-aa-presets-row" id="noteAaPresetsRow" role="group" aria-label="Color presets"></div>
+            <!-- Minimalist Notes UI: Styles & Frames are no longer rendered in the editor.
+                 The rows keep their ids (app.js still builds/fills them), and any style/frame
+                 already stored on a note keeps being applied exactly as before. -->
+            <div class="note-ui-hidden note-aa-section" data-i18n="noteStylesLabel">Styles</div>
+            <div class="note-ui-hidden note-aa-styles-row" id="noteAaStylesRow" role="group" aria-label="Note styles"></div>
+            <div class="note-ui-hidden note-aa-section" data-i18n="noteFramesLabel">Frames</div>
+            <div class="note-ui-hidden note-aa-frames-row" id="noteAaFramesRow" role="group" aria-label="Page frames"></div>
+
+          </div>
+          <!-- Minimalist Notes UI: the standalone color inputs / cell-fill palette are no
+               longer displayed; both keep their ids + change handlers. -->
+          <input type="color" id="noteTextColorInput" class="note-ui-hidden note-color-input" value="#d93025" aria-hidden="true" tabindex="-1" />
+          <div id="noteCellBgColorPalette" class="note-ui-hidden note-cell-bg-color-palette hidden" role="listbox" aria-label="Cell background colors"></div>
+          <input type="color" id="noteCellBgColorInput" class="note-ui-hidden note-color-input" value="#ffffff" aria-hidden="true" tabindex="-1" />
+          <div id="noteTablePanel" class="note-table-panel hidden">
+            <div class="note-table-panel-label" data-i18n="noteTableInsertPopupTitle">Insert Table</div>
+            <div class="note-table-preset" role="group" aria-label="Table presets">
+              <button type="button" class="note-table-preset-btn" data-preset="2x2" aria-label="2 by 2">2 × 2</button>
+              <button type="button" class="note-table-preset-btn" data-preset="3x3" aria-label="3 by 3">3 × 3</button>
+              <button type="button" class="note-table-preset-btn" data-preset="4x5" aria-label="4 by 5">4 × 5</button>
+              <button type="button" class="note-table-preset-btn note-table-preset-custom" data-preset="custom" data-i18n="noteTablePresetCustomLabel">Custom</button>
+            </div>
+            <div class="note-table-panel-fields">
+              <label class="note-table-panel-field">
+                <span data-i18n="noteTableRowsLabel">Rows</span>
+                <input type="number" id="noteTableRows" min="1" max="20" value="3" aria-label="Rows" />
+              </label>
+              <label class="note-table-panel-field">
+                <span data-i18n="noteTableColsLabel">Cols</span>
+                <input type="number" id="noteTableCols" min="1" max="20" value="3" aria-label="Columns" />
+              </label>
+              <label class="note-table-panel-field note-table-panel-check">
+                <input type="checkbox" id="noteTableHeader" aria-label="Header row" />
+                <span data-i18n="noteTableHeaderRowLabel">Header row</span>
+              </label>
+            </div>
+            <div class="note-table-panel-actions">
+              <button type="button" id="noteTableInsertBtn" class="note-table-insert-btn" data-i18n="noteTableInsertBtnLabel">Insert Table</button>
+              <button type="button" id="noteTableCancelBtn" class="note-table-cancel-btn" data-i18n="cancelBtn">Cancel</button>
+            </div>
+          </div>
+          <div id="noteBodyInput" class="note-body-input" contenteditable="true" dir="auto" placeholder="Start writing..." data-i18n-placeholder="noteBodyPlaceholder" spellcheck="true"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INSTANT EXPORT PHASE: the old "PDF Export" setup dialog (Style / Title /
+         Date / Company Profile, with Preview + Create PDF actions) was removed in
+         full. The editor header's PDF button now builds and shares/downloads the
+         PDF immediately, using the note's own title, its own Style/Frame and the
+         current (today) export date — no dialog, no backdrop markup. -->
+
+
+
+    <!-- PHASE 06: Notes PDF Preview workspace. Read-only viewer for the REAL
+         PDF produced by the existing buildNotePdfBlob pipeline (same blob as
+         export/share — zero data-model or engine changes). Pages are rendered
+         with pdf.js (lazy CDN, same pattern as the existing PDF_LIB_URL), with
+         prev/next navigation, zoom in/out/fit, rotate and share/save. -->
+    <div id="notePdfPreviewModal" class="note-pdf-preview-backdrop" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="notePdfPreviewTitleEl">
+      <div class="note-pdf-preview">
+        <header class="note-pdf-preview-header">
+          <button id="notePdfPreviewClose" class="notes-back-btn icon-btn" type="button" aria-label="Close preview">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+          </button>
+          <h3 id="notePdfPreviewTitleEl" class="note-pdf-preview-title"></h3>
+          <button id="notePdfPreviewShare" class="notes-send-btn" type="button" aria-label="Share / Save PDF">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+          </button>
+          <button id="notePdfDocToggleBtn" class="note-format-btn" type="button" aria-label="Document options" aria-haspopup="false" aria-expanded="false" aria-controls="notePdfDocOptions">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3"/><path d="M2 14h4M10 8h4M18 16h4"/></svg>
+          </button>
+        </header>
+        <!-- PHASE 09: document options (template / header / footer / watermark).
+             Presentation-only; updates the session notePdfDocOptions and
+             regenerates the preview blob. Never touches the note data. -->
+        <div id="notePdfDocOptions" class="note-pdf-doc-options" hidden>
+          <label class="note-pdf-doc-opt" data-i18n="pdfDocTemplate">Template
+            <select id="notePdfDocTemplate">
+              <option value="blank" data-i18n="pdfTplBlank">Blank</option>
+              <option value="report" data-i18n="pdfTplReport">Report</option>
+              <option value="invoice" data-i18n="pdfTplInvoice">Invoice</option>
+              <option value="receipt" data-i18n="pdfTplReceipt">Receipt</option>
+              <option value="contract" data-i18n="pdfTplContract">Contract</option>
+              <option value="cv" data-i18n="pdfTplCv">CV</option>
+              <option value="business" data-i18n="pdfTplBusiness">Business Report</option>
+              <option value="engineering" data-i18n="pdfTplEngineering">Engineering Report</option>
+              <option value="letter" data-i18n="pdfTplLetter">Letter</option>
+            </select>
+          </label>
+          <label class="note-pdf-doc-check"><input type="checkbox" id="notePdfDocHeader" checked> <span data-i18n="pdfDocHeader">Header</span></label>
+          <label class="note-pdf-doc-check"><input type="checkbox" id="notePdfDocFooter" checked> <span data-i18n="pdfDocFooter">Footer</span></label>
+          <label class="note-pdf-doc-check"><input type="checkbox" id="notePdfDocWmOn"> <span data-i18n="pdfDocWatermark">Watermark</span></label>
+          <input id="notePdfDocWmText" class="note-pdf-doc-wmtext" type="text" data-i18n-placeholder="pdfDocWmText" placeholder="Watermark text" aria-label="Watermark text">
+        </div>
+        <div id="notePdfPreviewStage" class="note-pdf-preview-stage">
+          <canvas id="notePdfPreviewCanvas"></canvas>
+          <!-- PHASE 08: annotation overlay — an independent layer over the
+               rasterized preview page. Geometry is stored in PDF user-space
+               (via pdf.js viewport conversion) so it survives zoom, rotate,
+               resize and page navigation. Never touches the note or the PDF
+               blob; Save/Share/Print deliver the original PDF (see report). -->
+          <div id="notePdfAnnoLayer" class="note-pdf-anno-layer" aria-hidden="false">
+            <canvas id="notePdfAnnoCanvas"></canvas>
+            <div id="notePdfAnnoTextBoxes" class="note-pdf-anno-textboxes"></div>
+            <button id="notePdfAnnoDeleteChip" type="button" class="note-pdf-anno-delete-chip" aria-label="Delete annotation" hidden><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          </div>
+        </div>
+        <footer class="note-pdf-preview-controls">
+          <button id="notePdfPrevPageBtn" class="note-format-btn" type="button" aria-label="Previous page">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <span id="notePdfPageIndicator" class="note-pdf-page-indicator" aria-live="polite">– / –</span>
+          <button id="notePdfNextPageBtn" class="note-format-btn" type="button" aria-label="Next page">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
+          <span class="note-table-toolbar-sep" role="separator" aria-hidden="true"></span>
+          <button id="notePdfZoomOutBtn" class="note-format-btn" type="button" aria-label="Zoom out">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3M8 11h6"/></svg>
+          </button>
+          <span id="notePdfZoomLevel" class="note-pdf-zoom-level" aria-live="off">100%</span>
+          <button id="notePdfZoomInBtn" class="note-format-btn" type="button" aria-label="Zoom in">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3M8 11h6M11 8v6"/></svg>
+          </button>
+          <button id="notePdfZoomFitBtn" class="note-format-btn" type="button" aria-label="Fit page">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+          </button>
+          <button id="notePdfRotateBtn" class="note-format-btn" type="button" aria-label="Rotate">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/></svg>
+          </button>
+          <!-- PHASE 08: annotation tools — Text/Highlight/Draw inline; the
+               remaining shapes live in the existing More menu. All operate on
+               the preview overlay only. -->
+          <span class="note-table-toolbar-sep" role="separator" aria-hidden="true"></span>
+          <button id="notePdfAnnoEditBtn" class="note-format-btn" type="button" aria-label="Edit annotations" aria-pressed="false">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+          </button>
+          <button id="notePdfAnnoTextBtn" class="note-format-btn" type="button" aria-label="Add text" aria-pressed="false">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V5h16v2"/><path d="M12 5v14"/><path d="M9 19h6"/></svg>
+          </button>
+          <button id="notePdfAnnoHighlightBtn" class="note-format-btn" type="button" aria-label="Highlight" aria-pressed="false">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11-6 6v4h4l6-6"/><path d="m18 2 4 4-10 10-4-4Z"/></svg>
+          </button>
+                                          <button id="notePdfAnnoDrawBtn" class="note-format-btn" type="button" aria-label="Draw" aria-pressed="false">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17c3-6 6 2 9-4s4 1 6-3"/></svg>
+          </button>
+          <!-- PHASE 07: secondary annotation tools (kept inline on desktop; hidden
+               on small screens where they live in the More menu). Note = pin. -->
+          <button id="notePdfAnnoUnderlineBtn" class="note-format-btn hidden-sm" type="button" aria-label="Underline" aria-pressed="false" data-note-pdf-anno-tool="underline">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="19" x2="19" y2="19"/></svg>
+          </button>
+          <button id="notePdfAnnoStrikeBtn" class="note-format-btn hidden-sm" type="button" aria-label="Strike-through" aria-pressed="false" data-note-pdf-anno-tool="strike">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="11" x2="19" y2="11"/></svg>
+          </button>
+          <button id="notePdfAnnoRectBtn" class="note-format-btn hidden-sm" type="button" aria-label="Rectangle" aria-pressed="false" data-note-pdf-anno-tool="rect">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/></svg>
+          </button>
+          <button id="notePdfAnnoNoteBtn" class="note-format-btn hidden-sm" type="button" aria-label="Add note" aria-pressed="false" data-note-pdf-anno-tool="note">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 10.5h6v6"/><path d="M12 2a9 9 0 0 0-2 17.3l3.7 2.1a1 1 0 0 0 1.4-.9V12a2 2 0 0 0-2-2V5a2 2 0 0 0-4 0v5"/></svg>
+          </button>
+          <!-- PHASE 07: basic toolbar additions — Save, Print and the More (⋯)
+               menu that groups the secondary tools on small screens. All items
+               reuse the existing Phase 06 state/handlers; no new engine. -->
+          <span class="note-table-toolbar-sep" role="separator" aria-hidden="true"></span>
+          <button id="notePdfSaveBtn" class="note-format-btn" type="button" aria-label="Save to device">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+          </button>
+          <button id="notePdfPrintBtn" class="note-format-btn" type="button" aria-label="Print">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></svg>
+          </button>
+          <button id="notePdfPreviewMoreBtn" class="note-format-btn" type="button" aria-label="More tools" aria-haspopup="true" aria-expanded="false">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
+          </button>
+          <div id="notePdfMoreMenu" class="note-pdf-more-menu" hidden role="menu" aria-label="More tools">
+            <button type="button" role="menuitem" data-note-pdf-more-action="prev" data-i18n="pdfPrevPage">Previous page</button>
+            <button type="button" role="menuitem" data-note-pdf-more-action="next" data-i18n="pdfNextPage">Next page</button>
+            <button type="button" role="menuitem" data-note-pdf-more-action="zoom-in" data-i18n="pdfZoomIn">Zoom in</button>
+            <button type="button" role="menuitem" data-note-pdf-more-action="zoom-out" data-i18n="pdfZoomOut">Zoom out</button>
+            <button type="button" role="menuitem" data-note-pdf-more-action="fit" data-i18n="pdfZoomFit">Fit page</button>
+            <button type="button" role="menuitem" data-note-pdf-more-action="rotate" data-i18n="pdfRotate">Rotate</button>
+            <button type="button" role="menuitem" data-note-pdf-more-action="save" data-i18n="pdfSave">Save to device</button>
+            <button type="button" role="menuitem" data-note-pdf-more-action="print" data-i18n="pdfPrint">Print</button>
+            <!-- PHASE 08: secondary annotation tools (primary ones are inline). -->
+            <button type="button" role="menuitem" data-note-pdf-more-action="anno-underline" data-i18n="pdfAnnoUnderline">Underline</button>
+            <button type="button" role="menuitem" data-note-pdf-more-action="anno-strike" data-i18n="pdfAnnoStrike">Strike-through</button>
+            <button type="button" role="menuitem" data-note-pdf-more-action="anno-rect" data-i18n="pdfAnnoRect">Rectangle</button>
+            <button type="button" role="menuitem" data-note-pdf-more-action="anno-circle" data-i18n="pdfAnnoCircle">Circle</button>
+            <button type="button" role="menuitem" data-note-pdf-more-action="anno-line" data-i18n="pdfAnnoLine">Line</button>
+            <button type="button" role="menuitem" data-note-pdf-more-action="anno-note" data-i18n="pdfAnnoNote">Add note</button>
+            <button type="button" role="menuitem" data-note-pdf-more-action="anno-clear" data-i18n="pdfAnnoClear">Clear page annotations</button>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <div id="smartDocsModal" class="smart-docs-backdrop" aria-hidden="true">
+      <!-- Reserved top ad slot for the Smart Documents screen. Reuses the SAME
+           .ad-placeholder reserved-space pattern as the main app slot (no ad
+           system, no network, invisible until an ad is ever wired). The modal
+           layout below always starts AFTER this reserved area. -->
+      <div id="smartAdPlaceholder" class="ad-placeholder smart-docs-ad-slot" aria-hidden="true"></div>
+      <div class="smart-docs-home" role="dialog" aria-modal="true" aria-labelledby="smartDocsTitle">
+        <header class="smart-docs-header">
+          <button id="closeSmartDocs" class="notes-back-btn icon-btn" type="button" aria-label="Back">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          </button>
+          <h3 id="smartDocsTitle" data-i18n="smartDocsTitle">📄 Smart Documents</h3>
+        </header>
+        <nav class="smart-steps" data-widget="smart-steps" aria-label="Document workflow steps">
+          <div class="smart-steps-track" data-step="1">
+            <div class="smart-step is-active" data-step="1">
+              <span class="smart-step-dot" aria-hidden="true"></span>
+              <span class="smart-step-label" data-i18n="smartDocsStep1">Start</span>
+            </div>
+            <div class="smart-step" data-step="2">
+              <span class="smart-step-dot" aria-hidden="true"></span>
+              <span class="smart-step-label" data-i18n="smartDocsStep2">Edit</span>
+            </div>
+            <div class="smart-step" data-step="3">
+              <span class="smart-step-dot" aria-hidden="true"></span>
+              <span class="smart-step-label" data-i18n="smartDocsStep3">Review</span>
+            </div>
+            <div class="smart-step" data-step="4">
+              <span class="smart-step-dot" aria-hidden="true"></span>
+              <span class="smart-step-label" data-i18n="smartDocsStep4">Export</span>
+            </div>
+          </div>
+        </nav>
+        <div class="smart-docs-body">
+          <h2 class="smart-docs-heading" data-i18n="smartDocsHeading">What would you like to do?</h2>
+          <!-- PART 20 — saved draft banner (hidden until a draft exists) -->
+          <div id="smartDraftBanner" class="smart-draft-banner" hidden>
+            <span class="smart-draft-text">
+              <span class="smart-draft-title" data-i18n="smartDraftBannerTitle">Draft saved on this device</span>
+              <span id="smartDraftInfo" class="smart-draft-info"></span>
+            </span>
+            <button type="button" class="smart-draft-resume" id="smartDraftResumeBtn" data-i18n="smartDraftResume">Resume draft</button>
+          </div>
+          <!-- PART 32 — "Your drafts" list (مسوداتك). Reads ONLY the existing
+               PART 23 IndexedDB store. Resume reuses the existing editor;
+               Delete uses the existing modal-dialog pattern (no alert/confirm). -->
+          <div id="smartDraftsSection" class="smart-drafts-section" hidden>
+            <h3 class="smart-drafts-heading" data-i18n="smartDraftsTitle">Your drafts</h3>
+            <div id="smartDraftsList" class="smart-drafts-list"></div>
+            <div id="smartDraftsEmpty" class="smart-drafts-empty" hidden>
+              <p class="smart-drafts-empty-text" data-i18n="smartDraftsEmpty">No saved drafts yet</p>
+              <button type="button" class="smart-drafts-new" id="smartDraftsNewBtn" data-i18n="smartDraftsNewDoc">Blank document</button>
+            </div>
+          </div>
+          <div class="smart-docs-grid">
+            <button type="button" class="smart-doc-card" data-action="smart-scan-doc">
+              <span class="smart-doc-card-icon" aria-hidden="true">📸</span>
+              <span class="smart-doc-card-content">
+                <span class="smart-doc-card-title" data-i18n="smartDocsCardScanTitle">Scan a Document</span>
+                <span class="smart-doc-card-desc" data-i18n="smartDocsCardScanDesc">Take a photo of a paper or a contract and turn it into editable content.</span>
+              </span>
+            </button>
+            <button type="button" class="smart-doc-card" data-action="smart-import-file">
+              <span class="smart-doc-card-icon" aria-hidden="true">📂</span>
+              <span class="smart-doc-card-content">
+                <span class="smart-doc-card-title" data-i18n="smartDocsCardImportTitle">Import a File</span>
+                <span class="smart-doc-card-desc" data-i18n="smartDocsCardImportDesc">Choose a PDF or a supported file from your device.</span>
+              </span>
+            </button>
+            <button type="button" class="smart-doc-card" data-action="smart-new-doc">
+              <span class="smart-doc-card-icon" aria-hidden="true">📄</span>
+              <span class="smart-doc-card-content">
+                <span class="smart-doc-card-title" data-i18n="smartDocsCardNewTitle">New Document</span>
+                <span class="smart-doc-card-desc" data-i18n="smartDocsCardNewDesc">A blank page to start from scratch.</span>
+              </span>
+            </button>
+            <button type="button" class="smart-doc-card" data-action="smart-templates">
+              <span class="smart-doc-card-icon" aria-hidden="true">📑</span>
+              <span class="smart-doc-card-content">
+                <span class="smart-doc-card-title" data-i18n="smartDocsCardTemplatesTitle">Templates</span>
+                <span class="smart-doc-card-desc" data-i18n="smartDocsCardTemplatesDesc">Ready-made templates to get started quickly.</span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PART 4 — Smart Scan / OCR workflow view (inside Smart Documents) -->
+      <section class="smart-scan-view" id="smartScanView" aria-hidden="true">
+        <header class="smart-scan-header">
+          <button id="smartScanBack" class="notes-back-btn icon-btn" type="button" aria-label="Back">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          </button>
+          <h3 id="smartScanTitle" data-i18n="smartScanTitle">📸 Scan a Document</h3>
+                </header>
+        <nav class="smart-steps" data-widget="smart-scan-steps" aria-label="Scan workflow steps">
+          <div class="smart-steps-track" data-step="1">
+            <div class="smart-step is-active" data-step="1">
+              <span class="smart-step-dot" aria-hidden="true"></span>
+              <span class="smart-step-label" data-i18n="smartDocsStep1">Start</span>
+            </div>
+            <div class="smart-step" data-step="2">
+              <span class="smart-step-dot" aria-hidden="true"></span>
+              <span class="smart-step-label" data-i18n="smartDocsStep2">Edit</span>
+            </div>
+            <div class="smart-step" data-step="3">
+              <span class="smart-step-dot" aria-hidden="true"></span>
+              <span class="smart-step-label" data-i18n="smartDocsStep3">Review</span>
+            </div>
+            <div class="smart-step" data-step="4">
+              <span class="smart-step-dot" aria-hidden="true"></span>
+              <span class="smart-step-label" data-i18n="smartDocsStep4">Export</span>
+            </div>
+          </div>
+        </nav>
+
+        <div class="smart-scan-stage" id="scanStageCamera">
+          <div class="scan-camera-frame" id="scanCameraFrame">
+            <video id="scanVideo" autoplay playsinline muted></video>
+            <div class="scan-camera-shade" aria-hidden="true"></div>
+          </div>
+          <div class="scan-camera-error" id="scanCameraError" hidden>
+            <span id="scanCameraErrorText"></span>
+          </div>
+          <div class="scan-capture-bar">
+            <button id="scanCaptureBtn" class="scan-primary-btn" type="button" data-i18n="smartScanCapture" disabled>Capture</button>
+          </div>
+          <p class="scan-upload-fallback" id="scanFilePick" >
+            <label for="scanFileInput">
+              <span data-i18n="smartScanUploadFallback">Choose an image from your device instead</span>
+            </label>
+            <input id="scanFileInput" type="file" accept="image/*" hidden />
+          </p>
+          <div class="scan-info" id="scanCameraHint" hidden></div>
+        </div>
+
+        <div class="smart-scan-stage" id="scanStageProcessing">
+          <div class="scan-progress" id="scanProcessingProgress">
+            <div class="scan-proc-item" data-proc="detect">
+              <span class="scan-proc-dot" aria-hidden="true"></span>
+              <span data-i18n="smartScanDetecting">Detecting document</span>
+            </div>
+            <div class="scan-proc-item" data-proc="correct">
+              <span class="scan-proc-dot" aria-hidden="true"></span>
+              <span data-i18n="smartScanCorrecting">Correcting image</span>
+            </div>
+            <div class="scan-proc-item" data-proc="improve">
+              <span class="scan-proc-dot" aria-hidden="true"></span>
+              <span data-i18n="smartScanImproving">Improving image</span>
+            </div>
+            <div class="scan-proc-item" data-proc="read">
+              <span class="scan-proc-dot" aria-hidden="true"></span>
+              <span data-i18n="smartScanReading">Reading text</span>
+            </div>
+          </div>
+          <div class="scan-info" id="scanProcessingInfo" data-i18n="smartScanProcessing">Processing…</div>
+          <canvas id="scanProcessingCanvas" hidden></canvas>
+        </div>
+
+        <div class="smart-scan-stage" id="scanStageReview">
+          <div class="scan-review-grid">
+            <div class="scan-review-col">
+              <span class="scan-review-label" data-i18n="smartScanPreviewLabel">Processed document</span>
+              <div class="scan-review-preview">
+                <img id="scanReviewImage" alt="Processed scanned document" />
+              </div>
+            </div>
+            <div class="scan-review-col">
+              <span class="scan-review-label" id="scanReviewHeading" data-i18n="smartScanReviewTitle">Review OCR result</span>
+              <!-- PART 18 — OCR Reality Rule: realistic, non-overclaiming review status. -->
+              <div id="scanReviewStatus" class="scan-review-status" data-state="needs" role="status" aria-live="polite"></div>
+              <div class="scan-review-text">
+                <textarea id="scanReviewText" rows="12" spellcheck="false" data-i18n-placeholder="smartScanEditHint"></textarea>
+              </div>
+              <!-- PART 16 — Document Understanding: detected structure indicators.
+                   Read-only review of what the analyzer found (Heading / Paragraph /
+                   Table / Number / Date / Field). The OCR textarea above stays the
+                   single editable surface — this is Smart Scan review, not an editor. -->
+              <div id="scanStructurePanel" class="scan-structure" hidden>
+                <span class="scan-review-label" id="scanStructureTitle" data-i18n="smartScanStructTitle">Detected structure</span>
+                <div id="scanStructureList" class="scan-structure-list" role="list" aria-labelledby="scanStructureTitle"></div>
+              </div>
+              <!-- PART 17 — Recognized Document → Editable structure → Create PDF.
+                   The raw OCR textarea above stays available, but the recognized
+                   structure (headings / paragraphs / fields / real HTML tables) is
+                   also editable here. User edits win over OCR and feed Create PDF. -->
+              <div id="scanEditPanel" class="scan-edit-doc" hidden>
+                <span class="scan-review-label" id="scanEditTitle" data-i18n="smartScanEditTitle">Editable document</span>
+                <input id="scanEditDocTitle" class="scan-edit-title-input" type="text" data-i18n-placeholder="smartScanEditDocTitlePh" />
+                <div id="scanEditBlocks" class="scan-edit-blocks"></div>
+                <div class="scan-edit-addrow">
+                  <button type="button" class="scan-edit-add" data-add-block="heading">+ H</button>
+                  <button type="button" class="scan-edit-add" data-add-block="paragraph">+ ¶</button>
+                  <button type="button" class="scan-edit-add" data-add-block="field">+ Ⓕ</button>
+                  <button type="button" class="scan-edit-add" data-add-block="table">+ ⛶</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="scan-info" id="scanAcceptInfo" hidden></div>
+          <div class="scan-review-actions">
+            <button id="scanRescanBtn" class="scan-ghost-btn" type="button" data-i18n="smartScanRescan">Rescan</button>
+            <button id="scanCreatePdfBtn" class="scan-primary-btn" type="button" data-i18n="smartScanCreatePdf">Create PDF</button>
+            <button id="scanAcceptBtn" class="scan-ghost-btn" type="button" data-i18n="smartScanAccept">Accept Result</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- PART 5 — Smart Import / PDF workflow view (inside Smart Documents) -->
+      <section class="smart-import-view" id="smartImportView" aria-hidden="true">
+        <header class="smart-scan-header">
+          <button id="smartImportBack" class="notes-back-btn icon-btn" type="button" aria-label="Back">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          </button>
+          <h3 id="smartImportTitle" data-i18n="smartImportTitle">📂 Import a File</h3>
+        </header>
+        <nav class="smart-steps" data-widget="smart-import-steps" aria-label="Import workflow steps">
+          <div class="smart-steps-track" data-step="1">
+            <div class="smart-step is-active" data-step="1">
+              <span class="smart-step-dot" aria-hidden="true"></span>
+              <span class="smart-step-label" data-i18n="smartDocsStep1">Start</span>
+            </div>
+            <div class="smart-step" data-step="2">
+              <span class="smart-step-dot" aria-hidden="true"></span>
+              <span class="smart-step-label" data-i18n="smartDocsStep2">Edit</span>
+            </div>
+            <div class="smart-step" data-step="3">
+              <span class="smart-step-dot" aria-hidden="true"></span>
+              <span class="smart-step-label" data-i18n="smartDocsStep3">Review</span>
+            </div>
+            <div class="smart-step" data-step="4">
+              <span class="smart-step-dot" aria-hidden="true"></span>
+              <span class="smart-step-label" data-i18n="smartDocsStep4">Export</span>
+            </div>
+          </div>
+        </nav>
+        <input id="smartImportFileInput" type="file" accept="application/pdf,.pdf" hidden />
+
+        <div class="smart-import-stage" id="importStagePick">
+          <p class="import-pick-prompt" data-i18n="smartImportPickPrompt">Choose a PDF file from your device.</p>
+          <div class="import-actions">
+            <button id="smartImportChooseBtn" class="scan-primary-btn" type="button" data-i18n="smartImportChoose">Choose File</button>
+          </div>
+        </div>
+
+        <div class="smart-import-stage" id="importStagePreparing" hidden>
+          <div class="scan-progress">
+            <div class="scan-proc-item proc-active" data-proc="prepare">
+              <span class="scan-proc-dot" aria-hidden="true"></span>
+              <span data-i18n="smartImportPreparing">Preparing Document…</span>
+            </div>
+            <div class="scan-proc-item" data-proc="analyze">
+              <span class="scan-proc-dot" aria-hidden="true"></span>
+              <span data-i18n="smartImportAnalyzing">Analyzing the document…</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="smart-import-stage" id="importStageScanned" hidden>
+          <div class="import-decision">
+            <h4 data-i18n="smartImportScannedTitle">Scanned Document Detected</h4>
+            <p data-i18n="smartImportScannedMsg">It looks like this document contains scanned pages. Would you like to use text recognition?</p>
+          </div>
+          <div class="import-actions">
+            <button id="importUseOcrBtn" class="scan-primary-btn" type="button" data-i18n="smartImportUseOcr">Use OCR</button>
+            <button id="importKeepImagesBtn" class="scan-ghost-btn" type="button" data-i18n="smartImportKeepImages">Keep Pages as Images</button>
+          </div>
+        </div>
+
+        <div class="smart-import-stage" id="importStageOcr" hidden>
+          <div class="scan-progress">
+            <div class="scan-proc-item proc-active" data-proc="ocr">
+              <span class="scan-proc-dot" aria-hidden="true"></span>
+              <span data-i18n="smartImportOcrProcessing">OCR Processing…</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="smart-import-stage" id="importStageError" hidden>
+          <div class="import-decision import-error">
+            <h4 data-i18n="smartImportFailed">Failed to Import</h4>
+            <p id="importErrorText"></p>
+          </div>
+          <div class="import-actions">
+            <button id="importRetryBtn" class="scan-primary-btn" type="button" data-i18n="smartImportRetry">Retry</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- PART 5 — Smart Documents editor destination for imported content -->
+      <section class="smart-editor-view" id="smartEditorView" aria-hidden="true">
+        <header class="smart-scan-header smart-pdf-toolbar">
+          <button id="smartEditorBack" class="notes-back-btn icon-btn" type="button" aria-label="Back">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          </button>
+          <h3 id="smartEditorTitle" data-i18n="smartEditorTitle">Editor</h3>
+          <!-- PART 5e — Text Color (Smart PDF Direct Editor): colors the REAL
+               PDF text via content-stream rg operators on Save. No new toolbar. -->
+          <div class="smart-pdf-color-wrap" id="smartPdfColorWrap">
+            <button type="button" class="smart-save-btn smart-textcolor-btn" id="smartPdfTextColorBtn" aria-haspopup="true" aria-expanded="false" aria-controls="smartPdfColorMenu">
+              <span aria-hidden="true">🎨</span>
+              <span class="smart-tc-label" data-i18n="smartPdfTextColor">Text Color</span>
+            </button>
+            <div class="smart-pdf-color-menu" id="smartPdfColorMenu" role="menu" aria-label="Text color" hidden>
+              <button type="button" class="smart-pdf-color-swatch" role="menuitem" data-color="#000000" style="background:#000000" aria-label="Black" title="Black"></button>
+              <button type="button" class="smart-pdf-color-swatch" role="menuitem" data-color="#ff0000" style="background:#ff0000" aria-label="Red" title="Red"></button>
+              <button type="button" class="smart-pdf-color-swatch" role="menuitem" data-color="#008000" style="background:#008000" aria-label="Green" title="Green"></button>
+              <button type="button" class="smart-pdf-color-swatch" role="menuitem" data-color="#0000ff" style="background:#0000ff" aria-label="Blue" title="Blue"></button>
+              <button type="button" class="smart-pdf-color-swatch" role="menuitem" data-color="#ffa500" style="background:#ffa500" aria-label="Orange" title="Orange"></button>
+              <button type="button" class="smart-pdf-color-swatch" role="menuitem" data-color="#800080" style="background:#800080" aria-label="Purple" title="Purple"></button>
+              <button type="button" class="smart-pdf-color-swatch" role="menuitem" data-color="#ffff00" style="background:#ffff00" aria-label="Yellow" title="Yellow"></button>
+              <button type="button" class="smart-pdf-color-swatch smart-pdf-color-swatch-light" role="menuitem" data-color="#ffffff" style="background:#ffffff" aria-label="White" title="White"></button>
+            </div>
+          </div>
+          <!-- PART 5e — imported-PDF editor toolbar (Back / Save / Send). Back is
+               already wired to the existing navigation; Save reuses the existing
+               in-memory rasterize + minimal-PDF writer + download seams; Send reuses
+               the existing native system Share Sheet. No new engine here. -->
+                    <!-- PART 22 - Add menu: Text/Image/Logo/Signature/Stamp/Date/Table (PDF editor only) -->
+          <div class="smart-pdf-add-wrap" id="smartPdfAddWrap">
+            <button type="button" class="smart-save-btn smart-add-btn" id="smartPdfAddBtn" aria-haspopup="true" aria-expanded="false" aria-controls="smartPdfAddMenu">
+              <span aria-hidden="true">➕</span>
+              <span data-i18n="smartPdfAdd">Add</span>
+            </button>
+            <div class="smart-pdf-add-menu" id="smartPdfAddMenu" role="menu" aria-label="Add" hidden>
+              <button type="button" class="smart-pdf-add-item" role="menuitem" data-add="text"><span aria-hidden="true">T</span><span data-i18n="smartPdfAddText">Text</span></button>
+              <button type="button" class="smart-pdf-add-item" role="menuitem" data-add="image"><span aria-hidden="true">🖼</span><span data-i18n="smartPdfAddImage">Image</span></button>
+              <button type="button" class="smart-pdf-add-item" role="menuitem" data-add="logo"><span aria-hidden="true">🏷</span><span data-i18n="smartPdfAddLogo">Logo</span></button>
+              <button type="button" class="smart-pdf-add-item" role="menuitem" data-add="signature"><span aria-hidden="true">✍</span><span data-i18n="smartPdfAddSignature">Signature</span></button>
+              <button type="button" class="smart-pdf-add-item" role="menuitem" data-add="stamp"><span aria-hidden="true">🔖</span><span data-i18n="smartPdfAddStamp">Stamp</span></button>
+              <button type="button" class="smart-pdf-add-item" role="menuitem" data-add="date"><span aria-hidden="true">📅</span><span data-i18n="smartPdfAddDate">Date</span></button>
+              <button type="button" class="smart-pdf-add-item" role="menuitem" data-add="table"><span aria-hidden="true">▦</span><span data-i18n="smartPdfAddTable">Table</span></button>
+            </div>
+            <!-- PART 29 — Add → Date sub-menu: Current Date / Custom Date (PDF editor only) -->
+            <div class="smart-pdf-add-menu smart-pdf-date-menu" id="smartPdfDateMenu" role="menu" aria-label="Date" hidden>
+              <button type="button" class="smart-pdf-add-item smart-pdf-date-item" role="menuitem" data-date-opt="current"><span aria-hidden="true">📅</span><span data-i18n="pdfDateCurrent">Current Date</span></button>
+              <button type="button" class="smart-pdf-add-item smart-pdf-date-item" role="menuitem" data-date-opt="custom"><span aria-hidden="true">📝</span><span data-i18n="pdfDateCustom">Custom Date</span></button>
+              <div class="smart-pdf-date-custom smart-pdf-date-hidden" id="smartPdfDateCustomRow">
+                <input type="date" id="smartPdfDateCustomInput" class="smart-pdf-date-input" aria-label="Custom date">
+                <button type="button" class="smart-pdf-date-insert" id="smartPdfDateInsertBtn" data-i18n="pdfDateInsert">Insert</button>
+              </div>
+              <button type="button" class="smart-pdf-date-back" id="smartPdfDateMenuClose"><span aria-hidden="true">←</span><span data-i18n="pdfDateBack">Back</span></button>
+            </div>
+          </div>
+           <!-- PART 27 — Signature Draw/Upload panel (PDF editor only, scoped) -->
+           <div class="smart-pdf-sig-panel" id="smartPdfSigPanel" role="dialog" aria-label="Signature" aria-hidden="true" hidden>
+             <div class="smart-pdf-sig-methods">
+               <button type="button" class="smart-pdf-sig-method smart-pdf-sig-method-active" data-sig-method="draw"><span aria-hidden="true">✎</span><span data-i18n="smartSigDraw">Draw</span></button>
+               <button type="button" class="smart-pdf-sig-method" data-sig-method="upload"><span aria-hidden="true">🖼</span><span data-i18n="smartSigImage">Image</span></button>
+             </div>
+             <div class="smart-pdf-sig-stage" id="smartPdfSigStageDraw">
+               <canvas id="smartPdfSigCanvas" class="smart-pdf-sig-canvas"></canvas>
+               <div class="smart-pdf-sig-actions">
+                 <button type="button" class="smart-text-btn smart-pdf-sig-clear" data-i18n="smartSigClear">Clear</button>
+                 <button type="button" class="smart-table-create-btn smart-pdf-sig-insert" data-i18n="smartSigInsert">Insert</button>
+                 <button type="button" class="smart-text-btn smart-pdf-sig-cancel" data-i18n="smartSigCancel">Cancel</button>
+               </div>
+             </div>
+             <div class="smart-pdf-sig-stage" id="smartPdfSigStageUpload" hidden>
+               <img id="smartPdfSigPreview" class="smart-pdf-sig-img-preview" alt="" hidden />
+               <p class="smart-pdf-sig-hint" id="smartPdfSigHint"><span data-i18n="smartSigChoose">Choose an image of your signature</span></p>
+               <div class="smart-pdf-sig-actions">
+                 <button type="button" class="smart-table-create-btn smart-pdf-sig-insert" data-i18n="smartSigInsert" disabled>Insert</button>
+                 <button type="button" class="smart-text-btn smart-pdf-sig-cancel" data-i18n="smartSigCancel">Cancel</button>
+               </div>
+             </div>
+             <input type="file" id="smartPdfSigImageInput" accept="image/png,image/jpeg,image/webp,image/svg+xml" hidden>
+           </div>
+          <!-- PART 24 - Mark menu: Highlight/Underline/Draw/Comment (PDF editor only) -->
+          <div class="smart-pdf-mark-wrap" id="smartPdfMarkWrap">
+            <button type="button" class="smart-save-btn smart-mark-btn" id="smartPdfMarkBtn" aria-haspopup="true" aria-expanded="false" aria-controls="smartPdfMarkMenu">
+              <span aria-hidden="true">🖊</span>
+              <span data-i18n="smartPdfMark">Mark</span>
+            </button>
+            <div class="smart-pdf-mark-menu" id="smartPdfMarkMenu" role="menu" aria-label="Mark" hidden>
+              <button type="button" class="smart-pdf-mark-item" role="menuitem" data-mark="highlight"><span aria-hidden="true">🖍</span><span data-i18n="smartPdfMarkHighlight">Highlight</span></button>
+              <button type="button" class="smart-pdf-mark-item" role="menuitem" data-mark="underline"><span aria-hidden="true">⎯</span><span data-i18n="smartPdfMarkUnderline">Underline</span></button>
+              <button type="button" class="smart-pdf-mark-item" role="menuitem" data-mark="draw"><span aria-hidden="true">✏</span><span data-i18n="smartPdfMarkDraw">Draw</span></button>
+              <button type="button" class="smart-pdf-mark-item" role="menuitem" data-mark="comment"><span aria-hidden="true">💬</span><span data-i18n="smartPdfMarkComment">Comment</span></button>
+            </div>
+          </div>
+          <!-- PART 25 - Pages menu: Add/Delete/Reorder/Rotate/Duplicate (PDF editor only) -->
+          <div class="smart-pdf-mark-wrap" id="smartPdfPagesWrap">
+            <button type="button" class="smart-save-btn smart-mark-btn" id="smartPdfPagesBtn" aria-haspopup="true" aria-expanded="false" aria-controls="smartPdfPagesMenu">
+              <span aria-hidden="true">📄</span>
+              <span data-i18n="smartPdfPages">Pages</span>
+            </button>
+            <div class="smart-pdf-mark-menu smart-pdf-pages-menu" id="smartPdfPagesMenu" role="menu" aria-label="Pages" hidden>
+              <div class="smart-pdf-pages-list" id="smartPdfPagesList" role="listbox" aria-label="Pages"></div>
+              <div class="smart-pdf-pages-actions">
+                <button type="button" class="smart-pdf-mark-item" role="menuitem" data-pact="add"><span aria-hidden="true">＋</span><span data-i18n="pdfPgAdd">Add Page</span></button>
+                <button type="button" class="smart-pdf-mark-item" role="menuitem" data-pact="del"><span aria-hidden="true">🗑</span><span data-i18n="pdfPgDel">Delete Page</span></button>
+                <button type="button" class="smart-pdf-mark-item" role="menuitem" data-pact="rot"><span aria-hidden="true">⟳</span><span data-i18n="pdfPgRot">Rotate</span></button>
+                <button type="button" class="smart-pdf-mark-item" role="menuitem" data-pact="dup"><span aria-hidden="true">⧉</span><span data-i18n="pdfPgDup">Duplicate</span></button>
+              </div>
+            </div>
+          </div>
+          <!-- PART 30 - Smart Styles menu: Simple/Business/Academic/Engineering (PDF editor only) -->
+          <div class="smart-pdf-add-wrap" id="smartPdfStyleWrap">
+            <button type="button" class="smart-save-btn smart-add-btn" id="smartPdfStyleBtn" aria-haspopup="true" aria-expanded="false" aria-controls="smartPdfStyleMenu">
+              <span aria-hidden="true">✨</span>
+              <span data-i18n="smartPdfStyle">Style</span>
+            </button>
+            <div class="smart-pdf-add-menu smart-pdf-style-menu" id="smartPdfStyleMenu" role="menu" aria-label="Style" hidden>
+              <button type="button" class="smart-pdf-add-item smart-pdf-style-item" role="menuitem" data-style="none"><span aria-hidden="true">⌀</span><span data-i18n="smartPdfStyleNone">No Style</span></button>
+              <button type="button" class="smart-pdf-add-item smart-pdf-style-item" role="menuitem" data-style="simple"><span aria-hidden="true">▪</span><span data-i18n="smartPdfStyleSimple">Simple</span></button>
+              <button type="button" class="smart-pdf-add-item smart-pdf-style-item" role="menuitem" data-style="business"><span aria-hidden="true">💼</span><span data-i18n="smartPdfStyleBusiness">Business</span></button>
+              <button type="button" class="smart-pdf-add-item smart-pdf-style-item" role="menuitem" data-style="academic"><span aria-hidden="true">🎓</span><span data-i18n="smartPdfStyleAcademic">Academic</span></button>
+              <button type="button" class="smart-pdf-add-item smart-pdf-style-item" role="menuitem" data-style="engineering"><span aria-hidden="true">⚙</span><span data-i18n="smartPdfStyleEngineering">Engineering</span></button>
+            </div>
+          </div>
+            <!-- PART 29 — Date controls (Format + Color), shown only when a Date overlay is selected -->
+            <div class="smart-pdf-date-controls" id="smartPdfDateControls" hidden>
+              <label class="smart-pdf-date-label" for="smartPdfDateFormatSelect" data-i18n="pdfDateFormat">Format</label>
+              <select id="smartPdfDateFormatSelect" class="smart-pdf-date-fmt" aria-label="Date format">
+                <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+              </select>
+              <span class="smart-pdf-date-color-label" data-i18n="pdfDateColor">Color</span>
+              <div class="smart-pdf-date-colors" id="smartPdfDateColors">
+                <button type="button" class="smart-pdf-date-swatch active" data-color="#000000" style="background:#000000" aria-label="Black" title="Black"></button>
+                <button type="button" class="smart-pdf-date-swatch" data-color="#dc2626" style="background:#dc2626" aria-label="Red" title="Red"></button>
+                <button type="button" class="smart-pdf-date-swatch" data-color="#16a34a" style="background:#16a34a" aria-label="Green" title="Green"></button>
+                <button type="button" class="smart-pdf-date-swatch" data-color="#2563eb" style="background:#2563eb" aria-label="Blue" title="Blue"></button>
+                <button type="button" class="smart-pdf-date-swatch" data-color="#ea580c" style="background:#ea580c" aria-label="Orange" title="Orange"></button>
+                <button type="button" class="smart-pdf-date-swatch" data-color="#9333ea" style="background:#9333ea" aria-label="Purple" title="Purple"></button>
+              </div>
+              <button type="button" class="smart-pdf-date-close" id="smartPdfDateControlsClose" aria-label="Done" title="Done">✕</button>
+            </div>
+<span class="smart-pdf-toolbar-spacer" aria-hidden="true"></span>
+          <button type="button" class="smart-save-btn" id="smartEditorSaveBtn">
+            <span aria-hidden="true">💾</span>
+            <span data-i18n="smartToolbarSave">Save</span>
+          </button>
+          <button type="button" class="smart-save-btn" id="smartEditorSendBtn">
+            <span aria-hidden="true">📤</span>
+            <span data-i18n="smartPdfSend">Send</span>
+          </button>
+        </header>
+        <div class="smart-editor-body">
+          <!-- PART 5e — the ORIGINAL PDF renders here, editable in place (canvas + text layer).
+               The textarea/images below stay hidden but keep their IDs: extracted text is still
+               produced (used by the text layer + kept for compatibility/tests). -->
+          <div class="smart-pdf-editor" id="smartPdfEditor" aria-label="PDF editor">
+            <!-- pages (canvas + editable text layer) are built here by smartPdfEditorBuild() -->
+          </div>
+          <div id="smartEditorImages" class="smart-editor-images" hidden></div>
+          <span class="scan-review-label" data-i18n="smartEditorHint" hidden>Document content</span>
+          <textarea id="smartEditorText" class="smart-editor-text" rows="14" spellcheck="false" data-i18n-placeholder="smartEditorPlaceholder" hidden></textarea>
+        </div>
+      </section>
+<!-- PART 6 — Smart Documents blank document workspace (A4 page as canvas) -->
+      <section class="smart-blank-view" id="smartBlankView" aria-hidden="true">
+        <header class="smart-scan-header">
+          <button id="smartBlankBack" class="notes-back-btn icon-btn" type="button" aria-label="Back">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          </button>
+          <span class="smart-blank-back-label" data-i18n="smartDocumentBackLabel">Smart Documents</span>
+          <h2 id="smartBlankDocTitle" class="smart-blank-title is-editable" data-i18n="smartToolbarDefault">New Document</h2>
+          <!-- PART 24 — document NAME editing: clicking the title swaps to this
+               inline input. Commits on Enter/blur, cancels on Escape. The name
+               lives in the existing PART 20/23 document model (state.smartBlankDoc.name)
+               and is persisted with the draft in the existing IndexedDB store. -->
+          <input id="smartBlankTitleInput" class="smart-blank-title-input" type="text" hidden autocomplete="off" spellcheck="false">
+          <!-- PART 20 — Save (حفظ): saves the whole document as a draft
+               locally on the device (localStorage, V1). Lives in the editor
+               header so the main toolbar list stays unchanged. -->
+          <button type="button" class="smart-save-btn" id="smartSaveDraftBtn">
+            <span aria-hidden="true">💾</span>
+            <span data-i18n="smartToolbarSave">Save</span>
+          </button>
+          <!-- PART 33 — New Document (مستند جديد) from inside the editor. Shares the
+               SAME protected flow as the home card: clean → start immediately,
+               dirty → unsaved-changes dialog (حفظ والمتابعة / بدء مستند جديد / إلغاء).
+               Reuses the existing smartBlankOpen start path. -->
+          <button type="button" class="smart-save-btn smart-new-doc-btn" id="smartNewDocBtn">
+            <span aria-hidden="true">📝</span>
+            <span data-i18n="smartDocsCardNewTitle">New Document</span>
+          </button>
+          <!-- PART 25 — Review (مراجعة): enters the read-only Review/Preview mode.
+               The preview is rendered from the SAME live A4 pages (no clone, no
+               screenshot); editing tools are hidden while reviewing. -->
+          <button type="button" class="smart-save-btn smart-review-btn" id="smartReviewBtn">
+            <span aria-hidden="true">👁</span>
+            <span data-i18n="smartReviewButton">Review</span>
+          </button>
+          <!-- PART 26 — تصدير PDF: opens the simple Smart Documents PDF export
+               dialog. Fully local/offline generation from the SAME live A4
+               pages the user sees in Review/Preview. -->
+          <button type="button" class="smart-save-btn smart-pdf-export-btn" id="smartPdfExportBtn">
+            <span aria-hidden="true">📄</span>
+            <span data-i18n="smartPdfExportButton">Export PDF</span>
+          </button>
+        </header>
+        <!-- PART 25 — Review bar
+        </header>
+        <!-- PART 25 — Review bar: shown only inside Review mode. Back-to-edit
+             button, workflow stage indicator (● ● ● ○) and the document name
+             from PART 24. No new state system — it drives setSmartDocsStep(3). -->
+        <div class="smart-review-bar" id="smartReviewBar" role="toolbar" aria-label="Review" hidden>
+          <button type="button" class="smart-nav-btn smart-review-exit" id="smartReviewExitBtn">
+            <span class="smart-nav-ico" aria-hidden="true">&#8630;</span>
+            <span data-i18n="smartReviewExit">Back to editing</span>
+          </button>
+          <span class="smart-review-dots" id="smartReviewDots" aria-hidden="true"></span>
+          <span class="smart-review-name" id="smartReviewDocName"></span>
+        </div>
+        <!-- PART 26 — Export PDF dialog: filename (PART 24 default + sanitizer),
+             pages (All / Current) and quality (Normal / High). Simple modal,
+             no native alert/confirm/prompt, fully local generation. -->
+        <div class="smart-pdf-backdrop" id="smartPdfModal" hidden>
+          <div class="smart-pdf-dialog" role="dialog" aria-modal="true" aria-labelledby="smartPdfTitle">
+            <h3 id="smartPdfTitle" data-i18n="smartPdfExportTitle">Export PDF</h3>
+            <label class="smart-pdf-field">
+              <span data-i18n="smartPdfExportFilenameLabel">File name</span>
+              <input id="smartPdfFilenameInput" type="text" autocomplete="off" spellcheck="false">
+            </label>
+            <fieldset class="smart-pdf-field">
+              <legend data-i18n="smartPdfExportPagesLabel">Pages</legend>
+              <label><input type="radio" name="smartPdfPages" value="all" checked> <span data-i18n="smartPdfExportAllPages">All pages</span></label>
+              <label><input type="radio" name="smartPdfPages" value="current"> <span data-i18n="smartPdfExportCurrentPage">Current page</span></label>
+            </fieldset>
+            <fieldset class="smart-pdf-field">
+              <legend data-i18n="smartPdfExportQualityLabel">Quality</legend>
+              <label><input type="radio" name="smartPdfQuality" value="normal" checked> <span data-i18n="smartPdfExportNormal">Normal</span></label>
+              <label><input type="radio" name="smartPdfQuality" value="high"> <span data-i18n="smartPdfExportHigh">High</span></label>
+            </fieldset>
+            <div class="smart-pdf-actions">
+              <button type="button" class="smart-nav-btn" id="smartPdfCancelBtn"><span data-i18n="smartPdfExportCancel">Cancel</span></button>
+              <button type="button" class="smart-save-btn smart-pdf-confirm" id="smartPdfConfirmBtn"><span data-i18n="smartPdfExportDo">Export</span></button>
+            </div>
+          </div>
+        </div>
+        <!-- PART 27 — Result dialog (مشاركة المستند): shown after a successful
+             PART 26 PDF export. Lightweight modal with three actions on the SAME
+             produced blob: Open PDF / Share / Close. Fully local/offline, no new
+             toolbar, no editing tools, no native alert/confirm/prompt. -->
+        <div class="smart-pdf-result-backdrop" id="smartPdfResultModal" role="dialog" aria-modal="true" aria-labelledby="smartPdfResultTitle" hidden>
+          <div class="smart-pdf-result-dialog">
+            <div class="smart-pdf-result-check" aria-hidden="true">&#10004;</div>
+            <!-- PART 31 — Preview stage. The dialog doubles as the real Preview:
+                 heading + note + live page gallery rendered from the SAME pages
+                 embedded in the PDF, then Save PDF / Open / Share / Close. -->
+            <h3 id="smartPdfResultTitle" data-i18n="smartPdfResultTitle">Document created successfully</h3>
+            <div class="smart-pdf-preview-title" id="smartPdfPreviewTitle" data-i18n="smartPdfPreviewTitle">Preview</div>
+            <div class="smart-pdf-preview-note" id="smartPdfPreviewNote" data-i18n="smartPdfPreviewNote">This is the file that will be saved.</div>
+            <div class="smart-pdf-result-file" id="smartPdfResultFilename"></div>
+            <div class="smart-pdf-preview-gallery" id="smartPdfPreviewPages" aria-live="polite"></div>
+            <div class="smart-pdf-result-actions">
+              <button type="button" class="smart-pdf-result-btn smart-pdf-result-open" id="smartPdfOpenBtn"><span data-i18n="smartPdfOpen">Open PDF</span></button>
+              <button type="button" class="smart-pdf-result-btn smart-pdf-result-save" id="smartPdfSaveBtn"><span data-i18n="smartPdfSave">Save PDF</span></button>
+              <button type="button" class="smart-pdf-result-btn smart-pdf-result-share" id="smartPdfShareBtn"><span data-i18n="smartPdfShare">Share</span></button>
+              <button type="button" class="smart-pdf-result-btn smart-pdf-result-close" id="smartPdfResultCloseBtn"><span data-i18n="smartPdfClose">Close</span></button>
+            </div>
+          </div>
+        </div>
+        <div class="smart-blank-toolbar" data-toolbar="blank-doc" role="toolbar">
+          <button type="button" class="smart-tool-btn" data-tool="undo">
+            <span class="smart-btn-ico" aria-hidden="true">&#8636;</span>
+            <span data-i18n="smartToolbarUndo">Undo</span>
+          </button>
+          <button type="button" class="smart-tool-btn" data-tool="redo">
+            <span class="smart-btn-ico" aria-hidden="true">&#8637;</span>
+            <span data-i18n="smartToolbarRedo">Redo</span>
+          </button>
+          <span class="smart-tool-sep" aria-hidden="true"></span>
+          <button type="button" class="smart-tool-btn" data-tool="add">
+            <span class="smart-btn-ico smart-btn-ico-letter" aria-hidden="true">+</span>
+            <span data-i18n="smartToolbarAdd">Add</span>
+          </button>
+          <button type="button" class="smart-tool-btn" data-tool="text">
+            <span class="smart-btn-ico smart-btn-ico-letter" aria-hidden="true"><b>T</b></span>
+            <span data-i18n="smartToolbarText">Text</span>
+          </button>
+          <button type="button" class="smart-tool-btn" data-tool="table">
+            <span class="smart-btn-ico" aria-hidden="true">▦</span>
+            <span data-i18n="smartToolbarTable">Table</span>
+          </button>
+          <button type="button" class="smart-tool-btn" data-tool="signature">
+            <span class="smart-btn-ico" aria-hidden="true">✍</span>
+            <span data-i18n="smartToolbarSignature">Signature</span>
+          </button>
+          <span class="smart-tool-sep" aria-hidden="true"></span>
+          <button type="button" class="smart-tool-btn" data-tool="image">
+            <span class="smart-btn-ico" aria-hidden="true">🖼</span>
+            <span data-i18n="smartToolbarImage">Image</span>
+          </button>
+          <button type="button" class="smart-tool-btn" data-tool="logo">
+            <span class="smart-btn-ico" aria-hidden="true">◉</span>
+            <span data-i18n="smartToolbarLogo">Logo</span>
+          </button>
+          <button type="button" class="smart-tool-btn" data-tool="divider">
+            <span class="smart-btn-ico" aria-hidden="true">━</span>
+            <span data-i18n="smartToolbarDivider">Divider</span>
+          </button>
+          <button type="button" class="smart-tool-btn" data-tool="border">
+            <span class="smart-btn-ico" aria-hidden="true">▭</span>
+            <span data-i18n="smartToolbarBorder">Border</span>
+          </button>
+          <button type="button" class="smart-tool-btn" data-tool="page">
+            <span class="smart-btn-ico" aria-hidden="true">📄</span>
+            <span data-i18n="smartToolbarPage">Page</span>
+          </button>
+          <button type="button" class="smart-tool-btn" data-tool="page-number">
+            <span class="smart-btn-ico smart-btn-ico-letter" aria-hidden="true">#</span>
+            <span data-i18n="smartToolbarPageNumber">Page number</span>
+          </button>
+          <button type="button" class="smart-tool-btn" data-tool="page-settings">
+            <span class="smart-btn-ico" aria-hidden="true">⚙</span>
+            <span data-i18n="smartToolbarPageSettings">Page settings</span>
+          </button>
+          <button type="button" class="smart-tool-btn" data-tool="more">
+            <span class="smart-btn-ico" aria-hidden="true">…</span>
+            <span data-i18n="smartToolbarMore">More</span>
+          </button>
+        </div>
+        <!-- PART 20 — Unsaved changes dialog (حفظ / خروج بدون حفظ / إلغاء).
+             Shown ONLY when the user tries to leave the editor with unsaved
+             changes. Never uses alert()/confirm()/prompt(). -->
+        <div class="smart-unsaved-backdrop" id="smartUnsavedModal" role="dialog" aria-modal="true" aria-hidden="true">
+          <div class="smart-unsaved-modal">
+            <p class="smart-unsaved-title" id="smartUnsavedTitle" data-i18n="smartUnsavedTitle">Do you want to save your changes before exiting?</p>
+            <div class="smart-unsaved-actions">
+              <button type="button" class="smart-unsaved-btn primary" id="smartUnsavedSaveBtn" data-i18n="smartUnsavedSave">Save</button>
+              <button type="button" class="smart-unsaved-btn danger" id="smartUnsavedExitBtn" data-i18n="smartUnsavedExit">Exit without saving</button>
+              <button type="button" class="smart-unsaved-btn" id="smartUnsavedCancelBtn" data-i18n="smartUnsavedCancel">Cancel</button>
+            </div>
+          </div>
+        </div>
+        <!-- PART 32 — Draft delete confirmation (حماية من الضغط العرضي).
+             Reuses the exact same modal pattern/classes as the PART 20
+             unsaved-changes dialog. Never alert()/confirm()/prompt(). -->
+        <div class="smart-unsaved-backdrop" id="smartDraftDeleteModal" role="dialog" aria-modal="true" aria-hidden="true">
+          <div class="smart-unsaved-modal">
+            <p class="smart-unsaved-title" id="smartDraftDelTitle" data-i18n="smartDraftDelTitle">Delete this draft?</p>
+            <p class="smart-draft-del-name" id="smartDraftDelName"></p>
+            <div class="smart-unsaved-actions">
+              <button type="button" class="smart-unsaved-btn" id="smartDraftDelCancelBtn" data-i18n="smartUnsavedCancel">Cancel</button>
+              <button type="button" class="smart-unsaved-btn danger" id="smartDraftDelConfirmBtn" data-i18n="smartDraftDelConfirm">Delete</button>
+            </div>
+          </div>
+        </div>
+<!-- PART 18 — Signature protection status (حالة حماية التوقيع).
+             "EQ Signature Status": EQ only checks whether the document's
+             substantial content changed after its last in-system signature.
+             It is NOT a legal / certified electronic signature. Session-only
+             (no persistence). Hidden until a signature exists; small, RTL-safe
+             and never causes horizontal overflow. -->
+        <div class="smart-sig-status" id="smartSigStatus" role="status" aria-hidden="true" hidden>
+          <span class="smart-sig-status-text" id="smartSigStatusText" data-i18n="smartSigStatusSigned"></span>
+          <button type="button" class="smart-sig-resign" id="smartSigResignBtn" data-i18n="smartSigResign" hidden>Re-sign</button>
+        </div>
+        <!-- PART 15 — Logo position control (shown only while a logo exists) -->
+        <div class="smart-logo-bar" id="smartLogoBar" role="toolbar" aria-hidden="true" data-smart-logo-tools>
+          <span class="smart-logo-bar-label" data-i18n="smartLogoPosition">Logo position</span>
+          <button type="button" class="smart-logo-pos" data-logo-pos="top-right" data-i18n="smartLogoTopRight">Top right</button>
+          <button type="button" class="smart-logo-pos" data-logo-pos="top-left" data-i18n="smartLogoTopLeft">Top left</button>
+          <button type="button" class="smart-logo-pos" data-logo-pos="center" data-i18n="smartLogoCenter">Center</button>
+        </div>
+        <!-- PART 11 — Text Formatting Controls (shown only while a text block is active) -->
+        <div class="smart-text-format-bar" id="smartTextFormatBar" role="toolbar" aria-hidden="true" data-smart-text-tools>
+          <label class="smart-text-field"><span data-i18n="smartTextFont">Font</span>
+            <select id="smartTextFontFamily" class="smart-text-ctl">
+              <option value="" data-i18n="smartTextFontDefault">Default</option>
+              <option value="Arial, sans-serif">Arial</option>
+              <option value="Georgia, serif">Georgia</option>
+              <option value="'Times New Roman', serif">Times New Roman</option>
+              <option value="'Courier New', monospace">Courier New</option>
+              <option value="Tahoma, sans-serif">Tahoma</option>
+              <option value="Verdana, sans-serif">Verdana</option>
+            </select>
+          </label>
+          <label class="smart-text-field"><span data-i18n="smartTextSize">Size</span>
+            <select id="smartTextFontSize" class="smart-text-ctl">
+              <option value="14px">14</option><option value="16px" selected>16</option>
+              <option value="18px">18</option><option value="20px">20</option>
+              <option value="24px">24</option><option value="28px">28</option><option value="32px">32</option>
+            </select>
+          </label>
+          <button type="button" class="smart-text-btn" data-textfmt="bold" data-i18n-title="smartTextBold" title="Bold" data-i18n="smartTextBold">B</button>
+          <button type="button" class="smart-text-btn" data-textfmt="italic" data-i18n-title="smartTextItalic" title="Italic" data-i18n="smartTextItalic">I</button>
+          <button type="button" class="smart-text-btn" data-textfmt="underline" data-i18n-title="smartTextUnderline" title="Underline" data-i18n="smartTextUnderline">U</button>
+          <button type="button" class="smart-text-btn" data-textalign="left" data-i18n-title="smartTextAlignLeft" title="Align left" data-i18n="smartTextAlignLeft">&#8676;</button>
+          <button type="button" class="smart-text-btn" data-textalign="center" data-i18n-title="smartTextAlignCenter" title="Center" data-i18n="smartTextAlignCenter">&#8544;</button>
+          <button type="button" class="smart-text-btn" data-textalign="right" data-i18n-title="smartTextAlignRight" title="Align right" data-i18n="smartTextAlignRight">&#8677;</button>
+          <label class="smart-text-field"><span data-i18n="smartTextDirection">Direction</span>
+            <select id="smartTextDirection" class="smart-text-ctl">
+              <option value="auto" data-i18n="smartTextDirAuto">Auto</option>
+              <option value="ltr" data-i18n="smartTextDirLtr">LTR</option>
+              <option value="rtl" data-i18n="smartTextDirRtl">RTL</option>
+            </select>
+          </label>
+          <label class="smart-text-field"><span data-i18n="smartTextSpacing">Line spacing</span>
+            <select id="smartTextLineSpacing" class="smart-text-ctl">
+              <option value="1" selected>1.0</option>
+              <option value="1.15">1.15</option>
+              <option value="1.5">1.5</option>
+              <option value="2">2.0</option>
+            </select>
+          </label>
+        </div>
+        <!-- PART 12 — Table size launcher (opened only by the ▦ toolbar button) -->
+        <div class="smart-table-create" id="smartTableCreate" role="dialog" aria-hidden="true" aria-label="Table size">
+          <div class="smart-table-create-cols">
+            <label class="stc-field"><span data-i18n="smartTableRows">Rows</span>
+              <input type="number" id="smartTableRows" value="4" min="1" max="20" />
+            </label>
+            <label class="stc-field"><span data-i18n="smartTableColumns">Columns</span>
+              <input type="number" id="smartTableCols" value="4" min="1" max="20" />
+            </label>
+          </div>
+          <div class="smart-table-create-size"><span id="smartTableCreateSize" aria-live="polite">4 × 4</span></div>
+          <button type="button" class="smart-table-create-btn" data-table-create="confirm">
+            <span data-i18n="smartTableCreate">Create table</span>
+          </button>
+        </div>
+        <!-- PART 12 — Contextual Table Tools (shown only while a cell is active) -->
+        <div class="smart-table-tools" id="smartTableToolbar" role="toolbar" aria-hidden="true" data-smart-table-tools>
+          <button type="button" class="smart-text-btn" data-tablecmd="add-row" data-i18n="smartTableAddRow">Add row</button>
+          <button type="button" class="smart-text-btn" data-tablecmd="del-row" data-i18n="smartTableDelRow">Delete row</button>
+          <button type="button" class="smart-text-btn" data-tablecmd="add-col" data-i18n="smartTableAddCol">Add column</button>
+          <button type="button" class="smart-text-btn" data-tablecmd="del-col" data-i18n="smartTableDelCol">Delete column</button>
+          <span class="smart-table-sep" aria-hidden="true"></span>
+          <button type="button" class="smart-text-btn" data-tablealign="left" data-i18n-title="smartTableAlignLeft" title="Align left" data-i18n="smartTableAlignLeft">&#8676;</button>
+          <button type="button" class="smart-text-btn" data-tablealign="center" data-i18n-title="smartTableAlignCenter" title="Center" data-i18n="smartTableAlignCenter">&#8544;</button>
+          <button type="button" class="smart-text-btn" data-tablealign="right" data-i18n-title="smartTableAlignRight" title="Align right" data-i18n="smartTableAlignRight">&#8677;</button>
+        </div>
+        <!-- PART 10 — Smart Add menu (opened by the toolbar "+" button only) -->
+        <div class="smart-add-menu" id="smartAddMenu" role="menu" aria-hidden="true">
+          <button type="button" class="smart-add-item" data-add="text" role="menuitem">
+            <span class="smart-add-ico" aria-hidden="true">T</span>
+            <span data-i18n="smartToolbarText">Text</span>
+          </button>
+          <button type="button" class="smart-add-item" data-add="heading" role="menuitem">
+            <span class="smart-add-ico" aria-hidden="true">H</span>
+            <span data-i18n="smartAddHeading">Heading</span>
+          </button>
+          <button type="button" class="smart-add-item" data-add="table" role="menuitem">
+            <span class="smart-add-ico" aria-hidden="true">▦</span>
+            <span data-i18n="smartToolbarTable">Table</span>
+          </button>
+          <button type="button" class="smart-add-item" data-add="image" role="menuitem">
+            <span class="smart-add-ico" aria-hidden="true">🖼</span>
+            <span data-i18n="smartToolbarImage">Image</span>
+          </button>
+          <button type="button" class="smart-add-item" data-add="divider" role="menuitem">
+            <span class="smart-add-ico" aria-hidden="true">━</span>
+            <span data-i18n="smartToolbarDivider">Divider</span>
+          </button>
+          <button type="button" class="smart-add-item" data-add="new-page" role="menuitem">
+            <span class="smart-add-ico" aria-hidden="true">+</span>
+            <span data-i18n="smartAddNewPage">New Page</span>
+          </button>
+        </div>
+        <!-- PART 16 — Page Design menu (opened by the toolbar ⚙ button only).
+             Exactly 5 fixed frame presets. No advanced customization in V1. -->
+        <div class="smart-add-menu smart-page-design-menu" id="smartPageDesignMenu" role="menu" aria-hidden="true">
+          <button type="button" class="smart-add-item smart-design-item" data-design="none" role="menuitem">
+            <span class="smart-add-ico smart-design-ico smart-design-ico-none" aria-hidden="true"></span>
+            <span data-i18n="smartPageDesignNone">No border</span>
+          </button>
+          <button type="button" class="smart-add-item smart-design-item" data-design="simple" role="menuitem">
+            <span class="smart-add-ico smart-design-ico smart-design-ico-simple" aria-hidden="true"></span>
+            <span data-i18n="smartPageDesignSimple">Simple</span>
+          </button>
+          <button type="button" class="smart-add-item smart-design-item" data-design="classic" role="menuitem">
+            <span class="smart-add-ico smart-design-ico smart-design-ico-classic" aria-hidden="true"></span>
+            <span data-i18n="smartPageDesignClassic">Classic</span>
+          </button>
+          <button type="button" class="smart-add-item smart-design-item" data-design="formal" role="menuitem">
+            <span class="smart-add-ico smart-design-ico smart-design-ico-formal" aria-hidden="true"></span>
+            <span data-i18n="smartPageDesignFormal">Formal</span>
+          </button>
+          <button type="button" class="smart-add-item smart-design-item" data-design="modern" role="menuitem">
+            <span class="smart-add-ico smart-design-ico smart-design-ico-modern" aria-hidden="true"></span>
+            <span data-i18n="smartPageDesignModern">Modern</span>
+          </button>
+        </div>
+        <!-- PART 17 — Signature tool (opened by the toolbar ✍ button only).
+             Exactly 3 methods: Draw / Type / Image. No advanced features. -->
+        <div class="smart-add-menu smart-signature-menu" id="smartSignatureMenu" role="menu" aria-hidden="true">
+          <button type="button" class="smart-add-item smart-sig-item" data-sig-method="draw" role="menuitem">
+            <span class="smart-add-ico" aria-hidden="true">✎</span>
+            <span data-i18n="smartSigDraw">Draw</span>
+          </button>
+          <button type="button" class="smart-add-item smart-sig-item" data-sig-method="type" role="menuitem">
+            <span class="smart-add-ico" aria-hidden="true">Aa</span>
+            <span data-i18n="smartSigType">Type</span>
+          </button>
+          <button type="button" class="smart-add-item smart-sig-item" data-sig-method="image" role="menuitem">
+            <span class="smart-add-ico" aria-hidden="true">🖼</span>
+            <span data-i18n="smartSigImage">Image</span>
+          </button>
+        </div>
+        <div class="smart-signature-panel" id="smartSignaturePanel" role="dialog" aria-label="Signature" aria-hidden="true">
+          <!-- Draw stage -->
+          <div class="smart-sig-stage" id="sigStageDraw" hidden>
+            <canvas id="signatureCanvas" class="smart-sig-canvas"></canvas>
+            <div class="smart-sig-actions">
+              <button type="button" class="smart-text-btn smart-sig-clear" data-i18n="smartSigClear">Clear</button>
+              <button type="button" class="smart-table-create-btn smart-sig-insert" data-i18n="smartSigInsert">Insert</button>
+              <button type="button" class="smart-text-btn smart-sig-cancel" data-i18n="smartSigCancel">Cancel</button>
+            </div>
+          </div>
+          <!-- Type stage -->
+          <div class="smart-sig-stage" id="sigStageType" hidden>
+            <input type="text" id="signatureNameInput" class="smart-text-ctl smart-sig-name" autocomplete="off" />
+            <div class="smart-sig-style-row" id="signatureStyleRow">
+              <button type="button" class="smart-text-btn smart-sig-style-btn active" data-sig-style="0">Aa</button>
+              <button type="button" class="smart-text-btn smart-sig-style-btn" data-sig-style="1">Aa</button>
+              <button type="button" class="smart-text-btn smart-sig-style-btn" data-sig-style="2">Aa</button>
+            </div>
+            <div class="smart-sig-preview" id="signatureTypePreview" aria-hidden="true"></div>
+            <div class="smart-sig-actions">
+              <button type="button" class="smart-table-create-btn smart-sig-insert" data-i18n="smartSigInsert">Insert</button>
+              <button type="button" class="smart-text-btn smart-sig-cancel" data-i18n="smartSigCancel">Cancel</button>
+            </div>
+          </div>
+          <!-- Image stage -->
+          <div class="smart-sig-stage" id="sigStageImage" hidden>
+            <img id="signatureImagePreview" class="smart-sig-img-preview" alt="" hidden />
+            <p class="smart-sig-hint" id="signatureImageHint"><span data-i18n="smartSigChoose">Choose an image of your signature</span></p>
+            <div class="smart-sig-actions">
+              <button type="button" class="smart-table-create-btn smart-sig-insert" data-i18n="smartSigInsert" disabled>Insert</button>
+              <button type="button" class="smart-text-btn smart-sig-cancel" data-i18n="smartSigCancel">Cancel</button>
+            </div>
+          </div>
+        </div>
+        <!-- PART 17 — hidden file picker used by the Signature Image option -->
+        <input type="file" id="smartSignatureImageInput" accept="image/*" hidden>
+        <!-- PART 10 — hidden file picker used by the Image option -->
+        <input type="file" id="smartAddImageInput" accept="image/*" hidden>
+        <!-- PART 15 — hidden file picker used by the Logo tool -->
+        <input type="file" id="smartAddLogoInput" accept="image/*" hidden>
+        <div class="smart-blank-stage">
+          <div class="smart-blank-canvas-holder" id="smartBlankCanvasHolder">
+            <div class="smart-blank-canvas smart-document-canvas" id="smartBlankCanvas" data-canvas="document">
+              <div class="smart-document-content" id="smartDocumentContent" data-canvas-content="document"></div>
+            </div>
+          </div>
+        </div>
+        <nav class="smart-blank-nav" data-widget="smart-blank-nav" aria-label="Page navigation">
+          <!-- PART 19 — real page management: navigate + add/copy/delete/reorder.
+               Uses the SAME page model as PART 6/10/16 (A4 canvases in the holder). -->
+          <button id="smartBlankPrevPage" class="smart-nav-btn" type="button" aria-label="Previous page">
+            <span class="smart-nav-ico" aria-hidden="true">&#8249;</span>
+            <span data-i18n="smartBlankNavPrev">Previous</span>
+          </button>
+          <span class="smart-page-counter">
+            <span class="smart-page-counter-label" data-i18n="smartBlankNavPage">Page</span>
+            <strong id="smartPageCount">1 / 1</strong>
+          </span>
+          <button id="smartBlankNextPage" class="smart-nav-btn" type="button" aria-label="Next page">
+            <span data-i18n="smartBlankNavNext">Next</span>
+            <span class="smart-nav-ico" aria-hidden="true">&#8250;</span>
+          </button>
+          <span class="smart-nav-sep" aria-hidden="true"></span>
+          <button id="smartPageAddBtn" class="smart-nav-btn" type="button" aria-label="Add page">
+            <span class="smart-nav-ico" aria-hidden="true">＋</span>
+            <span data-i18n="smartPageAdd">Add page</span>
+          </button>
+          <button id="smartPageCopyBtn" class="smart-nav-btn" type="button" aria-label="Duplicate page">
+            <span class="smart-nav-ico" aria-hidden="true">⧉</span>
+            <span data-i18n="smartPageCopy">Copy page</span>
+          </button>
+          <button id="smartPageDeleteBtn" class="smart-nav-btn" type="button" aria-label="Delete page">
+            <span class="smart-nav-ico" aria-hidden="true">🗑</span>
+            <span data-i18n="smartPageDelete">Delete page</span>
+          </button>
+          <button id="smartPageMoveUpBtn" class="smart-nav-btn smart-nav-icon-btn" type="button" aria-label="Move page up">
+            <span class="smart-nav-ico smart-nav-move-up" aria-hidden="true">↑</span>
+          </button>
+          <button id="smartPageMoveDownBtn" class="smart-nav-btn smart-nav-icon-btn" type="button" aria-label="Move page down">
+            <span class="smart-nav-ico smart-nav-move-down" aria-hidden="true">↓</span>
+          </button>
+        </nav>
+      </section>
+
+      <!-- PART 7 — Smart Documents templates (categories + template items) -->
+      <section class="smart-templates-view" id="smartTemplatesView" aria-hidden="true">
+        <header class="smart-scan-header">
+          <button id="smartTemplatesBack" class="notes-back-btn icon-btn" type="button" aria-label="Back">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          </button>
+          <h3 id="smartTemplatesTitle" data-i18n="smartDocsCardTemplatesTitle">Templates</h3>
+        </header>
+        <div class="smart-templates-body">
+          <section class="smart-template-group" data-template-group="business">
+            <h4 class="smart-template-group-title" data-i18n="smartTemplatesBusiness">Business</h4>
+            <div class="smart-template-list">
+              <button type="button" class="smart-template-item" data-template-id="invoice" data-template-group="business">
+                <span class="smart-template-item-icon" aria-hidden="true">🧾</span>
+                <span class="smart-template-item-name" data-i18n="smartTemplatesInvoice">Invoice</span>
+              </button>
+              <button type="button" class="smart-template-item" data-template-id="quote" data-template-group="business">
+                <span class="smart-template-item-icon" aria-hidden="true">📊</span>
+                <span class="smart-template-item-name" data-i18n="smartTemplatesQuote">Quote</span>
+              </button>
+              <button type="button" class="smart-template-item" data-template-id="payment-agreement" data-template-group="business">
+                <span class="smart-template-item-icon" aria-hidden="true">🤝</span>
+                <span class="smart-template-item-name" data-i18n="smartTemplatesPaymentAgreement">Payment Agreement</span>
+              </button>
+              <button type="button" class="smart-template-item" data-template-id="service-contract" data-template-group="business">
+                <span class="smart-template-item-icon" aria-hidden="true">📋</span>
+                <span class="smart-template-item-name" data-i18n="smartTemplatesServiceContract">Service Contract</span>
+              </button>
+              <button type="button" class="smart-template-item" data-template-id="simple-agreement" data-template-group="business">
+                <span class="smart-template-item-icon" aria-hidden="true">📄</span>
+                <span class="smart-template-item-name" data-i18n="smartTemplatesSimpleAgreement">Simple Agreement</span>
+              </button>
+            </div>
+          </section>
+          <section class="smart-template-group" data-template-group="personal">
+            <h4 class="smart-template-group-title" data-i18n="smartTemplatesPersonal">Personal</h4>
+            <div class="smart-template-list">
+              <button type="button" class="smart-template-item" data-template-id="payment-receipt" data-template-group="personal">
+                <span class="smart-template-item-icon" aria-hidden="true">🧾</span>
+                <span class="smart-template-item-name" data-i18n="smartTemplatesPaymentReceipt">Payment Receipt</span>
+              </button>
+              <button type="button" class="smart-template-item" data-template-id="rental-agreement" data-template-group="personal">
+                <span class="smart-template-item-icon" aria-hidden="true">🏠</span>
+                <span class="smart-template-item-name" data-i18n="smartTemplatesRentalAgreement">Rental Agreement</span>
+              </button>
+              <button type="button" class="smart-template-item" data-template-id="simple-agreement" data-template-group="personal">
+                <span class="smart-template-item-icon" aria-hidden="true">📄</span>
+                <span class="smart-template-item-name" data-i18n="smartTemplatesSimpleAgreement">Simple Agreement</span>
+              </button>
+            </div>
+          </section>
+          <section class="smart-template-group" data-template-group="custom">
+            <h4 class="smart-template-group-title" data-i18n="smartTemplatesCustom">Custom</h4>
+            <div class="smart-template-list">
+              <button type="button" class="smart-template-item" data-template-id="my-templates" data-template-group="custom">
+                <span class="smart-template-item-icon" aria-hidden="true">📁</span>
+                <span class="smart-template-item-name" data-i18n="smartTemplatesMyTemplates">My Templates</span>
+              </button>
+            </div>
+          </section>
+        </div>
+      </section>
+    </div>
+
+
+    <div id="drawerOverlay" class="drawer-overlay"></div>
+    <aside id="drawer" class="drawer side" aria-label="EQ7 tools drawer">
+      <div class="drawer-header">
+        <div>
+          <h2 class="app-logo" dir="ltr"><span class="logo-e">E</span><span class="logo-q">Q</span><span class="logo-7">7</span></h2>
+        </div>
+        <button id="drawerCloseButton" class="modal-close-btn" type="button" aria-label="Close drawer">×</button>
+      </div>
+      <nav class="drawer-menu">
+        <button class="drawer-menu-item" data-action="open-history" type="button">
+         <span class="item-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></span>
+          <span data-i18n="drawerHistory">History</span>
+        </button>
+        <button class="drawer-menu-item" data-action="open-notes" type="button">
+          <span class="item-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></span>
+          <span data-i18n="drawerNotes">Notes</span>
+        </button>
+        <button class="drawer-menu-item" data-action="open-smart-docs" type="button">
+          <span class="item-icon"><span class="smart-docs-icon">📄</span></span>
+          <span data-i18n="smartDocsTitle">📄 Smart Documents</span>
+        </button>
+        <button class="drawer-menu-item" data-action="open-install" type="button">
+          <span class="item-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg></span>
+          <span data-i18n="drawerInstall">Install App</span>
+        </button>
+        <button class="drawer-menu-item" data-action="open-settings" type="button">
+         <span class="item-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></span>
+          <span data-i18n="drawerSettings">Settings</span>
+        </button>
+      </nav>
+    </aside>
+
+    <!-- PART 14 — PDF Workspace (organizational entry point only).
+         Reuses the existing PHASE 01 workspace modal (#pdfReportsWorkspace), the
+         existing drawer open-pdf-reports action, and the existing smart-doc-card
+         component. Contains NO Notes tools and NO PDF engine: the two cards are
+         entry points only (placeholder feedback), and Recent PDFs is an empty
+         state until a later phase provides real data. -->
+    <div id="pdfReportsWorkspace" class="settings-modal-backdrop" aria-hidden="true">
+      <div class="settings-modal pdf-reports-workspace" role="dialog" aria-modal="true" aria-labelledby="pdfReportsTitle">
+        <div class="settings-modal-header">
+          <div>
+            <h3 id="pdfReportsTitle" data-i18n="pdfWorkspaceTitle">PDF</h3>
+            <p class="settings-modal-subtitle" data-i18n="pdfReportsSubtitle">Dedicated workspace for the upcoming PDF Reports phases.</p>
+          </div>
+          <button id="pdfReportsBackBtn" class="modal-close-btn" type="button" aria-label="Back">×</button>
+        </div>
+        <div class="settings-modal-body">
+          <div class="smart-docs-grid pdf-workspace-grid">
+            <button type="button" class="smart-doc-card" id="pdfScanCreateCard" data-action="pdf-scan-create">
+              <span class="smart-doc-card-icon" aria-hidden="true">📷</span>
+              <span class="smart-doc-card-content">
+                <span class="smart-doc-card-title" data-i18n="pdfCardScanTitle">Scan / Create PDF</span>
+                <span class="smart-doc-card-desc" data-i18n="pdfCardScanDesc">Create a PDF from documents</span>
+              </span>
+            </button>
+            <button type="button" class="smart-doc-card" id="pdfOpenCard" data-action="pdf-open">
+              <span class="smart-doc-card-icon" aria-hidden="true">📄</span>
+              <span class="smart-doc-card-content">
+                <span class="smart-doc-card-title" data-i18n="pdfCardOpenTitle">Open PDF</span>
+                <span class="smart-doc-card-desc" data-i18n="pdfCardOpenDesc">Edit an existing PDF</span>
+              </span>
+            </button>
+          </div>
+          <div class="pdf-recent-section">
+            <h4 class="pdf-recent-title" data-i18n="pdfRecentTitle">Recent PDFs</h4>
+            <div id="pdfRecentList" class="pdf-recent-list">
+              <p class="pdf-recent-empty" data-i18n="pdfRecentEmpty">No recent PDFs yet.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE — INLINE LIVE PDF EDITOR (dedicated to the PDF Workspace "Open PDF"
+         card #pdfOpenCard / data-action="pdf-open" ONLY).
+         Self-contained namespaced UI (.live-pdf-ed-*). Does NOT touch Notes PDF,
+         Smart Documents, Calculator, PWA or any other system. Backdrop is LIGHT
+         (rgba(0,0,0,.45)) so the editor content is always visible (no black screen). -->
+    <style>
+      .live-pdf-ed-backdrop { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.45); z-index: 40; }
+      .live-pdf-ed-backdrop.show { display: flex; }
+      .live-pdf-ed {
+        display: flex; flex-direction: column;
+        width: min(96vw, 900px); height: min(92vh, 900px); margin: auto;
+        background: #f5f6f8; border-radius: 14px; overflow: hidden;
+        box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+      }
+      .live-pdf-ed-header {
+        display: flex; align-items: center; gap: 8px;
+        padding: 10px 12px; background: #0f766e; color: #fff;
+        flex: 0 0 auto; min-width: 0;
+      }
+      .live-pdf-ed-header h3 {
+        flex: 1 1 auto; min-width: 0; font-size: 15px; font-weight: 700;
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      }
+      .live-pdf-ed-close {
+        flex: 0 0 auto; background: rgba(255,255,255,.15); color: #fff;
+        border: none; border-radius: 8px; width: 34px; height: 34px;
+        font-size: 18px; cursor: pointer;
+      }
+      .live-pdf-ed-save-top {
+        flex: 0 0 auto; background: #fff; color: #0f766e; border: none;
+        border-radius: 8px; padding: 7px 12px; font-size: 13px;
+        font-weight: 700; cursor: pointer; white-space: nowrap;
+      }
+      .live-pdf-ed-pages {
+        flex: 1 1 auto; overflow-y: auto; overflow-x: hidden;
+        padding: 14px 10px; display: flex; flex-direction: column;
+        align-items: center; gap: 16px;
+      }
+      .live-pdf-ed-empty { color: #475569; font-size: 14px; text-align: center; padding: 30px 12px; }
+      .live-pdf-ed-page {
+        position: relative; background: #fff;
+        box-shadow: 0 2px 10px rgba(0,0,0,.18); border-radius: 4px; max-width: 100%;
+      }
+      .live-pdf-ed-page canvas { display: block; width: 100%; height: auto; border-radius: 4px; }
+      .live-pdf-ed-layer { position: absolute; inset: 0; overflow: hidden; }
+      .live-pdf-ed-span {
+        position: absolute; font-family: Helvetica, Arial, sans-serif;
+        color: transparent; cursor: text; white-space: pre; outline: none;
+        border: 1px solid transparent; border-radius: 2px; min-width: 6px;
+      }
+      .live-pdf-ed-span:hover { border-color: rgba(15,118,110,.35); background: rgba(15,118,110,.06); }
+      .live-pdf-ed-span:focus {
+        color: #0f172a; background: rgba(255,255,0,.25);
+        border-color: #0f766e; caret-color: #0f766e;
+      }
+      .live-pdf-ed-footer {
+        flex: 0 0 auto; display: flex; align-items: center;
+        justify-content: space-between; gap: 10px; padding: 10px 12px;
+        background: #fff; border-top: 1px solid #e2e8f0; min-width: 0; flex-wrap: wrap;
+      }
+      .live-pdf-ed-btn {
+        flex: 1 1 45%; min-width: 0; border: none; border-radius: 9px;
+        padding: 10px 12px; font-size: 14px; font-weight: 700; cursor: pointer;
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      }
+      .live-pdf-ed-btn[disabled] { opacity: 0.5; cursor: default; }
+      .live-pdf-ed-upload { background: #e2e8f0; color: #0f172a; }
+      .live-pdf-ed-export { background: #0f766e; color: #fff; }
+      .live-pdf-ed-fileinput { display: none; }
+      .live-pdf-ed-status {
+        flex: 1 1 100%; font-size: 12px; color: #0f766e; text-align: center;
+        min-height: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      }
+      @media (max-width: 480px) {
+        .live-pdf-ed { width: 100vw; height: 100vh; border-radius: 0; }
+        .live-pdf-ed-header h3 { font-size: 13px; }
+        .live-pdf-ed-save-top { padding: 6px 9px; font-size: 12px; }
+        .live-pdf-ed-btn { font-size: 13px; padding: 9px 10px; }
+      }
+    </style>
+    <div id="livePdfEdBackdrop" class="live-pdf-ed-backdrop" aria-hidden="true">
+      <div class="live-pdf-ed" role="dialog" aria-modal="true" aria-labelledby="livePdfEdTitle">
+        <div class="live-pdf-ed-header">
+          <button id="livePdfEdClose" class="live-pdf-ed-close" type="button" aria-label="Close">✕</button>
+          <h3 id="livePdfEdTitle">Live Document Editor</h3>
+          <button id="livePdfEdSaveBtn" class="live-pdf-ed-save-top" type="button">💾 Save</button>
+        </div>
+        <div id="livePdfEdPages" class="live-pdf-ed-pages">
+          <p id="livePdfEdEmpty" class="live-pdf-ed-empty">Upload a PDF to start editing.</p>
+        </div>
+        <div class="live-pdf-ed-footer">
+          <button id="livePdfEdUploadBtn" class="live-pdf-ed-btn live-pdf-ed-upload" type="button">📁 Upload PDF</button>
+          <button id="livePdfEdExportBtn" class="live-pdf-ed-btn live-pdf-ed-export" type="button" disabled>💾 Save &amp; Export</button>
+          <span id="livePdfEdStatus" class="live-pdf-ed-status"></span>
+        </div>
+        <input id="livePdfEdFileInput" class="live-pdf-ed-fileinput" type="file" accept="application/pdf,.pdf">
+      </div>
+    </div>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

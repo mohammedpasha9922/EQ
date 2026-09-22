@@ -1,0 +1,47 @@
+import http from 'node:http';
+import fs from 'node:fs';
+import path from 'node:path';
+import puppeteer from 'puppeteer-core';
+const ROOT = process.cwd();
+const CHROME = 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe';
+const PORT = 8391;
+const MIME = { '.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.png':'image/png' };
+const server = http.createServer((req,res)=>{ let u=decodeURIComponent(req.url.split('?')[0]); if(u==='/'||u==='')u='/index.html'; const fp=path.join(ROOT,u); try{ const d=fs.readFileSync(fp); res.writeHead(200,{'Content-Type':(MIME[path.extname(fp).toLowerCase()]||'application/octet-stream')}); res.end(d);}catch(e){res.writeHead(404);res.end('nf');} });
+await new Promise(r=>server.listen(PORT,'127.0.0.1',r));
+const URL='http://127.0.0.1:'+PORT+'/';
+const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new', args:['--no-sandbox','--disable-gpu','--no-first-run','--disable-dev-shm-usage'] });
+const sleep=(ms)=>new Promise(r=>setTimeout(r,ms));
+const page = await browser.newPage();
+await page.setViewport({width:1280,height:800});
+const errs=[]; page.on('pageerror',e=>errs.push(String(e&&e.message||e)));
+await page.goto(URL,{waitUntil:'domcontentloaded',timeout:45000});
+await sleep(1200);
+await page.evaluate(()=>{ document.getElementById('drawerToggle').click(); });
+await sleep(400);
+await page.evaluate(()=>{ document.querySelector('.drawer-menu-item[data-action="open-pdf-reports"]').click(); });
+await sleep(500);
+const ws = await page.evaluate(()=>{
+  const t=document.querySelector('#pdfScanCreateCard .smart-doc-card-title');
+  const d=document.querySelector('#pdfScanCreateCard .smart-doc-card-desc');
+  const t2=document.querySelector('#pdfOpenCard .smart-doc-card-title');
+  const cs=getComputedStyle(document.querySelector('.pdf-recent-section'));
+  return { wsShow: document.getElementById('pdfReportsWorkspace').classList.contains('show'), createTitle: t?t.textContent:null, createDesc: d?d.textContent:null, openTitle: t2?t2.textContent:null, recentDisp: cs.display };
+});
+console.log('WS='+JSON.stringify(ws));
+await page.evaluate(()=>{ document.getElementById('pdfScanCreateCard').click(); });
+await sleep(900);
+const ac = await page.evaluate(()=>{
+  return ['smartScanView','smartImportView','smartEditorView','smartBlankView'].map((id)=>{ const el=document.getElementById(id); const cs=getComputedStyle(el); const r=el.getBoundingClientRect(); return id+':disp='+cs.display+' w='+Math.round(r.width)+' h='+Math.round(r.height)+' aria='+el.getAttribute('aria-hidden'); });
+});
+console.log('AFTERCREATE='+JSON.stringify(ac));
+const blank = await page.evaluate(()=>{
+  const vis=(el)=>{ if(!el) return 'missing'; const cs=getComputedStyle(el); const r=el.getBoundingClientRect(); return (cs.display!=='none'&&r.width>0&&r.height>0)?'vis':'hid('+cs.display+')'; };
+  const tools=[...document.querySelectorAll('#smartBlankView .smart-tool-btn')].map(b=>b.getAttribute('data-tool')+'='+vis(b));
+  const addItems=[...document.querySelectorAll('#smartPdfAddMenu .smart-pdf-add-item')].map(b=>b.getAttribute('data-add')+'='+vis(b));
+  const pg=['smartPageAddBtn','smartPageCopyBtn','smartPageDeleteBtn','smartPageMoveUpBtn','smartPageMoveDownBtn'].map(id=>id+'='+vis(document.getElementById(id)));
+  const hd=['smartSaveDraftBtn','smartNewDocBtn','smartReviewBtn','smartPdfExportBtn'].map(id=>id+'='+vis(document.getElementById(id)));
+  return { tools, addItems, pg, hd, seams: { blank: typeof window.__smartBlank, pages: typeof window.__smartPages, imp: typeof window.__smartImport } };
+});
+console.log('BLANK='+JSON.stringify(blank));
+console.log('ERRS='+JSON.stringify(errs.slice(0,10)));
+await browser.close(); server.close();
