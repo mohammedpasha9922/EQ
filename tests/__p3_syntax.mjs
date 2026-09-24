@@ -5534,21 +5534,13 @@ async function smartPdfV3RenderAll(token) {
   const scroll = smartPdfV3El('smartPdfViewerScroll');
   if (!pagesEl || !scroll || !smartPdfV3Doc) return;
   pagesEl.textContent = '';
-  // RENDERING QUALITY — canvas backing store × devicePixelRatio: render each
-  // page at up to 3× its CSS scale so text stays sharp on high-DPI (2x/3x)
-  // mobile screens. Only the canvas' INTERNAL resolution scales — the CSS
-  // display size (width:100%) and the page layout/visual size are unchanged.
-  const dpr = Math.min(window.devicePixelRatio || 1, 3);
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
   for (let n = 1; n <= smartPdfV3Total; n++) {
     if (token !== smartPdfV3Token) return; // superseded by a newer file
     const page = await smartPdfV3Doc.getPage(n);
     const base = page.getViewport({ scale: 1 });
     const avail = Math.max(240, (scroll.clientWidth || 640) - 24);
-    // Fit-to-width scale used ONLY for the canvas backing resolution (the
-    // visual size is driven purely by the CSS width:100%). Uncapped, so the
-    // backing store is always avail × DPR for every page format — the canvas
-    // always carries exactly the pixels the display needs at the set DPR.
-    const cssScale = avail / base.width;
+    const cssScale = Math.min(avail / base.width, 2);
     const viewport = page.getViewport({ scale: cssScale * dpr });
     const wrap = document.createElement('div');
     wrap.className = 'smart-pdf-viewer-page';
@@ -5566,9 +5558,6 @@ async function smartPdfV3RenderAll(token) {
       try { await page.render({ canvasContext: ctx, viewport }).promise; }
       catch (e) { /* keep the page slot even if one page fails to paint */ }
     }
-    // Hidden inline editing layer (Smart PDF only) — transparent spans over
-    // the painted canvas; purely optional, never affects rendering quality.
-    await smartPdfV3BuildTextLayer(page, wrap, canvas, token);
   }
   if (token !== smartPdfV3Token) return;
   smartPdfV3DetectPage();
@@ -5597,23 +5586,7 @@ async function smartPdfV3OpenFile(file) {
   const token = ++smartPdfV3Token;
   try {
     const data = await file.arrayBuffer();
-  // RENDERING QUALITY (Smart PDF only) — pdf.js document config:
-  //  * cMapUrl/cMapPacked: provide the cMap tables PDFs need to decode
-  //    CID/encoded text. Without them glyphs decode wrong → broken characters
-  //    and letter/character spacing (critical for Arabic/complex PDFs).
-  //  * standardFontDataUrl + useSystemFonts:false: load the PDF's own
-  //    (embedded) fonts / pdf.js font data instead of substituting local
-  //    system fonts, whose metrics differ per device and distort spacing.
-  //  * disableFontFace:false: keep loading embedded font programs as real
-  //    @font-face fonts (browser default made explicit here).
-    const doc = await pdfjs.getDocument({
-      data,
-      cMapUrl: '/__pdfdiag/vendor/cmaps/',
-      cMapPacked: true,
-      standardFontDataUrl: '/__pdfdiag/vendor/standard_fonts/',
-      useSystemFonts: false,
-      disableFontFace: false
-    }).promise;
+    const doc = await pdfjs.getDocument({ data }).promise;
     if (token !== smartPdfV3Token) {
       try { doc.destroy(); } catch (e) { /* ignore */ }
       return false;
@@ -5636,219 +5609,6 @@ async function smartPdfV3OpenFile(file) {
   }
 }
 
-// ============================================================
-// INLINE TEXT EDITING (Smart PDF ONLY) — hidden until direct interaction.
-// A transparent per-page text layer (from pdf.js getTextContent) sits over
-// the painted canvas. Clicking existing text turns that exact span into an
-// in-place native editable with a real caret — NO edit button, toolbar,
-// menu, floating control, or any other visible editing UI is added.
-// ============================================================
-
-// Build the invisible text layer for one rendered page. Positions one
-// transparent span per pdf.js text item exactly over the canvas glyphs.
-async function smartPdfV3BuildTextLayer(page, wrap, canvas, token) {
-  try {
-    const tc = await page.getTextContent();
-    if (token !== smartPdfV3Token || !wrap || !wrap.isConnected || !canvas) return;
-    const rect = canvas.getBoundingClientRect();
-    if (!rect.width) return; // layer is optional; canvas already stands
-    const base = page.getViewport({ scale: 1 });
-    // Scale the layer to the canvas' ACTUAL CSS display size (width:100%),
-    // independent of the backing-store DPR scale used for rendering quality.
-    const vp = page.getViewport({ scale: rect.width / base.width });
-    const Util = window.pdfjsLib && window.pdfjsLib.Util;
-    const layer = document.createElement('div');
-    layer.className = 'smart-pdf-text-layer';
-    const styles = tc.styles || {};
-    const items = tc.items || [];
-    for (let i = 0; i < items.length; i++) {
-      const item = items[i];
-      if (!item || typeof item.str !== 'string' || !item.str) continue;
-      let tx = null;
-      try { tx = (Util && item.transform) ? Util.transform(vp.transform, item.transform) : null; }
-      catch (e) { tx = null; }
-      if (!tx) continue;
-      const fontH = Math.hypot(tx[2], tx[3]) || 10; // em size in display px
-      const style = styles[item.fontName] || null;
-      const ascent = (style && typeof style.ascent === 'number' && style.ascent > 0) ? style.ascent : 0.8;
-      const span = document.createElement('span');
-      span.textContent = item.str;
-      span.setAttribute('dir', item.dir === 'rtl' ? 'rtl' : 'ltr'); // Arabic RTL + English LTR
-      span.style.left = tx[4] + 'px';
-      span.style.top = (tx[5] - fontH * ascent) + 'px'; // baseline-aligned
-      span.style.fontSize = fontH + 'px';
-      span.style.lineHeight = fontH + 'px';
-      span.style.height = fontH + 'px';
-      span.style.minWidth = Math.max(1, (item.width || 0) * vp.scale) + 'px'; // covers original text
-      if (style && style.fontFamily) span.style.fontFamily = style.fontFamily;
-      // Non-visual metadata: how far THIS item's painted glyphs may extend past
-      // the span's em box (descenders sit below the baseline-derived box). Used
-      // only when an edit clears the original glyphs from the canvas — it never
-      // affects layout, caret placement or rendering.
-      const desc = (style && typeof style.descent === 'number' && style.descent)
-        ? Math.abs(style.descent) : 0.22;
-      span._smartPdfInk = {
-        t: Math.max(1, fontH * 0.03),
-        l: Math.max(1, fontH * 0.04),
-        r: Math.max(1, fontH * 0.04),
-        b: Math.max(1, Math.max(0, desc - Math.max(0, 1 - ascent)) * fontH + 1)
-      };
-      layer.appendChild(span);
-    }
-    if (layer.firstChild) wrap.appendChild(layer);
-  } catch (e) { /* editing layer optional — rendering/scrolling unaffected */ }
-}
-
-// VISUAL LAYERING FIX — clear the canvas' original glyphs under one span.
-// The original text is PAINTED into the page canvas, so merely layering the
-// editable span on top either showed through it (ghost/duplicated text) or
-// required a white DOM patch (white rectangle / edit marker / overlap at the
-// patch edges). Instead, at edit time this saves the exact pixels of the
-// span's ink box, paints them over with the page's OWN background colour (the
-// dominant colour inside the box — never a white rectangle on non-white
-// pages) and remembers the original glyph colour. During AND after the edit
-// only the real caret and the text itself are visible: no patch, highlight,
-// box, border, second layer, ghost or marker. This is a local, edit-only
-// pixel operation — pdf.js rendering, the viewport, DPR scaling and the
-// canvas size are never touched. Returns false when the canvas pixels are
-// unreadable, in which case editing simply stays fully optional as before.
-function smartPdfV3ClearUnderSpan(span) {
-  if (!span || span._smartPdfErase) return true; // already cleared for this edit
-  try {
-    const page = span.closest ? span.closest('.smart-pdf-viewer-page') : null;
-    const canvas = page ? page.querySelector('canvas') : null;
-    if (!canvas || !canvas.width || !canvas.height) return false;
-    const cssW = canvas.clientWidth, cssH = canvas.clientHeight;
-    if (!cssW || !cssH) return false;
-    // The text layer is inset:0 over the canvas, so a span's offsets ARE
-    // canvas-relative CSS pixels; scale them to the backing-store pixels.
-    const kx = canvas.width / cssW, ky = canvas.height / cssH;
-    const ink = span._smartPdfInk || { t: 1, l: 1, r: 1, b: 1 };
-    let x = Math.floor((span.offsetLeft - ink.l) * kx);
-    let y = Math.floor((span.offsetTop - ink.t) * ky);
-    let w = Math.ceil((span.offsetWidth + ink.l + ink.r) * kx);
-    let h = Math.ceil((span.offsetHeight + ink.t + ink.b) * ky);
-    if (x < 0) { w += x; x = 0; }
-    if (y < 0) { h += y; y = 0; }
-    if (x + w > canvas.width) w = canvas.width - x;
-    if (y + h > canvas.height) h = canvas.height - y;
-    if (w < 1 || h < 1) return false;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return false;
-    // Throws on an unreadable canvas → bail out and keep editing optional.
-    const img = ctx.getImageData(x, y, w, h);
-    const d = img.data;
-    // Page background under the text = the dominant colour of the box
-    // (correct for white AND non-white pages — this is what removes the
-    // original glyphs without leaving any visible rectangle behind).
-    const buckets = new Map();
-    for (let i = 0; i < d.length; i += 4) {
-      const key = ((d[i] >> 3) << 10) | ((d[i + 1] >> 3) << 5) | (d[i + 2] >> 3);
-      let b = buckets.get(key);
-      if (!b) { b = [0, 0, 0, 0]; buckets.set(key, b); }
-      b[0]++; b[1] += d[i]; b[2] += d[i + 1]; b[3] += d[i + 2];
-    }
-    let bg = null, bgCount = 0;
-    buckets.forEach((b) => { if (b[0] > bgCount) { bgCount = b[0]; bg = b; } });
-    const bgR = bg ? Math.round(bg[1] / bg[0]) : 255;
-    const bgG = bg ? Math.round(bg[2] / bg[0]) : 255;
-    const bgB = bg ? Math.round(bg[3] / bg[0]) : 255;
-    // Original text colour = the pixel farthest from that background, so the
-    // edited text keeps painting in the SAME colour the canvas used.
-    let best = -1, tr = 0, tg = 0, tb = 0;
-    for (let i = 0; i < d.length; i += 4) {
-      const dr = d[i] - bgR, dg = d[i + 1] - bgG, db = d[i + 2] - bgB;
-      const dist = dr * dr + dg * dg + db * db;
-      if (dist > best) { best = dist; tr = d[i]; tg = d[i + 1]; tb = d[i + 2]; }
-    }
-    if (best < 900) { // no distinct glyph ink — pick by background luminance
-      const lum = 0.2126 * bgR + 0.7152 * bgG + 0.0722 * bgB;
-      span.style.color = lum > 128 ? '#000000' : '#ffffff';
-    } else {
-      span.style.color = 'rgb(' + tr + ',' + tg + ',' + tb + ')';
-    }
-    ctx.fillStyle = 'rgb(' + bgR + ',' + bgG + ',' + bgB + ')';
-    ctx.fillRect(x, y, w, h);
-    span._smartPdfErase = { ctx: ctx, img: img, x: x, y: y };
-    return true;
-  } catch (e) {
-    return false; // canvas unreadable — editing still works, layer stays optional
-  }
-}
-
-// Commit an in-place edit. The original glyphs were already cleared from the
-// canvas at edit time, so changed text simply stays visible exactly where it
-// was — NO white patch, highlight, box, border, ghost or edit marker. An
-// unchanged edit is rolled back to the exact original pixels instead, leaving
-// zero visual trace of the click.
-function smartPdfV3CommitEdit(span) {
-  if (!span) return;
-  try { span.removeAttribute('contenteditable'); } catch (e) { /* ignore */ }
-  span.classList.remove('smart-pdf-text-editing');
-  const orig = span.getAttribute('data-orig');
-  const changed = orig !== null && (span.textContent || '') !== orig;
-  if (changed) {
-    span.classList.add('smart-pdf-text-edited');
-    return;
-  }
-  // Unchanged → pristine original: put the saved pixels back and hide again.
-  span.classList.remove('smart-pdf-text-edited');
-  span.style.color = '';
-  const saved = span._smartPdfErase;
-  if (saved) {
-    try { saved.ctx.putImageData(saved.img, saved.x, saved.y); } catch (e) { /* ignore */ }
-    span._smartPdfErase = null;
-  }
-}
-
-// Enter in-place editing on the exact span the user clicked, dropping the
-// native caret at the clicked character (RTL-aware fallback via midpoint).
-function smartPdfV3StartEdit(span, clientX, clientY) {
-  if (!span || span.classList.contains('smart-pdf-text-editing')) return;
-  const pagesEl = smartPdfV3El('smartPdfViewerPages');
-  const active = pagesEl ? pagesEl.querySelector('.smart-pdf-text-editing') : null;
-  if (active && active !== span) smartPdfV3CommitEdit(active);
-  if (span.getAttribute('data-orig') === null) span.setAttribute('data-orig', span.textContent || '');
-  const textLen = (span.textContent || '').length;
-  // Resolve the clicked character index while the span is still plain text.
-  let index = null;
-  try {
-    const doc = span.ownerDocument;
-    let node = null, offset = -1;
-    if (doc.caretRangeFromPoint) {
-      const r = doc.caretRangeFromPoint(clientX, clientY);
-      if (r) { node = r.startContainer; offset = r.startOffset; }
-    } else if (doc.caretPositionFromPoint) {
-      const p = doc.caretPositionFromPoint(clientX, clientY);
-      if (p) { node = p.offsetNode; offset = p.offset; }
-    }
-    if (node && node.nodeType === 3 && span.contains(node)) index = offset;
-  } catch (e) { index = null; }
-  if (index === null || index < 0 || index > textLen) {
-    const r = span.getBoundingClientRect();
-    let fromStart = (clientX - r.left) < r.width / 2;
-    if (span.getAttribute('dir') === 'rtl') fromStart = !fromStart;
-    index = fromStart ? 0 : textLen;
-  }
-  // Clear the original painted glyphs BEFORE the span becomes visible, so no
-  // frame can show original+edited overlap (no patch, no ghost, no marker).
-  smartPdfV3ClearUnderSpan(span);
-  span.setAttribute('contenteditable', 'plaintext-only'); // plain text only
-  if (!span.isContentEditable) span.setAttribute('contenteditable', 'true'); // fallback
-  span.classList.add('smart-pdf-text-editing');
-  try { span.focus({ preventScroll: true }); } catch (e) { try { span.focus(); } catch (e2) { /* ignore */ } }
-  try {
-    let node = span.firstChild && span.firstChild.nodeType === 3 ? span.firstChild : null;
-    if (!node) { node = span.ownerDocument.createTextNode(span.textContent || ''); span.appendChild(node); }
-    const sel = span.ownerDocument.getSelection();
-    const range = span.ownerDocument.createRange();
-    range.setStart(node, Math.max(0, Math.min(index, node.data.length)));
-    range.collapse(true);
-    sel.removeAllRanges();
-    sel.addRange(range);
-  } catch (e) { /* native default caret position is acceptable */ }
-}
-
 // One-time wiring for the Smart PDF upload button, the PDF-only file input
 // and the viewer scroll listener (bound from openSmartPdfWorkspace).
 function smartPdfV3Wire() {
@@ -5869,33 +5629,6 @@ function smartPdfV3Wire() {
     if (file) smartPdfV3OpenFile(file).catch(() => {});
   });
   if (scroll) scroll.addEventListener('scroll', smartPdfV3OnScroll, { passive: true });
-
-  // Hidden inline text editing — delegation on the pages container ONLY.
-  // Nothing here is visible; editing starts solely from a click on existing
-  // PDF text inside #smartPdfViewerPages (Smart PDF scope; no other feature).
-  const pagesEl = smartPdfV3El('smartPdfViewerPages');
-  if (pagesEl) {
-    pagesEl.addEventListener('click', (e) => {
-      const span = e.target && e.target.closest ? e.target.closest('.smart-pdf-text-layer > span') : null;
-      if (span) smartPdfV3StartEdit(span, e.clientX, e.clientY);
-    });
-    pagesEl.addEventListener('focusout', (e) => {
-      const t = e.target;
-      if (t && t.classList && t.classList.contains('smart-pdf-text-editing')) smartPdfV3CommitEdit(t);
-    });
-    pagesEl.addEventListener('keydown', (e) => {
-      const t = e.target;
-      if (!t || !t.classList || !t.classList.contains('smart-pdf-text-editing')) return;
-      if (e.key === 'Enter') { e.preventDefault(); try { t.blur(); } catch (err) { /* ignore */ } }
-    });
-    pagesEl.addEventListener('paste', (e) => {
-      const t = e.target;
-      if (!t || !t.classList || !t.classList.contains('smart-pdf-text-editing')) return;
-      e.preventDefault();
-      const txt = e.clipboardData ? e.clipboardData.getData('text/plain') : '';
-      if (txt) { try { document.execCommand('insertText', false, txt); } catch (err) { /* ignore */ } }
-    });
-  }
 }
 
 // ============================================================

@@ -1,0 +1,45 @@
+id="smartDocsModal" class="smart-docs-backdrop" aria-hidden="true">
+      <!-- SMART DOCUMENTS — CLEAN RESET: empty workspace placeholder only.
+           All previous tools (scan, import, editor, templates, drafts,
+           review and export) were removed. The entry point is unchanged. -->
+      <div class="smart-docs-home" role="dialog" aria-modal="true" aria-labelledby="smartDocsTitle">
+        <header class="smart-docs-header">
+          <button id="closeSmartDocs" class="notes-back-btn icon-btn" type="button" aria-label="Back">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          </button>
+          <h3 id="smartDocsTitle" data-i18n="smartDocsTitle">📄 Smart Documents</h3>
+        </header>
+        <div class="smart-docs-body">
+          <!-- SMART DOCUMENTS — PDF WORKSPACE (Phase: PDF import + fullscreen direct editing only). -->
+          <input id="smartPdfFileInput" class="smart-pdf-file-input" type="file" accept="application/pdf,.pdf" hidden />
+          <div id="smartPdfEmpty" class="smart-pdf-empty">
+            <div class="smart-pdf-empty-icon" aria-hidden="true">📄</div>
+            <p class="smart-pdf-empty-title" data-i18n="smartPdfEmptyTitle">Open a PDF from your device</p>
+            <p class="smart-pdf-empty-sub" data-i18n="smartPdfEmptySub">PDF only · Downloads, Desktop, Documents or any folder your browser can reach</p>
+            <button id="smartPdfUploadBtn" class="smart-pdf-upload-btn" type="button" data-i18n="smartPdfUpload">Upload PDF</button>
+          </div>
+          <p id="smartPdfError" class="smart-pdf-error" role="alert" hidden></p>
+          <div id="smartPdfWorkspace" class="smart-pdf-workspace" hidden>
+            <!-- SMART DOCUMENTS — SLIM TOOLBAR: one single, short row pinned to
+                 the top of the PDF workspace. It stays fixed while the PDF
+                 scrolls and never covers the pages. Existing tools only. -->
+            <div id="smartPdfToolbar" class="smart-pdf-toolbar" role="toolbar" aria-label="PDF tools">
+              <button id="smartPdfBackBtn" class="smart-pdf-tb-icon" type="button" aria-label="Back">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+              </button>
+              <span id="smartPdfFileName" class="smart-pdf-file-name"></span>
+              <button id="smartPdfViewBtn" class="smart-pdf-tool-btn is-active" type="button" aria-pressed="true" data-i18n="smartPdfView">View</button>
+              <button id="smartPdfEditBtn" class="smart-pdf-tool-btn" type="button" aria-pressed="false" data-i18n="smartPdfEdit">Edit text</button>
+              <span id="smartPdfEditHint" class="smart-pdf-edit-hint" data-i18n="smartPdfEditHint">Edit mode: tap a text line, then type. Tap elsewhere or View to finish.</span>
+              <button id="smartPdfChangeBtn" class="smart-pdf-tool-btn smart-pdf-tb-end" type="button" data-i18n="smartPdfChange">Choose another</button>
+            </div>
+            <div id="smartPdfScroll" class="smart-pdf-scroll" tabindex="0">
+              <div id="smartPdfPages" class="smart-pdf-pages"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div 

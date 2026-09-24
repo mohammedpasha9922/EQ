@@ -1,0 +1,12 @@
+const fs = require('fs');
+const h = fs.readFileSync('index.html', 'utf8');
+const a = fs.readFileSync('app.js', 'utf8');
+const ids = ['smartDocsModal', 'drawerOverlay', 'smartPdfWorkspace', 'pdfReportsWorkspace', 'smartPdfFileInput', 'smartPdfUploadBtn', 'smartPdfViewerArea', 'smartPdfUploadArea', 'smartPdfViewerScroll', 'smartPdfPageIndicator'];
+const out = ids.map((i) => i + ' @ ' + h.indexOf('id="' + i + '"'));
+const s = h.indexOf('id="smartDocsModal"');
+const e = h.indexOf('id="drawerOverlay"');
+out.push('static-test slice len = ' + (e - s));
+out.push('slice has smartPdfUploadBtn: ' + h.slice(s, e).includes('id="smartPdfUploadBtn"'));
+out.push('app has smartPdfV3OpenFile: ' + a.includes('function smartPdfV3OpenFile('));
+fs.writeFileSync('tests/__p3_probe.txt', out.join('\n'));
+console.log(out.join('\n'));

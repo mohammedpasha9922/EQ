@@ -526,14 +526,191 @@ const translations = {
     pdfRecentEmpty: 'No recent PDFs yet.',
     pdfComingSoon: 'Coming in an upcoming update.',
     smartDocsTitle: '📄 Smart Documents',
+    smartDocsDesc: 'Manage your documents from a single home page. New tools will appear here.',
+    smartDocsHeading: 'What would you like to do?',
+    smartDocsStep1: 'Start',
+    smartDocsStep2: 'Edit',
+    smartDocsStep3: 'Review',
+    smartDocsStep4: 'Export',
+    smartDocsCardScanTitle: 'Scan a Document',
+    smartDocsCardScanDesc: 'Take a photo of a paper or a contract and turn it into editable content.',
+    smartDocsCardImportTitle: 'Import a File',
+    smartDocsCardImportDesc: 'Choose a PDF or a supported file from your device.',
+    smartDocsCardNewTitle: 'New Document',
+    smartDocsCardNewDesc: 'A blank page to start from scratch.',
+    smartDocsCardTemplatesTitle: 'Templates',
+    smartDocsCardTemplatesDesc: 'Ready-made templates to get started quickly.',
+    smartTemplatesBusiness: 'Business',
+    smartTemplatesPersonal: 'Personal',
+    smartTemplatesCustom: 'Custom',
+    smartTemplatesInvoice: 'Invoice',
+    smartTemplatesQuote: 'Quote',
+    smartTemplatesPaymentAgreement: 'Payment Agreement',
+    smartTemplatesServiceContract: 'Service Contract',
+    smartTemplatesSimpleAgreement: 'Simple Agreement',
+    smartTemplatesPaymentReceipt: 'Payment Receipt',
+    smartTemplatesRentalAgreement: 'Rental Agreement',
+    smartTemplatesMyTemplates: 'My Templates',
+    smartScanTitle: '📸 Scan a Document',
+    smartScanCapture: 'Capture',
+    smartScanUploadFallback: 'Choose an image from your device instead',
+    smartScanDetecting: 'Detecting document',
+    smartScanCorrecting: 'Correcting image',
+    smartScanImproving: 'Improving image',
+    smartScanReading: 'Reading text',
+    smartScanProcessing: 'Processing…',
+    smartScanReviewTitle: 'Review OCR result',
+    smartScanPreviewLabel: 'Processed document',
+    smartScanEditHint: 'You can edit the recognized text before accepting.',
+    smartScanRescan: 'Rescan',
+    smartScanAccept: 'Accept Result',
+    smartScanStructTitle: 'Detected structure',
+    smartScanReviewNote: 'Document recognized. Review the content before creating the PDF.',
+    smartScanStatusNeeds: 'Needs review',
+    smartScanStatusEdited: 'Edited — your corrections will be used in the PDF',
+    smartScanStructHeading: 'Heading',
+    smartScanStructParagraph: 'Paragraph',
+    smartScanStructTable: 'Table',
+    smartScanStructNumber: 'Number',
+    smartScanStructDate: 'Date',
+    smartScanStructField: 'Field',
+    smartScanCameraUnavailable: 'Camera is not available on this device.',
+    smartScanPermissionDenied: 'Camera permission was denied.',
+    smartScanNoText: 'No text was detected. Try again or add an image.',
+    smartScanOcrFailed: 'Reading text failed. Please try again.',
+    smartScanAccepted: 'Result accepted and ready for editing.',
+    smartScanEditTitle: 'Editable document', smartScanEditDocTitlePh: 'Document title',
+    smartScanCreatePdf: 'Create PDF', smartScanPdfCreating: 'Creating PDF…',
+    smartScanPdfCreated: 'PDF created from the edited document.',
+    smartScanOfflinePdf: 'Offline — the PDF library could not be loaded.',
+    smartScanPdfFailed: 'Could not create PDF.',
+        smartImportTitle: '📂 Import a File',
     pdfAddTitle: 'Add to PDF', pdfAddText: 'Text', pdfAddImage: 'Image', pdfAddLogo: 'Logo', pdfAddSignature: 'Signature', pdfAddStamp: 'Stamp', pdfAddDate: 'Date', pdfAddTable: 'Table',
-    smartPdfWorkspaceTitle: 'Smart PDF',
-    smartPdfUploadBtn: 'Upload PDF',
-    smartPdfUploadHint: 'PDF only · max 20MB',
-    smartPdfUploadSuccess: 'PDF received',
-    smartPdfPageIndicator: 'Page {current} of {total}',
-    smartPdfUploadError: 'Please choose a PDF file.',
-    smartPdfUploadTooLarge: 'This file is too large (max 20MB).',
+    smartImportPickPrompt: 'Choose a PDF file from your device.',
+    smartImportChoose: 'Choose File',
+    smartImportPreparing: 'Preparing Document…',
+    smartImportAnalyzing: 'Analyzing the document…',
+    smartImportScannedTitle: 'Scanned Document Detected',
+    smartImportScannedMsg: 'It looks like this document contains scanned pages. Would you like to use text recognition?',
+    smartImportUseOcr: 'Use OCR',
+    smartImportKeepImages: 'Keep Pages as Images',
+    smartImportOcrProcessing: 'OCR Processing…',
+    smartImportFailed: 'Failed to Import',
+    smartImportRetry: 'Retry',
+    smartImportInvalidFile: 'This file is not a valid PDF. Please choose a PDF file.',
+    smartImportCorrupt: 'The PDF appears to be corrupted or could not be read. Please try another file.',
+    smartImportEmpty: 'This document has no usable content.',
+    smartImportOcrFailed: 'Text recognition failed. Please try again.',
+    smartEditorTitle: 'Editor',
+    smartEditorHint: 'Document content',
+    smartEditorPlaceholder: 'Imported content will appear here…',
+    smartToolbarDefault: 'New Document',
+    smartUntitledDoc: 'Untitled Document',
+    smartToolbarUndo: 'Undo',
+    smartToolbarRedo: 'Redo',
+    smartToolbarBold: 'Bold',
+    smartToolbarItalic: 'Italic',
+    smartToolbarUnderline: 'Underline',
+    smartDocumentBackLabel: 'Smart Documents',
+    smartToolbarAdd: 'Add',
+    smartAddHeading: 'Heading',
+    smartAddNewPage: 'New Page',
+    smartPageDesignNone: 'No border',
+    smartPageDesignSimple: 'Simple',
+    smartPageDesignClassic: 'Classic',
+    smartPageDesignFormal: 'Formal',
+    smartPageDesignModern: 'Modern',
+    // PART 17 — Signature tool
+    smartSigDraw: 'Draw', smartSigType: 'Type', smartSigImage: 'Image',
+    smartSigInsert: 'Insert', smartSigClear: 'Clear', smartSigCancel: 'Cancel',
+    smartSigNamePh: 'Your name', smartSigChoose: 'Choose an image of your signature',
+    // PART 18 — Signature protection status (EQ Signature Status)
+    smartSigStatusSigned: '\u2713 Signed',
+    smartSigStatusModified: '\u26A0 The document was changed after signing',
+    smartSigResign: 'Re-sign',
+    // PART 11 — text formatting controls
+    smartTextFont: 'Font', smartTextSize: 'Size', smartTextFontDefault: 'Default',
+    smartTextBold: 'Bold', smartTextItalic: 'Italic', smartTextUnderline: 'Underline',
+    smartTextAlignLeft: 'Align left', smartTextAlignCenter: 'Center', smartTextAlignRight: 'Align right',
+    smartTextDirection: 'Direction', smartTextDirAuto: 'Auto', smartTextDirLtr: 'LTR', smartTextDirRtl: 'RTL',
+    smartTextSpacing: 'Line spacing',
+    smartToolbarText: 'Text',
+    smartToolbarTable: 'Table',
+    smartTableRows: 'Rows', smartTableColumns: 'Columns',
+    smartTableCreate: 'Create table',
+    smartTableAddRow: 'Add row', smartTableDelRow: 'Delete row',
+    smartTableAddCol: 'Add column', smartTableDelCol: 'Delete column',
+    smartTableAlignLeft: 'Align left', smartTableAlignCenter: 'Center', smartTableAlignRight: 'Align right',
+    smartToolbarSignature: 'Signature',
+    smartToolbarMore: 'More',
+    smartToolbarImage: 'Image',
+    smartImageDelete: 'Delete image',
+    smartToolbarLogo: 'Logo',
+    smartLogoPosition: 'Logo position',
+    smartLogoTopRight: 'Top right',
+    smartLogoTopLeft: 'Top left',
+    smartLogoCenter: 'Center',
+    smartToolbarDivider: 'Divider',
+    smartToolbarBorder: 'Border',
+    smartToolbarPage: 'Page',
+    smartToolbarPageNumber: 'Page number',
+    smartToolbarPageSettings: 'Page settings',
+    smartBlankNavPage: 'Page',
+    smartBlankNavPrev: 'Previous',
+    smartBlankNavNext: 'Next',
+    // PART 19 — page management
+    smartBlankNavOf: 'of',
+    smartPageAdd: 'Add page', smartPageCopy: 'Copy page', smartPageDelete: 'Delete page',
+    // PART 20 — saving work
+    smartToolbarSave: 'Save', smartSavedToast: 'Document saved',
+    smartPdfTextColor: 'Text Color',
+    smartPdfStyle: 'Style', smartPdfStyleNone: 'No Style', smartPdfStyleSimple: 'Simple', smartPdfStyleBusiness: 'Business', smartPdfStyleAcademic: 'Academic', smartPdfStyleEngineering: 'Engineering', smartPdfAdd: 'Add', smartPdfAddText: 'Text', smartPdfAddImage: 'Image', smartPdfAddLogo: 'Logo', smartPdfAddSignature: 'Signature', smartPdfAddStamp: 'Stamp', smartPdfAddDate: 'Date', smartPdfAddTable: 'Table', smartPdfMark: 'Mark', smartPdfMarkHighlight: 'Highlight', smartPdfMarkUnderline: 'Underline', smartPdfMarkDraw: 'Draw', smartPdfMarkComment: 'Comment', smartPdfMarkDone: 'Done', smartPdfMarkCancel: 'Cancel', smartPdfCommentTitle: 'Comment', smartPdfCommentText: 'Comment text', smartPdfCommentAdd: 'Add Comment', smartPdfMarkSelectText: 'Select text to mark first', smartPdfMarkDrawHint: 'Draw on the page', smartPdfMarkCommentLabel: 'Comment text', smartPdfMarkAddComment: 'Add Comment', pdfTblRow: 'Add Row', pdfTblRowDel: 'Delete Row', pdfTblCol: 'Add Column', pdfTblColDel: 'Delete Column', pdfTblAlignL: 'Left', pdfTblAlignC: 'Center', pdfTblAlignR: 'Right', pdfTblBold: 'Bold', pdfTblItalic: 'Italic', pdfTblTextColor: 'Text Color', pdfTblBg: 'Background', pdfTblBorder: 'Border Color', pdfTblNoBorder: 'No border', pdfTblRowH: 'Row height', pdfTblControls: 'Table controls', smartPdfPages: 'Pages', pdfPgAdd: 'Add Page', pdfPgDel: 'Delete Page', pdfPgRot: 'Rotate', pdfPgDup: 'Duplicate', pdfPgAdded: 'Page added', pdfPgDeleted: 'Page deleted', pdfPgRotated: 'Rotated', pdfPgDuplicated: 'Page duplicated', pdfPgLast: 'A document must keep at least one page',
+    smartSaveFailed: "Couldn't save. Please try again.",
+    smartUnsavedTitle: 'Do you want to save your changes before exiting?',
+    smartReviewButton: 'Review', smartReviewExit: 'Back to editing',
+    smartPdfExportButton: 'Export PDF', smartPdfExportTitle: 'Export PDF', smartPdfExportFilenameLabel: 'File name',
+    smartPdfExportPagesLabel: 'Pages', smartPdfExportAllPages: 'All pages', smartPdfExportCurrentPage: 'Current page',
+    smartPdfExportQualityLabel: 'Quality', smartPdfExportNormal: 'Normal', smartPdfExportHigh: 'High',
+    smartPdfExportDo: 'Export', smartPdfExportCancel: 'Cancel',
+    smartPdfExportSuccess: 'PDF exported successfully.', smartPdfExportFailed: 'PDF generation failed.',
+    // PART 34 — human-readable operation states (no technical details in the UI)
+    smartPdfPreparing: 'Preparing document…', smartPdfPrepareFailed: "Couldn't prepare the PDF. Please try again.",
+    smartPdfResultTitle: 'Document created successfully', smartPdfResultFileLabel: 'File',
+    smartPdfOpen: 'Open PDF', smartPdfShare: 'Share', smartPdfSend: 'Send', smartPdfClose: 'Close',
+    smartPdfShareUnsupported: 'Direct sharing is not supported on this device. The PDF was downloaded.',
+    smartPdfShareCancelled: 'Sharing cancelled.', smartPdfShareFailed: 'Sharing failed. The PDF was downloaded.',
+    smartPdfOpenFailed: 'Could not open the PDF in this browser.',
+    // PART 31 — Preview (stage before final PDF export). The preview shows the
+    // exact rasterized pages the export pipeline embeds, then Save PDF / Share.
+    smartPdfPreviewTitle: 'Preview',
+    smartPdfPreviewNote: 'This is the file that will be saved.',
+    smartPdfSave: 'Save PDF',
+    smartUnsavedSave: 'Save', smartUnsavedExit: 'Exit without saving', smartUnsavedCancel: 'Cancel',
+    // PART 33 — New Document protection
+    smartUnsavedNewTitle: 'You have unsaved changes.',
+    smartUnsavedSaveContinue: 'Save and continue',
+    smartUnsavedStartNew: 'Start new document',
+    smartSaveAndContinueFailed: 'Save failed. Your changes were not lost.',
+    smartDraftBannerTitle: 'Draft saved on this device', smartDraftResume: 'Resume draft',
+    // SMART DOCUMENTS — PDF WORKSPACE phase (import + fullscreen direct editing only).
+    smartPdfEmptyTitle: 'Open a PDF from your device',
+    smartPdfEmptySub: 'PDF only · Downloads, Desktop, Documents or any folder your browser can reach',
+    smartPdfUpload: 'Upload PDF',
+    smartPdfChange: 'Choose another',
+    smartPdfView: 'View',
+    smartPdfEdit: 'Edit text',
+    smartPdfEditHint: 'Edit mode: tap a text line, then type. Tap elsewhere or View to finish.',
+    smartPdfPagesLabel: '{n} pages',
+    smartPdfPageLabel: 'Page {n}',
+    smartPdfNeedPdf: 'Please choose a PDF file.',
+    smartPdfInvalid: 'This file is not a valid PDF. Please choose a PDF file.',
+    smartPdfReadFailed: "Couldn't read this PDF. Please try another file.",
+    smartPdfNeedLibrary: 'PDF library unavailable. Check your connection and try again.',
+    smartDraftsTitle: 'Your drafts', smartDraftsEmpty: 'No saved drafts yet', smartDraftsNewDoc: 'Blank document',
+    smartDraftResumeBtn: 'Resume editing', smartDraftDeleteBtn: 'Delete',
+    smartDraftDelTitle: 'Delete this draft?', smartDraftDelConfirm: 'Delete',
+    smartRelNow: 'just now', smartRelMin: 'a minute ago', smartRelMins: '{n} minutes ago',
+    smartRelHour: 'an hour ago', smartRelHours: '{n} hours ago', smartRelYesterday: 'yesterday', smartRelDays: '{n} days ago',
     drawerConverter: 'Direct Currency Converter',
     drawerDirectory: 'Global Currency Directory & Search',
     drawerInstall: 'Install App',
@@ -702,7 +879,7 @@ const translations = {
     helpBenefit6: 'Multi-language interface',
     helpBenefit7: 'Responsive design and PWA support',
     helpLangTitle: 'Languages',
-    helpLangDesc: 'EQ7 is fully translated. Choose your language in the top bar or in Settings, and the whole app — including this help page — updates instantly.',
+    helpLangDesc: 'EQ7 is fully translated. Choose your language in the top bar or in Settings, and the whole app — including this help page — updates instantly.'
   },
   es: {
     eyebrow: '',
@@ -879,14 +1056,174 @@ const translations = {
     resetButton: 'Restablecer',
     featureRequiresInternet: 'Esta función requiere una conexión a Internet.',
     smartDocsTitle: '📄 Documentos inteligentes',
+    smartDocsDesc: 'Gestiona tus documentos desde una sola página principal. Aquí aparecerán nuevas herramientas.',
+    smartDocsHeading: '¿Qué deseas hacer?',
+    smartDocsStep1: 'Inicio',
+    smartDocsStep2: 'Edición',
+    smartDocsStep3: 'Revisión',
+    smartDocsStep4: 'Exportación',
+    smartDocsCardScanTitle: 'Escanear un documento',
+    smartDocsCardScanDesc: 'Toma una foto de un papel o contrato y conviértela en contenido editable.',
+    smartDocsCardImportTitle: 'Importar archivo',
+    smartDocsCardImportDesc: 'Elige un PDF o un archivo compatible desde tu dispositivo.',
+    smartDocsCardNewTitle: 'Nuevo documento',
+    smartDocsCardNewDesc: 'Una página en blanco para empezar desde cero.',
+    smartDocsCardTemplatesTitle: 'Plantillas',
+    smartDocsCardTemplatesDesc: 'Plantillas listas para empezar rápidamente.',
+    smartTemplatesBusiness: 'Negocios',
+    smartTemplatesPersonal: 'Personal',
+    smartTemplatesCustom: 'Personalizado',
+    smartTemplatesInvoice: 'Factura',
+    smartTemplatesQuote: 'Cotización',
+    smartTemplatesPaymentAgreement: 'Acuerdo de pago',
+    smartTemplatesServiceContract: 'Contrato de servicios',
+    smartTemplatesSimpleAgreement: 'Acuerdo simple',
+    smartTemplatesPaymentReceipt: 'Recibo de pago',
+    smartTemplatesRentalAgreement: 'Contrato de alquiler',
+    smartTemplatesMyTemplates: 'Mis plantillas',
+    smartScanTitle: '📸 Escanear un documento',
+    smartScanCapture: 'Capturar',
+    smartScanUploadFallback: 'Elige una imagen de tu dispositivo en su lugar',
+    smartScanDetecting: 'Detectando documento',
+    smartScanCorrecting: 'Corrigiendo imagen',
+    smartScanImproving: 'Mejorando imagen',
+    smartScanReading: 'Leyendo texto',
+    smartScanProcessing: 'Procesando…',
+    smartScanReviewTitle: 'Revisar resultado de OCR',
+    smartScanPreviewLabel: 'Documento procesado',
+    smartScanEditHint: 'Puedes editar el texto reconocido antes de aceptarlo.',
+    smartScanRescan: 'Volver a escanear',
+    smartScanAccept: 'Aceptar resultado',
+    smartScanStructTitle: 'Estructura detectada',
+smartScanReviewNote: 'Documento reconocido. Revisa el contenido antes de crear el PDF.',
+    smartScanStatusNeeds: 'Requiere revisión',
+    smartScanStatusEdited: 'Editado: se usarán tus correcciones en el PDF',
+    smartScanStructHeading: 'Encabezado',
+    smartScanStructParagraph: 'Párrafo',
+    smartScanStructTable: 'Tabla',
+    smartScanStructNumber: 'Número',
+    smartScanStructDate: 'Fecha',
+    smartScanStructField: 'Campo',
+    smartScanCameraUnavailable: 'La cámara no está disponible en este dispositivo.',
+    smartScanPermissionDenied: 'Se denegó el permiso de la cámara.',
+    smartScanNoText: 'No se detectó texto. Inténtalo de nuevo o añade una imagen.',
+    smartScanOcrFailed: 'Falló la lectura del texto. Inténtalo de nuevo.',
+    smartScanAccepted: 'Resultado aceptado y listo para editar.',
+    smartScanEditTitle: 'Documento editable', smartScanEditDocTitlePh: 'Título del documento',
+    smartScanCreatePdf: 'Crear PDF', smartScanPdfCreating: 'Creando PDF…',
+    smartScanPdfCreated: 'PDF creado a partir del documento editado.',
+    smartScanOfflinePdf: 'Sin conexión: no se pudo cargar la biblioteca PDF.',
+    smartScanPdfFailed: 'No se pudo crear el PDF.',
+        smartImportTitle: '📂 Importar archivo',
     pdfAddTitle: 'Añadir al PDF', pdfAddText: 'Texto', pdfAddImage: 'Imagen', pdfAddLogo: 'Logotipo', pdfAddSignature: 'Firma', pdfAddStamp: 'Sello', pdfAddDate: 'Fecha', pdfAddTable: 'Tabla',
-    smartPdfWorkspaceTitle: 'Smart PDF',
-    smartPdfUploadBtn: 'Subir PDF',
-    smartPdfUploadHint: 'Solo PDF · máx 20MB',
-    smartPdfUploadSuccess: 'PDF recibido',
-    smartPdfPageIndicator: 'Página {current} de {total}',
-    smartPdfUploadError: 'Elige un archivo PDF.',
-    smartPdfUploadTooLarge: 'El archivo es demasiado grande (máx 20MB).',
+    smartImportPickPrompt: 'Elige un archivo PDF desde tu dispositivo.',
+    smartImportChoose: 'Elegir archivo',
+    smartImportPreparing: 'Preparando documento…',
+    smartImportAnalyzing: 'Analizando el documento…',
+    smartImportScannedTitle: 'Documento escaneado detectado',
+    smartImportScannedMsg: 'Parece que este documento contiene páginas escaneadas. ¿Quieres usar el reconocimiento de texto?',
+    smartImportUseOcr: 'Usar OCR',
+    smartImportKeepImages: 'Mantener páginas como imágenes',
+    smartImportOcrProcessing: 'Procesando OCR…',
+    smartImportFailed: 'Error al importar',
+    smartImportRetry: 'Reintentar',
+    smartImportInvalidFile: 'Este archivo no es un PDF válido. Elige un archivo PDF.',
+    smartImportCorrupt: 'El PDF parece estar dañado o no se pudo leer. Prueba con otro archivo.',
+    smartImportEmpty: 'Este documento no tiene contenido útil.',
+    smartImportOcrFailed: 'Falló el reconocimiento de texto. Inténtalo de nuevo.',
+    smartEditorTitle: 'Editor',
+    smartEditorHint: 'Contenido del documento',
+    smartEditorPlaceholder: 'El contenido importado aparecerá aquí…',
+    smartToolbarDefault: 'Documento nuevo',
+    smartUntitledDoc: 'Documento sin título',
+    smartToolbarUndo: 'Deshacer',
+    smartToolbarRedo: 'Rehacer',
+    smartToolbarBold: 'Negrita',
+    smartToolbarItalic: 'Cursiva',
+    smartToolbarUnderline: 'Subrayar',
+    smartDocumentBackLabel: 'Documentos inteligentes',
+    smartToolbarAdd: 'Añadir',
+    smartAddHeading: 'Título',
+    smartAddNewPage: 'Nueva página',
+    smartPageDesignNone: 'Sin borde',
+    smartPageDesignSimple: 'Sencillo',
+    smartPageDesignClassic: 'Clásico',
+    smartPageDesignFormal: 'Formal',
+    smartPageDesignModern: 'Moderno',
+    // PART 17 — Firma
+    smartSigDraw: 'Dibujar', smartSigType: 'Escribir', smartSigImage: 'Imagen',
+    smartSigInsert: 'Insertar', smartSigClear: 'Borrar', smartSigCancel: 'Cancelar',
+    smartSigNamePh: 'Tu nombre', smartSigChoose: 'Elige una imagen de tu firma',
+    // PART 18 — Signature protection status (EQ Signature Status)
+    smartSigStatusSigned: '\u2713 Firmado',
+    smartSigStatusModified: '\u26A0 El documento se modific\u00f3 despu\u00e9s de la firma',
+    smartSigResign: 'Volver a firmar',
+    smartTextFont: 'Fuente', smartTextSize: 'Tamaño', smartTextFontDefault: 'Predeterminado',
+    smartTextBold: 'Negrita', smartTextItalic: 'Cursiva', smartTextUnderline: 'Subrayado',
+    smartTextAlignLeft: 'Alinear a la izquierda', smartTextAlignCenter: 'Centrar', smartTextAlignRight: 'Alinear a la derecha',
+    smartTextDirection: 'Dirección', smartTextDirAuto: 'Auto', smartTextDirLtr: 'LTR', smartTextDirRtl: 'RTL',
+    smartTextSpacing: 'Interlineado',
+    smartToolbarText: 'Texto',
+    smartToolbarTable: 'Tabla',
+    smartTableRows: 'Filas', smartTableColumns: 'Columnas',
+    smartTableCreate: 'Crear tabla',
+    smartTableAddRow: 'Añadir fila', smartTableDelRow: 'Eliminar fila',
+    smartTableAddCol: 'Añadir columna', smartTableDelCol: 'Eliminar columna',
+    smartTableAlignLeft: 'Alinear a la izquierda', smartTableAlignCenter: 'Centrar', smartTableAlignRight: 'Alinear a la derecha',
+    smartToolbarSignature: 'Firma',
+    smartToolbarMore: 'Más',
+    smartToolbarImage: 'Imagen',
+    smartImageDelete: 'Eliminar imagen',
+    smartToolbarLogo: 'Logotipo',
+    smartLogoPosition: 'Posición del logotipo',
+    smartLogoTopRight: 'Arriba a la derecha',
+    smartLogoTopLeft: 'Arriba a la izquierda',
+    smartLogoCenter: 'Centro',
+    smartToolbarDivider: 'Separador',
+    smartToolbarBorder: 'Borde',
+    smartToolbarPage: 'Página',
+    smartToolbarPageNumber: 'Número de página',
+    smartToolbarPageSettings: 'Configuración de página',
+    smartBlankNavPage: 'Página',
+    smartBlankNavPrev: 'Anterior',
+    smartBlankNavNext: 'Siguiente',
+    // PART 19 — gestión de páginas
+    smartBlankNavOf: 'de',
+    smartPageAdd: 'Añadir página', smartPageCopy: 'Copiar página', smartPageDelete: 'Eliminar página',
+    // PART 20 — guardar el trabajo
+    smartToolbarSave: 'Guardar', smartSavedToast: 'Documento guardado',
+    smartPdfTextColor: 'Color del texto',
+    smartPdfStyle: 'Estilo', smartPdfStyleNone: 'Sin estilo', smartPdfStyleSimple: 'Sencillo', smartPdfStyleBusiness: 'Empresarial', smartPdfStyleAcademic: 'Académico', smartPdfStyleEngineering: 'Ingeniería',
+    smartSaveFailed: 'No se pudo guardar. Inténtalo de nuevo.',
+    smartUnsavedTitle: '¿Guardar los cambios antes de salir?',
+    smartReviewButton: 'Revisar', smartReviewExit: 'Volver a la edición',
+    smartPdfExportButton: 'Exportar PDF', smartPdfExportTitle: 'Exportar PDF', smartPdfExportFilenameLabel: 'Nombre del archivo',
+    smartPdfExportPagesLabel: 'Páginas', smartPdfExportAllPages: 'Todas las páginas', smartPdfExportCurrentPage: 'Página actual',
+    smartPdfExportQualityLabel: 'Calidad', smartPdfExportNormal: 'Normal', smartPdfExportHigh: 'Alta',
+    smartPdfExportDo: 'Exportar', smartPdfExportCancel: 'Cancelar',
+    smartPdfExportSuccess: 'PDF exportado correctamente.', smartPdfExportFailed: 'Error al generar el PDF.',
+    smartPdfPreparing: 'Preparando documento…', smartPdfPrepareFailed: 'No se pudo preparar el PDF. Inténtalo de nuevo.',
+    smartPdfResultTitle: 'Documento creado correctamente', smartPdfResultFileLabel: 'Archivo',
+    smartPdfOpen: 'Abrir PDF', smartPdfShare: 'Compartir', smartPdfSend: 'Enviar', smartPdfClose: 'Cerrar',
+    smartPdfShareUnsupported: 'La compartición directa no es compatible con este dispositivo. El PDF se ha descargado.',
+    smartPdfShareCancelled: 'Compartición cancelada.', smartPdfShareFailed: 'Error al compartir. El PDF se ha descargado.',
+    smartPdfOpenFailed: 'No se pudo abrir el PDF en este navegador.',
+    // PART 31 — Preview
+    smartPdfPreviewTitle: 'Vista previa',
+    smartPdfPreviewNote: 'Este es el archivo que se guardará.',
+    smartPdfSave: 'Guardar PDF',
+    smartUnsavedSave: 'Guardar', smartUnsavedExit: 'Salir sin guardar', smartUnsavedCancel: 'Cancelar',
+    // PART 33 — Nuevo documento (protección)
+    smartUnsavedNewTitle: 'Tiene cambios sin guardar.',
+    smartUnsavedSaveContinue: 'Guardar y continuar',
+    smartUnsavedStartNew: 'Iniciar un documento nuevo',
+    smartSaveAndContinueFailed: 'No se pudo guardar. Sus cambios no se perdieron.',
+    smartDraftBannerTitle: 'Borrador guardado en este dispositivo', smartDraftResume: 'Continuar borrador',
+    smartDraftsTitle: 'Tus borradores', smartDraftsEmpty: 'No hay borradores guardados', smartDraftsNewDoc: 'Documento en blanco',
+    smartDraftResumeBtn: 'Continuar editando', smartDraftDeleteBtn: 'Eliminar',
+    smartDraftDelTitle: '¿Eliminar este borrador?', smartDraftDelConfirm: 'Eliminar',
+    smartRelNow: 'ahora mismo', smartRelMin: 'hace un minuto', smartRelMins: 'hace {n} minutos',
+    smartRelHour: 'hace una hora', smartRelHours: 'hace {n} horas', smartRelYesterday: 'ayer', smartRelDays: 'hace {n} días',
     drawerConverter: 'Conversor directo de divisas',
     drawerDirectory: 'Directorio global de divisas',
     drawerInstall: 'Instalar app',
@@ -1054,7 +1391,9 @@ const translations = {
     helpBenefit6: 'Interfaz multilingüe',
     helpBenefit7: 'Diseño adaptable y soporte PWA',
     helpLangTitle: 'Idiomas',
-    helpLangDesc: 'EQ7 está totalmente traducido. Elige tu idioma en la barra superior o en Configuración y toda la aplicación, incluida esta página de ayuda, se actualiza al instante.',
+    helpLangDesc: 'EQ7 está totalmente traducido. Elige tu idioma en la barra superior o en Configuración y toda la aplicación, incluida esta página de ayuda, se actualiza al instante.'
+  , smartPdfAdd: 'Añadir', smartPdfAddText: 'Texto', smartPdfAddImage: 'Imagen', smartPdfAddLogo: 'Logotipo', smartPdfAddSignature: 'Firma', smartPdfAddStamp: 'Sello', smartPdfAddDate: 'Fecha', smartPdfAddTable: 'Tabla', smartPdfMark: 'Marcar', smartPdfMarkHighlight: 'Resaltar', smartPdfMarkUnderline: 'Subrayar', smartPdfMarkDraw: 'Dibujar', smartPdfMarkComment: 'Comentario', smartPdfMarkDone: 'Hecho', smartPdfMarkCancel: 'Cancelar', smartPdfCommentTitle: 'Comentario', smartPdfCommentText: 'Texto del comentario', smartPdfCommentAdd: 'Añadir comentario', smartPdfMarkSelectText: 'Selecciona primero el texto a marcar', smartPdfMarkDrawHint: 'Dibuja en la página', smartPdfMarkCommentLabel: 'Texto del comentario', smartPdfMarkAddComment: 'Añadir comentario', pdfTblRow: 'Añadir fila', pdfTblRowDel: 'Eliminar fila', pdfTblCol: 'Añadir columna', pdfTblColDel: 'Eliminar columna', pdfTblAlignL: 'Izquierda', pdfTblAlignC: 'Centro', pdfTblAlignR: 'Derecha', pdfTblBold: 'Negrita', pdfTblItalic: 'Cursiva', pdfTblTextColor: 'Color del texto', pdfTblBg: 'Fondo', pdfTblBorder: 'Color del borde', pdfTblNoBorder: 'Sin borde', pdfTblRowH: 'Altura de fila', pdfTblControls: 'Controles de tabla', smartPdfPages: 'Páginas', pdfPgAdd: 'Añadir página', pdfPgDel: 'Eliminar página', pdfPgRot: 'Rotar', pdfPgDup: 'Duplicar', pdfPgAdded: 'Página añadida', pdfPgDeleted: 'Página eliminada', pdfPgRotated: 'Rotado', pdfPgDuplicated: 'Página duplicada', pdfPgLast: 'Un documento debe conservar al menos una página'
+, smartPdfAdd: 'Añadir', smartPdfAddText: 'Texto', smartPdfAddImage: 'Imagen', smartPdfAddLogo: 'Logotipo', smartPdfAddSignature: 'Firma', smartPdfAddStamp: 'Sello', smartPdfAddDate: 'Fecha', smartPdfAddTable: 'Tabla', smartPdfMark: 'Marcar', smartPdfMarkHighlight: 'Resaltar', smartPdfMarkUnderline: 'Subrayar', smartPdfMarkDraw: 'Dibujar', smartPdfMarkComment: 'Comentario', smartPdfMarkDone: 'Hecho', smartPdfMarkCancel: 'Cancelar', smartPdfCommentTitle: 'Comentario', smartPdfCommentText: 'Texto del comentario', smartPdfCommentAdd: 'Añadir comentario', smartPdfMarkSelectText: 'Selecciona primero el texto a marcar', smartPdfMarkDrawHint: 'Dibuja en la página', smartPdfMarkCommentLabel: 'Texto del comentario', smartPdfMarkAddComment: 'Añadir comentario', pdfTblRow: 'Añadir fila', pdfTblRowDel: 'Eliminar fila', pdfTblCol: 'Añadir columna', pdfTblColDel: 'Eliminar columna', pdfTblAlignL: 'Izquierda', pdfTblAlignC: 'Centro', pdfTblAlignR: 'Derecha', pdfTblBold: 'Negrita', pdfTblItalic: 'Cursiva', pdfTblTextColor: 'Color del texto', pdfTblBg: 'Fondo', pdfTblBorder: 'Color del borde', pdfTblNoBorder: 'Sin borde', pdfTblRowH: 'Altura de fila', pdfTblControls: 'Controles de tabla', smartPdfPages: 'Páginas', pdfPgAdd: 'Añadir página', pdfPgDel: 'Eliminar página', pdfPgRot: 'Rotar', pdfPgDup: 'Duplicar', pdfPgAdded: 'Página añadida', pdfPgDeleted: 'Página eliminada', pdfPgRotated: 'Rotado', pdfPgDuplicated: 'Página duplicada', pdfPgLast: 'Un documento debe conservar al menos una página'
 },
   ar: {
     eyebrow: '',
@@ -1231,14 +1570,175 @@ const translations = {
     pdfRecentEmpty: 'لا توجد ملفات PDF حديثة بعد.',
     pdfComingSoon: 'سيتوفر في تحديث قادم.',
     smartDocsTitle: '📄 المستندات الذكية',
+    smartDocsDesc: 'أدِر مستنداتك من صفحة رئيسية واحدة. ستظهر أدوات جديدة هنا.',
+    smartDocsHeading: 'ماذا تريد أن تفعل؟',
+    smartDocsStep1: 'البدء',
+    smartDocsStep2: 'التحرير',
+    smartDocsStep3: 'المراجعة',
+    smartDocsStep4: 'التصدير',
+    smartDocsCardScanTitle: 'مسح مستند',
+    smartDocsCardScanDesc: 'لتصوير ورقة أو عقد وتحويله إلى محتوى قابل للتحرير.',
+    smartDocsCardImportTitle: 'استيراد ملف',
+    smartDocsCardImportDesc: 'اختيار PDF أو ملف مدعوم من الجهاز.',
+    smartDocsCardNewTitle: 'مستند جديد',
+    smartDocsCardNewDesc: 'صفحة بيضاء تبدأ منها من الصفر.',
+    smartDocsCardTemplatesTitle: 'القوالب',
+    smartDocsCardTemplatesDesc: 'قوالب جاهزة تبدأ منها بسرعة.',
+    smartTemplatesBusiness: 'الأعمال',
+    smartTemplatesPersonal: 'الشخصية',
+    smartTemplatesCustom: 'مخصصة',
+    smartTemplatesInvoice: 'فاتورة',
+    smartTemplatesQuote: 'عرض سعر',
+    smartTemplatesPaymentAgreement: 'اتفاقية دفع',
+    smartTemplatesServiceContract: 'عقد خدمات',
+    smartTemplatesSimpleAgreement: 'اتفاقية بسيطة',
+    smartTemplatesPaymentReceipt: 'إيصال دفع',
+    smartTemplatesRentalAgreement: 'اتفاقية إيجار',
+    smartTemplatesMyTemplates: 'قوالبي',
+    smartScanTitle: '📸 مسح مستند',
+    smartScanCapture: 'التقاط',
+    smartScanUploadFallback: 'اختر صورة من جهازك بدلًا من ذلك',
+    smartScanDetecting: 'اكتشاف حدود المستند',
+    smartScanCorrecting: 'تصحيح الصورة',
+    smartScanImproving: 'تحسين الصورة',
+    smartScanReading: 'قراءة النص',
+    smartScanProcessing: 'جارٍ المعالجة…',
+    smartScanReviewTitle: 'مراجعة نتيجة القراءة',
+    smartScanPreviewLabel: 'المستند المعالج',
+    smartScanEditHint: 'يمكنك تعديل النص المُستخرج قبل القبول.',
+    smartScanRescan: 'إعادة المسح',
+    smartScanAccept: 'قبول النتيجة',
+    smartScanStructTitle: 'البنية المكتشفة',
+    smartScanReviewNote: 'راجع المحتوى قبل إنشاء ملف PDF.',
+    smartScanStatusNeeds: 'مراجعة مطلوبة',
+    smartScanStatusEdited: 'تم التعديل: سيتم استخدام تصحيحاتك في ملف PDF.',
+    smartScanStructHeading: 'عنوان',
+    smartScanStructParagraph: 'فقرة',
+    smartScanStructTable: 'جدول',
+    smartScanStructNumber: 'رقم',
+    smartScanStructDate: 'تاريخ',
+    smartScanStructField: 'حقل',
+    smartScanCameraUnavailable: 'الكاميرا غير متاحة على هذا الجهاز.',
+    smartScanPermissionDenied: 'تم رفض إذن الكاميرا.',
+    smartScanNoText: 'لم يتم التعرف على أي نص. أعد المحاولة أو أضف صورة.',
+    smartScanOcrFailed: 'فشلت قراءة النص. حاول مجددًا.',
+    smartScanAccepted: 'تم قبول النتيجة وجاهزة للتحرير.',
+    smartScanEditTitle: 'مستند قابل للتحرير', smartScanEditDocTitlePh: 'عنوان المستند',
+    smartScanCreatePdf: 'إنشاء PDF', smartScanPdfCreating: 'جارٍ إنشاء PDF…',
+    smartScanPdfCreated: 'تم إنشاء PDF من المستند المعدّل.',
+    smartScanOfflinePdf: 'غير متصل — تعذّر تحميل مكتبة PDF.',
+    smartScanPdfFailed: 'تعذّر إنشاء PDF.',
+        smartImportTitle: '📂 استيراد ملف',
     pdfAddTitle: 'إضافة إلى PDF', pdfAddText: 'نص', pdfAddImage: 'صورة', pdfAddLogo: 'شعار', pdfAddSignature: 'توقيع', pdfAddStamp: 'ختم', pdfAddDate: 'تاريخ', pdfAddTable: 'جدول',
-    smartPdfWorkspaceTitle: 'Smart PDF',
-    smartPdfUploadBtn: 'رفع PDF',
-    smartPdfUploadHint: 'PDF فقط · أقصى 20MB',
-    smartPdfUploadSuccess: 'تم استقبال PDF',
-    smartPdfPageIndicator: 'صفحة {current} من {total}',
-    smartPdfUploadError: 'يرجى اختيار ملف PDF.',
-    smartPdfUploadTooLarge: 'حجم الملف كبير جدًا (الحد الأقصى 20MB).',
+    smartImportPickPrompt: 'اختر ملف PDF من جهازك.',
+    smartImportChoose: 'اختيار ملف',
+    smartImportPreparing: 'جارٍ تجهيز المستند…',
+    smartImportAnalyzing: 'جارٍ تحليل المستند…',
+    smartImportScannedTitle: 'تم اكتشاف مستند مصوّر',
+    smartImportScannedMsg: 'يبدو أن هذا المستند يحتوي على صفحات مصوّرة. هل تريد استخدام التعرف على النص؟',
+    smartImportUseOcr: 'استخدام OCR',
+    smartImportKeepImages: 'إبقاء الصفحات كصور',
+    smartImportOcrProcessing: 'جارٍ معالجة OCR…',
+    smartImportFailed: 'فشل الاستيراد',
+    smartImportRetry: 'إعادة المحاولة',
+    smartImportInvalidFile: 'هذا الملف ليس PDF صالحًا. اختر ملف PDF.',
+    smartImportCorrupt: 'يبدو أن ملف PDF تالف أو تعذّرت قراءته. جرّب ملفًا آخر.',
+    smartImportEmpty: 'لا يحتوي هذا المستند على محتوى مفيد.',
+    smartImportOcrFailed: 'فشل التعرف على النص. حاول مجددًا.',
+    smartEditorTitle: 'المحرر',
+    smartEditorHint: 'محتوى المستند',
+    smartEditorPlaceholder: 'سيظهر المحتوى المستورد هنا…',
+    smartToolbarDefault: 'مستند جديد',
+    smartUntitledDoc: 'مستند بدون عنوان',
+    smartToolbarUndo: 'تراجع',
+    smartToolbarRedo: 'إعادة',
+    smartToolbarBold: 'غامق',
+    smartToolbarItalic: 'مائل',
+    smartToolbarUnderline: 'تسطير',
+    smartDocumentBackLabel: 'المستندات الذكية',
+    smartToolbarAdd: 'إضافة',
+    smartAddHeading: 'عنوان',
+    smartAddNewPage: 'صفحة جديدة',
+    smartPageDesignNone: 'بدون إطار',
+    smartPageDesignSimple: 'بسيط',
+    smartPageDesignClassic: 'كلاسيكي',
+    smartPageDesignFormal: 'رسمي',
+    smartPageDesignModern: 'حديث',
+    // PART 17 — التوقيع
+    smartSigDraw: 'رسم', smartSigType: 'كتابة', smartSigImage: 'صورة',
+    smartSigInsert: 'إدراج', smartSigClear: 'مسح', smartSigCancel: 'إلغاء',
+    smartSigNamePh: 'اكتب اسمك', smartSigChoose: 'اختر صورة توقيعك',
+    // PART 18 — حالة حماية التوقيع (حالة EQ)
+    smartSigStatusSigned: '✓ تم التوقيع',
+    smartSigStatusModified: '⚠ تم تعديل المستند بعد التوقيع',
+    smartSigResign: 'إعادة التوقيع',
+    smartTextFont: 'الخط', smartTextSize: 'الحجم', smartTextFontDefault: 'افتراضي',
+    smartTextBold: 'عريض', smartTextItalic: 'مائل', smartTextUnderline: 'تسطير',
+    smartTextAlignLeft: 'محاذاة لليسار', smartTextAlignCenter: 'وسط', smartTextAlignRight: 'محاذاة لليمين',
+    smartTextDirection: 'اتجاه النص', smartTextDirAuto: 'تلقائي', smartTextDirLtr: 'من اليسار إلى اليمين', smartTextDirRtl: 'من اليمين إلى اليسار',
+    smartTextSpacing: 'تباعد الأسطر',
+    smartToolbarText: 'نص',
+    smartToolbarTable: 'جدول',
+    smartTableRows: 'الصفوف', smartTableColumns: 'الأعمدة',
+    smartTableCreate: 'إنشاء الجدول',
+    smartTableAddRow: 'إضافة صف', smartTableDelRow: 'حذف صف',
+    smartTableAddCol: 'إضافة عمود', smartTableDelCol: 'حذف عمود',
+    smartTableAlignLeft: 'محاذاة لليسار', smartTableAlignCenter: 'وسط', smartTableAlignRight: 'محاذاة لليمين',
+    smartToolbarSignature: 'توقيع',
+    smartToolbarMore: 'المزيد',
+    smartToolbarImage: 'صورة',
+    smartImageDelete: 'حذف الصورة',
+    smartToolbarLogo: 'شعار',
+    smartLogoPosition: 'موضع الشعار',
+    smartLogoTopRight: 'أعلى اليمين',
+    smartLogoTopLeft: 'أعلى اليسار',
+    smartLogoCenter: 'الوسط',
+    smartToolbarDivider: 'فاصل',
+    smartToolbarBorder: 'إطار',
+    smartToolbarPage: 'صفحة',
+    smartToolbarPageNumber: 'ترقيم',
+    smartToolbarPageSettings: 'إعدادات الصفحة',
+    smartBlankNavPage: 'صفحة',
+    smartBlankNavPrev: 'السابق',
+    smartBlankNavNext: 'التالي',
+    // PART 19 — إدارة الصفحات
+    smartBlankNavOf: 'من',
+    smartPageAdd: 'إضافة صفحة', smartPageCopy: 'نسخ الصفحة', smartPageDelete: 'حذف الصفحة',
+    // PART 20 — حفظ العمل
+    smartToolbarSave: 'حفظ', smartSavedToast: 'تم حفظ المستند',
+    smartPdfTextColor: 'لون النص',
+    smartPdfStyle: 'نمط', smartPdfStyleNone: 'بدون نمط', smartPdfStyleSimple: 'بسيط', smartPdfStyleBusiness: 'أعمال', smartPdfStyleAcademic: 'أكاديمي', smartPdfStyleEngineering: 'هندسي',
+    smartPdfAdd: 'إضافة', smartPdfAddText: 'نص', smartPdfAddImage: 'صورة', smartPdfAddLogo: 'شعار', smartPdfAddSignature: 'توقيع', smartPdfAddStamp: 'ختم', smartPdfAddDate: 'تاريخ', smartPdfAddTable: 'جدول', smartPdfMark: 'وضع علامة', smartPdfMarkHighlight: 'تمييز', smartPdfMarkUnderline: 'تسطير', smartPdfMarkDraw: 'رسم', smartPdfMarkComment: 'تعليق', smartPdfMarkDone: 'تم', smartPdfMarkCancel: 'إلغاء', smartPdfCommentTitle: 'تعليق', smartPdfCommentText: 'نص التعليق', smartPdfCommentAdd: 'إضافة تعليق', smartPdfMarkSelectText: 'حدد النص أولاً لوضع علامة', smartPdfMarkDrawHint: 'ارسم على الصفحة', smartPdfMarkCommentLabel: 'نص التعليق', smartPdfMarkAddComment: 'إضافة تعليق', pdfTblRow: 'إضافة صف', pdfTblRowDel: 'حذف صف', pdfTblCol: 'إضافة عمود', pdfTblColDel: 'حذف عمود', pdfTblAlignL: 'يسار', pdfTblAlignC: 'وسط', pdfTblAlignR: 'يمين', pdfTblBold: 'عريض', pdfTblItalic: 'مائل', pdfTblTextColor: 'لون النص', pdfTblBg: 'الخلفية', pdfTblBorder: 'لون الحدود', pdfTblNoBorder: 'بدون حدود', pdfTblRowH: 'ارتفاع الصف', pdfTblControls: 'أدوات الجدول', smartPdfPages: 'الصفحات', pdfPgAdd: 'إضافة صفحة', pdfPgDel: 'حذف صفحة', pdfPgRot: 'تدوير', pdfPgDup: 'تكرار الصفحة', pdfPgAdded: 'تمت إضافة صفحة', pdfPgDeleted: 'تم حذف الصفحة', pdfPgRotated: 'تم التدوير', pdfPgDuplicated: 'تم تكرار الصفحة', pdfPgLast: 'يجب إبقاء صفحة واحدة على الأقل',
+    smartSaveFailed: 'تعذر الحفظ. حاول مرة أخرى.',
+    smartUnsavedTitle: 'هل تريد حفظ التغييرات قبل الخروج؟',
+    smartReviewButton: 'مراجعة', smartReviewExit: 'العودة إلى التحرير',
+    smartPdfExportButton: 'تصدير PDF', smartPdfExportTitle: 'تصدير PDF', smartPdfExportFilenameLabel: 'اسم الملف',
+    smartPdfExportPagesLabel: 'الصفحات', smartPdfExportAllPages: 'جميع الصفحات', smartPdfExportCurrentPage: 'الصفحة الحالية',
+    smartPdfExportQualityLabel: 'الجودة', smartPdfExportNormal: 'عادية', smartPdfExportHigh: 'عالية',
+    smartPdfExportDo: 'تصدير', smartPdfExportCancel: 'إلغاء',
+    smartPdfExportSuccess: 'تم تصدير PDF بنجاح.', smartPdfExportFailed: 'فشل إنشاء ملف PDF.',
+    smartPdfPreparing: 'جارٍ تجهيز المستند…', smartPdfPrepareFailed: 'تعذر تجهيز ملف PDF. حاول مرة أخرى.',
+    smartPdfResultTitle: 'تم إنشاء المستند بنجاح', smartPdfResultFileLabel: 'الملف',
+    smartPdfOpen: 'فتح PDF', smartPdfShare: 'مشاركة', smartPdfSend: 'إرسال', smartPdfClose: 'إغلاق',
+    smartPdfShareUnsupported: 'المشاركة المباشرة غير مدعومة على هذا الجهاز. تم تنزيل ملف PDF.',
+    smartPdfShareCancelled: 'تم إلغاء المشاركة.', smartPdfShareFailed: 'فشلت المشاركة. تم تنزيل ملف PDF.',
+    smartPdfOpenFailed: 'تعذر فتح ملف PDF في هذا المتصفح.',
+    // PART 31 — المعاينة قبل التصدير النهائي
+    smartPdfPreviewTitle: 'معاينة',
+    smartPdfPreviewNote: 'هذا هو الملف الذي سيُحفظ.',
+    smartPdfSave: 'حفظ PDF',
+    smartUnsavedSave: 'حفظ', smartUnsavedExit: 'خروج بدون حفظ', smartUnsavedCancel: 'إلغاء',
+    // PART 33 — مستند جديد (حماية التغييرات غير المحفوظة)
+    smartUnsavedNewTitle: 'لديك تغييرات غير محفوظة.',
+    smartUnsavedSaveContinue: 'حفظ والمتابعة',
+    smartUnsavedStartNew: 'بدء مستند جديد',
+    smartSaveAndContinueFailed: 'فشل الحفظ. لم تُفقد تغييراتك.',
+    smartDraftBannerTitle: 'مسودة محفوظة على هذا الجهاز', smartDraftResume: 'متابعة المسودة',
+    smartDraftsTitle: 'مسوداتك', smartDraftsEmpty: 'لا توجد مسودات محفوظة', smartDraftsNewDoc: 'مستند فارغ',
+    smartDraftResumeBtn: 'متابعة التحرير', smartDraftDeleteBtn: 'حذف',
+    smartDraftDelTitle: 'حذف هذه المسودة؟', smartDraftDelConfirm: 'حذف',
+    smartRelNow: 'الآن', smartRelMin: 'منذ دقيقة', smartRelMins: 'منذ {n} دقائق',
+    smartRelHour: 'منذ ساعة', smartRelHours: 'منذ {n} ساعات', smartRelYesterday: 'أمس', smartRelDays: 'منذ {n} أيام',
     drawerConverter: 'محول العملات المباشر',
     drawerDirectory: 'الدليل العالمي للعملات والبحث',
     drawerInstall: 'تثبيت التطبيق',
@@ -1407,7 +1907,7 @@ const translations = {
     helpBenefit6: 'واجهة متعددة اللغات',
     helpBenefit7: 'تصميم متجاوب ودعم PWA',
     helpLangTitle: 'اللغات',
-    helpLangDesc: 'EQ7 مترجم بالكامل. اختر لغتك من الشريط العلوي أو من الإعدادات، وسيتم تحديث التطبيق بالكامل — بما في ذلك صفحة المساعدة هذه — فورًا.',
+    helpLangDesc: 'EQ7 مترجم بالكامل. اختر لغتك من الشريط العلوي أو من الإعدادات، وسيتم تحديث التطبيق بالكامل — بما في ذلك صفحة المساعدة هذه — فورًا.'
   },
   fr: {
     eyebrow: '',
@@ -1584,14 +2084,174 @@ const translations = {
     resetButton: 'Réinitialiser',
     featureRequiresInternet: 'Cette fonctionnalité nécessite une connexion Internet.',
     smartDocsTitle: '📄 Documents intelligents',
+    smartDocsDesc: 'Gérez vos documents depuis une page d’accueil unique. De nouveaux outils apparaîtront ici.',
+    smartDocsHeading: 'Que voulez-vous faire ?',
+    smartDocsStep1: 'Démarrer',
+    smartDocsStep2: 'Modifier',
+    smartDocsStep3: 'Révision',
+    smartDocsStep4: 'Exportation',
+    smartDocsCardScanTitle: 'Numériser un document',
+    smartDocsCardScanDesc: 'Prenez une photo d’un papier ou d’un contrat et transformez-la en contenu modifiable.',
+    smartDocsCardImportTitle: 'Importer un fichier',
+    smartDocsCardImportDesc: 'Choisissez un PDF ou un fichier pris en charge depuis votre appareil.',
+    smartDocsCardNewTitle: 'Nouveau document',
+    smartDocsCardNewDesc: 'Une page blanche pour partir de zéro.',
+    smartDocsCardTemplatesTitle: 'Modèles',
+    smartDocsCardTemplatesDesc: 'Des modèles prêts à l’emploi pour démarrer rapidement.',
+    smartTemplatesBusiness: 'Affaires',
+    smartTemplatesPersonal: 'Personnel',
+    smartTemplatesCustom: 'Personnalisé',
+    smartTemplatesInvoice: 'Facture',
+    smartTemplatesQuote: 'Devis',
+    smartTemplatesPaymentAgreement: 'Accord de paiement',
+    smartTemplatesServiceContract: 'Contrat de services',
+    smartTemplatesSimpleAgreement: 'Accord simple',
+    smartTemplatesPaymentReceipt: 'Reçu de paiement',
+    smartTemplatesRentalAgreement: 'Contrat de location',
+    smartTemplatesMyTemplates: 'Mes modèles',
+    smartScanTitle: '📸 Numériser un document',
+    smartScanCapture: 'Capturer',
+    smartScanUploadFallback: 'Choisissez plutôt une image de votre appareil',
+    smartScanDetecting: 'Détection des bordures du document',
+    smartScanCorrecting: 'Correction de l’image',
+    smartScanImproving: 'Amélioration de l’image',
+    smartScanReading: 'Lecture du texte',
+    smartScanProcessing: 'Traitement…',
+    smartScanReviewTitle: 'Revoir le résultat de l’OCR',
+    smartScanPreviewLabel: 'Document traité',
+    smartScanEditHint: 'Vous pouvez modifier le texte reconnu avant de l’accepter.',
+    smartScanRescan: 'Re-numériser',
+    smartScanAccept: 'Accepter le résultat',
+    smartScanStructTitle: 'Structure détectée',
+smartScanReviewNote: 'Document reconnu. Vérifiez le contenu avant de créer le PDF.',
+    smartScanStatusNeeds: 'Doit être vérifié',
+    smartScanStatusEdited: 'Modifié — vos corrections seront utilisées dans le PDF',
+    smartScanStructHeading: 'Titre',
+    smartScanStructParagraph: 'Paragraphe',
+    smartScanStructTable: 'Tableau',
+    smartScanStructNumber: 'Nombre',
+    smartScanStructDate: 'Date',
+    smartScanStructField: 'Champ',
+    smartScanCameraUnavailable: 'La caméra n’est pas disponible sur cet appareil.',
+    smartScanPermissionDenied: 'L’autorisation de la caméra a été refusée.',
+    smartScanNoText: 'Aucun texte détecté. Réessayez ou ajoutez une image.',
+    smartScanOcrFailed: 'La lecture du texte a échoué. Veuillez réessayer.',
+    smartScanAccepted: 'Résultat accepté et prêt à être modifié.',
+    smartScanEditTitle: 'Document modifiable', smartScanEditDocTitlePh: 'Titre du document',
+    smartScanCreatePdf: 'Créer un PDF', smartScanPdfCreating: 'Création du PDF…',
+    smartScanPdfCreated: 'PDF créé à partir du document modifié.',
+    smartScanOfflinePdf: 'Hors ligne — la bibliothèque PDF n\u2019a pas pu être chargée.',
+    smartScanPdfFailed: 'Impossible de créer le PDF.',
+        smartImportTitle: '📂 Importer un fichier',
     pdfAddTitle: 'Ajouter au PDF', pdfAddText: 'Texte', pdfAddImage: 'Image', pdfAddLogo: 'Logo', pdfAddSignature: 'Signature', pdfAddStamp: 'Cachet', pdfAddDate: 'Date', pdfAddTable: 'Tableau',
-    smartPdfWorkspaceTitle: 'Smart PDF',
-    smartPdfUploadBtn: 'Télécharger PDF',
-    smartPdfUploadHint: 'PDF uniquement · max 20Mo',
-    smartPdfUploadSuccess: 'PDF reçu',
-    smartPdfPageIndicator: 'Page {current} sur {total}',
-    smartPdfUploadError: 'Veuillez choisir un fichier PDF.',
-    smartPdfUploadTooLarge: 'Ce fichier est trop volumineux (max 20 Mo).',
+    smartImportPickPrompt: 'Choisissez un fichier PDF depuis votre appareil.',
+    smartImportChoose: 'Choisir un fichier',
+    smartImportPreparing: 'Préparation du document…',
+    smartImportAnalyzing: 'Analyse du document…',
+    smartImportScannedTitle: 'Document numérisé détecté',
+    smartImportScannedMsg: 'Ce document semble contenir des pages numérisées. Voulez-vous utiliser la reconnaissance de texte ?',
+    smartImportUseOcr: 'Utiliser l’OCR',
+    smartImportKeepImages: 'Garder les pages en images',
+    smartImportOcrProcessing: 'Traitement OCR…',
+    smartImportFailed: 'Échec de l’importation',
+    smartImportRetry: 'Réessayer',
+    smartImportInvalidFile: 'Ce fichier n’est pas un PDF valide. Choisissez un fichier PDF.',
+    smartImportCorrupt: 'Le PDF semble corrompu ou illisible. Essayez un autre fichier.',
+    smartImportEmpty: 'Ce document ne contient aucun contenu utile.',
+    smartImportOcrFailed: 'La reconnaissance de texte a échoué. Veuillez réessayer.',
+    smartEditorTitle: 'Éditeur',
+    smartEditorHint: 'Contenu du document',
+    smartEditorPlaceholder: 'Le contenu importé apparaîtra ici…',
+    smartToolbarDefault: 'Nouveau document',
+    smartUntitledDoc: 'Document sans titre',
+    smartToolbarUndo: 'Annuler',
+    smartToolbarRedo: 'Refaire',
+    smartToolbarBold: 'Gras',
+    smartToolbarItalic: 'Italique',
+    smartToolbarUnderline: 'Souligné',
+    smartDocumentBackLabel: 'Documents intelligents',
+    smartToolbarAdd: 'Ajouter',
+    smartAddHeading: 'Titre',
+    smartAddNewPage: 'Nouvelle page',
+    smartPageDesignNone: 'Sans bordure',
+    smartPageDesignSimple: 'Simple',
+    smartPageDesignClassic: 'Classique',
+    smartPageDesignFormal: 'Formel',
+    smartPageDesignModern: 'Moderne',
+    // PART 17 — Signature
+    smartSigDraw: 'Dessiner', smartSigType: 'Écrire', smartSigImage: 'Image',
+    smartSigInsert: 'Insérer', smartSigClear: 'Effacer', smartSigCancel: 'Annuler',
+    smartSigNamePh: 'Votre nom', smartSigChoose: 'Choisissez une image de votre signature',
+    // PART 18 — Statut de protection de la signature (EQ Signature Status)
+    smartSigStatusSigned: '\u2713 Sign\u00e9',
+    smartSigStatusModified: '\u26A0 Le document a \u00e9t\u00e9 modifi\u00e9 apr\u00e8s la signature',
+    smartSigResign: 'Signer \u00e0 nouveau',
+    smartTextFont: 'Police', smartTextSize: 'Taille', smartTextFontDefault: 'Par défaut',
+    smartTextBold: 'Gras', smartTextItalic: 'Italique', smartTextUnderline: 'Souligné',
+    smartTextAlignLeft: 'Aligner à gauche', smartTextAlignCenter: 'Centrer', smartTextAlignRight: 'Aligner à droite',
+    smartTextDirection: 'Direction', smartTextDirAuto: 'Auto', smartTextDirLtr: 'LTR', smartTextDirRtl: 'RTL',
+    smartTextSpacing: 'Interligne',
+    smartToolbarText: 'Texte',
+    smartToolbarTable: 'Tableau',
+    smartTableRows: 'Lignes', smartTableColumns: 'Colonnes',
+    smartTableCreate: 'Créer le tableau',
+    smartTableAddRow: 'Ajouter une ligne', smartTableDelRow: 'Supprimer une ligne',
+    smartTableAddCol: 'Ajouter une colonne', smartTableDelCol: 'Supprimer une colonne',
+    smartTableAlignLeft: 'Aligner à gauche', smartTableAlignCenter: 'Centrer', smartTableAlignRight: 'Aligner à droite',
+    smartToolbarSignature: 'Signature',
+    smartToolbarMore: 'Plus',
+    smartToolbarImage: 'Image',
+    smartImageDelete: 'Supprimer l’image',
+    smartToolbarLogo: 'Logo',
+    smartLogoPosition: 'Position du logo',
+    smartLogoTopRight: 'En haut à droite',
+    smartLogoTopLeft: 'En haut à gauche',
+    smartLogoCenter: 'Centre',
+    smartToolbarDivider: 'Séparateur',
+    smartToolbarBorder: 'Bordure',
+    smartToolbarPage: 'Page',
+    smartToolbarPageNumber: 'Numéro de page',
+    smartToolbarPageSettings: 'Paramètres de page',
+    smartBlankNavPage: 'Page',
+    smartBlankNavPrev: 'Précédent',
+    smartBlankNavNext: 'Suivant',
+    // PART 19 — gestion des pages
+    smartBlankNavOf: 'sur',
+    smartPageAdd: 'Ajouter une page', smartPageCopy: 'Copier la page', smartPageDelete: 'Supprimer la page',
+    // PART 20 — enregistrement du travail
+    smartToolbarSave: 'Enregistrer', smartSavedToast: 'Document enregistré',
+    smartPdfTextColor: 'Couleur du texte',
+    smartPdfStyle: 'Style', smartPdfStyleNone: 'Aucun style', smartPdfStyleSimple: 'Simple', smartPdfStyleBusiness: 'Affaires', smartPdfStyleAcademic: 'Académique', smartPdfStyleEngineering: 'Ingénierie',
+    smartSaveFailed: "Impossible d'enregistrer. Veuillez réessayer.",
+    smartUnsavedTitle: 'Voulez-vous enregistrer les modifications avant de quitter ?',
+    smartReviewButton: 'Révision', smartReviewExit: "Retour à l'édition",
+    smartPdfExportButton: 'Exporter en PDF', smartPdfExportTitle: 'Exporter en PDF', smartPdfExportFilenameLabel: 'Nom du fichier',
+    smartPdfExportPagesLabel: 'Pages', smartPdfExportAllPages: 'Toutes les pages', smartPdfExportCurrentPage: 'Page actuelle',
+    smartPdfExportQualityLabel: 'Qualité', smartPdfExportNormal: 'Normale', smartPdfExportHigh: 'Haute',
+    smartPdfExportDo: 'Exporter', smartPdfExportCancel: 'Annuler',
+    smartPdfExportSuccess: 'PDF exporté avec succès.', smartPdfExportFailed: "Échec de la génération du PDF.",
+    smartPdfPreparing: 'Préparation du document…', smartPdfPrepareFailed: "Impossible de préparer le PDF. Veuillez réessayer.",
+    smartPdfResultTitle: 'Document créé avec succès', smartPdfResultFileLabel: 'Fichier',
+    smartPdfOpen: 'Ouvrir le PDF', smartPdfShare: 'Partager', smartPdfSend: 'Envoyer', smartPdfClose: 'Fermer',
+    smartPdfShareUnsupported: 'Le partage direct n’est pas pris en charge sur cet appareil. Le PDF a été téléchargé.',
+    smartPdfShareCancelled: 'Partage annulé.', smartPdfShareFailed: 'Échec du partage. Le PDF a été téléchargé.',
+    smartPdfOpenFailed: 'Impossible d’ouvrir le PDF dans ce navigateur.',
+    // PART 31 — Aperçu
+    smartPdfPreviewTitle: 'Aperçu',
+    smartPdfPreviewNote: 'Ceci est le fichier qui sera enregistré.',
+    smartPdfSave: 'Enregistrer le PDF',
+    smartUnsavedSave: 'Enregistrer', smartUnsavedExit: 'Quitter sans enregistrer', smartUnsavedCancel: 'Annuler',
+    // PART 33 — Nouveau document (protection)
+    smartUnsavedNewTitle: 'Vous avez des modifications non enregistrées.',
+    smartUnsavedSaveContinue: 'Enregistrer et continuer',
+    smartUnsavedStartNew: 'Créer un nouveau document',
+    smartSaveAndContinueFailed: 'Échec de l’enregistrement. Vos modifications ne sont pas perdues.',
+    smartDraftBannerTitle: 'Brouillon enregistré sur cet appareil', smartDraftResume: 'Reprendre le brouillon',
+    smartDraftsTitle: 'Vos brouillons', smartDraftsEmpty: 'Aucun brouillon enregistré', smartDraftsNewDoc: 'Document vierge',
+    smartDraftResumeBtn: 'Reprendre l’édition', smartDraftDeleteBtn: 'Supprimer',
+    smartDraftDelTitle: 'Supprimer ce brouillon ?', smartDraftDelConfirm: 'Supprimer',
+    smartRelNow: 'à l’instant', smartRelMin: 'il y a une minute', smartRelMins: 'il y a {n} minutes',
+    smartRelHour: 'il y a une heure', smartRelHours: 'il y a {n} heures', smartRelYesterday: 'hier', smartRelDays: 'il y a {n} jours',
     drawerConverter: 'Convertisseur de devises direct',
     drawerDirectory: 'Répertoire mondial des devises & recherche',
     drawerInstall: 'Installer l\'application',
@@ -1759,7 +2419,9 @@ const translations = {
     helpBenefit6: 'Interface multilingue',
     helpBenefit7: 'Design responsive et support PWA',
     helpLangTitle: 'Langues',
-    helpLangDesc: 'EQ7 est entièrement traduit. Choisissez votre langue dans la barre supérieure ou dans les Paramètres, et toute l’application — y compris cette page d’aide — se met à jour instantanément.',
+    helpLangDesc: 'EQ7 est entièrement traduit. Choisissez votre langue dans la barre supérieure ou dans les Paramètres, et toute l’application — y compris cette page d’aide — se met à jour instantanément.'
+  , smartPdfAdd: 'Ajouter', smartPdfAddText: 'Texte', smartPdfAddImage: 'Image', smartPdfAddLogo: 'Logo', smartPdfAddSignature: 'Signature', smartPdfAddStamp: 'Tampon', smartPdfAddDate: 'Date', smartPdfAddTable: 'Tableau', smartPdfMark: 'Marquer', smartPdfMarkHighlight: 'Surligner', smartPdfMarkUnderline: 'Souligner', smartPdfMarkDraw: 'Dessiner', smartPdfMarkComment: 'Commentaire', smartPdfMarkDone: 'Terminé', smartPdfMarkCancel: 'Annuler', smartPdfCommentTitle: 'Commentaire', smartPdfCommentText: 'Texte du commentaire', smartPdfCommentAdd: 'Ajouter un commentaire', smartPdfMarkSelectText: "Sélectionnez d'abord le texte à marquer", smartPdfMarkDrawHint: 'Dessinez sur la page', smartPdfMarkCommentLabel: 'Texte du commentaire', smartPdfMarkAddComment: 'Ajouter un commentaire', pdfTblRow: 'Ajouter une ligne', pdfTblRowDel: 'Supprimer la ligne', pdfTblCol: 'Ajouter une colonne', pdfTblColDel: 'Supprimer la colonne', pdfTblAlignL: 'Gauche', pdfTblAlignC: 'Centre', pdfTblAlignR: 'Droite', pdfTblBold: 'Gras', pdfTblItalic: 'Italique', pdfTblTextColor: 'Couleur du texte', pdfTblBg: 'Arrière-plan', pdfTblBorder: 'Couleur de la bordure', pdfTblNoBorder: 'Sans bordure', pdfTblRowH: 'Hauteur de ligne', pdfTblControls: 'Contrôles du tableau', smartPdfPages: 'Pages', pdfPgAdd: 'Ajouter une page', pdfPgDel: 'Supprimer la page', pdfPgRot: 'Pivoter', pdfPgDup: 'Dupliquer', pdfPgAdded: 'Page ajoutée', pdfPgDeleted: 'Page supprimée', pdfPgRotated: 'Pivoté', pdfPgDuplicated: 'Page dupliquée', pdfPgLast: 'Un document doit conserver au moins une page'
+, smartPdfAdd: 'Ajouter', smartPdfAddText: 'Texte', smartPdfAddImage: 'Image', smartPdfAddLogo: 'Logo', smartPdfAddSignature: 'Signature', smartPdfAddStamp: 'Tampon', smartPdfAddDate: 'Date', smartPdfAddTable: 'Tableau', smartPdfMark: 'Marquer', smartPdfMarkHighlight: 'Surligner', smartPdfMarkUnderline: 'Souligner', smartPdfMarkDraw: 'Dessiner', smartPdfMarkComment: 'Commentaire', smartPdfMarkDone: 'Terminé', smartPdfMarkCancel: 'Annuler', smartPdfCommentTitle: 'Commentaire', smartPdfCommentText: 'Texte du commentaire', smartPdfCommentAdd: 'Ajouter un commentaire', smartPdfMarkSelectText: "Sélectionnez d'abord le texte à marquer", smartPdfMarkDrawHint: 'Dessinez sur la page', smartPdfMarkCommentLabel: 'Texte du commentaire', smartPdfMarkAddComment: 'Ajouter un commentaire', pdfTblRow: 'Ajouter une ligne', pdfTblRowDel: 'Supprimer la ligne', pdfTblCol: 'Ajouter une colonne', pdfTblColDel: 'Supprimer la colonne', pdfTblAlignL: 'Gauche', pdfTblAlignC: 'Centre', pdfTblAlignR: 'Droite', pdfTblBold: 'Gras', pdfTblItalic: 'Italique', pdfTblTextColor: 'Couleur du texte', pdfTblBg: 'Arrière-plan', pdfTblBorder: 'Couleur de la bordure', pdfTblNoBorder: 'Sans bordure', pdfTblRowH: 'Hauteur de ligne', pdfTblControls: 'Contrôles du tableau', smartPdfPages: 'Pages', pdfPgAdd: 'Ajouter une page', pdfPgDel: 'Supprimer la page', pdfPgRot: 'Pivoter', pdfPgDup: 'Dupliquer', pdfPgAdded: 'Page ajoutée', pdfPgDeleted: 'Page supprimée', pdfPgRotated: 'Pivoté', pdfPgDuplicated: 'Page dupliquée', pdfPgLast: 'Un document doit conserver au moins une page'
 },
   ru: {
     eyebrow: '',
@@ -1936,14 +2598,174 @@ const translations = {
     resetButton: 'Сбросить',
     featureRequiresInternet: 'Для этой функции требуется подключение к Интернету.',
     smartDocsTitle: '📄 Умные документы',
+    smartDocsDesc: 'Управляйте документами с единой главной страницы. Здесь появятся новые инструменты.',
+    smartDocsHeading: 'Что вы хотите сделать?',
+    smartDocsStep1: 'Начало',
+    smartDocsStep2: 'Редактирование',
+    smartDocsStep3: 'Проверка',
+    smartDocsStep4: 'Экспорт',
+    smartDocsCardScanTitle: 'Сканировать документ',
+    smartDocsCardScanDesc: 'Сфотографируйте бумагу или договор и превратите его в редактируемый контент.',
+    smartDocsCardImportTitle: 'Импортировать файл',
+    smartDocsCardImportDesc: 'Выберите PDF или поддерживаемый файл с вашего устройства.',
+    smartDocsCardNewTitle: 'Новый документ',
+    smartDocsCardNewDesc: 'Белая страница, чтобы начать с нуля.',
+    smartDocsCardTemplatesTitle: 'Шаблоны',
+    smartDocsCardTemplatesDesc: 'Готовые шаблоны для быстрого старта.',
+    smartTemplatesBusiness: 'Бизнес',
+    smartTemplatesPersonal: 'Личное',
+    smartTemplatesCustom: 'Свои',
+    smartTemplatesInvoice: 'Счёт',
+    smartTemplatesQuote: 'Коммерческое предложение',
+    smartTemplatesPaymentAgreement: 'Соглашение об оплате',
+    smartTemplatesServiceContract: 'Договор на услуги',
+    smartTemplatesSimpleAgreement: 'Простое соглашение',
+    smartTemplatesPaymentReceipt: 'Квитанция об оплате',
+    smartTemplatesRentalAgreement: 'Договор аренды',
+    smartTemplatesMyTemplates: 'Мои шаблоны',
+    smartScanTitle: '📸 Сканировать документ',
+    smartScanCapture: 'Сфотографировать',
+    smartScanUploadFallback: 'Вместо этого выберите изображение на устройстве',
+    smartScanDetecting: 'Определение границ документа',
+    smartScanCorrecting: 'Исправление изображения',
+    smartScanImproving: 'Улучшение изображения',
+    smartScanReading: 'Чтение текста',
+    smartScanProcessing: 'Обработка…',
+    smartScanReviewTitle: 'Проверить результат OCR',
+    smartScanPreviewLabel: 'Обработанный документ',
+    smartScanEditHint: 'Вы можете отредактировать распознанный текст перед принятием.',
+    smartScanRescan: 'Повторить сканирование',
+    smartScanAccept: 'Принять результат',
+    smartScanStructTitle: 'Обнаруженная структура',
+smartScanReviewNote: 'Dokument erkannt. Prüfen Sie den Inhalt, bevor Sie die PDF erstellen.',
+    smartScanStatusNeeds: 'Überprüfung erforderlich',
+    smartScanStatusEdited: 'Bearbeitet — Ihre Korrekturen werden in der PDF verwendet',
+    smartScanStructHeading: 'Заголовок',
+    smartScanStructParagraph: 'Абзац',
+    smartScanStructTable: 'Таблица',
+    smartScanStructNumber: 'Число',
+    smartScanStructDate: 'Дата',
+    smartScanStructField: 'Поле',
+    smartScanCameraUnavailable: 'Камера недоступна на этом устройстве.',
+    smartScanPermissionDenied: 'Разрешение на использование камеры отклонено.',
+    smartScanNoText: 'Текст не обнаружен. Повторите попытку или добавьте изображение.',
+    smartScanOcrFailed: 'Не удалось прочитать текст. Попробуйте снова.',
+    smartScanAccepted: 'Результат принят и готов к редактированию.',
+    smartScanEditTitle: 'Редактируемый документ', smartScanEditDocTitlePh: 'Название документа',
+    smartScanCreatePdf: 'Создать PDF', smartScanPdfCreating: 'Создание PDF…',
+    smartScanPdfCreated: 'PDF создан из отредактированного документа.',
+    smartScanOfflinePdf: 'Нет сети — не удалось загрузить библиотеку PDF.',
+    smartScanPdfFailed: 'Не удалось создать PDF.',
+        smartImportTitle: '📂 Импортировать файл',
     pdfAddTitle: 'Добавить в PDF', pdfAddText: 'Текст', pdfAddImage: 'Изображение', pdfAddLogo: 'Логотип', pdfAddSignature: 'Подпись', pdfAddStamp: 'Печать', pdfAddDate: 'Дата', pdfAddTable: 'Таблица',
-    smartPdfWorkspaceTitle: 'Smart PDF',
-    smartPdfUploadBtn: 'Загрузить PDF',
-    smartPdfUploadHint: 'Только PDF · макс 20МБ',
-    smartPdfUploadSuccess: 'PDF получен',
-    smartPdfPageIndicator: 'Страница {current} из {total}',
-    smartPdfUploadError: 'Выберите PDF-файл.',
-    smartPdfUploadTooLarge: 'Файл слишком большой (макс. 20МБ).',
+    smartImportPickPrompt: 'Выберите PDF-файл с вашего устройства.',
+    smartImportChoose: 'Выбрать файл',
+    smartImportPreparing: 'Подготовка документа…',
+    smartImportAnalyzing: 'Анализ документа…',
+    smartImportScannedTitle: 'Обнаружен отсканированный документ',
+    smartImportScannedMsg: 'Похоже, этот документ содержит отсканированные страницы. Хотите использовать распознавание текста?',
+    smartImportUseOcr: 'Использовать OCR',
+    smartImportKeepImages: 'Сохранить страницы как изображения',
+    smartImportOcrProcessing: 'Обработка OCR…',
+    smartImportFailed: 'Не удалось импортировать',
+    smartImportRetry: 'Повторить',
+    smartImportInvalidFile: 'Это недействительный PDF-файл. Выберите PDF-файл.',
+    smartImportCorrupt: 'Похоже, PDF повреждён или не читается. Попробуйте другой файл.',
+    smartImportEmpty: 'В этом документе нет полезного содержимого.',
+    smartImportOcrFailed: 'Не удалось распознать текст. Попробуйте снова.',
+    smartEditorTitle: 'Редактор',
+    smartEditorHint: 'Содержимое документа',
+    smartEditorPlaceholder: 'Импортированное содержимое появится здесь…',
+    smartToolbarDefault: 'Новый документ',
+    smartUntitledDoc: 'Документ без названия',
+    smartToolbarUndo: 'Отменить',
+    smartToolbarRedo: 'Повторить',
+    smartToolbarBold: 'Жирный',
+    smartToolbarItalic: 'Курсив',
+    smartToolbarUnderline: 'Подчеркнуть',
+    smartDocumentBackLabel: 'Умные документы',
+    smartToolbarAdd: 'Добавить',
+    smartAddHeading: 'Заголовок',
+    smartAddNewPage: 'Новая страница',
+    smartPageDesignNone: 'Без рамки',
+    smartPageDesignSimple: 'Простой',
+    smartPageDesignClassic: 'Классический',
+    smartPageDesignFormal: 'Официальный',
+    smartPageDesignModern: 'Современный',
+    // PART 17 — Signature tool
+    smartSigDraw: 'Рисовать', smartSigType: 'Ввести', smartSigImage: 'Изображение',
+    smartSigInsert: 'Вставить', smartSigClear: 'Очистить', smartSigCancel: 'Отмена',
+    smartSigNamePh: 'Ваше имя', smartSigChoose: 'Выберите изображение вашей подписи',
+    // PART 18 — Статус защиты подписи (EQ Signature Status)
+    smartSigStatusSigned: '\u2713 Подписано',
+    smartSigStatusModified: '\u26A0 Документ был изменён после подписи',
+    smartSigResign: 'Подписать заново',
+    smartTextFont: 'Шрифт', smartTextSize: 'Размер', smartTextFontDefault: 'По умолчанию',
+    smartTextBold: 'Полужирный', smartTextItalic: 'Курсив', smartTextUnderline: 'Подчёркнутый',
+    smartTextAlignLeft: 'По левому краю', smartTextAlignCenter: 'По центру', smartTextAlignRight: 'По правому краю',
+    smartTextDirection: 'Направление', smartTextDirAuto: 'Авто', smartTextDirLtr: 'LTR', smartTextDirRtl: 'RTL',
+    smartTextSpacing: 'Междустрочный интервал',
+    smartToolbarText: 'Текст',
+    smartToolbarTable: 'Таблица',
+    smartTableRows: 'Строки', smartTableColumns: 'Столбцы',
+    smartTableCreate: 'Создать таблицу',
+    smartTableAddRow: 'Добавить строку', smartTableDelRow: 'Удалить строку',
+    smartTableAddCol: 'Добавить столбец', smartTableDelCol: 'Удалить столбец',
+    smartTableAlignLeft: 'По левому краю', smartTableAlignCenter: 'По центру', smartTableAlignRight: 'По правому краю',
+    smartToolbarSignature: 'Подпись',
+    smartToolbarMore: 'Ещё',
+    smartToolbarImage: 'Изображение',
+    smartImageDelete: 'Удалить изображение',
+    smartToolbarLogo: 'Логотип',
+    smartLogoPosition: 'Положение логотипа',
+    smartLogoTopRight: 'Вверху справа',
+    smartLogoTopLeft: 'Вверху слева',
+    smartLogoCenter: 'По центру',
+    smartToolbarDivider: 'Разделитель',
+    smartToolbarBorder: 'Рамка',
+    smartToolbarPage: 'Страница',
+    smartToolbarPageNumber: 'Номер страницы',
+    smartToolbarPageSettings: 'Настройки страницы',
+    smartBlankNavPage: 'Страница',
+    smartBlankNavPrev: 'Назад',
+    smartBlankNavNext: 'Вперед',
+    // PART 19 — управление страницами
+    smartBlankNavOf: 'из',
+    smartPageAdd: 'Добавить страницу', smartPageCopy: 'Копировать страницу', smartPageDelete: 'Удалить страницу',
+    // PART 20 — сохранение работы
+    smartToolbarSave: 'Сохранить', smartSavedToast: 'Документ сохранён',
+    smartPdfTextColor: 'Цвет текста',
+    smartPdfStyle: 'Стиль', smartPdfStyleNone: 'Без стиля', smartPdfStyleSimple: 'Простой', smartPdfStyleBusiness: 'Деловой', smartPdfStyleAcademic: 'Академический', smartPdfStyleEngineering: 'Инженерный',
+    smartSaveFailed: 'Не удалось сохранить. Попробуйте ещё раз.',
+    smartUnsavedTitle: 'Сохранить изменения перед выходом?',
+    smartReviewButton: 'Просмотр', smartReviewExit: 'Вернуться к редактированию',
+    smartPdfExportButton: 'Экспорт PDF', smartPdfExportTitle: 'Экспорт PDF', smartPdfExportFilenameLabel: 'Имя файла',
+    smartPdfExportPagesLabel: 'Страницы', smartPdfExportAllPages: 'Все страницы', smartPdfExportCurrentPage: 'Текущая страница',
+    smartPdfExportQualityLabel: 'Качество', smartPdfExportNormal: 'Обычное', smartPdfExportHigh: 'Высокое',
+    smartPdfExportDo: 'Экспортировать', smartPdfExportCancel: 'Отмена',
+    smartPdfExportSuccess: 'PDF успешно экспортирован.', smartPdfExportFailed: 'Не удалось создать PDF.',
+    smartPdfPreparing: 'Подготовка документа…', smartPdfPrepareFailed: 'Не удалось подготовить PDF. Попробуйте ещё раз.',
+    smartPdfResultTitle: 'Документ успешно создан', smartPdfResultFileLabel: 'Файл',
+    smartPdfOpen: 'Открыть PDF', smartPdfShare: 'Поделиться', smartPdfSend: 'Отправить', smartPdfClose: 'Закрыть',
+    smartPdfShareUnsupported: 'Прямой обмен не поддерживается на этом устройстве. PDF был скачан.',
+    smartPdfShareCancelled: 'Обмен отменён.', smartPdfShareFailed: 'Не удалось поделиться. PDF был скачан.',
+    smartPdfOpenFailed: 'Не удалось открыть PDF в этом браузере.',
+    // PART 31 — Предпросмотр
+    smartPdfPreviewTitle: 'Предпросмотр',
+    smartPdfPreviewNote: 'Это файл, который будет сохранён.',
+    smartPdfSave: 'Сохранить PDF',
+    smartUnsavedSave: 'Сохранить', smartUnsavedExit: 'Выйти без сохранения', smartUnsavedCancel: 'Отмена',
+    // PART 33 — Новый документ (защита)
+    smartUnsavedNewTitle: 'У вас есть несохранённые изменения.',
+    smartUnsavedSaveContinue: 'Сохранить и продолжить',
+    smartUnsavedStartNew: 'Создать новый документ',
+    smartSaveAndContinueFailed: 'Не удалось сохранить. Ваши изменения не потеряны.',
+    smartDraftBannerTitle: 'Черновик сохранён на этом устройстве', smartDraftResume: 'Продолжить черновик',
+    smartDraftsTitle: 'Ваши черновики', smartDraftsEmpty: 'Нет сохранённых черновиков', smartDraftsNewDoc: 'Пустой документ',
+    smartDraftResumeBtn: 'Продолжить редактирование', smartDraftDeleteBtn: 'Удалить',
+    smartDraftDelTitle: 'Удалить этот черновик?', smartDraftDelConfirm: 'Удалить',
+    smartRelNow: 'только что', smartRelMin: 'минуту назад', smartRelMins: '{n} мин. назад',
+    smartRelHour: 'час назад', smartRelHours: '{n} ч. назад', smartRelYesterday: 'вчера', smartRelDays: '{n} дн. назад',
     drawerConverter: 'Прямой конвертер валют',
     drawerDirectory: 'Глобальный справочник валют и поиск',
     drawerInstall: 'Установить приложение',
@@ -2111,7 +2933,9 @@ const translations = {
     helpBenefit6: 'Многоязычный интерфейс',
     helpBenefit7: 'Адаптивный дизайн и поддержка PWA',
     helpLangTitle: 'Языки',
-    helpLangDesc: 'EQ7 полностью переведён. Выберите язык в верхней панели или в Настройках, и всё приложение — включая эту страницу справки — обновится мгновенно.',
+    helpLangDesc: 'EQ7 полностью переведён. Выберите язык в верхней панели или в Настройках, и всё приложение — включая эту страницу справки — обновится мгновенно.'
+  , smartPdfAdd: 'Добавить', smartPdfAddText: 'Текст', smartPdfAddImage: 'Изображение', smartPdfAddLogo: 'Логотип', smartPdfAddSignature: 'Подпись', smartPdfAddStamp: 'Штамп', smartPdfAddDate: 'Дата', smartPdfAddTable: 'Таблица', smartPdfMark: 'Отметка', smartPdfMarkHighlight: 'Выделение', smartPdfMarkUnderline: 'Подчёркивание', smartPdfMarkDraw: 'Рисование', smartPdfMarkComment: 'Комментарий', smartPdfMarkDone: 'Готово', smartPdfMarkCancel: 'Отмена', smartPdfCommentTitle: 'Комментарий', smartPdfCommentText: 'Текст комментария', smartPdfCommentAdd: 'Добавить комментарий', smartPdfMarkSelectText: 'Сначала выделите текст для отметки', smartPdfMarkDrawHint: 'Рисуйте на странице', smartPdfMarkCommentLabel: 'Текст комментария', smartPdfMarkAddComment: 'Добавить комментарий', pdfTblRow: 'Добавить строку', pdfTblRowDel: 'Удалить строку', pdfTblCol: 'Добавить столбец', pdfTblColDel: 'Удалить столбец', pdfTblAlignL: 'Слева', pdfTblAlignC: 'По центру', pdfTblAlignR: 'Справа', pdfTblBold: 'Полужирный', pdfTblItalic: 'Курсив', pdfTblTextColor: 'Цвет текста', pdfTblBg: 'Фон', pdfTblBorder: 'Цвет рамки', pdfTblNoBorder: 'Без рамки', pdfTblRowH: 'Высота строки', pdfTblControls: 'Управление таблицей', smartPdfPages: 'Страницы', pdfPgAdd: 'Добавить страницу', pdfPgDel: 'Удалить страницу', pdfPgRot: 'Повернуть', pdfPgDup: 'Дублировать', pdfPgAdded: 'Страница добавлена', pdfPgDeleted: 'Страница удалена', pdfPgRotated: 'Повёрнуто', pdfPgDuplicated: 'Страница дублирована', pdfPgLast: 'В документе должна оставаться хотя бы одна страница'
+, smartPdfAdd: 'Добавить', smartPdfAddText: 'Текст', smartPdfAddImage: 'Изображение', smartPdfAddLogo: 'Логотип', smartPdfAddSignature: 'Подпись', smartPdfAddStamp: 'Штамп', smartPdfAddDate: 'Дата', smartPdfAddTable: 'Таблица', smartPdfMark: 'Отметка', smartPdfMarkHighlight: 'Выделение', smartPdfMarkUnderline: 'Подчёркивание', smartPdfMarkDraw: 'Рисование', smartPdfMarkComment: 'Комментарий', smartPdfMarkDone: 'Готово', smartPdfMarkCancel: 'Отмена', smartPdfCommentTitle: 'Комментарий', smartPdfCommentText: 'Текст комментария', smartPdfCommentAdd: 'Добавить комментарий', smartPdfMarkSelectText: 'Сначала выделите текст для отметки', smartPdfMarkDrawHint: 'Рисуйте на странице', smartPdfMarkCommentLabel: 'Текст комментария', smartPdfMarkAddComment: 'Добавить комментарий', pdfTblRow: 'Добавить строку', pdfTblRowDel: 'Удалить строку', pdfTblCol: 'Добавить столбец', pdfTblColDel: 'Удалить столбец', pdfTblAlignL: 'Слева', pdfTblAlignC: 'По центру', pdfTblAlignR: 'Справа', pdfTblBold: 'Полужирный', pdfTblItalic: 'Курсив', pdfTblTextColor: 'Цвет текста', pdfTblBg: 'Фон', pdfTblBorder: 'Цвет рамки', pdfTblNoBorder: 'Без рамки', pdfTblRowH: 'Высота строки', pdfTblControls: 'Управление таблицей', smartPdfPages: 'Страницы', pdfPgAdd: 'Добавить страницу', pdfPgDel: 'Удалить страницу', pdfPgRot: 'Повернуть', pdfPgDup: 'Дублировать', pdfPgAdded: 'Страница добавлена', pdfPgDeleted: 'Страница удалена', pdfPgRotated: 'Повёрнуто', pdfPgDuplicated: 'Страница дублирована', pdfPgLast: 'В документе должна оставаться хотя бы одна страница'
 },
   de: {
     eyebrow: '',
@@ -2288,14 +3112,175 @@ const translations = {
     resetButton: 'Zurücksetzen',
     featureRequiresInternet: 'Diese Funktion erfordert eine Internetverbindung.',
     smartDocsTitle: '📄 Intelligente Dokumente',
+    smartDocsDesc: 'Verwalten Sie Ihre Dokumente von einer einzigen Hauptseite. Neue Tools werden hier erscheinen.',
+    smartDocsHeading: 'Was möchten Sie tun?',
+    smartDocsStep1: 'Start',
+    smartDocsStep2: 'Bearbeiten',
+    smartDocsStep3: 'Überprüfung',
+    smartDocsStep4: 'Export',
+    smartDocsCardScanTitle: 'Dokument scannen',
+    smartDocsCardScanDesc: 'Fotografieren Sie ein Papier oder einen Vertrag und wandeln Sie es in bearbeitbaren Inhalt um.',
+    smartDocsCardImportTitle: 'Datei importieren',
+    smartDocsCardImportDesc: 'Wählen Sie eine PDF- oder unterstützte Datei von Ihrem Gerät.',
+    smartDocsCardNewTitle: 'Neues Dokument',
+    smartDocsCardNewDesc: 'Eine leere Seite, um von vorne zu beginnen.',
+    smartDocsCardTemplatesTitle: 'Vorlagen',
+    smartDocsCardTemplatesDesc: 'Fertige Vorlagen für einen schnellen Start.',
+    smartTemplatesBusiness: 'Geschäftlich',
+    smartTemplatesPersonal: 'Persönlich',
+    smartTemplatesCustom: 'Benutzerdefiniert',
+    smartTemplatesInvoice: 'Rechnung',
+    smartTemplatesQuote: 'Angebot',
+    smartTemplatesPaymentAgreement: 'Zahlungsvereinbarung',
+    smartTemplatesServiceContract: 'Dienstleistungsvertrag',
+    smartTemplatesSimpleAgreement: 'Einfache Vereinbarung',
+    smartTemplatesPaymentReceipt: 'Zahlungsbeleg',
+    smartTemplatesRentalAgreement: 'Mietvertrag',
+    smartTemplatesMyTemplates: 'Meine Vorlagen',
+    smartScanTitle: '📸 Dokument scannen',
+    smartScanCapture: 'Aufnehmen',
+    smartScanUploadFallback: 'Wählen Sie stattdessen ein Bild von Ihrem Gerät aus',
+    smartScanDetecting: 'Dokumentgrenzen erkennen',
+    smartScanCorrecting: 'Bild korrigieren',
+    smartScanImproving: 'Bild verbessern',
+    smartScanReading: 'Text lesen',
+    smartScanProcessing: 'Verarbeite…',
+    smartScanReviewTitle: 'OCR-Ergebnis überprüfen',
+    smartScanPreviewLabel: 'Verarbeitetes Dokument',
+    smartScanEditHint: 'Sie können den erkannten Text vor dem Annehmen bearbeiten.',
+    smartScanRescan: 'Erneut scannen',
+    smartScanAccept: 'Ergebnis akzeptieren',
+    smartScanStructTitle: 'Erkannte Struktur',
+smartScanReviewNote: 'Belge tanındı. PDF oluşturmadan önce içeriği gözden geçirin.',
+    smartScanStatusNeeds: 'İnceleme gerekli',
+    smartScanStatusEdited: 'Düzenlendi — düzeltmeleriniz PDF’de kullanılacak',
+    smartScanStructHeading: 'Überschrift',
+    smartScanStructParagraph: 'Absatz',
+    smartScanStructTable: 'Tabelle',
+    smartScanStructNumber: 'Zahl',
+    smartScanStructDate: 'Datum',
+    smartScanStructField: 'Feld',
+    smartScanCameraUnavailable: 'Die Kamera ist auf diesem Gerät nicht verfügbar.',
+    smartScanPermissionDenied: 'Kamera-Berechtigung wurde verweigert.',
+    smartScanNoText: 'Kein Text erkannt. Bitte erneut versuchen oder ein Bild hinzufügen.',
+    smartScanOcrFailed: 'Das Lesen des Textes ist fehlgeschlagen. Bitte versuchen Sie es erneut.',
+    smartScanAccepted: 'Ergebnis akzeptiert und bereit zum Bearbeiten.',
+    smartScanEditTitle: 'Editierbares Dokument', smartScanEditDocTitlePh: 'Dokumenttitel',
+    smartScanCreatePdf: 'PDF erstellen', smartScanPdfCreating: 'PDF wird erstellt…',
+    smartScanPdfCreated: 'PDF aus dem bearbeiteten Dokument erstellt.',
+    smartScanOfflinePdf: 'Offline — die PDF-Bibliothek konnte nicht geladen werden.',
+    smartScanPdfFailed: 'PDF konnte nicht erstellt werden.',
+        smartImportTitle: '📂 Datei importieren',
     pdfAddTitle: 'Zum PDF hinzufügen', pdfAddText: 'Text', pdfAddImage: 'Bild', pdfAddLogo: 'Logo', pdfAddSignature: 'Unterschrift', pdfAddStamp: 'Stempel', pdfAddDate: 'Datum', pdfAddTable: 'Tabelle',
-    smartPdfWorkspaceTitle: 'Smart PDF',
-    smartPdfUploadBtn: 'PDF hochladen',
-    smartPdfUploadHint: 'Nur PDF · max 20MB',
-    smartPdfUploadSuccess: 'PDF erhalten',
-    smartPdfPageIndicator: 'Seite {current} von {total}',
-    smartPdfUploadError: 'Bitte wählen Sie eine PDF-Datei.',
-    smartPdfUploadTooLarge: 'Die Datei ist zu groß (max. 20MB).',
+    smartImportPickPrompt: 'Wählen Sie eine PDF-Datei von Ihrem Gerät.',
+    smartImportChoose: 'Datei auswählen',
+    smartImportPreparing: 'Dokument wird vorbereitet…',
+    smartImportAnalyzing: 'Dokument wird analysiert…',
+    smartImportScannedTitle: 'Gescanntes Dokument erkannt',
+    smartImportScannedMsg: 'Dieses Dokument scheint gescannte Seiten zu enthalten. Möchten Sie Texterkennung verwenden?',
+    smartImportUseOcr: 'OCR verwenden',
+    smartImportKeepImages: 'Seiten als Bilder behalten',
+    smartImportOcrProcessing: 'OCR-Verarbeitung…',
+    smartImportFailed: 'Import fehlgeschlagen',
+    smartImportRetry: 'Erneut versuchen',
+    smartImportInvalidFile: 'Dies ist keine gültige PDF-Datei. Wählen Sie eine PDF-Datei.',
+    smartImportCorrupt: 'Die PDF scheint beschädigt oder nicht lesbar zu sein. Versuchen Sie eine andere Datei.',
+    smartImportEmpty: 'Dieses Dokument hat keinen brauchbaren Inhalt.',
+    smartImportOcrFailed: 'Texterkennung fehlgeschlagen. Bitte erneut versuchen.',
+    smartEditorTitle: 'Editor',
+    smartEditorHint: 'Dokumentinhalt',
+    smartEditorPlaceholder: 'Importierter Inhalt erscheint hier…',
+    smartToolbarDefault: 'Neues Dokument',
+    smartUntitledDoc: 'Unbenanntes Dokument',
+    smartToolbarUndo: 'Rückgängig',
+    smartToolbarRedo: 'Wiederholen',
+    smartToolbarBold: 'Fett',
+    smartToolbarItalic: 'Kursiv',
+    smartToolbarUnderline: 'Unterstreichen',
+    smartDocumentBackLabel: 'Intelligente Dokumente',
+    smartToolbarAdd: 'Hinzufügen',
+    smartAddHeading: 'Überschrift',
+    smartAddNewPage: 'Neue Seite',
+    smartPageDesignNone: 'Ohne Rahmen',
+    smartPageDesignSimple: 'Einfach',
+    smartPageDesignClassic: 'Klassisch',
+    smartPageDesignFormal: 'Formell',
+    smartPageDesignModern: 'Modern',
+    // PART 17 — Unterschrift
+    smartSigDraw: 'Zeichnen', smartSigType: 'Schreiben', smartSigImage: 'Bild',
+    smartSigInsert: 'Einfügen', smartSigClear: 'Löschen', smartSigCancel: 'Abbrechen',
+    smartSigNamePh: 'Ihr Name', smartSigChoose: 'Wählen Sie ein Bild Ihrer Unterschrift',
+    // PART 18 — Signaturschutz-Status (EQ Signature Status)
+    smartSigStatusSigned: '\u2713 Unterschrieben',
+    smartSigStatusModified: '\u26A0 Das Dokument wurde nach der Unterschrift ge\u00e4ndert',
+    smartSigResign: 'Erneut unterschreiben',
+    // PART 11 — text formatting controls
+    smartTextFont: 'Schrift', smartTextSize: 'Größe', smartTextFontDefault: 'Standard',
+    smartTextBold: 'Fett', smartTextItalic: 'Kursiv', smartTextUnderline: 'Unterstrichen',
+    smartTextAlignLeft: 'Linksbündig', smartTextAlignCenter: 'Zentriert', smartTextAlignRight: 'Rechtsbündig',
+    smartTextDirection: 'Richtung', smartTextDirAuto: 'Auto', smartTextDirLtr: 'LTR', smartTextDirRtl: 'RTL',
+    smartTextSpacing: 'Zeilenabstand',
+    smartToolbarText: 'Text',
+    smartToolbarTable: 'Tabelle',
+    smartTableRows: 'Zeilen', smartTableColumns: 'Spalten',
+    smartTableCreate: 'Tabelle erstellen',
+    smartTableAddRow: 'Zeile hinzufügen', smartTableDelRow: 'Zeile löschen',
+    smartTableAddCol: 'Spalte hinzufügen', smartTableDelCol: 'Spalte löschen',
+    smartTableAlignLeft: 'Linksbündig', smartTableAlignCenter: 'Zentriert', smartTableAlignRight: 'Rechtsbündig',
+    smartToolbarSignature: 'Unterschrift',
+    smartToolbarMore: 'Mehr',
+    smartToolbarImage: 'Bild',
+    smartImageDelete: 'Bild löschen',
+    smartToolbarLogo: 'Logo',
+    smartLogoPosition: 'Logo-Position',
+    smartLogoTopRight: 'Oben rechts',
+    smartLogoTopLeft: 'Oben links',
+    smartLogoCenter: 'Mitte',
+    smartToolbarDivider: 'Trennlinie',
+    smartToolbarBorder: 'Rahmen',
+    smartToolbarPage: 'Seite',
+    smartToolbarPageNumber: 'Seitenzahl',
+    smartToolbarPageSettings: 'Seiteneinstellungen',
+    smartBlankNavPage: 'Seite',
+    smartBlankNavPrev: 'Zurück',
+    smartBlankNavNext: 'Weiter',
+    // PART 19 — Seitenverwaltung
+    smartBlankNavOf: 'von',
+    smartPageAdd: 'Seite hinzufügen', smartPageCopy: 'Seite kopieren', smartPageDelete: 'Seite löschen',
+    // PART 20 — Arbeit speichern
+    smartToolbarSave: 'Speichern', smartSavedToast: 'Dokument gespeichert',
+    smartPdfTextColor: 'Textfarbe',
+    smartPdfStyle: 'Stil', smartPdfStyleNone: 'Kein Stil', smartPdfStyleSimple: 'Einfach', smartPdfStyleBusiness: 'Business', smartPdfStyleAcademic: 'Akademisch', smartPdfStyleEngineering: 'Engineering',
+    smartSaveFailed: 'Speichern nicht möglich. Bitte erneut versuchen.',
+    smartUnsavedTitle: 'Möchten Sie die Änderungen vor dem Beenden speichern?',
+    smartReviewButton: 'Prüfen', smartReviewExit: 'Zurück zum Bearbeiten',
+    smartPdfExportButton: 'PDF exportieren', smartPdfExportTitle: 'PDF exportieren', smartPdfExportFilenameLabel: 'Dateiname',
+    smartPdfExportPagesLabel: 'Seiten', smartPdfExportAllPages: 'Alle Seiten', smartPdfExportCurrentPage: 'Aktuelle Seite',
+    smartPdfExportQualityLabel: 'Qualität', smartPdfExportNormal: 'Normal', smartPdfExportHigh: 'Hoch',
+    smartPdfExportDo: 'Exportieren', smartPdfExportCancel: 'Abbrechen',
+    smartPdfExportSuccess: 'PDF erfolgreich exportiert.', smartPdfExportFailed: 'PDF-Erzeugung fehlgeschlagen.',
+    smartPdfPreparing: 'Dokument wird vorbereitet…', smartPdfPrepareFailed: 'PDF konnte nicht vorbereitet werden. Bitte erneut versuchen.',
+    smartPdfResultTitle: 'Dokument erfolgreich erstellt', smartPdfResultFileLabel: 'Datei',
+    smartPdfOpen: 'PDF öffnen', smartPdfShare: 'Teilen', smartPdfSend: 'Senden', smartPdfClose: 'Schließen',
+    smartPdfShareUnsupported: 'Direktes Teilen wird auf diesem Gerät nicht unterstützt. Die PDF wurde heruntergeladen.',
+    smartPdfShareCancelled: 'Teilen abgebrochen.', smartPdfShareFailed: 'Teilen fehlgeschlagen. Die PDF wurde heruntergeladen.',
+    smartPdfOpenFailed: 'Die PDF konnte in diesem Browser nicht geöffnet werden.',
+    // PART 31 — Vorschau
+    smartPdfPreviewTitle: 'Vorschau',
+    smartPdfPreviewNote: 'Dies ist die Datei, die gespeichert wird.',
+    smartPdfSave: 'PDF speichern',
+    smartUnsavedSave: 'Speichern', smartUnsavedExit: 'Beenden ohne Speichern', smartUnsavedCancel: 'Abbrechen',
+    // PART 33 — Neues Dokument (Schutz)
+    smartUnsavedNewTitle: 'Sie haben nicht gespeicherte Änderungen.',
+    smartUnsavedSaveContinue: 'Speichern und fortfahren',
+    smartUnsavedStartNew: 'Neues Dokument starten',
+    smartSaveAndContinueFailed: 'Speichern fehlgeschlagen. Ihre Änderungen sind nicht verloren.',
+    smartDraftBannerTitle: 'Entwurf auf diesem Gerät gespeichert', smartDraftResume: 'Entwurf fortsetzen',
+    smartDraftsTitle: 'Deine Entwürfe', smartDraftsEmpty: 'Keine gespeicherten Entwürfe', smartDraftsNewDoc: 'Leeres Dokument',
+    smartDraftResumeBtn: 'Bearbeitung fortsetzen', smartDraftDeleteBtn: 'Löschen',
+    smartDraftDelTitle: 'Diesen Entwurf löschen?', smartDraftDelConfirm: 'Löschen',
+    smartRelNow: 'gerade eben', smartRelMin: 'vor einer Minute', smartRelMins: 'vor {n} Minuten',
+    smartRelHour: 'vor einer Stunde', smartRelHours: 'vor {n} Stunden', smartRelYesterday: 'gestern', smartRelDays: 'vor {n} Tagen',
     drawerConverter: 'Direkter Währungsrechner',
     drawerDirectory: 'Globales Währungsverzeichnis & Suche',
     drawerInstall: 'App installieren',
@@ -2463,7 +3448,9 @@ const translations = {
     helpBenefit6: 'Mehrsprachige Oberfläche',
     helpBenefit7: 'Responsives Design und PWA-Support',
     helpLangTitle: 'Sprachen',
-    helpLangDesc: 'EQ7 ist vollständig übersetzt. Wählen Sie Ihre Sprache in der oberen Leiste oder in den Einstellungen, und die gesamte App – einschließlich dieser Hilfeseite – wird sofort aktualisiert.',
+    helpLangDesc: 'EQ7 ist vollständig übersetzt. Wählen Sie Ihre Sprache in der oberen Leiste oder in den Einstellungen, und die gesamte App – einschließlich dieser Hilfeseite – wird sofort aktualisiert.'
+  , smartPdfAdd: 'Hinzufügen', smartPdfAddText: 'Text', smartPdfAddImage: 'Bild', smartPdfAddLogo: 'Logo', smartPdfAddSignature: 'Signatur', smartPdfAddStamp: 'Stempel', smartPdfAddDate: 'Datum', smartPdfAddTable: 'Tabelle', smartPdfMark: 'Markieren', smartPdfMarkHighlight: 'Hervorheben', smartPdfMarkUnderline: 'Unterstreichen', smartPdfMarkDraw: 'Zeichnen', smartPdfMarkComment: 'Kommentar', smartPdfMarkDone: 'Fertig', smartPdfMarkCancel: 'Abbrechen', smartPdfCommentTitle: 'Kommentar', smartPdfCommentText: 'Kommentartext', smartPdfCommentAdd: 'Kommentar hinzufügen', smartPdfMarkSelectText: 'Zuerst den zu markierenden Text auswählen', smartPdfMarkDrawHint: 'Auf der Seite zeichnen', smartPdfMarkCommentLabel: 'Kommentartext', smartPdfMarkAddComment: 'Kommentar hinzufügen', pdfTblRow: 'Zeile hinzufügen', pdfTblRowDel: 'Zeile löschen', pdfTblCol: 'Spalte hinzufügen', pdfTblColDel: 'Spalte löschen', pdfTblAlignL: 'Links', pdfTblAlignC: 'Mitte', pdfTblAlignR: 'Rechts', pdfTblBold: 'Fett', pdfTblItalic: 'Kursiv', pdfTblTextColor: 'Textfarbe', pdfTblBg: 'Hintergrund', pdfTblBorder: 'Rahmenfarbe', pdfTblNoBorder: 'Kein Rahmen', pdfTblRowH: 'Zeilenhöhe', pdfTblControls: 'Tabellensteuerung', smartPdfPages: 'Seiten', pdfPgAdd: 'Seite hinzufügen', pdfPgDel: 'Seite löschen', pdfPgRot: 'Drehen', pdfPgDup: 'Duplizieren', pdfPgAdded: 'Seite hinzugefügt', pdfPgDeleted: 'Seite gelöscht', pdfPgRotated: 'Gedreht', pdfPgDuplicated: 'Seite dupliziert', pdfPgLast: 'Ein Dokument muss mindestens eine Seite behalten'
+, smartPdfAdd: 'Hinzufügen', smartPdfAddText: 'Text', smartPdfAddImage: 'Bild', smartPdfAddLogo: 'Logo', smartPdfAddSignature: 'Signatur', smartPdfAddStamp: 'Stempel', smartPdfAddDate: 'Datum', smartPdfAddTable: 'Tabelle', smartPdfMark: 'Markieren', smartPdfMarkHighlight: 'Hervorheben', smartPdfMarkUnderline: 'Unterstreichen', smartPdfMarkDraw: 'Zeichnen', smartPdfMarkComment: 'Kommentar', smartPdfMarkDone: 'Fertig', smartPdfMarkCancel: 'Abbrechen', smartPdfCommentTitle: 'Kommentar', smartPdfCommentText: 'Kommentartext', smartPdfCommentAdd: 'Kommentar hinzufügen', smartPdfMarkSelectText: 'Zuerst den zu markierenden Text auswählen', smartPdfMarkDrawHint: 'Auf der Seite zeichnen', smartPdfMarkCommentLabel: 'Kommentartext', smartPdfMarkAddComment: 'Kommentar hinzufügen', pdfTblRow: 'Zeile hinzufügen', pdfTblRowDel: 'Zeile löschen', pdfTblCol: 'Spalte hinzufügen', pdfTblColDel: 'Spalte löschen', pdfTblAlignL: 'Links', pdfTblAlignC: 'Mitte', pdfTblAlignR: 'Rechts', pdfTblBold: 'Fett', pdfTblItalic: 'Kursiv', pdfTblTextColor: 'Textfarbe', pdfTblBg: 'Hintergrund', pdfTblBorder: 'Rahmenfarbe', pdfTblNoBorder: 'Kein Rahmen', pdfTblRowH: 'Zeilenhöhe', pdfTblControls: 'Tabellensteuerung', smartPdfPages: 'Seiten', pdfPgAdd: 'Seite hinzufügen', pdfPgDel: 'Seite löschen', pdfPgRot: 'Drehen', pdfPgDup: 'Duplizieren', pdfPgAdded: 'Seite hinzugefügt', pdfPgDeleted: 'Seite gelöscht', pdfPgRotated: 'Gedreht', pdfPgDuplicated: 'Seite dupliziert', pdfPgLast: 'Ein Dokument muss mindestens eine Seite behalten'
 },
   tr: {
     eyebrow: '',
@@ -2640,14 +3627,174 @@ const translations = {
     resetButton: 'Sıfırla',
     featureRequiresInternet: 'Bu özellik internet bağlantısı gerektirir.',
     smartDocsTitle: '📄 Akıllı Belgeler',
+    smartDocsDesc: 'Belgelerinizi tek bir ana sayfadan yönetin. Burada yeni araçlar görünecek.',
+    smartDocsHeading: 'Ne yapmak istersiniz?',
+    smartDocsStep1: 'Başlangıç',
+    smartDocsStep2: 'Düzenleme',
+    smartDocsStep3: 'İnceleme',
+    smartDocsStep4: 'Dışa Aktarma',
+    smartDocsCardScanTitle: 'Belge Tara',
+    smartDocsCardScanDesc: 'Bir kağıdın veya sözleşmenin fotoğrafını çekin ve düzenlenebilir içeriğe dönüştürün.',
+    smartDocsCardImportTitle: 'Dosya İçe Aktar',
+    smartDocsCardImportDesc: 'Cihazınızdan bir PDF veya desteklenen dosya seçin.',
+    smartDocsCardNewTitle: 'Yeni Belge',
+    smartDocsCardNewDesc: 'Sıfırdan başlamak için boş bir sayfa.',
+    smartDocsCardTemplatesTitle: 'Şablonlar',
+    smartDocsCardTemplatesDesc: 'Hızlı başlamak için hazır şablonlar.',
+    smartTemplatesBusiness: 'İş',
+    smartTemplatesPersonal: 'Kişisel',
+    smartTemplatesCustom: 'Özel',
+    smartTemplatesInvoice: 'Fatura',
+    smartTemplatesQuote: 'Teklif',
+    smartTemplatesPaymentAgreement: 'Ödeme Sözleşmesi',
+    smartTemplatesServiceContract: 'Hizmet Sözleşmesi',
+    smartTemplatesSimpleAgreement: 'Basit Anlaşma',
+    smartTemplatesPaymentReceipt: 'Ödeme Makbuzu',
+    smartTemplatesRentalAgreement: 'Kira Sözleşmesi',
+    smartTemplatesMyTemplates: 'Şablonlarım',
+    smartScanTitle: '📸 Belge Tara',
+    smartScanCapture: 'Yakala',
+    smartScanUploadFallback: 'Cihazınızdan bir görüntü seçin',
+    smartScanDetecting: 'Belge kenarlarını tespit et',
+    smartScanCorrecting: 'Görüntüyü düzelt',
+    smartScanImproving: 'Görüntüyü iyileştir',
+    smartScanReading: 'Metni oku',
+    smartScanProcessing: 'İşleniyor…',
+    smartScanReviewTitle: 'OCR sonucunu gözden geçir',
+    smartScanPreviewLabel: 'İşlenmiş belge',
+    smartScanEditHint: 'Kabul etmeden önce tanınan metni düzenleyebilirsiniz.',
+smartScanReviewNote: 'تم التعرف على المستند. راجع المحتوى قبل إنشاء ملف PDF.',
+    smartScanStatusNeeds: 'يحتاج إلى مراجعة',
+    smartScanStatusEdited: 'تم التعديل — ستُستخدم تصحيحاتك في ملف PDF',
+    smartScanRescan: 'Yeniden tara',
+    smartScanAccept: 'Sonucu kabul et',
+    smartScanStructTitle: 'Algılanan yapı',
+    smartScanStructHeading: 'Başlık',
+    smartScanStructParagraph: 'Paragraf',
+    smartScanStructTable: 'Tablo',
+    smartScanStructNumber: 'Sayı',
+    smartScanStructDate: 'Tarih',
+    smartScanStructField: 'Alan',
+    smartScanCameraUnavailable: 'Bu cihazda kamera mevcut değil.',
+    smartScanPermissionDenied: 'Kamera izni reddedildi.',
+    smartScanNoText: 'Metin algılanamadı. Tekrar deneyin veya bir görüntü ekleyin.',
+    smartScanOcrFailed: 'Metin okuma başarısız oldu. Lütfen tekrar deneyin.',
+    smartScanAccepted: 'Sonuç kabul edildi ve düzenleme için hazır.',
+    smartScanEditTitle: 'Düzenlenebilir belge', smartScanEditDocTitlePh: 'Belge başlığı',
+    smartScanCreatePdf: 'PDF oluştur', smartScanPdfCreating: 'PDF oluşturuluyor…',
+    smartScanPdfCreated: 'Düzenlenen belgeden PDF oluşturuldu.',
+    smartScanOfflinePdf: 'Çevrimdışı — PDF kitaplığı yüklenemedi.',
+    smartScanPdfFailed: 'PDF oluşturulamadı.',
+        smartImportTitle: '📂 Dosya İçe Aktar',
     pdfAddTitle: 'PDF\'ye Ekle', pdfAddText: 'Metin', pdfAddImage: 'Görsel', pdfAddLogo: 'Logo', pdfAddSignature: 'İmza', pdfAddStamp: 'Müstahap', pdfAddDate: 'Tarih', pdfAddTable: 'Tablo',
-    smartPdfWorkspaceTitle: 'Smart PDF',
-    smartPdfUploadBtn: 'PDF Yükle',
-    smartPdfUploadHint: 'Yalnızca PDF · maks 20MB',
-    smartPdfUploadSuccess: 'PDF alındı',
-    smartPdfPageIndicator: 'Sayfa {current} / {total}',
-    smartPdfUploadError: 'Lütfen bir PDF dosyası seçin.',
-    smartPdfUploadTooLarge: 'Dosya çok büyük (en fazla 20MB).',
+    smartImportPickPrompt: 'Cihazınızdan bir PDF dosyası seçin.',
+    smartImportChoose: 'Dosya Seç',
+    smartImportPreparing: 'Belge hazırlanıyor…',
+    smartImportAnalyzing: 'Belge analiz ediliyor…',
+    smartImportScannedTitle: 'Taranmış belge algılandı',
+    smartImportScannedMsg: 'Bu belge taranmış sayfalar içeriyor gibi görünüyor. Metin tanımayı kullanmak ister misiniz?',
+    smartImportUseOcr: 'OCR Kullan',
+    smartImportKeepImages: 'Sayfaları görsel olarak tut',
+    smartImportOcrProcessing: 'OCR İşleniyor…',
+    smartImportFailed: 'İçe aktarma başarısız',
+    smartImportRetry: 'Tekrar dene',
+    smartImportInvalidFile: 'Bu geçerli bir PDF dosyası değil. Bir PDF dosyası seçin.',
+    smartImportCorrupt: 'PDF bozuk veya okunamıyor gibi görünüyor. Başka bir dosya deneyin.',
+    smartImportEmpty: 'Bu belgede kullanışlı içerik yok.',
+    smartImportOcrFailed: 'Metin tanıma başarısız oldu. Tekrar deneyin.',
+    smartEditorTitle: 'Düzenleyici',
+    smartEditorHint: 'Belge içeriği',
+    smartEditorPlaceholder: 'İçe aktarılan içerik burada görünecek…',
+    smartToolbarDefault: 'Yeni Belge',
+    smartUntitledDoc: 'Adsız Belge',
+    smartToolbarUndo: 'Geri Al',
+    smartToolbarRedo: 'Yeniden Yap',
+    smartToolbarBold: 'Kalın',
+    smartToolbarItalic: 'Eğik',
+    smartToolbarUnderline: 'Altı Çizgi',
+    smartDocumentBackLabel: 'Akıllı Belgeler',
+    smartToolbarAdd: 'Ekle',
+    smartAddHeading: 'Başlık',
+    smartAddNewPage: 'Yeni Sayfa',
+    smartPageDesignNone: 'Çerçevesiz',
+    smartPageDesignSimple: 'Basit',
+    smartPageDesignClassic: 'Klasik',
+    smartPageDesignFormal: 'Resmi',
+    smartPageDesignModern: 'Modern',
+    // PART 17 — İmza
+    smartSigDraw: 'Çiz', smartSigType: 'Yaz', smartSigImage: 'Resim',
+    smartSigInsert: 'Ekle', smartSigClear: 'Temizle', smartSigCancel: 'İptal',
+    smartSigNamePh: 'Adınız', smartSigChoose: 'İmzanızın resmini seçin',
+    // PART 18 — İmza koruma durumu (EQ Signature Status)
+    smartSigStatusSigned: '\u2713 İmzalı',
+    smartSigStatusModified: '\u26A0 Belge imzaland\u0131ktan sonra de\u011fi\u015ftirildi',
+    smartSigResign: 'Yeniden imzala',
+    smartTextFont: 'Yazı tipi', smartTextSize: 'Boyut', smartTextFontDefault: 'Varsayılan',
+    smartTextBold: 'Kalın', smartTextItalic: 'İtalik', smartTextUnderline: 'Altı çizili',
+    smartTextAlignLeft: 'Sola hizala', smartTextAlignCenter: 'Ortala', smartTextAlignRight: 'Sağa hizala',
+    smartTextDirection: 'Yön', smartTextDirAuto: 'Otomatik', smartTextDirLtr: 'LTR', smartTextDirRtl: 'RTL',
+    smartTextSpacing: 'Satır aralığı',
+    smartToolbarText: 'Metin',
+    smartToolbarTable: 'Tablo',
+    smartTableRows: 'Satırlar', smartTableColumns: 'Sütunlar',
+    smartTableCreate: 'Tablo oluştur',
+    smartTableAddRow: 'Satır ekle', smartTableDelRow: 'Satır sil',
+    smartTableAddCol: 'Sütun ekle', smartTableDelCol: 'Sütun sil',
+    smartTableAlignLeft: 'Sola hizala', smartTableAlignCenter: 'Ortala', smartTableAlignRight: 'Sağa hizala',
+    smartToolbarSignature: 'İmza',
+    smartToolbarMore: 'Daha Fazla',
+    smartToolbarImage: 'Resim',
+    smartImageDelete: 'Resmi sil',
+    smartToolbarLogo: 'Logo',
+    smartLogoPosition: 'Logo konumu',
+    smartLogoTopRight: 'Sağ üst',
+    smartLogoTopLeft: 'Sol üst',
+    smartLogoCenter: 'Orta',
+    smartToolbarDivider: 'Ayırıcı',
+    smartToolbarBorder: 'Kenarı',
+    smartToolbarPage: 'Sayfa',
+    smartToolbarPageNumber: 'Sayfa Numarası',
+    smartToolbarPageSettings: 'Sayfa Ayarları',
+    smartBlankNavPage: 'Sayfa',
+    smartBlankNavPrev: 'Önceki',
+    smartBlankNavNext: 'Sonraki',
+    // PART 19 — sayfa yönetimi
+    smartBlankNavOf: '/',
+    smartPageAdd: 'Sayfa ekle', smartPageCopy: 'Sayfayı kopyala', smartPageDelete: 'Sayfayı sil',
+    // PART 20 — çalışmayı kaydetme
+    smartToolbarSave: 'Kaydet', smartSavedToast: 'Belge kaydedildi',
+    smartPdfTextColor: 'Metin rengi',
+    smartPdfStyle: 'Stil', smartPdfStyleNone: 'Stil Yok', smartPdfStyleSimple: 'Basit', smartPdfStyleBusiness: 'İş', smartPdfStyleAcademic: 'Akademik', smartPdfStyleEngineering: 'Mühendislik',
+    smartSaveFailed: 'Kaydedilemedi. Lütfen tekrar deneyin.',
+    smartUnsavedTitle: 'Çıkmadan önce değişiklikleri kaydetmek istiyor musunuz?',
+    smartReviewButton: 'İnceleme', smartReviewExit: 'Düzenlemeye dön',
+    smartPdfExportButton: "PDF'e aktar", smartPdfExportTitle: "PDF'e aktar", smartPdfExportFilenameLabel: 'Dosya adı',
+    smartPdfExportPagesLabel: 'Sayfalar', smartPdfExportAllPages: 'Tüm sayfalar', smartPdfExportCurrentPage: 'Geçerli sayfa',
+    smartPdfExportQualityLabel: 'Kalite', smartPdfExportNormal: 'Normal', smartPdfExportHigh: 'Yüksek',
+    smartPdfExportDo: 'Aktar', smartPdfExportCancel: 'İptal',
+    smartPdfExportSuccess: "PDF başarıyla dışa aktarıldı.", smartPdfExportFailed: 'PDF oluşturulamadı.',
+    smartPdfPreparing: 'Belge hazırlanıyor…', smartPdfPrepareFailed: 'PDF hazırlanamadı. Lütfen tekrar deneyin.',
+    smartPdfResultTitle: 'Belge başarıyla oluşturuldu', smartPdfResultFileLabel: 'Dosya',
+    smartPdfOpen: 'PDF\'i aç', smartPdfShare: 'Paylaş', smartPdfSend: 'Gönder', smartPdfClose: 'Kapat',
+    smartPdfShareUnsupported: 'Bu cihazda doğrudan paylaşım desteklenmiyor. PDF indirildi.',
+    smartPdfShareCancelled: 'Paylaşım iptal edildi.', smartPdfShareFailed: 'Paylaşım başarısız oldu. PDF indirildi.',
+    smartPdfOpenFailed: 'PDF bu tarayıcıda açılamadı.',
+    // PART 31 — Önizleme
+    smartPdfPreviewTitle: 'Önizleme',
+    smartPdfPreviewNote: 'Kaydedilecek dosya budur.',
+    smartPdfSave: 'PDF\'yi Kaydet',
+    smartUnsavedSave: 'Kaydet', smartUnsavedExit: 'Kaydetmeden çık', smartUnsavedCancel: 'İptal',
+    // PART 33 — Yeni belge (koruma)
+    smartUnsavedNewTitle: 'Kaydedilmemiş değişiklikleriniz var.',
+    smartUnsavedSaveContinue: 'Kaydet ve devam et',
+    smartUnsavedStartNew: 'Yeni belge başlat',
+    smartSaveAndContinueFailed: 'Kaydetme başarısız. Değişiklikleriniz kaybolmadı.',
+    smartDraftBannerTitle: 'Taslak bu cihazda kaydedildi', smartDraftResume: 'Taslağa devam et',
+    smartDraftsTitle: 'Taslaklarınız', smartDraftsEmpty: 'Kayıtlı taslak yok', smartDraftsNewDoc: 'Boş belge',
+    smartDraftResumeBtn: 'Düzenlemeye devam et', smartDraftDeleteBtn: 'Sil',
+    smartDraftDelTitle: 'Bu taslak silinsin mi?', smartDraftDelConfirm: 'Sil',
+    smartRelNow: 'şu an', smartRelMin: 'bir dakika önce', smartRelMins: '{n} dakika önce',
+    smartRelHour: 'bir saat önce', smartRelHours: '{n} saat önce', smartRelYesterday: 'dün', smartRelDays: '{n} gün önce',
     drawerConverter: 'Doğrudan Döviz Çevirici',
     drawerDirectory: 'Küresel Döviz Rehberi ve Arama',
     drawerInstall: 'Uygulamayı Yükle',
@@ -2815,8 +3962,9 @@ const translations = {
     helpBenefit6: 'Çok dilli arayüz',
     helpBenefit7: 'Duyarlı tasarım ve PWA desteği',
     helpLangTitle: 'Diller',
-    helpLangDesc: 'EQ7 tamamen çevrilmiştir. Dilinizi üst çubukta veya Ayarlar’da seçin; bu yardım sayfası dahil tüm uygulama anında güncellenir.',
-                                               },
+    helpLangDesc: 'EQ7 tamamen çevrilmiştir. Dilinizi üst çubukta veya Ayarlar’da seçin; bu yardım sayfası dahil tüm uygulama anında güncellenir.'
+  , smartPdfAdd: 'Ekle', smartPdfAddText: 'Metin', smartPdfAddImage: 'Görüntü', smartPdfAddLogo: 'Logo', smartPdfAddSignature: 'İmza', smartPdfAddStamp: 'Damga', smartPdfAddDate: 'Tarih', smartPdfAddTable: 'Tablo', smartPdfMark: 'İşaretle', smartPdfMarkHighlight: 'Vurgula', smartPdfMarkUnderline: 'Altı çizgi', smartPdfMarkDraw: 'Çiz', smartPdfMarkComment: 'Yorum', smartPdfMarkDone: 'Tamam', smartPdfMarkCancel: 'İptal', smartPdfCommentTitle: 'Yorum', smartPdfCommentText: 'Yorum metni', smartPdfCommentAdd: 'Yorum ekle', smartPdfMarkSelectText: 'Önce işaretlenecek metni seçin', smartPdfMarkDrawHint: 'Sayfaya çizin', smartPdfMarkCommentLabel: 'Yorum metni', smartPdfMarkAddComment: 'Yorum ekle', pdfTblRow: 'Satır ekle', pdfTblRowDel: 'Satır sil', pdfTblCol: 'Sütun ekle', pdfTblColDel: 'Sütun sil', pdfTblAlignL: 'Sol', pdfTblAlignC: 'Orta', pdfTblAlignR: 'Sağ', pdfTblBold: 'Kalın', pdfTblItalic: 'İtalik', pdfTblTextColor: 'Metin rengi', pdfTblBg: 'Arka plan', pdfTblBorder: 'Kenarlık rengi', pdfTblNoBorder: 'Kenarlık yok', pdfTblRowH: 'Satır yüksekliği', pdfTblControls: 'Tablo kontrolleri', smartPdfPages: 'Sayfalar', pdfPgAdd: 'Sayfa ekle', pdfPgDel: 'Sayfa sil', pdfPgRot: 'Döndür', pdfPgDup: 'Çoğalt', pdfPgAdded: 'Sayfa eklendi', pdfPgDeleted: 'Sayfa silindi', pdfPgRotated: 'Döndürüldü', pdfPgDuplicated: 'Sayfa çoğaltıldı', pdfPgLast: 'Bir belge en az bir sayfa içermelidir'
+, smartPdfAdd: 'Ekle', smartPdfAddText: 'Metin', smartPdfAddImage: 'Görüntü', smartPdfAddLogo: 'Logo', smartPdfAddSignature: 'İmza', smartPdfAddStamp: 'Damga', smartPdfAddDate: 'Tarih', smartPdfAddTable: 'Tablo', smartPdfMark: 'İşaretle', smartPdfMarkHighlight: 'Vurgula', smartPdfMarkUnderline: 'Altı çizgi', smartPdfMarkDraw: 'Çiz', smartPdfMarkComment: 'Yorum', smartPdfMarkDone: 'Tamam', smartPdfMarkCancel: 'İptal', smartPdfCommentTitle: 'Yorum', smartPdfCommentText: 'Yorum metni', smartPdfCommentAdd: 'Yorum ekle', smartPdfMarkSelectText: 'Önce işaretlenecek metni seçin', smartPdfMarkDrawHint: 'Sayfaya çizin', smartPdfMarkCommentLabel: 'Yorum metni', smartPdfMarkAddComment: 'Yorum ekle', pdfTblRow: 'Satır ekle', pdfTblRowDel: 'Satır sil', pdfTblCol: 'Sütun ekle', pdfTblColDel: 'Sütun sil', pdfTblAlignL: 'Sol', pdfTblAlignC: 'Orta', pdfTblAlignR: 'Sağ', pdfTblBold: 'Kalın', pdfTblItalic: 'İtalik', pdfTblTextColor: 'Metin rengi', pdfTblBg: 'Arka plan', pdfTblBorder: 'Kenarlık rengi', pdfTblNoBorder: 'Kenarlık yok', pdfTblRowH: 'Satır yüksekliği', pdfTblControls: 'Tablo kontrolleri', smartPdfPages: 'Sayfalar', pdfPgAdd: 'Sayfa ekle', pdfPgDel: 'Sayfa sil', pdfPgRot: 'Döndür', pdfPgDup: 'Çoğalt', pdfPgAdded: 'Sayfa eklendi', pdfPgDeleted: 'Sayfa silindi', pdfPgRotated: 'Döndürüldü', pdfPgDuplicated: 'Sayfa çoğaltıldı', pdfPgLast: 'Bir belge en az bir sayfa içermelidir'},
   ku: {
     "eyebrow": "",
     "adBarLabel": "ڕیکلام",
@@ -3008,6 +4156,54 @@ const translations = {
     "pdfRecentEmpty": "هێشتا PDF ی نوێ نییە.",
     "pdfComingSoon": "لە نوێکردنەوەی داهاتوودا دێت.",
     "smartDocsTitle": "📄 بەڵگە ژیرەکان",
+    "smartDocsDesc": "بەڵگەکانت لە پەڕەیەکی سەرەکییەوە بەڕێوەببە. ئامرازە نوێیەکان لێرە دەردەکەون.",
+    "smartDocsHeading": "دەتەوێت چی بکەیت؟",
+    "smartDocsStep1": "دەستپێکردن",
+    "smartDocsStep2": "دەستکاری",
+    "smartDocsStep3": "پێداچوونەوە",
+    "smartDocsStep4": "دەرهێنان",
+    "smartDocsCardScanTitle": "سکانکردنی بەڵگەیەک",
+    "smartDocsCardScanDesc": "وێنەی کاغەزێک یان پەیماننامەیەک بگرە و بیکە بە ناوەڕۆکی دەستکاریکراو.",
+    "smartDocsCardImportTitle": "هاواردنی فایل",
+    "smartDocsCardImportDesc": "PDF یەک یان فایلێکی پشتگیریکراو لە ئامێرەکەت هەڵبژێرە.",
+    "smartDocsCardNewTitle": "بەڵگەی نوێ",
+    "smartDocsCardNewDesc": "پەڕەیەکی بەتاڵ بۆ دەستپێکردن لە سفرەوە.",
+    "smartDocsCardTemplatesTitle": "قاڵبەکان",
+    "smartDocsCardTemplatesDesc": "قاڵبی ئامادە بۆ دەستپێکردنی خێرا.",
+    "smartTemplatesBusiness": "بازرگانی",
+    "smartTemplatesPersonal": "تایبەت",
+    "smartTemplatesCustom": "تایبەت",
+    "smartTemplatesInvoice": "فاکتوور",
+    "smartTemplatesQuote": "نرخنامە",
+    "smartTemplatesPaymentAgreement": "ڕێکەوتنامەی پارەدان",
+    "smartTemplatesServiceContract": "پەیماننامەی ڕاژە",
+    "smartScanTitle": "📸 سکانکردنی بەڵگە",
+    "smartScanEditHint": "دەتوانیت دەقی ناسینراو دەستکاری بکەیت پێش وەرگرتن.",
+    "smartScanRescan": "سکانکردنەوە",
+    "smartScanAccept": "وەرگرتنی ئەنجام",
+    "smartScanStructTitle": "ساختە دۆزراوەکان",
+    "smartScanReviewNote": "بەڵگە ناسینرا. دەقی ناوەڕۆکە بپێداچووە پێش دروستکردنی PDF.",
+    "smartScanStatusNeeds": "پێویستی پێداچوونەوەیە",
+    "smartScanStatusEdited": "دەستکاریکراو — ڕاستکردنەکانت لە PDF دا بەکاردەبرێن",
+    "smartScanStructHeading": "سەرنووسە",
+    "smartScanStructParagraph": "بەش",
+    "smartScanStructTable": "خشتە",
+    "smartScanStructNumber": "ژمارە",
+    "smartScanStructDate": "بەروار",
+    "smartScanStructField": "هەڵگە",
+    "smartScanCameraUnavailable": "کامێرا لەسەر ئەم ئامێرە بەردەست نییە.",
+    "smartScanPermissionDenied": "ڕێگا بە کامێراکە نەدرا.",
+    "smartScanNoText": "هیچ دەق دۆز نەکراو. دووبارە هەوڵ بکە یان وێنەیەک زیاد بکە.",
+    "smartScanOcrFailed": "خوێندنەوەی دەق شکستی خوارد. تکایە دووبارە هەوڵ بکەرەوە.",
+    "smartScanAccepted": "ئەنجام وەرگیرا و ئامادەیە بۆ دەستکاری.",
+    "smartScanEditTitle": "بەڵگەی دەستکاریکراو",
+    "smartScanEditDocTitlePh": "ناونیشانی بەڵگە",
+    "smartScanCreatePdf": "دروستکردنی PDF",
+    "smartScanPdfCreating": "دروستکردنی PDF...",
+    "smartScanPdfCreated": "PDF لە بەڵگەی دەستکاریکراوەوە دروستکرا.",
+    "smartScanOfflinePdf": "ناتۆراو — کتێبخانەی PDF نەتوانرا باربکرێت.",
+    "smartScanPdfFailed": "نەتوانرا PDF دروست بکەین.",
+    "smartImportTitle": "📂 هاواردنی فایل",
     "pdfAddTitle": "زیادکردن بۆ PDF",
     "pdfAddText": "دەق",
     "pdfAddImage": "وێنە",
@@ -3016,13 +4212,206 @@ const translations = {
     "pdfAddStamp": "مۆر",
     "pdfAddDate": "بەروار",
     "pdfAddTable": "خشتە",
-    "smartPdfWorkspaceTitle": "Smart PDF",
-    "smartPdfUploadBtn": "بارکردنی PDF",
-    "smartPdfUploadHint": "تەنها PDF · ئەوپەڕی 20MB",
-    "smartPdfUploadSuccess": "PDF وەرگیرا",
-    "smartPdfPageIndicator": "لاپەڕە {current} لە {total}دا",
-    "smartPdfUploadError": "تکایە فایلێکی PDF هەڵبژێرە.",
-    "smartPdfUploadTooLarge": "ئەم فایلە زۆر گەورەیە (زۆرترین 20MB).",
+    "smartImportPickPrompt": "فایلی PDF یەک لە ئامێرەکەت هەڵبژێرە.",
+    "smartImportChoose": "هەڵبژاردنی فایل",
+    "smartImportPreparing": "ئامادەکردنی بەڵگە...",
+    "smartImportAnalyzing": "شیکردنەوەی بەڵگەکە...",
+    "smartImportScannedTitle": "بەڵگەی سکانکراو دۆزکرا",
+    "smartImportScannedMsg": "واکوایە ئەم بەڵگە پەڕەی سکانکراوی لەخۆیەتی. دەتەوێت بە ناسینەوەی دەق بەکارببەیت؟",
+    "smartImportUseOcr": "بەکارهێنانی ناسینەوە",
+    "smartImportKeepImages": "پاشەکەوتکردنی پەڕەکان وەک وێنە",
+    "smartImportOcrProcessing": "ناوەڕۆکی ناسینەوە...",
+    "smartImportFailed": "شکستی لە هاواردن",
+    "smartImportRetry": "دووبارە هەوڵکردنەوە",
+    "smartImportInvalidFile": "ئەم فایلە PDF ی ڕەوای نییە. تکایە فایلی PDF هەڵبژێرە.",
+    "smartImportCorrupt": "واکوایە PDF یەکە بەرایشێکی هەیە یان نەتوانرا بخوێنرێت. تکایە فایلێکی تر هەڵبژێرە.",
+    "smartImportEmpty": "ئەم بەڵگە هیچ ناوەڕۆکی بەکارهێنراوی نییە.",
+    "smartImportOcrFailed": "ناسینەوەی دەق شکستی خوارد. تکایە دووبارە هەوڵ بکەرەوە.",
+    "smartEditorTitle": "دەستکاریکەر",
+    "smartEditorHint": "ناوەڕۆکی بەڵگە",
+    "smartEditorPlaceholder": "ناوەڕۆکی هاواردکراو لێرە دەردەکەوێت...",
+    "smartToolbarDefault": "بەڵگەی نوێ",
+    "smartToolbarUndo": "گەڕانەوە",
+    "smartToolbarRedo": "دووبارەکردنەوە",
+    "smartToolbarBold": "قەڵەو",
+    "smartToolbarItalic": "لاری",
+    "smartToolbarUnderline": "ژێرهێڵ",
+    "smartDocumentBackLabel": "بەڵگە ژیرەکان",
+    "smartToolbarAdd": "زیادکردن",
+    "smartAddHeading": "سەرنووسە",
+    "smartAddNewPage": "پەڕەی نوێ",
+    "smartPageDesignNone": "بێ سنوور",
+    "smartPageDesignSimple": "ئاسان",
+    "smartPageDesignClassic": "کلاسیک",
+    "smartPageDesignFormal": "فەرمی",
+    "smartPageDesignModern": "مۆدێرن",
+    "smartSigDraw": "وێنەکێشان",
+    "smartSigType": "نووسین",
+    "smartSigImage": "وێنە",
+    "smartSigInsert": "زیادکردن",
+    "smartSigClear": "سڕینەوە",
+    "smartSigCancel": "هەڵوەشاندنەوە",
+    "smartSigNamePh": "ناوت",
+    "smartSigChoose": "وێنەی واژۆکەت هەڵبژێرە",
+    "smartSigStatusSigned": "✓ واژۆکراو",
+    "smartSigStatusModified": "⚠ بەڵگەکە دوای واژۆکردن گۆڕدراوە",
+    "smartSigResign": "دووبارە واژۆکردنەوە",
+    "smartTextFont": "فۆنت",
+    "smartTextSize": "قەبارە",
+    "smartTextFontDefault": "بنەمایی",
+    "smartTextBold": "قەڵەو",
+    "smartTextItalic": "لاری",
+    "smartTextUnderline": "ژێرهێڵ",
+    "smartTextAlignLeft": "ڕێکخستن بۆ چەپ",
+    "smartTextAlignCenter": "ناوەڕاست",
+    "smartTextAlignRight": "ڕێکخستن بۆ ڕاست",
+    "smartTextDirection": "ئاڕاستەکردن",
+    "smartTextDirAuto": "خۆکار",
+    "smartTextDirLtr": "LTR",
+    "smartTextDirRtl": "RTL",
+    "smartTextSpacing": "بۆشایی ڕیزەکان",
+    "smartToolbarText": "دەق",
+    "smartToolbarTable": "خشتە",
+    "smartTableRows": "ڕیزەکان",
+    "smartTableColumns": "ستوونەکان",
+    "smartTableCreate": "دروستکردنی خشتە",
+    "smartTableAddRow": "زیادکردنی ڕیز",
+    "smartTableDelRow": "سڕینەوەی ڕیز",
+    "smartTableAddCol": "زیادکردنی ستوون",
+    "smartTableDelCol": "سڕینەوەی ستوون",
+    "smartTableAlignLeft": "ڕێکخستن بۆ چەپ",
+    "smartTableAlignCenter": "ناوەڕاست",
+    "smartTableAlignRight": "ڕێکخستن بۆ ڕاست",
+    "smartToolbarSignature": "واژۆ",
+    "smartToolbarMore": "زیاتر",
+    "smartToolbarImage": "وێنە",
+    "smartImageDelete": "سڕینەوەی وێنە",
+    "smartToolbarLogo": "لۆگۆ",
+    "smartLogoPosition": "شوێنی لۆگۆ",
+    "smartLogoTopRight": "لەسەر بۆ ڕاست",
+    "smartLogoTopLeft": "لەسەر بۆ چەپ",
+    "smartLogoCenter": "ناوەڕاست",
+    "smartToolbarDivider": "جیاکەرەوە",
+    "smartToolbarBorder": "سنوور",
+    "smartToolbarPage": "پەڕە",
+    "smartToolbarPageNumber": "ژمارەی پەڕە",
+    "smartToolbarPageSettings": "ڕێکخستنەکانی پەڕە",
+    "smartBlankNavPage": "پەڕە",
+    "smartBlankNavPrev": "پێشوو",
+    "smartBlankNavNext": "دواتر",
+    "smartPageAdd": "زیادکردنی پەڕە",
+    "smartPageCopy": "کۆپیکردنی پەڕە",
+    "smartPageDelete": "سڕینەوەی پەڕە",
+    "smartToolbarSave": "پاشەکەوتکردن",
+    "smartSavedToast": "بەڵگە پاشەکەوتکرا",
+    "smartPdfTextColor": "ڕەنگی دەق",
+    "smartPdfStyle": "شێواز",
+    "smartPdfStyleNone": "بێ شێواز",
+    "smartPdfStyleSimple": "ئاسان",
+    "smartPdfStyleBusiness": "بازرگانی",
+    "smartPdfStyleAcademic": "ئەکادیمی",
+    "smartPdfStyleEngineering": "ئەندازیاری",
+    "smartPdfAdd": "زیادکردن",
+    "smartPdfAddText": "دەق",
+    "smartPdfAddImage": "وێنە",
+    "smartPdfAddLogo": "لۆگۆ",
+    "smartPdfAddSignature": "واژۆ",
+    "smartPdfAddStamp": "مۆر",
+    "smartPdfAddDate": "بەروار",
+    "smartPdfAddTable": "خشتە",
+    "smartPdfMark": "نیشانەکردن",
+    "smartPdfMarkHighlight": "بەرچاوکردن",
+    "smartPdfMarkUnderline": "ژێرهێڵکردن",
+    "smartPdfMarkDraw": "وێنەکێشان",
+    "smartPdfMarkComment": "لێدوان",
+    "smartPdfMarkDone": "تەواو",
+    "smartPdfMarkCancel": "هەڵوەشاندنەوە",
+    "smartPdfCommentTitle": "لێدوان",
+    "smartPdfCommentText": "دەقی لێدوان",
+    "smartPdfCommentAdd": "زیادکردنی لێدوان",
+    "smartPdfMarkSelectText": "پێشوو دەقەکە هەڵبژێرە بۆ نیشانەکردن",
+    "smartPdfMarkDrawHint": "لەسەر پەڕەکە وێنە بکێشە",
+    "smartPdfMarkCommentLabel": "دەقی لێدوان",
+    "smartPdfMarkAddComment": "زیادکردنی لێدوان",
+    "pdfTblRow": "زیادکردنی ڕیز",
+    "pdfTblRowDel": "سڕینەوەی ڕیز",
+    "pdfTblCol": "زیادکردنی ستوون",
+    "pdfTblColDel": "سڕینەوەی ستوون",
+    "pdfTblAlignL": "چەپ",
+    "pdfTblAlignC": "ناوەڕاست",
+    "pdfTblAlignR": "ڕاست",
+    "pdfTblBold": "قەڵەو",
+    "pdfTblItalic": "لاری",
+    "pdfTblTextColor": "ڕەنگی دەق",
+    "pdfTblBg": "پاشینەوان",
+    "pdfTblBorder": "ڕەنگی سنوور",
+    "pdfTblNoBorder": "بێ سنوور",
+    "pdfTblRowH": "بەرزی ڕیز",
+    "pdfTblControls": "کۆنترۆڵەکانی خشتە",
+    "smartPdfPages": "پەڕەکان",
+    "pdfPgAdd": "زیادکردنی پەڕە",
+    "pdfPgDel": "سڕینەوەی پەڕە",
+    "pdfPgRot": "سووڕاندنەوە",
+    "pdfPgDup": "کۆپیکردن",
+    "pdfPgAdded": "پەڕە زیادکرا",
+    "pdfPgDeleted": "پەڕە سڕایەوە",
+    "pdfPgRotated": "سووڕاندراوە",
+    "pdfPgDuplicated": "پەڕە کۆپیکرا",
+    "pdfPgLast": "بەڵگە دەبێت بەلایەنی کەم لە یەک پەڕەی تێبکەی",
+    "smartSaveFailed": "نەتوانرا پاشەکەوتبکەین. تکایە دووبارە هەوڵ بکەرەوە.",
+    "smartUnsavedTitle": "دەتەوێت گۆڕانکارییەکانت پاشەکەوتبکەیت پێش دەرچوون؟",
+    "smartReviewButton": "پێداچوونەوە",
+    "smartReviewExit": "گەڕانەوە بۆ دەستکاری",
+    "smartPdfExportButton": "دەرهێنانی PDF",
+    "smartPdfExportTitle": "دەرهێنانی PDF",
+    "smartPdfExportFilenameLabel": "ناوی فایل",
+    "smartPdfExportPagesLabel": "پەڕەکان",
+    "smartPdfExportAllPages": "هەموو پەڕەکان",
+    "smartPdfExportCurrentPage": "پەڕەی ئێستا",
+    "smartPdfExportQualityLabel": "کوالیتی",
+    "smartPdfExportNormal": "ئاسایی",
+    "smartPdfExportHigh": "بەرز",
+    "smartPdfExportDo": "دەرهێنان",
+    "smartPdfExportCancel": "هەڵوەشاندنەوە",
+    "smartPdfExportSuccess": "PDF بە سەرکەوتووی دەرهێنرا.",
+    "smartPdfExportFailed": "دروستکردنی PDF شکستی خوارد.",
+    "smartPdfPreparing": "ئامادەکردنی بەڵگە...",
+    "smartPdfPrepareFailed": "نەتوانرا PDF ئامادە بکەین. تکایە دووبارە هەوڵ بکەرەوە.",
+    "smartPdfResultTitle": "بەڵگە بە سەرکەوتووی دروستکرا",
+    "smartPdfResultFileLabel": "فایل",
+    "smartPdfOpen": "کردنەوەی PDF",
+    "smartPdfShare": "هاوبەشکردن",
+    "smartPdfSend": "ناردن",
+    "smartPdfClose": "داخستن",
+    "smartPdfShareUnsupported": "هاوبەشکردنی ڕاستەوخۆ لەسەر ئەم ئامێرە پشتگیر نییە. PDF یەکە دابەزیرکرا.",
+    "smartPdfShareCancelled": "هاوبەشکردن هەڵوەشایەوە.",
+    "smartPdfShareFailed": "هاوبەشکردن شکستی خوارد. PDF یەکە دابەزیرکرا.",
+    "smartPdfOpenFailed": "نەتوانرا PDF یەکە لەم براوسەرەدا بکەینەوە.",
+    "smartPdfPreviewTitle": "پێشبینین",
+    "smartPdfPreviewNote": "ئەمە ئەو فایلەیە کە دەپاشەکەوتکرێت.",
+    "smartUnsavedSave": "پاشەکەوتکردن",
+    "smartUnsavedExit": "دەرچوون بەبێ پاشەکەوتکردن",
+    "smartUnsavedCancel": "هەڵوەشاندنەوە",
+    "smartUnsavedNewTitle": "گۆڕانکارییە پاشەکەوتنەکراوەکانت هەیە.",
+    "smartUnsavedSaveContinue": "پاشەکەوتکردن و بەردەوامبوون",
+    "smartUnsavedStartNew": "دەستپێکردنی بەڵگەی نوێ",
+    "smartSaveAndContinueFailed": "پاشەکەوتکردن شکستی خوارد. گۆڕانکارییەکانت لەدەست نەچوون.",
+    "smartDraftBannerTitle": "پێشنووس لەسەر ئەم ئامێرە پاشەکەوتکرا",
+    "smartDraftResume": "بەردەوامبوون لە پێشنووس",
+    "smartDraftsTitle": "پێشنووسەکانت",
+    "smartDraftsEmpty": "هێشتا هیچ پێشنووسێک پاشەکەوت نەکراوە",
+    "smartDraftsNewDoc": "بەڵگەی بەتاڵ",
+    "smartDraftResumeBtn": "بەردەوامبوون لە دەستکاری",
+    "smartDraftDeleteBtn": "سڕینەوە",
+    "smartDraftDelTitle": "ئەم پێشنووسە بسڕەوە؟",
+    "smartDraftDelConfirm": "سڕینەوە",
+    "smartRelNow": "ئێستا",
+    "smartRelMin": "خولەکێک پێش ئێستا",
+    "smartRelMins": "{n} خولەک پێش ئێستا",
+    "smartRelHour": "کاتژمێرێک پێش ئێستا",
+    "smartRelHours": "{n} کاتژمێر پێش ئێستا",
+    "smartRelYesterday": "دوێنێ",
+    "smartRelDays": "{n} ڕۆژ پێش ئێستا",
     "drawerConverter": "گۆڕەری ڕاستەوخۆی دراو",
     "drawerDirectory": "فەهرەست و گەڕانی جیهانی دراو",
     "drawerInstall": "دامەزراندنی بەرنامە",
@@ -3188,6 +4577,22 @@ const translations = {
     "helpBenefit7": "شێوازی وەڵامدەر و پشتگیری PWA",
     "helpLangTitle": "زمانەکان",
     "helpLangDesc": "EQ7 بە تەواوی وەرگێڕدراوە. زمانەکەت لە باڕی سەرەکی یان لە ڕێکخستنەکاندا هەڵبژێرە، و تەواوی بەرنامەکە — لەگەڵ ئەم پەڕەی یارمەتییەوە — دەستبەجێ نوێدەکاتەوە.",
+    "smartTemplatesSimpleAgreement": "ڕێکەوتنامەی ئاسان",
+    "smartTemplatesPaymentReceipt": "وەسڵی پارەدان",
+    "smartTemplatesRentalAgreement": "ڕێکەوتنامەی کرێ",
+    "smartTemplatesMyTemplates": "قاڵبەکانی من",
+    "smartScanCapture": "گرتن",
+    "smartScanUploadFallback": "لەجیاتی ئەوە وێنەیەک لە ئامێرەکەت هەڵبژێرە",
+    "smartScanDetecting": "دۆزینەوەی بەڵگە",
+    "smartScanCorrecting": "ڕاستکردنەوەی وێنە",
+    "smartScanImproving": "باشترکردنی وێنە",
+    "smartScanReading": "خوێندنەوەی دەق",
+    "smartScanProcessing": "پرۆسێسکردن...",
+    "smartScanReviewTitle": "پێداچوونەوەی ئەنجامی ناسینەوە",
+    "smartScanPreviewLabel": "بەڵگەی پرۆسێسکراو",
+    "smartUntitledDoc": "بەڵگەی بێ ناونیشان",
+    "smartBlankNavOf": "لە",
+    "smartPdfSave": "پاشەکەوتکردنی PDF",
     "currencyRatesError": "نرخەکان بەردەست نین",
     "folderDeleteConfirmText": "تێبینییەکانی ناو ئەم فۆڵدەرە دەگوازرێنەوە بۆ بەشی بێ فۆڵدەر و دەپارێزرێن.",
   }
@@ -3818,6 +5223,9 @@ function updateTexts() {
       el.setAttribute('title', value);
     }
   });
+  // SMART DOCUMENTS — PDF WORKSPACE labels (English fallback when the
+  // current locale has no dedicated key yet). Scoped call only.
+  try { if (typeof smartPdfSyncLabels === 'function') smartPdfSyncLabels(); } catch (e) { /* noop */ }
 }
 
 function updateInstallModalContent() {
@@ -5325,12 +6733,554 @@ function closeNotesManager() {
 // remain as no-op hooks so the History bridge (PART 35) and any remaining
 // callers keep working without errors.
 // ============================================================
+let smartDocsStep = 1; // single empty stage after the reset
+
+function smartDocStepsReached() { /* stepper UI removed with the reset */ }
+
+function setSmartDocsStep(rawStep) {
+  smartDocsStep = Math.min(4, Math.max(1, parseInt(rawStep, 10) || 1));
+  return smartDocsStep;
+}
+
+function renderSmartDocsSteps() { /* no stepper UI after the reset */ }
+
+// No-op hook kept for behavioral tests / future phases.
+window.__smartDocsWorkflow = {
+  setStep: (n) => setSmartDocsStep(n),
+  getStep: () => smartDocsStep,
+  render: () => renderSmartDocsSteps()
+};
+
+// Scan seam reduced to a stable no-op surface (nothing to scan anymore).
+window.__smartScan = {
+  getState: () => ({ stage: 'home', step: smartDocsStep, result: null, recognized: null, inkRatio: 0, structure: null, activeTracks: [], cameraMode: 'auto' }),
+  open: () => { openSmartDocs(); },
+  setOcrResult: () => {},
+  clearOcrResult: () => {},
+  analyzeStructure: () => null,
+  debugMode: () => {},
+  reset: () => {},
+  stopCamera: () => {},
+  activeTracks: () => [],
+  isStreamStopped: () => true
+};
 
 // PART 35 (History bridge) targets — the bridge still works: it opens the
 // empty Smart Documents workspace; there is no content surface after the
 // reset, so the snapshot copy step resolves to null and stops cleanly.
 function smartBlankOpen() { openSmartDocs(); }
 function smartActivePageContent() { return null; }
+
+// ============================================================
+// SMART DOCUMENTS — PDF WORKSPACE (import + fullscreen direct editing).
+// Scoped to #smartDocsModal only. Reuses the Notes PDF preview pdf.js
+// dependency (no new dependency, no Notes code touched). Session-only
+// state is kept for later phases (PDF -> Edit -> Final PDF -> Share).
+// ============================================================
+const smartPdfState = {
+  fileName: '',
+  bytes: null,
+  doc: null,
+  totalPages: 0,
+  loading: false,
+  loadToken: 0,
+  editing: false,
+  edits: {},
+  renderToken: 0
+};
+
+function smartPdfT(key, fallback) {
+  try {
+    const t = (typeof translations !== 'undefined' && translations[state.locale]) || null;
+    if (t && t[key] !== undefined && t[key] !== null && t[key] !== '') return t[key];
+  } catch (e) { /* fallback below */ }
+  try {
+    const en = (typeof translations !== 'undefined' && translations.en) || null;
+    if (en && en[key] !== undefined && en[key] !== null && en[key] !== '') return en[key];
+  } catch (e2) { /* noop */ }
+  return fallback;
+}
+
+function smartPdfEl(id) { return (typeof document === 'undefined') ? null : document.getElementById(id); }
+
+function smartPdfShowError(message) {
+  const err = smartPdfEl('smartPdfError');
+  if (!err) return;
+  if (!message) { err.textContent = ''; err.hidden = true; return; }
+  err.textContent = message;
+  err.hidden = false;
+}
+
+function smartPdfSyncCount() {
+  // Page navigation control removed from the Smart Documents toolbar.
+  // No page-count label is shown anymore; keep the function as a safe no-op
+  // because it is still called by reset/open/sync-labels flows.
+}
+
+function smartPdfSyncLabels() {
+  const emptyTitle = document.querySelector('#smartPdfEmpty .smart-pdf-empty-title');
+  if (emptyTitle) emptyTitle.textContent = smartPdfT('smartPdfEmptyTitle', 'Open a PDF from your device');
+  const emptySub = document.querySelector('#smartPdfEmpty .smart-pdf-empty-sub');
+  if (emptySub) emptySub.textContent = smartPdfT('smartPdfEmptySub', 'PDF only');
+  smartPdfSyncCount();
+}
+
+// PDF WORKSPACE LAYOUT — when a PDF is loaded the modal header ("Smart
+// Documents" title) is hidden and the slim toolbar + PDF become the full
+// workspace. The upload-empty state is untouched.
+function smartPdfSetFullscreenMode(on) {
+  const home = document.querySelector('#smartDocsModal .smart-docs-home');
+  if (home) home.classList.toggle('has-pdf', !!on);
+}
+
+function smartPdfFinishActiveEdit() {
+  try {
+    const active = document.activeElement;
+    if (active && active.classList && active.classList.contains('smart-pdf-edit-line')) active.blur();
+  } catch (e) { /* noop */ }
+}
+
+function smartPdfSetMode(editing) {
+  smartPdfState.editing = !!editing;
+  const pages = smartPdfEl('smartPdfPages');
+  if (pages) {
+    pages.classList.toggle('is-editing', smartPdfState.editing);
+    // Toggle inline editability on every existing text line. While ON, the
+    // browser's native caret/selection engine works per line (click → caret
+    // at the exact character, double-click → word, drag → range, mobile
+    // long-press → native selection handles).
+    Array.prototype.forEach.call(pages.querySelectorAll('.smart-pdf-edit-line'), (line) => {
+      smartPdfSetLineEditable(line, smartPdfState.editing);
+    });
+  }
+  const viewBtn = smartPdfEl('smartPdfViewBtn');
+  const editBtn = smartPdfEl('smartPdfEditBtn');
+  if (viewBtn) {
+    viewBtn.classList.toggle('is-active', !smartPdfState.editing);
+    viewBtn.setAttribute('aria-pressed', !smartPdfState.editing ? 'true' : 'false');
+  }
+  if (editBtn) {
+    editBtn.classList.toggle('is-active', smartPdfState.editing);
+    editBtn.setAttribute('aria-pressed', smartPdfState.editing ? 'true' : 'false');
+  }
+  if (!smartPdfState.editing) smartPdfFinishActiveEdit();
+}
+
+function smartPdfResetWorkspace() {
+  smartPdfState.loadToken += 1;
+  smartPdfState.renderToken += 1;
+  if (smartPdfState.doc) { try { smartPdfState.doc.destroy(); } catch (e) { /* noop */ } }
+  smartPdfState.doc = null;
+  smartPdfState.bytes = null;
+  smartPdfState.fileName = '';
+  smartPdfState.totalPages = 0;
+  smartPdfState.loading = false;
+  smartPdfState.edits = {};
+  smartPdfState.editing = false;
+  const pages = smartPdfEl('smartPdfPages');
+  if (pages) { pages.innerHTML = ''; pages.classList.remove('is-editing'); }
+  smartPdfSetFullscreenMode(false);
+  const ws = smartPdfEl('smartPdfWorkspace');
+  if (ws) ws.hidden = true;
+  const empty = smartPdfEl('smartPdfEmpty');
+  if (empty) empty.hidden = false;
+  const nameEl = smartPdfEl('smartPdfFileName');
+  if (nameEl) nameEl.textContent = '';
+  smartPdfShowError('');
+  smartPdfSyncCount();
+}
+
+async function smartPdfEnsureLib() {
+  if (typeof window !== 'undefined' && window.pdfjsLib) {
+    try {
+      if (window.pdfjsLib.GlobalWorkerOptions && typeof NOTE_PDF_PREVIEW_WORKER_URL !== 'undefined') {
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc = NOTE_PDF_PREVIEW_WORKER_URL;
+      }
+    } catch (e) { /* keep default */ }
+    return window.pdfjsLib;
+  }
+  if (typeof ensureNotePdfPreviewLib === 'function') return ensureNotePdfPreviewLib();
+  if (typeof isOffline === 'function' && isOffline()) throw new Error('no-internet');
+  const libUrl = (typeof NOTE_PDF_PREVIEW_LIB_URL !== 'undefined')
+    ? NOTE_PDF_PREVIEW_LIB_URL
+    : 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+  await new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = libUrl;
+    s.async = true;
+    s.onload = () => resolve();
+    s.onerror = () => reject(new Error('pdf-lib-missing'));
+    document.head.appendChild(s);
+  });
+  if (!window.pdfjsLib) throw new Error('pdf-lib-missing');
+  try {
+    if (window.pdfjsLib.GlobalWorkerOptions && typeof NOTE_PDF_PREVIEW_WORKER_URL !== 'undefined') {
+      window.pdfjsLib.GlobalWorkerOptions.workerSrc = NOTE_PDF_PREVIEW_WORKER_URL;
+    }
+  } catch (e) { /* keep default */ }
+  return window.pdfjsLib;
+}
+
+function smartPdfOpenPicker() {
+  const input = smartPdfEl('smartPdfFileInput');
+  if (!input) return;
+  smartPdfShowError('');
+  try { input.click(); } catch (e) { /* noop */ }
+}
+
+function smartPdfIsPdfFile(file) {
+  if (!file) return false;
+  const name = String((file && file.name) || '');
+  const type = String((file && file.type) || '').toLowerCase();
+  return type === 'application/pdf' || /\.pdf$/i.test(name);
+}
+
+async function smartPdfOpenFile(file) {
+  if (!file) { smartPdfShowError(smartPdfT('smartPdfNeedPdf', 'Please choose a PDF file.')); return false; }
+  if (!smartPdfIsPdfFile(file)) { smartPdfShowError(smartPdfT('smartPdfInvalid', 'Not a valid PDF.')); return false; }
+  const token = ++smartPdfState.loadToken;
+  smartPdfState.loading = true;
+  smartPdfShowError('');
+  let buf = null;
+  try { buf = await file.arrayBuffer(); }
+  catch (e) {
+    if (token !== smartPdfState.loadToken) return false;
+    smartPdfState.loading = false;
+    smartPdfShowError(smartPdfT('smartPdfReadFailed', "Couldn't read this PDF."));
+    return false;
+  }
+  if (!buf || !buf.byteLength) {
+    if (token !== smartPdfState.loadToken) return false;
+    smartPdfState.loading = false;
+    smartPdfShowError(smartPdfT('smartPdfReadFailed', "Couldn't read this PDF."));
+    return false;
+  }
+  let stored = null;
+  try { stored = buf.slice(0); } catch (e) { stored = null; }
+  let lib = null;
+  try { lib = await smartPdfEnsureLib(); }
+  catch (e) {
+    if (token !== smartPdfState.loadToken) return false;
+    smartPdfState.loading = false;
+    if (e && e.message === 'no-internet') {
+      try { if (typeof showInternetRequiredToast === 'function') showInternetRequiredToast(); } catch (e2) { /* noop */ }
+    }
+    smartPdfShowError(smartPdfT('smartPdfNeedLibrary', 'PDF library unavailable.'));
+    return false;
+  }
+  let doc = null;
+  try {
+    const data = stored ? stored.slice(0) : buf.slice(0);
+    doc = await lib.getDocument({ data }).promise;
+  } catch (e) {
+    if (token !== smartPdfState.loadToken) { try { doc && doc.destroy(); } catch (e2) { /* noop */ } return false; }
+    smartPdfState.loading = false;
+    smartPdfShowError(smartPdfT('smartPdfInvalid', 'Not a valid PDF.'));
+    return false;
+  }
+  if (token !== smartPdfState.loadToken) { try { doc.destroy(); } catch (e) { /* noop */ } return false; }
+  if (smartPdfState.doc) { try { smartPdfState.doc.destroy(); } catch (e) { /* noop */ } }
+  smartPdfState.doc = doc;
+  smartPdfState.bytes = stored || buf;
+  smartPdfState.fileName = String((file && file.name) || 'document.pdf');
+  smartPdfState.totalPages = doc.numPages || 0;
+  smartPdfState.edits = {};
+  smartPdfState.loading = false;
+  if (!smartPdfState.totalPages) {
+    smartPdfShowError(smartPdfT('smartPdfReadFailed', "Couldn't read this PDF."));
+    return false;
+  }
+  const empty = smartPdfEl('smartPdfEmpty');
+  if (empty) empty.hidden = true;
+  smartPdfSetFullscreenMode(true);
+  const ws = smartPdfEl('smartPdfWorkspace');
+  if (ws) ws.hidden = false;
+  const nameEl = smartPdfEl('smartPdfFileName');
+  if (nameEl) nameEl.textContent = smartPdfState.fileName;
+  smartPdfSetMode(false);
+  smartPdfSyncCount();
+  smartPdfRenderAllPages();
+  return true;
+}
+
+function smartPdfPageWidth() {
+  const scroll = smartPdfEl('smartPdfScroll');
+  const fallback = (typeof window !== 'undefined' && window.innerWidth) ? Math.min(window.innerWidth - 32, 920) : 720;
+  if (!scroll || !scroll.clientWidth) return Math.max(280, fallback);
+  return Math.max(280, scroll.clientWidth - 24);
+}
+
+function smartPdfRenderAllPages() {
+  const pagesEl = smartPdfEl('smartPdfPages');
+  if (!pagesEl || !smartPdfState.doc) return;
+  const token = ++smartPdfState.renderToken;
+  pagesEl.innerHTML = '';
+  const frag = document.createDocumentFragment();
+  const jobs = [];
+  for (let n = 1; n <= smartPdfState.totalPages; n += 1) {
+    const wrap = document.createElement('section');
+    wrap.className = 'smart-pdf-page';
+    wrap.dataset.page = String(n);
+    const label = document.createElement('div');
+    label.className = 'smart-pdf-page-label';
+    label.textContent = String(smartPdfT('smartPdfPageLabel', 'Page {n}')).replace('{n}', String(n));
+    const stage = document.createElement('div');
+    stage.className = 'smart-pdf-page-stage';
+    const canvas = document.createElement('canvas');
+    canvas.className = 'smart-pdf-canvas';
+    const layer = document.createElement('div');
+    layer.className = 'smart-pdf-textlayer';
+    stage.appendChild(canvas);
+    stage.appendChild(layer);
+    wrap.appendChild(label);
+    wrap.appendChild(stage);
+    frag.appendChild(wrap);
+    jobs.push({ n, canvas, layer, stage });
+  }
+  pagesEl.appendChild(frag);
+  let chain = Promise.resolve();
+  jobs.forEach((job) => {
+    chain = chain.then(() => smartPdfRenderOnePage(job.n, job.canvas, job.layer, job.stage, token)).catch(() => {});
+  });
+  chain.catch(() => {});
+}
+
+function smartPdfRenderOnePage(pageNum, canvas, layer, stage, token) {
+  return (async () => {
+    if (token !== smartPdfState.renderToken || !smartPdfState.doc) return;
+    let page = null;
+    try { page = await smartPdfState.doc.getPage(pageNum); }
+    catch (e) { return; }
+    if (token !== smartPdfState.renderToken) { try { page.cleanup(); } catch (e) { /* noop */ } return; }
+    const targetCssWidth = smartPdfPageWidth();
+    const base = page.getViewport({ scale: 1 });
+    const fitScale = targetCssWidth / ((base && base.width) || targetCssWidth || 1);
+    const dpr = (typeof window !== 'undefined' && window.devicePixelRatio) ? Math.min(window.devicePixelRatio, 2.5) : 1;
+    const scale = Math.max(0.5, fitScale * dpr);
+    const viewport = page.getViewport({ scale });
+    canvas.width = Math.max(1, Math.floor(viewport.width));
+    canvas.height = Math.max(1, Math.floor(viewport.height));
+    canvas.style.width = (viewport.width / dpr) + 'px';
+    canvas.style.height = (viewport.height / dpr) + 'px';
+    try {
+      const ctx = canvas.getContext('2d', { alpha: false });
+      if (ctx) await page.render({ canvasContext: ctx, viewport }).promise;
+    } catch (e) { /* keep shell so page order/scroll survive */ }
+    if (token !== smartPdfState.renderToken) { try { page.cleanup(); } catch (e2) { /* noop */ } return; }
+    try {
+      stage.style.width = canvas.style.width;
+      stage.style.height = canvas.style.height;
+      await smartPdfBuildTextLayer(page, viewport, dpr, pageNum, layer, token);
+    } catch (e) { /* text layer is progressive enhancement */ }
+    try { page.cleanup(); } catch (e2) { /* noop */ }
+  })();
+}
+
+async function smartPdfBuildTextLayer(page, viewport, dpr, pageNum, layer, token) {
+  if (!layer) return;
+  layer.innerHTML = '';
+  let content = null;
+  try { content = await page.getTextContent(); }
+  catch (e) { return; }
+  if (token !== smartPdfState.renderToken || !content || !content.items) return;
+  const cssW = viewport.width / dpr;
+  const cssH = viewport.height / dpr;
+  const rows = [];
+  content.items.forEach((item, idx) => {
+    if (!item || !item.str || !String(item.str).trim()) return;
+    const tx = (item.transform && item.transform.length >= 6) ? item.transform : [1, 0, 0, 1, 0, 0];
+    const fontH = Math.abs(tx[3]) || Math.abs(tx[0]) || 10;
+    const p0 = viewport.convertToViewportPoint(tx[4], tx[5]);
+    const wPt = (item.width || 0) * viewport.scale;
+    const left = p0[0] / dpr;
+    const baseline = p0[1] / dpr;
+    const sizePx = (fontH * viewport.scale) / dpr;
+    const width = Math.max(sizePx * 0.4, wPt / dpr);
+    const top = baseline - sizePx * 0.92;
+    const height = Math.max(10, sizePx * 1.22);
+    const row = { idx, text: String(item.str), left, top: Math.max(0, top), width, height, sizePx, baseY: baseline };
+    let placed = false;
+    for (let r = 0; r < rows.length; r += 1) {
+      const ref = rows[r];
+      if (Math.abs(ref.baseY - row.baseY) <= Math.max(3, row.sizePx * 0.28)) {
+        ref.items.push(row);
+        if (row.baseY < ref.baseY) ref.baseY = row.baseY;
+        placed = true;
+        break;
+      }
+    }
+    if (!placed) rows.push({ baseY: row.baseY, items: [row] });
+  });
+  rows.sort((a, b) => a.baseY - b.baseY);
+  rows.forEach((row) => {
+    if (token !== smartPdfState.renderToken) return;
+    row.items.sort((a, b) => a.left - b.left);
+    const left = Math.max(0, Math.min(cssW - 8, Math.min.apply(null, row.items.map((r) => r.left))));
+    const right = Math.min(cssW, Math.max.apply(null, row.items.map((r) => r.left + r.width)));
+    const top = Math.max(0, Math.min(cssH - 8, Math.min.apply(null, row.items.map((r) => r.top))));
+    const bottom = Math.min(cssH, Math.max.apply(null, row.items.map((r) => r.top + r.height)));
+    const box = document.createElement('div');
+    box.className = 'smart-pdf-edit-line';
+    box.dataset.page = String(pageNum);
+    box.dataset.items = row.items.map((r) => r.idx).join(',');
+    box.style.left = left + 'px';
+    box.style.top = top + 'px';
+    box.style.width = Math.max(12, right - left) + 'px';
+    box.style.height = Math.max(12, bottom - top) + 'px';
+    box.style.fontSize = Math.max(10, Math.min.apply(null, row.items.map((r) => r.sizePx))) + 'px';
+    box.setAttribute('role', 'textbox');
+    box.setAttribute('tabindex', '-1');
+    const key = row.items.map((r) => r.idx).join(',');
+    const saved = smartPdfState.edits[pageNum] && smartPdfState.edits[pageNum][key];
+    const lineText = (saved !== undefined && saved !== null) ? saved : row.items.map((r) => r.text).join(' ');
+    box.textContent = lineText;
+    // Direct PDF Text Editing: per-line direction (Arabic → RTL, English → LTR,
+    // mixed handled by the browser bidi engine inside the line) and inline
+    // editability that follows the current Edit-text mode.
+    box.setAttribute('dir', smartPdfLineDir(lineText));
+    if (smartPdfState.editing) box.contentEditable = 'true';
+    if (saved !== undefined && saved !== null) box.classList.add('is-edited');
+    box.addEventListener('pointerdown', (e) => { e.stopPropagation(); }, { passive: true });
+    // Live direction while typing: an Arabic word typed into an English line
+    // (or vice versa) flips that line's direction as the text changes, so the
+    // caret keeps following the text baseline instead of jumping.
+    box.addEventListener('input', () => {
+      try { box.setAttribute('dir', smartPdfLineDir(box.textContent)); } catch (e) { /* noop */ }
+    });
+    box.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (!smartPdfState.editing) return;
+      smartPdfActivateLine(box);
+    });
+    // Paste as plain text only — no rich formatting can enter the text layer.
+    box.addEventListener('paste', (e) => {
+      if (!smartPdfState.editing) return;
+      e.preventDefault();
+      const clip = (e.clipboardData && e.clipboardData.getData) ? e.clipboardData : (window.clipboardData || null);
+      let txt = '';
+      try { txt = clip ? (clip.getData('text/plain') || '') : ''; } catch (err) { txt = ''; }
+      txt = String(txt).replace(/[\r\n\t]+/g, ' ');
+      if (!txt) return;
+      if (!document.execCommand || !document.execCommand('insertText', false, txt)) {
+        try {
+          const sel = window.getSelection();
+          if (sel && sel.rangeCount) {
+            const r = sel.getRangeAt(0);
+            r.deleteContents();
+            r.insertNode(document.createTextNode(txt));
+            r.collapse(false);
+            sel.removeAllRanges();
+            sel.addRange(r);
+          } else { box.textContent = String(box.textContent || '') + txt; }
+        } catch (err2) { box.textContent = String(box.textContent || '') + txt; }
+      }
+    });
+    box.addEventListener('keydown', (e) => {
+      if (!smartPdfState.editing) return;
+      // Select-all is scoped to the active line only (never the whole viewer).
+      if ((e.ctrlKey || e.metaKey) && (e.key === 'a' || e.key === 'A')) {
+        e.preventDefault();
+        smartPdfSelectLineAll(box);
+        return;
+      }
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); box.blur(); }
+      if (e.key === 'Escape') { e.preventDefault(); box.blur(); }
+      e.stopPropagation();
+    });
+    box.addEventListener('blur', () => smartPdfCommitLine(box, pageNum, key));
+    layer.appendChild(box);
+  });
+}
+
+// Editable-line helpers — Direct PDF Text Editing phase.
+// Direction is detected from the line's own text (Arabic → RTL, else LTR).
+// No new direction system: it reuses the browser bidi engine per line.
+function smartPdfLineDir(text) {
+  return /[\u0590-\u05FF\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/.test(String(text || '')) ? 'rtl' : 'ltr';
+}
+
+function smartPdfSelectLineAll(box) {
+  if (!box) return;
+  try {
+    const range = document.createRange();
+    range.selectNodeContents(box);
+    const sel = window.getSelection();
+    if (sel) { sel.removeAllRanges(); sel.addRange(range); }
+  } catch (e) { /* noop */ }
+}
+
+function smartPdfActivateLine(box) {
+  if (!box || !smartPdfState.editing) return;
+  // Lines are contentEditable for the whole editing session (set by
+  // smartPdfSetMode), so a native click already places the caret at the
+  // exact clicked character. focus() is only a fallback (keyboard access).
+  if (!box.isContentEditable) box.contentEditable = 'true';
+  box.classList.add('is-active');
+  try { box.focus({ preventScroll: false }); } catch (e) { try { box.focus(); } catch (e2) { /* noop */ } }
+}
+
+function smartPdfCommitLine(box, pageNum, key) {
+  if (!box) return;
+  const text = String(box.textContent || '');
+  if (!smartPdfState.edits[pageNum]) smartPdfState.edits[pageNum] = {};
+  smartPdfState.edits[pageNum][key] = text;
+  // Keep the line contentEditable while Edit text mode stays ON, so the
+  // user can click another spot (or the same line) and keep editing inline.
+  box.classList.remove('is-active');
+  box.classList.toggle('is-edited', true);
+  box.textContent = text;
+  // Refresh the line direction from its own text: typing Arabic into an
+  // English line (or vice versa) keeps that line rendering correctly.
+  box.setAttribute('dir', smartPdfLineDir(text));
+}
+
+function smartPdfSetLineEditable(line, editable) {
+  if (!line) return;
+  try { line.contentEditable = editable ? 'true' : 'false'; } catch (e) { /* noop */ }
+  if (!editable) line.classList.remove('is-active');
+}
+
+let smartPdfWired = false;
+function smartPdfWire() {
+  if (smartPdfWired) return;
+  const input = smartPdfEl('smartPdfFileInput');
+  const upload = smartPdfEl('smartPdfUploadBtn');
+  if (!input || !upload) return;
+  smartPdfWired = true;
+  upload.addEventListener('click', (e) => { e.stopPropagation(); smartPdfOpenPicker(); });
+  const change = smartPdfEl('smartPdfChangeBtn');
+  if (change) change.addEventListener('click', (e) => { e.stopPropagation(); smartPdfOpenPicker(); });
+  input.addEventListener('change', () => {
+    const file = input.files && input.files[0];
+    input.value = '';
+    if (!file) return;
+    smartPdfOpenFile(file);
+  });
+  const viewBtn = smartPdfEl('smartPdfViewBtn');
+  const editBtn = smartPdfEl('smartPdfEditBtn');
+  if (viewBtn) viewBtn.addEventListener('click', (e) => { e.stopPropagation(); smartPdfSetMode(false); });
+  if (editBtn) editBtn.addEventListener('click', (e) => { e.stopPropagation(); smartPdfSetMode(true); });
+  const scroll = smartPdfEl('smartPdfScroll');
+  if (scroll) {
+    scroll.addEventListener('pointerdown', (e) => {
+      if (!smartPdfState.editing) return;
+      const line = e.target && e.target.closest ? e.target.closest('.smart-pdf-edit-line') : null;
+      if (!line) smartPdfFinishActiveEdit();
+    }, { passive: true });
+  }
+  // Slim-toolbar back button — same exit path as the existing close button.
+  const back = smartPdfEl('smartPdfBackBtn');
+  if (back) back.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (typeof closeSmartDocs === 'function') closeSmartDocs();
+  });
+  let resizeTimer = null;
+  window.addEventListener('resize', () => {
+    if (!smartPdfState.doc || !smartPdfState.totalPages) return;
+    if (resizeTimer) clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => { smartPdfRenderAllPages(); }, 220);
+  }, { passive: true });
+}
 
 // SHARED PDF LIBRARY LOADERS — kept verbatim because they are used by OTHER
 // features (PDF V1 page-count/export and the History PDF export), not only by
@@ -5398,504 +7348,6 @@ function closePdfReportsWorkspace() {
     if (wrapEl) wrapEl.hidden = true;
     pdfV1ShowError('');
   } catch (e) { /* layout-only */ }
-}
-
-// ============================================================
-// Smart PDF Workspace (independent, Phase 01 only).
-// Standalone empty workspace shell — no relation to #pdfReportsWorkspace.
-// No PDF tools, no viewer, no upload, no export, no editing.
-// Future Smart PDF phases will be built into this workspace separately.
-// ============================================================
-function openSmartPdfWorkspace() {
-  const ws = document.getElementById('smartPdfWorkspace');
-  if (!ws) return;
-  // PHASE 03 — bind the upload button / file input / viewer scroll once.
-  try { smartPdfV3Wire(); } catch (e) { /* keep workspace usable */ }
-  ws.classList.add('show');
-  ws.setAttribute('aria-hidden', 'false');
-  document.body.classList.add('modal-open');
-}
-
-function closeSmartPdfWorkspace() {
-  const ws = document.getElementById('smartPdfWorkspace');
-  if (!ws) return;
-  ws.classList.remove('show');
-  ws.setAttribute('aria-hidden', 'true');
-  // Release the body lock only if no other modal/workspace is still open.
-  const anyOpen = document.querySelector('.modal.show, .workspace-overlay.show, .settings-modal-backdrop.show');
-  if (!anyOpen) document.body.classList.remove('modal-open');
-}
-
-// ============================================================
-// PHASE 03 — Smart PDF: Upload → vertical-scroll PDF Viewer ONLY.
-// Conditional rendering INSIDE #smartPdfWorkspace:
-//   UploadZone (#smartPdfUploadArea) → valid PDF chosen →
-//   PDFViewer (#smartPdfViewerArea) with all pages stacked vertically.
-// Reuses the EXISTING pdf.js loader (smartImportLoadPdfJs) — no new
-// dependency, no link to #pdfReportsWorkspace / the legacy PDF systems.
-// ============================================================
-const SMART_PDF_MAX_BYTES = 20 * 1024 * 1024; // matches the "max 20MB" hint
-let smartPdfV3Wired = false;
-let smartPdfV3Doc = null; // pdf.js document currently displayed
-let smartPdfV3Total = 0;
-let smartPdfV3Current = 1;
-let smartPdfV3Token = 0; // invalidates stale async renders when a new file lands
-let smartPdfV3IndicatorObserver = null;
-let smartPdfV3ScrollRaf = 0;
-
-function smartPdfV3El(id) { return document.getElementById(id); }
-function smartPdfV3T() { return translations[state.locale] || translations.en; }
-
-function smartPdfV3SetError(key) {
-  const err = smartPdfV3El('smartPdfUploadError');
-  if (!err) return;
-  if (!key) {
-    err.textContent = '';
-    err.hidden = true;
-    return;
-  }
-  const msg = smartPdfV3T()[key] || '';
-  err.textContent = msg;
-  err.hidden = !msg;
-}
-
-// Conditional rendering: exactly one of the two states is visible.
-function smartPdfV3ShowMode(mode) {
-  const upload = smartPdfV3El('smartPdfUploadArea');
-  const viewer = smartPdfV3El('smartPdfViewerArea');
-  const showViewer = mode === 'viewer';
-  if (upload) upload.hidden = showViewer;
-  if (viewer) viewer.hidden = !showViewer;
-}
-
-function smartPdfV3IsPdf(file) {
-  if (!file) return false;
-  const name = String(file.name || '').toLowerCase();
-  const type = String(file.type || '').toLowerCase();
-  if (type === 'application/pdf') return true;
-  if (type === 'application/x-pdf' || type === 'application/acrobat') return true;
-  return name.endsWith('.pdf');
-}
-
-// Localized "Page X of Y" built from the i18n template of the current language.
-function smartPdfV3IndicatorText(current, total) {
-  const tpl = smartPdfV3T().smartPdfPageIndicator || 'Page {current} of {total}';
-  return tpl.replace('{current}', String(current)).replace('{total}', String(total));
-}
-
-function smartPdfV3UpdateIndicator() {
-  const ind = smartPdfV3El('smartPdfPageIndicator');
-  if (!ind || !smartPdfV3Doc || !smartPdfV3Total) return;
-  const text = smartPdfV3IndicatorText(smartPdfV3Current, smartPdfV3Total);
-  if (ind.textContent !== text) ind.textContent = text;
-}
-
-// The shared updateTexts() writes the raw i18n template (with {current}/
-// {total}) into any [data-i18n] node on a language change. Watch our
-// indicator and immediately re-fill the live numbers in the NEW language.
-function smartPdfV3WatchIndicator() {
-  const ind = smartPdfV3El('smartPdfPageIndicator');
-  if (!ind || smartPdfV3IndicatorObserver || typeof MutationObserver === 'undefined') return;
-  smartPdfV3IndicatorObserver = new MutationObserver(() => smartPdfV3UpdateIndicator());
-  smartPdfV3IndicatorObserver.observe(ind, { childList: true, characterData: true, subtree: true });
-}
-
-// Vertical-scroll page tracking: the page covering the upper third of the
-// viewport is the "current" one (scroll is the ONLY primary navigation).
-function smartPdfV3DetectPage() {
-  const scroll = smartPdfV3El('smartPdfViewerScroll');
-  const pages = smartPdfV3El('smartPdfViewerPages');
-  if (!scroll || !pages || !smartPdfV3Total) return;
-  // Viewport-relative comparison keeps the maths in ONE frame of reference
-  // (offsetTop of the pages is measured against a different offsetParent).
-  const scRect = scroll.getBoundingClientRect();
-  const marker = scRect.top + scroll.clientHeight * 0.35;
-  let cur = 1;
-  const items = pages.children;
-  for (let i = 0; i < items.length; i++) {
-    if (items[i].getBoundingClientRect().top <= marker) cur = i + 1;
-  }
-  if (cur !== smartPdfV3Current) {
-    smartPdfV3Current = cur;
-    smartPdfV3UpdateIndicator();
-  }
-}
-
-function smartPdfV3OnScroll() {
-  if (smartPdfV3ScrollRaf) return;
-  smartPdfV3ScrollRaf = (typeof requestAnimationFrame === 'function')
-    ? requestAnimationFrame(() => { smartPdfV3ScrollRaf = 0; smartPdfV3DetectPage(); })
-    : (smartPdfV3DetectPage(), 0);
-}
-
-// Stack every page vertically inside #smartPdfViewerPages (canvas per page).
-async function smartPdfV3RenderAll(token) {
-  const pagesEl = smartPdfV3El('smartPdfViewerPages');
-  const scroll = smartPdfV3El('smartPdfViewerScroll');
-  if (!pagesEl || !scroll || !smartPdfV3Doc) return;
-  pagesEl.textContent = '';
-  // RENDERING QUALITY — canvas backing store × devicePixelRatio: render each
-  // page at up to 3× its CSS scale so text stays sharp on high-DPI (2x/3x)
-  // mobile screens. Only the canvas' INTERNAL resolution scales — the CSS
-  // display size (width:100%) and the page layout/visual size are unchanged.
-  const dpr = Math.min(window.devicePixelRatio || 1, 3);
-  for (let n = 1; n <= smartPdfV3Total; n++) {
-    if (token !== smartPdfV3Token) return; // superseded by a newer file
-    const page = await smartPdfV3Doc.getPage(n);
-    const base = page.getViewport({ scale: 1 });
-    const avail = Math.max(240, (scroll.clientWidth || 640) - 24);
-    // Fit-to-width scale used ONLY for the canvas backing resolution (the
-    // visual size is driven purely by the CSS width:100%). Uncapped, so the
-    // backing store is always avail × DPR for every page format — the canvas
-    // always carries exactly the pixels the display needs at the set DPR.
-    const cssScale = avail / base.width;
-    const viewport = page.getViewport({ scale: cssScale * dpr });
-    const wrap = document.createElement('div');
-    wrap.className = 'smart-pdf-viewer-page';
-    wrap.setAttribute('data-page', String(n));
-    const canvas = document.createElement('canvas');
-    canvas.width = Math.max(1, Math.floor(viewport.width));
-    canvas.height = Math.max(1, Math.floor(viewport.height));
-    canvas.setAttribute('data-page', String(n));
-    canvas.style.width = '100%';
-    canvas.style.height = 'auto';
-    wrap.appendChild(canvas);
-    pagesEl.appendChild(wrap);
-    const ctx = canvas.getContext('2d');
-    if (ctx) {
-      try { await page.render({ canvasContext: ctx, viewport }).promise; }
-      catch (e) { /* keep the page slot even if one page fails to paint */ }
-    }
-    // Hidden inline editing layer (Smart PDF only) — transparent spans over
-    // the painted canvas; purely optional, never affects rendering quality.
-    await smartPdfV3BuildTextLayer(page, wrap, canvas, token);
-  }
-  if (token !== smartPdfV3Token) return;
-  smartPdfV3DetectPage();
-  smartPdfV3UpdateIndicator();
-}
-
-// Validate + open a picked file. Returns true only after the viewer is shown.
-async function smartPdfV3OpenFile(file) {
-  if (!file) return false;
-  if (!smartPdfV3IsPdf(file)) {
-    smartPdfV3SetError('smartPdfUploadError');
-    return false;
-  }
-  // Keep the existing "max 20MB" limit advertised by the Smart PDF hint.
-  if (typeof file.size === 'number' && file.size > SMART_PDF_MAX_BYTES) {
-    smartPdfV3SetError('smartPdfUploadTooLarge');
-    return false;
-  }
-  smartPdfV3SetError('');
-  let pdfjs = null;
-  try { pdfjs = await smartImportLoadPdfJs(); } catch (e) { pdfjs = null; }
-  if (!pdfjs) {
-    smartPdfV3SetError('smartPdfUploadError');
-    return false;
-  }
-  const token = ++smartPdfV3Token;
-  try {
-    const data = await file.arrayBuffer();
-  // RENDERING QUALITY (Smart PDF only) — pdf.js document config:
-  //  * cMapUrl/cMapPacked: provide the cMap tables PDFs need to decode
-  //    CID/encoded text. Without them glyphs decode wrong → broken characters
-  //    and letter/character spacing (critical for Arabic/complex PDFs).
-  //  * standardFontDataUrl + useSystemFonts:false: load the PDF's own
-  //    (embedded) fonts / pdf.js font data instead of substituting local
-  //    system fonts, whose metrics differ per device and distort spacing.
-  //  * disableFontFace:false: keep loading embedded font programs as real
-  //    @font-face fonts (browser default made explicit here).
-    const doc = await pdfjs.getDocument({
-      data,
-      cMapUrl: '/__pdfdiag/vendor/cmaps/',
-      cMapPacked: true,
-      standardFontDataUrl: '/__pdfdiag/vendor/standard_fonts/',
-      useSystemFonts: false,
-      disableFontFace: false
-    }).promise;
-    if (token !== smartPdfV3Token) {
-      try { doc.destroy(); } catch (e) { /* ignore */ }
-      return false;
-    }
-    if (smartPdfV3Doc) {
-      try { smartPdfV3Doc.destroy(); } catch (e) { /* ignore */ }
-    }
-    smartPdfV3Doc = doc;
-    smartPdfV3Total = doc.numPages;
-    smartPdfV3Current = 1;
-    // UploadZone disappears entirely; PDFViewer takes its place.
-    smartPdfV3ShowMode('viewer');
-    smartPdfV3WatchIndicator();
-    smartPdfV3UpdateIndicator();
-    await smartPdfV3RenderAll(token);
-    return token === smartPdfV3Token;
-  } catch (e) {
-    smartPdfV3SetError('smartPdfUploadError');
-    return false;
-  }
-}
-
-// ============================================================
-// INLINE TEXT EDITING (Smart PDF ONLY) — hidden until direct interaction.
-// A transparent per-page text layer (from pdf.js getTextContent) sits over
-// the painted canvas. Clicking existing text turns that exact span into an
-// in-place native editable with a real caret — NO edit button, toolbar,
-// menu, floating control, or any other visible editing UI is added.
-// ============================================================
-
-// Build the invisible text layer for one rendered page. Positions one
-// transparent span per pdf.js text item exactly over the canvas glyphs.
-async function smartPdfV3BuildTextLayer(page, wrap, canvas, token) {
-  try {
-    const tc = await page.getTextContent();
-    if (token !== smartPdfV3Token || !wrap || !wrap.isConnected || !canvas) return;
-    const rect = canvas.getBoundingClientRect();
-    if (!rect.width) return; // layer is optional; canvas already stands
-    const base = page.getViewport({ scale: 1 });
-    // Scale the layer to the canvas' ACTUAL CSS display size (width:100%),
-    // independent of the backing-store DPR scale used for rendering quality.
-    const vp = page.getViewport({ scale: rect.width / base.width });
-    const Util = window.pdfjsLib && window.pdfjsLib.Util;
-    const layer = document.createElement('div');
-    layer.className = 'smart-pdf-text-layer';
-    const styles = tc.styles || {};
-    const items = tc.items || [];
-    for (let i = 0; i < items.length; i++) {
-      const item = items[i];
-      if (!item || typeof item.str !== 'string' || !item.str) continue;
-      let tx = null;
-      try { tx = (Util && item.transform) ? Util.transform(vp.transform, item.transform) : null; }
-      catch (e) { tx = null; }
-      if (!tx) continue;
-      const fontH = Math.hypot(tx[2], tx[3]) || 10; // em size in display px
-      const style = styles[item.fontName] || null;
-      const ascent = (style && typeof style.ascent === 'number' && style.ascent > 0) ? style.ascent : 0.8;
-      const span = document.createElement('span');
-      span.textContent = item.str;
-      span.setAttribute('dir', item.dir === 'rtl' ? 'rtl' : 'ltr'); // Arabic RTL + English LTR
-      span.style.left = tx[4] + 'px';
-      span.style.top = (tx[5] - fontH * ascent) + 'px'; // baseline-aligned
-      span.style.fontSize = fontH + 'px';
-      span.style.lineHeight = fontH + 'px';
-      span.style.height = fontH + 'px';
-      span.style.minWidth = Math.max(1, (item.width || 0) * vp.scale) + 'px'; // covers original text
-      if (style && style.fontFamily) span.style.fontFamily = style.fontFamily;
-      // Non-visual metadata: how far THIS item's painted glyphs may extend past
-      // the span's em box (descenders sit below the baseline-derived box). Used
-      // only when an edit clears the original glyphs from the canvas — it never
-      // affects layout, caret placement or rendering.
-      const desc = (style && typeof style.descent === 'number' && style.descent)
-        ? Math.abs(style.descent) : 0.22;
-      span._smartPdfInk = {
-        t: Math.max(1, fontH * 0.03),
-        l: Math.max(1, fontH * 0.04),
-        r: Math.max(1, fontH * 0.04),
-        b: Math.max(1, Math.max(0, desc - Math.max(0, 1 - ascent)) * fontH + 1)
-      };
-      layer.appendChild(span);
-    }
-    if (layer.firstChild) wrap.appendChild(layer);
-  } catch (e) { /* editing layer optional — rendering/scrolling unaffected */ }
-}
-
-// VISUAL LAYERING FIX — clear the canvas' original glyphs under one span.
-// The original text is PAINTED into the page canvas, so merely layering the
-// editable span on top either showed through it (ghost/duplicated text) or
-// required a white DOM patch (white rectangle / edit marker / overlap at the
-// patch edges). Instead, at edit time this saves the exact pixels of the
-// span's ink box, paints them over with the page's OWN background colour (the
-// dominant colour inside the box — never a white rectangle on non-white
-// pages) and remembers the original glyph colour. During AND after the edit
-// only the real caret and the text itself are visible: no patch, highlight,
-// box, border, second layer, ghost or marker. This is a local, edit-only
-// pixel operation — pdf.js rendering, the viewport, DPR scaling and the
-// canvas size are never touched. Returns false when the canvas pixels are
-// unreadable, in which case editing simply stays fully optional as before.
-function smartPdfV3ClearUnderSpan(span) {
-  if (!span || span._smartPdfErase) return true; // already cleared for this edit
-  try {
-    const page = span.closest ? span.closest('.smart-pdf-viewer-page') : null;
-    const canvas = page ? page.querySelector('canvas') : null;
-    if (!canvas || !canvas.width || !canvas.height) return false;
-    const cssW = canvas.clientWidth, cssH = canvas.clientHeight;
-    if (!cssW || !cssH) return false;
-    // The text layer is inset:0 over the canvas, so a span's offsets ARE
-    // canvas-relative CSS pixels; scale them to the backing-store pixels.
-    const kx = canvas.width / cssW, ky = canvas.height / cssH;
-    const ink = span._smartPdfInk || { t: 1, l: 1, r: 1, b: 1 };
-    let x = Math.floor((span.offsetLeft - ink.l) * kx);
-    let y = Math.floor((span.offsetTop - ink.t) * ky);
-    let w = Math.ceil((span.offsetWidth + ink.l + ink.r) * kx);
-    let h = Math.ceil((span.offsetHeight + ink.t + ink.b) * ky);
-    if (x < 0) { w += x; x = 0; }
-    if (y < 0) { h += y; y = 0; }
-    if (x + w > canvas.width) w = canvas.width - x;
-    if (y + h > canvas.height) h = canvas.height - y;
-    if (w < 1 || h < 1) return false;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return false;
-    // Throws on an unreadable canvas → bail out and keep editing optional.
-    const img = ctx.getImageData(x, y, w, h);
-    const d = img.data;
-    // Page background under the text = the dominant colour of the box
-    // (correct for white AND non-white pages — this is what removes the
-    // original glyphs without leaving any visible rectangle behind).
-    const buckets = new Map();
-    for (let i = 0; i < d.length; i += 4) {
-      const key = ((d[i] >> 3) << 10) | ((d[i + 1] >> 3) << 5) | (d[i + 2] >> 3);
-      let b = buckets.get(key);
-      if (!b) { b = [0, 0, 0, 0]; buckets.set(key, b); }
-      b[0]++; b[1] += d[i]; b[2] += d[i + 1]; b[3] += d[i + 2];
-    }
-    let bg = null, bgCount = 0;
-    buckets.forEach((b) => { if (b[0] > bgCount) { bgCount = b[0]; bg = b; } });
-    const bgR = bg ? Math.round(bg[1] / bg[0]) : 255;
-    const bgG = bg ? Math.round(bg[2] / bg[0]) : 255;
-    const bgB = bg ? Math.round(bg[3] / bg[0]) : 255;
-    // Original text colour = the pixel farthest from that background, so the
-    // edited text keeps painting in the SAME colour the canvas used.
-    let best = -1, tr = 0, tg = 0, tb = 0;
-    for (let i = 0; i < d.length; i += 4) {
-      const dr = d[i] - bgR, dg = d[i + 1] - bgG, db = d[i + 2] - bgB;
-      const dist = dr * dr + dg * dg + db * db;
-      if (dist > best) { best = dist; tr = d[i]; tg = d[i + 1]; tb = d[i + 2]; }
-    }
-    if (best < 900) { // no distinct glyph ink — pick by background luminance
-      const lum = 0.2126 * bgR + 0.7152 * bgG + 0.0722 * bgB;
-      span.style.color = lum > 128 ? '#000000' : '#ffffff';
-    } else {
-      span.style.color = 'rgb(' + tr + ',' + tg + ',' + tb + ')';
-    }
-    ctx.fillStyle = 'rgb(' + bgR + ',' + bgG + ',' + bgB + ')';
-    ctx.fillRect(x, y, w, h);
-    span._smartPdfErase = { ctx: ctx, img: img, x: x, y: y };
-    return true;
-  } catch (e) {
-    return false; // canvas unreadable — editing still works, layer stays optional
-  }
-}
-
-// Commit an in-place edit. The original glyphs were already cleared from the
-// canvas at edit time, so changed text simply stays visible exactly where it
-// was — NO white patch, highlight, box, border, ghost or edit marker. An
-// unchanged edit is rolled back to the exact original pixels instead, leaving
-// zero visual trace of the click.
-function smartPdfV3CommitEdit(span) {
-  if (!span) return;
-  try { span.removeAttribute('contenteditable'); } catch (e) { /* ignore */ }
-  span.classList.remove('smart-pdf-text-editing');
-  const orig = span.getAttribute('data-orig');
-  const changed = orig !== null && (span.textContent || '') !== orig;
-  if (changed) {
-    span.classList.add('smart-pdf-text-edited');
-    return;
-  }
-  // Unchanged → pristine original: put the saved pixels back and hide again.
-  span.classList.remove('smart-pdf-text-edited');
-  span.style.color = '';
-  const saved = span._smartPdfErase;
-  if (saved) {
-    try { saved.ctx.putImageData(saved.img, saved.x, saved.y); } catch (e) { /* ignore */ }
-    span._smartPdfErase = null;
-  }
-}
-
-// Enter in-place editing on the exact span the user clicked, dropping the
-// native caret at the clicked character (RTL-aware fallback via midpoint).
-function smartPdfV3StartEdit(span, clientX, clientY) {
-  if (!span || span.classList.contains('smart-pdf-text-editing')) return;
-  const pagesEl = smartPdfV3El('smartPdfViewerPages');
-  const active = pagesEl ? pagesEl.querySelector('.smart-pdf-text-editing') : null;
-  if (active && active !== span) smartPdfV3CommitEdit(active);
-  if (span.getAttribute('data-orig') === null) span.setAttribute('data-orig', span.textContent || '');
-  const textLen = (span.textContent || '').length;
-  // Resolve the clicked character index while the span is still plain text.
-  let index = null;
-  try {
-    const doc = span.ownerDocument;
-    let node = null, offset = -1;
-    if (doc.caretRangeFromPoint) {
-      const r = doc.caretRangeFromPoint(clientX, clientY);
-      if (r) { node = r.startContainer; offset = r.startOffset; }
-    } else if (doc.caretPositionFromPoint) {
-      const p = doc.caretPositionFromPoint(clientX, clientY);
-      if (p) { node = p.offsetNode; offset = p.offset; }
-    }
-    if (node && node.nodeType === 3 && span.contains(node)) index = offset;
-  } catch (e) { index = null; }
-  if (index === null || index < 0 || index > textLen) {
-    const r = span.getBoundingClientRect();
-    let fromStart = (clientX - r.left) < r.width / 2;
-    if (span.getAttribute('dir') === 'rtl') fromStart = !fromStart;
-    index = fromStart ? 0 : textLen;
-  }
-  // Clear the original painted glyphs BEFORE the span becomes visible, so no
-  // frame can show original+edited overlap (no patch, no ghost, no marker).
-  smartPdfV3ClearUnderSpan(span);
-  span.setAttribute('contenteditable', 'plaintext-only'); // plain text only
-  if (!span.isContentEditable) span.setAttribute('contenteditable', 'true'); // fallback
-  span.classList.add('smart-pdf-text-editing');
-  try { span.focus({ preventScroll: true }); } catch (e) { try { span.focus(); } catch (e2) { /* ignore */ } }
-  try {
-    let node = span.firstChild && span.firstChild.nodeType === 3 ? span.firstChild : null;
-    if (!node) { node = span.ownerDocument.createTextNode(span.textContent || ''); span.appendChild(node); }
-    const sel = span.ownerDocument.getSelection();
-    const range = span.ownerDocument.createRange();
-    range.setStart(node, Math.max(0, Math.min(index, node.data.length)));
-    range.collapse(true);
-    sel.removeAllRanges();
-    sel.addRange(range);
-  } catch (e) { /* native default caret position is acceptable */ }
-}
-
-// One-time wiring for the Smart PDF upload button, the PDF-only file input
-// and the viewer scroll listener (bound from openSmartPdfWorkspace).
-function smartPdfV3Wire() {
-  if (smartPdfV3Wired) return;
-  const input = smartPdfV3El('smartPdfFileInput');
-  const upload = smartPdfV3El('smartPdfUploadBtn');
-  const scroll = smartPdfV3El('smartPdfViewerScroll');
-  if (!input || !upload) return;
-  smartPdfV3Wired = true;
-  upload.addEventListener('click', (e) => {
-    e.stopPropagation();
-    smartPdfV3SetError('');
-    input.click();
-  });
-  input.addEventListener('change', () => {
-    const file = input.files && input.files[0];
-    try { input.value = ''; } catch (e) { /* ignore */ } // allow re-picking
-    if (file) smartPdfV3OpenFile(file).catch(() => {});
-  });
-  if (scroll) scroll.addEventListener('scroll', smartPdfV3OnScroll, { passive: true });
-
-  // Hidden inline text editing — delegation on the pages container ONLY.
-  // Nothing here is visible; editing starts solely from a click on existing
-  // PDF text inside #smartPdfViewerPages (Smart PDF scope; no other feature).
-  const pagesEl = smartPdfV3El('smartPdfViewerPages');
-  if (pagesEl) {
-    pagesEl.addEventListener('click', (e) => {
-      const span = e.target && e.target.closest ? e.target.closest('.smart-pdf-text-layer > span') : null;
-      if (span) smartPdfV3StartEdit(span, e.clientX, e.clientY);
-    });
-    pagesEl.addEventListener('focusout', (e) => {
-      const t = e.target;
-      if (t && t.classList && t.classList.contains('smart-pdf-text-editing')) smartPdfV3CommitEdit(t);
-    });
-    pagesEl.addEventListener('keydown', (e) => {
-      const t = e.target;
-      if (!t || !t.classList || !t.classList.contains('smart-pdf-text-editing')) return;
-      if (e.key === 'Enter') { e.preventDefault(); try { t.blur(); } catch (err) { /* ignore */ } }
-    });
-    pagesEl.addEventListener('paste', (e) => {
-      const t = e.target;
-      if (!t || !t.classList || !t.classList.contains('smart-pdf-text-editing')) return;
-      e.preventDefault();
-      const txt = e.clipboardData ? e.clipboardData.getData('text/plain') : '';
-      if (txt) { try { document.execCommand('insertText', false, txt); } catch (err) { /* ignore */ } }
-    });
-  }
 }
 
 // ============================================================
@@ -6016,6 +7468,10 @@ function openSmartDocs() {
     smartDocsModal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('modal-open');
   }
+  // The workspace always opens on its single empty stage after the reset.
+  setSmartDocsStep(1);
+  try { if (typeof smartPdfWire === 'function') smartPdfWire(); } catch (e) { /* noop */ }
+  try { if (typeof smartPdfSyncLabels === 'function') smartPdfSyncLabels(); } catch (e2) { /* noop */ }
 }
 
 function closeSmartDocs() {
@@ -9192,7 +10648,9 @@ function resetNotePdfDocOptions() {
 // uploads, previews and the signature canvas) was removed with its phase. The
 // persisted store itself is intentionally KEPT because other features still
 // READ it:
-//   * the History / selection PDF branding reads the saved logo + stamp.
+//   * Smart Documents PDF editor — "Use Saved Logo" reads cp.logo
+//     (smartPdfPickLogo), and the History / selection PDF branding reads the
+//     saved logo + stamp.
 //   * savedCompanyName() / HISTORY_COMPANY_KEY — the legacy company-name line.
 // NOTE: the Note → PDF export does NOT read the profile anymore — the export
 // dialog's "Use Company Profile" option was removed with the instant-export
@@ -12962,8 +14420,8 @@ function handleDrawerMenuItem(action) {
     case 'open-notes':
       openNotesManager();
       break;
-    case 'open-smart-pdf':
-      openSmartPdfWorkspace();
+    case 'open-smart-docs':
+      openSmartDocs();
       break;
     case 'open-pdf-reports':
       openPdfReportsWorkspace();
@@ -13369,6 +14827,15 @@ function wireEvents() {
         toggleCurrencyMenu();
         return;
       }
+      // PDF V1 — Phase 1 TARGET LOCK: the circled 📄 button in the Feature
+      // Navigation Bar (button.feature-nav-btn[data-action="open-smart-docs"]
+      // inside #featureNavBar) opens the EXISTING #pdfReportsWorkspace.
+      // Drawer open-smart-docs still opens Smart Docs; Smart Docs code untouched.
+      if (action === 'open-smart-docs' && btn.closest && btn.closest('#featureNavBar')) {
+        e.stopPropagation();
+        openPdfReportsWorkspace();
+        return;
+      }
       handleDrawerMenuItem(action);
     });
   });
@@ -13474,11 +14941,6 @@ function wireEvents() {
   if (pdfReportsBackBtn) {
     pdfReportsBackBtn.addEventListener('click', closePdfReportsWorkspace);
   }
-  // PHASE 01 — Smart PDF workspace Back button (independent close pattern).
-  const smartPdfBackBtn = document.getElementById('smartPdfBackBtn');
-  if (smartPdfBackBtn) {
-    smartPdfBackBtn.addEventListener('click', closeSmartPdfWorkspace);
-  }
   // PDF V1 — Phase 1 import wiring (scoped to #pdfReportsWorkspace only).
   try { pdfV1WireImport(); } catch (e) {}
   if (settingsModal) {
@@ -13534,6 +14996,8 @@ function wireEvents() {
     });
   }
 
+  // Smart Documents — PDF WORKSPACE wiring (scoped to #smartDocsModal only).
+  try { if (typeof smartPdfWire === 'function') smartPdfWire(); } catch (e) { /* noop */ }
   // Smart Documents — CLEAN RESET: only the close/back entry remains.
   if (closeSmartDocsButton) {
     closeSmartDocsButton.addEventListener('click', closeSmartDocs);
