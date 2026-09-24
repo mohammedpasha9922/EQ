@@ -226,6 +226,34 @@ try {
     afterFirstEquals === '7' && afterSecondEquals === '7',
     'after1=' + afterFirstEquals + ' after2=' + afterSecondEquals);
 
+  // 16c-16e. SMART ENGINE (operator precedence) through REAL buttons:
+  // a chain without parentheses must keep building the expression (no eager
+  // left-to-right collapse) and evaluate with PEMDAS at `=`.
+  await clear();
+  await tap('.keypad-btn.number[data-value="2"]');
+  await tap('.keypad-btn.operator[data-value="+"]');
+  await tap('.keypad-btn.number[data-value="3"]');
+  await tap('.keypad-btn.operator[data-value="*"]');
+  s = await readState();
+  check('16c. Mid-chain 2+3* builds expression without error',
+    !/error/i.test(s.display) && !/error/i.test(s.expression),
+    'display=' + s.display + ' expr=' + s.expression);
+  await tap('.keypad-btn.number[data-value="4"]');
+  await tap('.keypad-btn.equals');
+  s = await readState();
+  check('16d. Precedence 2+3*4 = 14 (not 20)', s.display === '14', 'display=' + s.display);
+
+  await clear();
+  await tap('.keypad-btn.number[data-value="2"]');
+  await tap('.keypad-btn.number[data-value="0"]');
+  await tap('.keypad-btn.operator[data-value="/"]');
+  await tap('.keypad-btn.number[data-value="5"]');
+  await tap('.keypad-btn.operator[data-value="+"]');
+  await tap('.keypad-btn.number[data-value="2"]');
+  await tap('.keypad-btn.equals');
+  s = await readState();
+  check('16e. Precedence 20/5+2 = 6', s.display === '6', 'display=' + s.display);
+
   // 17. No uncaught runtime/page errors after all interaction
   check('17. No uncaught page errors after interactions', pageErrors.length === 0,
     pageErrors.length ? pageErrors.join(' | ').slice(0, 300) : 'clean');

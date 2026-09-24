@@ -31,6 +31,29 @@ export function setAngleMode(mode) {
 }
 
 /**
+ * Snap near-exact trigonometric results to clean landmarks:
+ * e.g. 0, ±0.5, ±1, ±(√3/2), ±(√2/2), etc.
+ * Avoids 0.49999999999999994 or 1e-16 when computing sin(30°), sin(180°), etc.
+ * Uses a tight epsilon of 1e-12 so true numbers are not corrupted.
+ * @param {number} val
+ * @returns {number}
+ */
+function snapTrig(val) {
+  if (Math.abs(val) < 1e-12) return 0;
+  if (Math.abs(val - 1) < 1e-12) return 1;
+  if (Math.abs(val + 1) < 1e-12) return -1;
+  if (Math.abs(val - 0.5) < 1e-12) return 0.5;
+  if (Math.abs(val + 0.5) < 1e-12) return -0.5;
+  const sqrt3_2 = Math.sqrt(3) / 2;
+  if (Math.abs(val - sqrt3_2) < 1e-12) return sqrt3_2;
+  if (Math.abs(val + sqrt3_2) < 1e-12) return -sqrt3_2;
+  const sqrt2_2 = Math.SQRT1_2;
+  if (Math.abs(val - sqrt2_2) < 1e-12) return sqrt2_2;
+  if (Math.abs(val + sqrt2_2) < 1e-12) return -sqrt2_2;
+  return val;
+}
+
+/**
  * Convert an angle from the current angle mode to radians for internal calculation.
  * @param {Decimal|number} angle - The angle in the current mode.
  * @returns {Decimal} The angle in radians.
@@ -38,13 +61,16 @@ export function setAngleMode(mode) {
 function toRadians(angle) {
   const rad = new Decimal(angle);
   if (angleMode === 'DEG') {
-    // Degrees to radians: multiply by π/180
-    const pi = new Decimal(Math.PI);
-    return rad.mul(pi.div(180));
+    // Degrees to radians: multiply by π/180. Use full-precision Number
+    // arithmetic here (NOT the 12-digit fallback cleanup): the radian value
+    // feeds Math.sin/cos/tan directly, and pre-rounding it to 12 digits
+    // injects ~1e-12 rad error (sin(30°) -> 0.4999999999988751).
+    const radNum = Number(rad.toString()) * Math.PI / 180;
+    return new Decimal(String(radNum));
   } else if (angleMode === 'GRAD') {
-    // Gradians to radians: multiply by π/200
-    const pi = new Decimal(Math.PI);
-    return rad.mul(pi.div(200));
+    // Gradians to radians: multiply by π/200 (same full-precision note).
+    const radNum = Number(rad.toString()) * Math.PI / 200;
+    return new Decimal(String(radNum));
   }
   // RAD: already in radians
   return rad;
@@ -71,13 +97,24 @@ function fromRadians(radians) {
 
 /**
  * Tokenize an expression string into tokens.
+ * Normalizes UI symbols (× ÷ − π) so direct evaluator calls and the
+ * button-built buffer behave identically. Rejects malformed numbers
+ * (multiple decimal points) instead of silently accepting them.
  * @param {string} expr - The expression string.
  * @returns {Array} Array of tokens.
  */
 function tokenizeExpression(expr) {
   const tokens = [];
   let i = 0;
-  const str = String(expr).trim();
+  // SCOPE-LOCKED normalization: only Calculation Engine input symbols.
+  // Buttons already convert × ÷ − before calling; this makes direct calls
+  // (tests, chaining) behave identically. No UI/display change.
+  const str = String(expr)
+    .replace(/×/g, '*')
+    .replace(/÷/g, '/')
+    .replace(/−/g, '-')
+    .replace(/π/g, 'pi')
+    .trim();
   while (i < str.length) {
     const ch = str[i];
     if (/\s/.test(ch)) { i++; continue; }
@@ -86,6 +123,10 @@ function tokenizeExpression(expr) {
       while (i < str.length && (/[\d.]/.test(str[i]))) {
         numStr += str[i];
         i++;
+      }
+      // Strict decimal validation: ".", "1.2.3" are syntax errors -> Error.
+      if (!/^(?:\d+\.?\d*|\.\d+)$/.test(numStr)) {
+        throw new Error(`Invalid number: ${numStr}`);
       }
       tokens.push({ type: 'NUMBER', value: numStr });
       continue;
@@ -224,9 +265,13 @@ function parseExpression(tokens) {
       const value = parseExpressionTokens();
       const rp = next();
       if (!rp || rp.type !== 'RPAREN') throw new Error('Missing ) after sin');
-      // Convert to radians based on angle mode, then compute sin
+      // Convert to radians based on angle mode, then compute sin.
+      // Snap near-exact float noise (sin(30°) = 0.49999999999999994) to the
+      // exact value so DEG/GRAD landmarks display cleanly. Tolerance 1e-12
+      // only touches float dust, never genuine digits.
       const radians = toRadians(value);
-      const result = new Decimal(Math.sin(Number(radians.toString())));
+      const sinV = Math.sin(Number(radians.toString()));
+      const result = new Decimal(snapTrig(sinV));
       return result;
     }
     if (token.type === 'FUNC_COS') {
@@ -235,9 +280,10 @@ function parseExpression(tokens) {
       const value = parseExpressionTokens();
       const rp = next();
       if (!rp || rp.type !== 'RPAREN') throw new Error('Missing ) after cos');
-      // Convert to radians based on angle mode, then compute cos
+      // Convert to radians based on angle mode, then compute cos (same snap).
       const radians = toRadians(value);
-      const result = new Decimal(Math.cos(Number(radians.toString())));
+      const cosV = Math.cos(Number(radians.toString()));
+      const result = new Decimal(snapTrig(cosV));
       return result;
     }
     if (token.type === 'FUNC_TAN') {
@@ -254,7 +300,7 @@ function parseExpression(tokens) {
       if (Math.abs(Math.abs(val % Math.PI) - Math.PI / 2) < eps) {
         throw new Error('tan is undefined for this angle');
       }
-      const result = new Decimal(Math.tan(val));
+      const result = new Decimal(snapTrig(Math.tan(val)));
       return result;
     }
     if (token.type === 'FUNC_ASIN') {
@@ -317,7 +363,7 @@ function parseExpression(tokens) {
       if (token.value === '-') return operand.neg ? operand.neg() : new Decimal(-Number(operand.toString()));
       return operand;
     }
-    return parsePostfix();
+    return parsePower();
   }
   // PHASE 40: postfix `%` and `!` bind to the immediately-preceding operand
   // (postfix precedence, above unary/power): `50%` -> 50/100, `5!` -> 120.
@@ -339,22 +385,23 @@ function parseExpression(tokens) {
     }
   }
   function parsePower() {
-    let left = parseUnary();
-    let token = peek();
-    while (token && token.type === 'POWER') {
+    // POWER is right-associative and binds tighter than unary minus:
+    // "2^3^2" = 2^(3^2) = 512; "-2^2" = -(2^2) = -4.
+    const base = parsePostfix();
+    const token = peek();
+    if (token && token.type === 'POWER') {
       next();
-      const right = parseUnary();
-      left = left.pow ? left.pow(right) : new Decimal(Math.pow(Number(left.toString()), Number(right.toString())));
-      token = peek();
+      const exponent = parseUnary();
+      return base.pow ? base.pow(exponent) : new Decimal(Math.pow(Number(base.toString()), Number(exponent.toString())));
     }
-    return left;
+    return base;
   }
   function parseTerm() {
-    let left = parsePower();
+    let left = parseUnary();
     let token = peek();
     while (token && token.type === 'OPERATOR' && (token.value === '*' || token.value === '/')) {
       next();
-      const right = parsePower();
+      const right = parseUnary();
       if (token.value === '*') {
         left = left.mul(right);
       } else {
@@ -381,6 +428,9 @@ function parseExpression(tokens) {
   }
   const result = parseExpressionTokens();
   if (pos < tokens.length) {
+    // A trailing binary operator means incomplete input; a leftover OPERATOR
+    // where an operand was expected is a syntax error. Both surface as
+    // 'Error' via the caller's catch — never a JS crash.
     throw new Error('Unexpected tokens at end of expression');
   }
   return result;
@@ -396,6 +446,8 @@ function parseExpression(tokens) {
  */
 function implicitMultiplyTokens(tokens) {
   const out = [];
+  // FUNC_* tokens also start an operand: "2sin(30)" -> "2*sin(30)".
+  const isFuncTok = (t) => t && typeof t.type === 'string' && t.type.startsWith('FUNC_');
   for (const tok of tokens) {
     if (out.length > 0) {
       const prev = out[out.length - 1];
@@ -405,7 +457,7 @@ function implicitMultiplyTokens(tokens) {
       // multiplication after a power still works via the exponent NUMBER when a
       // '(' follows, e.g. "2^2(3)" -> "2^2*(3)".
       const endsOperand = prev.type === 'NUMBER' || prev.type === 'RPAREN' || prev.type === 'CONST_PI' || prev.type === 'CONST_E' || prev.type === 'PERCENT' || prev.type === 'FACTORIAL';
-      const startsOperand = tok.type === 'NUMBER' || tok.type === 'LPAREN' || tok.type === 'FUNC_SQRT' || tok.type === 'CONST_PI' || tok.type === 'CONST_E';
+      const startsOperand = tok.type === 'NUMBER' || tok.type === 'LPAREN' || tok.type === 'FUNC_SQRT' || isFuncTok(tok) || tok.type === 'CONST_PI' || tok.type === 'CONST_E';
       if (endsOperand && startsOperand) {
         out.push({ type: 'OPERATOR', value: '*' });
       }

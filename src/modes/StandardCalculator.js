@@ -343,22 +343,27 @@ class StandardCalculator {
       this.refreshDisplay();
       return;
     }
-    const currentValue = new Decimal(state.displayValue);
     state.hasPressedEquals = false;
 
     if (state.pendingOperator && !state.startNewNumber) {
-      // Chain operation: compute previous with current
-      const prev = new Decimal(state.storedValue);
-      let result;
-      switch (state.pendingOperator) {
-        case '+': result = prev.add(currentValue); break;
-        case '-': result = prev.sub(currentValue); break;
-        case '*': result = prev.mul(currentValue); break;
-        case '/': result = currentValue.isZero && currentValue.isZero() ? new Decimal(0) : prev.div(currentValue); break;
-        default: result = currentValue;
-      }
-      state.storedValue = result.toString();
-    } else {
+      // SMART ENGINE (operator precedence): do NOT eagerly reduce the pending
+      // pair left-to-right here — that would collapse "2+3*4" to "5*4" = 20
+      // the moment the second operator arrives, violating PEMDAS. Instead
+      // unify the whole chain into the free-expression buffer (same pattern
+      // as backspace()) and defer evaluation to `=`, where the shared
+      // ExpressionEvaluator applies full precedence, implicit multiplication
+      // and right-associative powers over the COMPLETE expression.
+      const full = String(state.storedValue).replace(/,/g, '') + state.pendingOperator + String(state.displayValue).replace(/,/g, '');
+      state.freeExpression = full + op;
+      state.displayValue = state.freeExpression;
+      state.expression = state.freeExpression;
+      state.pendingOperator = null;
+      state.storedValue = null;
+      state.startNewNumber = false;
+      this.refreshDisplay();
+      return;
+    }
+    if (!state.pendingOperator) {
       state.storedValue = state.displayValue;
     }
     state.pendingOperator = op;

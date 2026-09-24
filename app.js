@@ -5644,6 +5644,309 @@ async function smartPdfV3OpenFile(file) {
 // menu, floating control, or any other visible editing UI is added.
 // ============================================================
 
+// ============================================================
+// STYLE MATCHING for edited runs (Smart PDF text layer ONLY).
+// Returns the information pdf.js used to PAINT one font on the canvas so the
+// editable span can reuse it verbatim:
+//   * family — the exact CSS family stack of the canvas paint (pdf.js 3.11's
+//     setFont uses systemFontInfo.css or "<internal name>", <fallback>; the
+//     internal name is the @font-face pdf.js registers for the PDF's own
+//     embedded font program when disableFontFace:false);
+//   * traits — the same bold/black/italic the canvas requested.
+// pdf.js exposes no public weight/style API, so the lookup reads the page's
+// already-resolved font objects (page.commonObjs) read-only; every step is
+// guarded and, when unavailable, we degrade to the public getTextContent
+// style data (generic family, inherited weight) — the editor, caret, canvas
+// clearing and rendering are never affected.
+// ============================================================
+// ============================================================
+// MULTILINGUAL SCRIPT MATCHING (Smart PDF text layer ONLY).
+// One edited run must keep the ORIGINAL run's appearance in ANY language or
+// writing system — not only Latin. Two things are needed for that beyond the
+// font/weight/style/size/scale/colour already matched below:
+//   1. a SCRIPT-AWARE fallback list — a generic family ("sans-serif") is not
+//      guaranteed to contain Arabic/Kurdish (or Cyrillic, Devanagari, CJK …)
+//      glyphs at all, so a run whose PDF face cannot render a newly typed
+//      character must fall back to a face that genuinely covers that script
+//      instead of to a generic Latin default;
+//   2. a `lang` hint on the span, so the browser selects the correct
+//      face/variant for the script (critical for Han unification, harmless
+//      everywhere else — no UI, no visible attribute).
+// The table below maps the Unicode script blocks pdf.js can safely expose to
+// the family list that covers them. Only scripts a generic family is NOT
+// guaranteed to cover are listed; everything else keeps today's exact
+// behaviour (the accepted Latin/Greek/Cyrillic rendering is unchanged).
+// Entry: [lang tag ('' = none), [fallback families…], [rangeLo, rangeHi]…]
+const SMART_PDF_SCRIPT_TABLE = [
+  ['ar', ['"Arial"', '"Tahoma"', '"Segoe UI"', '"Noto Naskh Arabic"', '"Traditional Arabic"'],
+    [0x0600, 0x06ff], [0x0750, 0x077f], [0x08a0, 0x08ff], [0xfb50, 0xfdff], [0xfe70, 0xfeff]],
+  ['he', ['"Arial"', '"Segoe UI"', '"Times New Roman"', '"Noto Sans Hebrew"'],
+    [0x0590, 0x05ff], [0xfb1d, 0xfb4f]],
+  ['syr', ['"Segoe UI Historic"', '"Estrangelo Edessa"', '"Noto Sans Syriac"'], [0x0700, 0x074f]],
+  ['dv', ['"MV Boli"', '"Noto Sans Thaana"'], [0x0780, 0x07bf]],
+  ['hy', ['"Segoe UI"', '"Sylfaen"', '"Noto Sans Armenian"'], [0x0530, 0x058f]],
+  ['ka', ['"Segoe UI"', '"Sylfaen"', '"Noto Sans Georgian"'], [0x10a0, 0x10ff], [0x2d00, 0x2d2f]],
+  ['', ['"Nirmala UI"', '"Mangal"', '"Noto Sans Devanagari"', '"Noto Sans"'],
+    [0x0900, 0x097f], [0x0980, 0x09ff], [0x0a00, 0x0a7f], [0x0a80, 0x0aff], [0x0b00, 0x0b7f],
+    [0x0b80, 0x0bff], [0x0c00, 0x0c7f], [0x0c80, 0x0cff], [0x0d00, 0x0d7f]],
+  ['si', ['"Nirmala UI"', '"Iskoola Pota"', '"Noto Sans Sinhala"'], [0x0d80, 0x0dff]],
+  ['th', ['"Leelawadee UI"', '"Tahoma"', '"Noto Sans Thai"'], [0x0e00, 0x0e7f]],
+  ['lo', ['"Leelawadee UI"', '"Noto Sans Lao"'], [0x0e80, 0x0eff]],
+  ['bo', ['"Microsoft Himalaya"', '"Noto Sans Tibetan"'], [0x0f00, 0x0fff]],
+  ['my', ['"Myanmar Text"', '"Noto Sans Myanmar"'], [0x1000, 0x109f], [0xaa60, 0xaa7f]],
+  ['am', ['"Nyala"', '"Noto Sans Ethiopic"'], [0x1200, 0x137f], [0x1380, 0x139f]],
+  ['km', ['"Khmer UI"', '"Leelawadee UI"', '"Noto Sans Khmer"'], [0x1780, 0x17ff]],
+  ['zh', ['"Microsoft YaHei"', '"SimSun"', '"PingFang SC"', '"Hiragino Sans"', '"Noto Sans CJK SC"'],
+    [0x2e80, 0x2eff], [0x3000, 0x303f], [0x3400, 0x4dbf], [0x4e00, 0x9fff], [0xf900, 0xfaff],
+    [0xfe30, 0xfe4f], [0xff00, 0xffef]],
+  ['ja', ['"Yu Gothic"', '"MS Gothic"', '"Hiragino Kaku Gothic ProN"', '"Noto Sans JP"'],
+    [0x3040, 0x30ff], [0x31f0, 0x31ff]],
+  ['ko', ['"Malgun Gothic"', '"Apple SD Gothic Neo"', '"Noto Sans KR"'],
+    [0x1100, 0x11ff], [0x3130, 0x318f], [0xac00, 0xd7af]]
+];
+
+// Right-to-left scripts among the blocks above (direction fallback only).
+const SMART_PDF_RTL_LANGS = { ar: 1, he: 1, syr: 1, dv: 1 };
+// Kurdish-specific Arabic-script letters (Sorani additions plain Arabic never
+// uses): they only refine the `lang` hint, never the rendering.
+const SMART_PDF_KURDISH_RE = /[ڕڵۆێە]/;
+
+// Families + language + direction one text run needs. Bounded and defensive:
+// input that needs nothing extra yields null (today's exact behaviour).
+function smartPdfV3ScriptMatch(text) {
+  if (!text || typeof text !== 'string') return null;
+  const fams = [];
+  let lang = '';
+  let rtl = false;
+  const kurdish = SMART_PDF_KURDISH_RE.test(text);
+  for (let i = 0; i < text.length; i++) {
+    const c = text.codePointAt(i);
+    if (c > 0xffff) i++; // keep surrogate pairs together (astral scripts/emoji need no addition)
+    if (c < 0x0530) continue; // Latin / Greek-Cyrillic blocks need no addition
+    for (let r = 0; r < SMART_PDF_SCRIPT_TABLE.length; r++) {
+      const row = SMART_PDF_SCRIPT_TABLE[r];
+      let hit = false;
+      for (let b = 2; b < row.length; b++) {
+        if (c >= row[b][0] && c <= row[b][1]) { hit = true; break; }
+      }
+      if (!hit) continue;
+      if (!lang && row[0]) lang = row[0];
+      if (SMART_PDF_RTL_LANGS[row[0]]) rtl = true;
+      for (let f = 0; f < row[1].length; f++) {
+        if (fams.indexOf(row[1][f]) < 0) fams.push(row[1][f]);
+      }
+      break;
+    }
+  }
+  if (!fams.length) return null;
+  return { fams: fams, lang: kurdish ? 'ckb' : lang, rtl: rtl };
+}
+
+// The exact family stack an edited run must carry: the PDF's own painted face
+// FIRST (embedded/subset program included — see smartPdfV3PdfFontInfo), then
+// the script-appropriate families of whatever that run currently contains,
+// then pdf.js' generic fallback last. A Latin-only run is byte-identical to
+// the original implementation (no script families are inserted at all), so
+// the already-accepted Latin behaviour cannot change.
+function smartPdfV3ApplyScriptStyle(span, text) {
+  const inf = span && span._smartPdfFontInfo;
+  if (!inf) return false;
+  const m = smartPdfV3ScriptMatch(text);
+  const key = m ? (m.lang + '#' + m.fams.join('|')) : '';
+  if (span._smartPdfScriptKey === key) return false; // already applied
+  span._smartPdfScriptKey = key;
+  if (!m) {
+    // Latin accepted path: the PDF's own face + pdf.js' generic fallback and
+    // NOTHING else — byte-identical to the original build behaviour (no
+    // script families ever enter a Latin run). Runs once per key transition
+    // (guard above): on build, and again when a script run is retyped back to
+    // Latin (restores the base stack and drops the stale `lang` hint).
+    const base = [inf.face, inf.generic].filter(Boolean).join(', ');
+    if (base) span.style.fontFamily = base;
+    span.removeAttribute('lang');
+    return false;
+  }
+  const parts = [];
+  if (inf.face) parts.push(inf.face);
+  for (let i = 0; i < m.fams.length; i++) parts.push(m.fams[i]);
+  if (inf.generic) parts.push(inf.generic);
+  if (parts.length) span.style.fontFamily = parts.join(', ');
+  if (m.lang) span.setAttribute('lang', m.lang);
+  else span.removeAttribute('lang');
+  return true;
+}
+
+// Direction of one pdf.js text item: item.dir (RTL/LTR) is authoritative; when
+// a text layer exposes no direction at all it is derived from the run's own
+// script, so RTL text can never silently become LTR.
+function smartPdfV3RunDir(item) {
+  if (item && (item.dir === 'rtl' || item.dir === 'ltr')) return item.dir;
+  const m = (item && typeof item.str === 'string') ? smartPdfV3ScriptMatch(item.str) : null;
+  return (m && m.rtl) ? 'rtl' : 'ltr';
+}
+
+// DIRECTION + OVERFLOW FIX (Smart PDF text layer ONLY — no renderer, canvas,
+// font, DPR, zoom, scroll or layout change; no scaleX, no letter-spacing).
+// 1. Direction is re-derived from what the run NOW contains: any RTL-script
+//    character (Arabic, Kurdish Sorani, Hebrew, Syriac, Thaana) keeps the
+//    whole replacement RTL no matter how long it becomes, so the continuation
+//    can never flip to LTR mid-edit. Runs without RTL content stay LTR.
+//    Mixed Arabic+English keeps dir=rtl and the browser's native BiDi orders
+//    the embedded Latin — nothing is moved or reflowed.
+// 2. A longer replacement is clamped to the free gap on its OWN line only
+//    (distance to the next same-line run, else the page edge) and wraps
+//    inside its own box, so it can never paint over neighbouring text.
+//    LTR keeps its left anchor; RTL pins its right edge so the extra
+//    characters continue leftward (RTL continuation).
+function smartPdfV3SyncEditDir(span, text) {
+  if (!span) return 'ltr';
+  let d = 'ltr';
+  try {
+    const m = smartPdfV3ScriptMatch(text || '');
+    if (m && m.rtl) d = 'rtl';
+    // Sticky RTL: an Arabic/Kurdish (or Hebrew/Syriac/Thaana) run NEVER flips
+    // to LTR mid-edit — not when longer, not when temporarily empty/Latin
+    // while retyping. The original run's script is the fallback.
+    else {
+      let orig = null;
+      try { orig = span.getAttribute('data-orig'); } catch (e2) { orig = null; }
+      const mo = orig ? smartPdfV3ScriptMatch(orig) : null;
+      if (mo && mo.rtl) d = 'rtl';
+      else if (!text && span.getAttribute('dir') === 'rtl') d = 'rtl';
+    }
+  } catch (e) { d = span.getAttribute('dir') === 'rtl' ? 'rtl' : 'ltr'; }
+  if (span.getAttribute('dir') !== d) span.setAttribute('dir', d);
+  return d;
+}
+
+function smartPdfV3ClampEditBox(span) {
+  if (!span || !span.parentElement) return;
+  const layer = span.parentElement;
+  let layerW = 0;
+  try { layerW = layer.clientWidth || 0; } catch (e) { layerW = 0; }
+  if (!layerW) return;
+  const dir = span.getAttribute('dir') === 'rtl' ? 'rtl' : 'ltr';
+  let myL = 0, myW = 0, myT = 0, myH = 0;
+  try { myL = span.offsetLeft; myW = span.offsetWidth; myT = span.offsetTop; myH = span.offsetHeight; }
+  catch (e) { return; }
+  if (myW < 1) myW = 1;
+  const band = Math.max(2, myH * 0.3);
+  let limit = -1;
+  try {
+    const kids = layer.children;
+    for (let i = 0; i < kids.length; i++) {
+      const s = kids[i];
+      if (s === span || s.nodeType !== 1) continue;
+      let l = 0, w = 0, t = 0;
+      try { l = s.offsetLeft; w = s.offsetWidth; t = s.offsetTop; } catch (e2) { continue; }
+      if (Math.abs(t - myT) > band) continue; // another line — never a bound
+      if (dir === 'ltr') {
+        if (l >= myL + myW - 1) { const gap = l - myL; if (gap > 0 && (limit < 0 || gap < limit)) limit = gap; }
+      } else {
+        const r = l + w;
+        if (r <= myL + 1) { const gap = (myL + myW) - r; if (gap > 0 && (limit < 0 || gap < limit)) limit = gap; }
+      }
+    }
+  } catch (e) { /* sibling scan is optional — page edge still bounds */ }
+  try {
+    if (dir === 'ltr') {
+      if (limit < 0) limit = layerW - myL; // no same-line neighbour: page edge
+      if (limit < 8) limit = 8;
+      if (span._smartPdfBoxL != null) span.style.left = span._smartPdfBoxL + 'px';
+      span.style.right = 'auto';
+    } else {
+      const myR = myL + myW;
+      if (limit < 0) limit = myR; // no same-line neighbour: page left edge
+      if (limit < 8) limit = 8;
+      const anchorR = (span._smartPdfBoxR != null) ? span._smartPdfBoxR : myR;
+      span.style.left = 'auto';
+      span.style.right = Math.max(0, layerW - anchorR) + 'px';
+    }
+    span.style.maxWidth = Math.floor(limit) + 'px';
+    span.style.whiteSpace = 'pre-wrap'; // wrap inside own box instead of over neighbour
+    span.style.overflowWrap = 'break-word';
+    span.style.overflow = 'hidden';
+    span.style.height = 'auto';
+    if (span.style.lineHeight) span.style.minHeight = span.style.lineHeight;
+  } catch (e) { /* bounding is best-effort — editing itself unaffected */ }
+}
+
+// Restore the pristine inline box style on an unchanged (rolled-back) edit.
+function smartPdfV3RestoreEditBox(span) {
+  if (!span) return;
+  try {
+    const o = span._smartPdfBoxOrig;
+    if (o) {
+      span.style.left = o.left; span.style.right = o.right;
+      span.style.maxWidth = o.maxWidth; span.style.whiteSpace = o.whiteSpace;
+      span.style.overflowWrap = o.overflowWrap; span.style.overflow = o.overflow;
+      span.style.height = o.height; span.style.minHeight = o.minHeight;
+    }
+  } catch (e) { /* ignore */ }
+  span._smartPdfBoxOrig = null; span._smartPdfBoxL = null; span._smartPdfBoxR = null;
+}
+
+
+function smartPdfV3PdfFontInfo(page, fontName, style) {
+  // Matched as the canvas: pdf.js paints "<face>", <generic fallback>. `face`
+  // is the PDF's own face (embedded/subset program when pdf.js registered one)
+  // and a script-appropriate family list is inserted between them per run (see
+  // smartPdfV3ApplyScriptStyle) — never a Latin-only generic for Arabic,
+  // Kurdish or any other script.
+  let face = '';
+  let generic = '';
+  let fontWeight = '';
+  let fontStyle = '';
+  try {
+    const objs = page && page.commonObjs;
+    if (fontName && objs && typeof objs.has === 'function' && objs.has(fontName)) {
+      const f = objs.get(fontName);
+      if (f) {
+        let systemFamily = false;
+        if (f.systemFontInfo && typeof f.systemFontInfo.css === 'string' && f.systemFontInfo.css) {
+          face = f.systemFontInfo.css;
+          systemFamily = true;
+        } else {
+          face = '"' + (f.loadedName || fontName) + '"';
+          generic = f.fallbackName || (style && style.fontFamily) || 'sans-serif';
+        }
+        if (f.black) fontWeight = '900';
+        else if (f.bold) fontWeight = 'bold';
+        if (f.italic) fontStyle = 'italic';
+        // Synthesized CSS fonts (XFA-style) are registered as
+        // @font-face {font-family: cssFontInfo.fontFamily;
+        //            font-weight: cssFontInfo.fontWeight;
+        //            font-style: oblique <ItalicAngle>deg}
+        // so that family/weight/style is the face the browser actually uses.
+        const cfi = f.cssFontInfo;
+        if (cfi && typeof cfi === 'object' && !systemFamily) {
+          if (typeof cfi.fontFamily === 'string' && cfi.fontFamily) {
+            face = '"' + cfi.fontFamily + '", ' + face;
+          }
+          if (!fontWeight && cfi.fontWeight) fontWeight = String(cfi.fontWeight);
+          if (!fontStyle && Number(cfi.italicAngle)) fontStyle = 'oblique ' + Number(cfi.italicAngle) + 'deg';
+        }
+      }
+    }
+  } catch (e) { /* font not resolved — public data only */ }
+  if (!face && fontName) {
+    face = '"' + fontName + '"';
+    generic = (style && style.fontFamily) || '';
+  }
+  if (!face) {
+    if (style && style.fontFamily) {
+      return { family: style.fontFamily, face: '', generic: style.fontFamily, fontWeight: '', fontStyle: '' };
+    }
+    return null;
+  }
+  return {
+    family: generic ? (face + ', ' + generic) : face,
+    face: face, generic: generic,
+    fontWeight: fontWeight, fontStyle: fontStyle
+  };
+}
+
+
 // Build the invisible text layer for one rendered page. Positions one
 // transparent span per pdf.js text item exactly over the canvas glyphs.
 async function smartPdfV3BuildTextLayer(page, wrap, canvas, token) {
@@ -5661,6 +5964,44 @@ async function smartPdfV3BuildTextLayer(page, wrap, canvas, token) {
     layer.className = 'smart-pdf-text-layer';
     const styles = tc.styles || {};
     const items = tc.items || [];
+    // STYLE MATCHING (this one feature) — resolve each font THIS page was
+    // painted with and wait until it is loadable, so edited text inherits the
+    // exact face (embedded/subset program included) plus the exact bold /
+    // black / italic traits the canvas used instead of a generic browser
+    // font. Entirely optional: if pdf.js has no record of a font, the layer
+    // builds exactly as before.
+    const fontInfo = Object.create(null); // fontName -> {family, fontWeight, fontStyle}
+    try {
+      // pdf.js resolves each font object into the page asynchronously (the
+      // FontFace bind finishes just after rendering), so give THIS page's own
+      // font objects a brief, bounded moment before reading the weight/style
+      // the canvas used. Optional and bounded: a font that never resolves
+      // simply falls back to the public getTextContent data below.
+      const pending = [];
+      for (let i = 0; i < items.length; i++) {
+        const it = items[i];
+        if (it && it.fontName && pending.indexOf(it.fontName) < 0) pending.push(it.fontName);
+      }
+      const resolved = (k) => !!(page && page.commonObjs &&
+        typeof page.commonObjs.has === 'function' && page.commonObjs.has(k));
+      let left = pending.filter((k) => !resolved(k));
+      const deadline = Date.now() + 1500;
+      while (left.length && token === smartPdfV3Token && Date.now() < deadline) {
+        await new Promise((r) => setTimeout(r, 25));
+        left = left.filter((k) => !resolved(k));
+      }
+      const loads = [];
+      for (let i = 0; i < pending.length; i++) {
+        const inf = smartPdfV3PdfFontInfo(page, pending[i], (styles[pending[i]] || null));
+        if (!inf) continue;
+        fontInfo[pending[i]] = inf;
+        if (inf.family && typeof document !== 'undefined' && document.fonts && document.fonts.load) {
+          loads.push(document.fonts.load('16px ' + inf.family).catch(() => {}));
+        }
+      }
+      if (loads.length) await Promise.all(loads);
+    } catch (e) { /* fonts stay optional — rendering/editing unaffected */ }
+    if (token !== smartPdfV3Token || !wrap || !wrap.isConnected) return;
     for (let i = 0; i < items.length; i++) {
       const item = items[i];
       if (!item || typeof item.str !== 'string' || !item.str) continue;
@@ -5673,14 +6014,31 @@ async function smartPdfV3BuildTextLayer(page, wrap, canvas, token) {
       const ascent = (style && typeof style.ascent === 'number' && style.ascent > 0) ? style.ascent : 0.8;
       const span = document.createElement('span');
       span.textContent = item.str;
-      span.setAttribute('dir', item.dir === 'rtl' ? 'rtl' : 'ltr'); // Arabic RTL + English LTR
+      span.setAttribute('dir', smartPdfV3RunDir(item)); // Arabic RTL + English LTR
       span.style.left = tx[4] + 'px';
       span.style.top = (tx[5] - fontH * ascent) + 'px'; // baseline-aligned
       span.style.fontSize = fontH + 'px';
       span.style.lineHeight = fontH + 'px';
       span.style.height = fontH + 'px';
       span.style.minWidth = Math.max(1, (item.width || 0) * vp.scale) + 'px'; // covers original text
-      if (style && style.fontFamily) span.style.fontFamily = style.fontFamily;
+      // ORIGINAL PDF STYLE on the span itself (visible while editing and
+      // after commit): the exact font family the canvas was painted with
+      // (the PDF's own font program when available) and the same bold /
+      // black / italic traits, plus the script-appropriate fallback families
+      // and `lang` hint of whatever this run contains (Arabic/Kurdish and any
+      // other script keeps a face that can render it — a Latin-only run is
+      // unchanged). Falls back to the public getTextContent data (generic
+      // family, inherited weight) whenever pdf.js exposes more than that
+      // publicly — never breaks editing, only refines the appearance.
+      const inf = (item.fontName && fontInfo[item.fontName]) || null;
+      span._smartPdfFontInfo = (inf && inf.family) ? inf
+        : { face: '', generic: (style && style.fontFamily) || '', fontWeight: '', fontStyle: '' };
+      smartPdfV3ApplyScriptStyle(span, item.str);
+      if (inf) {
+        if (inf.fontWeight) span.style.fontWeight = inf.fontWeight;
+        if (inf.fontStyle) span.style.fontStyle = inf.fontStyle;
+      }
+
       // Non-visual metadata: how far THIS item's painted glyphs may extend past
       // the span's em box (descenders sit below the baseline-derived box). Used
       // only when an edit clears the original glyphs from the canvas — it never
@@ -5789,11 +6147,20 @@ function smartPdfV3CommitEdit(span) {
   const changed = orig !== null && (span.textContent || '') !== orig;
   if (changed) {
     span.classList.add('smart-pdf-text-edited');
+    // The committed text is final: direction follows what it NOW contains
+    // (RTL stays RTL even when longer; LTR stays LTR; mixed keeps BiDi),
+    // the box stays clamped to its own line gap, then its script's family
+    // stack + lang are put in place (no-op unless the text needs families
+    // today's stack does not carry).
+    smartPdfV3SyncEditDir(span, span.textContent || '');
+    smartPdfV3ClampEditBox(span);
+    smartPdfV3ApplyScriptStyle(span, span.textContent || '');
     return;
   }
   // Unchanged → pristine original: put the saved pixels back and hide again.
   span.classList.remove('smart-pdf-text-edited');
   span.style.color = '';
+  smartPdfV3RestoreEditBox(span);
   const saved = span._smartPdfErase;
   if (saved) {
     try { saved.ctx.putImageData(saved.img, saved.x, saved.y); } catch (e) { /* ignore */ }
@@ -5833,6 +6200,24 @@ function smartPdfV3StartEdit(span, clientX, clientY) {
   // Clear the original painted glyphs BEFORE the span becomes visible, so no
   // frame can show original+edited overlap (no patch, no ghost, no marker).
   smartPdfV3ClearUnderSpan(span);
+  // Snapshot the pristine inline box once (for rollback) and pin the line
+  // anchors: LTR keeps its left edge, RTL pins its right edge so longer
+  // replacements continue in their own direction inside their own gap.
+  if (!span._smartPdfBoxOrig) {
+    span._smartPdfBoxOrig = {
+      left: span.style.left, right: span.style.right, maxWidth: span.style.maxWidth,
+      whiteSpace: span.style.whiteSpace, overflowWrap: span.style.overflowWrap,
+      overflow: span.style.overflow, height: span.style.height, minHeight: span.style.minHeight
+    };
+    span._smartPdfBoxL = span.offsetLeft;
+    span._smartPdfBoxR = span.offsetLeft + span.offsetWidth;
+  }
+  smartPdfV3SyncEditDir(span, span.textContent || '');
+  smartPdfV3ClampEditBox(span);
+  // Replacement text may introduce another script (e.g. Arabic/Kurdish typed
+  // into a Latin run, or pasted), so the family stack + lang are re-derived
+  // while typing — a no-op for text that needs nothing extra.
+  smartPdfV3ApplyScriptStyle(span, span.textContent || '');
   span.setAttribute('contenteditable', 'plaintext-only'); // plain text only
   if (!span.isContentEditable) span.setAttribute('contenteditable', 'true'); // fallback
   span.classList.add('smart-pdf-text-editing');
@@ -5887,6 +6272,17 @@ function smartPdfV3Wire() {
       const t = e.target;
       if (!t || !t.classList || !t.classList.contains('smart-pdf-text-editing')) return;
       if (e.key === 'Enter') { e.preventDefault(); try { t.blur(); } catch (err) { /* ignore */ } }
+    });
+    // Invisible: keep the family stack / lang of the edited run aligned with
+    // whatever script the typed or pasted text actually contains (Latin-only
+    // text is never touched).
+    pagesEl.addEventListener('input', (e) => {
+      const t = e.target;
+      if (t && t.classList && t.classList.contains('smart-pdf-text-editing')) {
+        smartPdfV3SyncEditDir(t, t.textContent || '');
+        smartPdfV3ClampEditBox(t);
+        smartPdfV3ApplyScriptStyle(t, t.textContent || '');
+      }
     });
     pagesEl.addEventListener('paste', (e) => {
       const t = e.target;

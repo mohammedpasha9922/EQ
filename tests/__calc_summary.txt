@@ -16,5 +16,8 @@ PASS	14. Keyboard input: 7 + 8 Enter = 15	-> display=15
 PASS	15. Language switch works (ar)	-> lang=ar dir=rtl bodyLang=ar
 PASS	16a. No duplicate listener on digit (5 -> "5")	-> display=5
 PASS	16b. Repeated equals does not double-apply (3+4=7 stays 7)	-> after1=7 after2=7
+PASS	16c. Mid-chain 2+3* builds expression without error	-> display=2+3* expr=2+3*
+PASS	16d. Precedence 2+3*4 = 14 (not 20)	-> display=14
+PASS	16e. Precedence 20/5+2 = 6	-> display=6
 PASS	17. No uncaught page errors after interactions	-> clean
-TOTAL	19/19
+TOTAL	22/22
