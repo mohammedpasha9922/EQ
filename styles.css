@@ -2225,6 +2225,50 @@ body[data-language='ar'] .help-about-item { text-align: right; }
   transform: translateY(-1px);
 }
 
+/* Per-entry speaker button (History card header). VISUAL ONLY: the inline
+   speaker SVG carries no width/height attributes, so without an explicit
+   size here it collapses to 0x0 and the button renders as an empty nub.
+   Markup, click handler and speech behaviour are untouched. */
+.history-speak-btn {
+  flex-shrink: 0;
+  border: none;
+  border-radius: 10px;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-subtle);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.history-speak-btn svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
+.history-speak-btn:hover {
+  background: rgba(56, 189, 248, 0.18);
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.history-speak-btn.speaking {
+  color: var(--info);
+  background: rgba(251, 191, 36, 0.16);
+}
+
+/* HISTORY UI VISIBILITY ONLY — hide the per-entry "Insert Result" button.
+   The button markup, its click handler and insertResultIntoSmartDocument()
+   are intentionally left intact; delete this one rule to restore it. */
+.history-insert-smart-btn {
+  display: none;
+}
+
 .empty-history {
   display: flex;
   align-items: center;
@@ -2293,7 +2337,9 @@ body[data-language='ar'] .history-datetime {
 
 .history-screen-header {
   display: flex;
-  justify-content: space-between;
+  /* The screen title is hidden (see .history-screen-title), so keep the four
+     top-bar icons packed together in one tidy row at the same edge as before. */
+  justify-content: flex-end;
   align-items: center;
   gap: 10px;
   margin-bottom: 16px;
@@ -2318,7 +2364,31 @@ body[data-language='ar'] .history-datetime {
   font-size: 0.85rem;
 }
 
+/* History top bar — icon-only buttons (select all / company name / share / close).
+   Text labels are intentionally not rendered; each button keeps an aria-label
+   plus a localized data-i18n-title tooltip. */
+.history-top-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  padding: 0;
+  border-radius: 14px;
+  font-size: 1rem;
+  line-height: 1;
+  flex: 0 0 auto;
+}
+
+.history-top-icon-btn i {
+  font-size: 1rem;
+  line-height: 1;
+}
+
 .history-screen-title {
+  /* Visible title ("سجل 24 ساعة") intentionally hidden — display only removed. */
+  display: none;
   margin: 0;
   font-size: 1.1rem;
   font-weight: 700;
@@ -4483,16 +4553,24 @@ body[data-language='ar'] .notes-list-panel.hidden {
   }
 }
 
-/* --- Notes Header: Single Row (Title + Actions) --- */
-/* Inherit the app direction; flexible text yields space to fixed-size buttons. */
+/* --- Notes Header: single balanced row (actions + title + close) --- */
+/* The bar is ONE flex row that inherits the document direction, so the very same
+   markup mirrors itself for RTL (ar/ku) and for every LTR language
+   (en/fr/de/es/ru/tr) — the layout is language-independent.
+   The icon buttons are fixed-size and icon-only (their meaning lives in
+   aria-label/title, never in translated text), so no translation can stretch or
+   break the bar; the title field is the only flexible item and takes every pixel
+   that is left. */
 
 .full-screen-note-header {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: flex-start;
   flex-wrap: nowrap;
   gap: 8px;
   width: 100%;
+  min-width: 0;
   padding-block: 10px 6px;
   padding-inline: 12px;
   overflow: visible;
@@ -4503,7 +4581,7 @@ body[data-language='ar'] .notes-list-panel.hidden {
   align-items: center;
   flex-wrap: nowrap;
   gap: 8px;
-  flex: 1;
+  flex: 1 1 auto;
   min-width: 0;
 }
 
@@ -4512,61 +4590,47 @@ body[data-language='ar'] .notes-list-panel.hidden {
   align-items: center;
   flex-wrap: nowrap;
   gap: 8px;
-  flex: 1;
+  flex: 1 1 auto;
   min-width: 0;
 }
 
 .note-title-input {
-  flex: 1;
+  flex: 1 1 auto;
   min-width: 0;
   width: 100%;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  padding-block: 8px;
-  padding-inline: 10px;
+  padding-block: 9px;
+  padding-inline: 12px;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--surface);
   color: var(--text);
   font: inherit;
-  font-size: 1rem;
+  font-size: 1.05rem;
+  font-weight: 600;
   outline: none;
   -webkit-appearance: none;
   box-sizing: border-box;
 }
 
-.note-title-input::placeholder { color: var(--text-muted); opacity: 0.8; }
+.note-title-input::placeholder { color: var(--text-muted); opacity: 0.8; font-weight: 500; }
 .note-title-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
 
-.note-saved-indicator {
-  flex: 0 1 auto;
-  min-width: 0;
-  max-width: 45%;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  font-size: 0.72rem;
-  font-weight: 500;
-  color: var(--text-muted);
-  letter-spacing: 0.02em;
-  white-space: nowrap;
-  opacity: 0.85;
-  transition: opacity 0.2s ease;
-}
-
-.note-saved-indicator.show { opacity: 1; color: var(--accent); }
-
+/* Fixed-size action group: never grows, never shrinks — so the icons can never
+   overlap the title field nor push anything out of the bar. */
 .full-screen-note-action-bar {
   display: flex;
-  justify-content: space-around;
   align-items: center;
+  justify-content: flex-end;
   flex-wrap: nowrap;
   gap: 8px;
   padding: 0;
   flex: 0 0 auto;
 }
 
-/* Notes header buttons — circular, colour-coded, consistent with existing Notes UI. */
+/* Notes header buttons — circular, colour-coded, identical size/alignment. */
 .notes-back-btn,
 .notes-save-btn,
 .notes-send-btn {
@@ -4599,13 +4663,14 @@ body[data-language='ar'] .notes-list-panel.hidden {
 .notes-send-btn:hover { background: var(--send-dark); }
 .notes-send-btn:active { transform: scale(0.94); }
 
-/* Narrow phones: keep buttons compact, prevent clipping. */
+/* Narrow phones: keep the bar compact without ever pushing an item off screen. */
 @media (max-width: 400px) {
-  .full-screen-note-header { padding-block: 8px 4px; padding-inline: 10px; }
+  .full-screen-note-header { gap: 6px; padding-block: 8px 4px; padding-inline: 10px; }
 
-  .full-screen-note-title-row { gap: 6px; }
+  .full-screen-note-title-row,
+  .full-screen-note-title-wrap { gap: 6px; }
 
-  .note-title-input { padding-block: 6px; padding-inline: 8px; font-size: 0.95rem; }
+  .note-title-input { padding-block: 8px; padding-inline: 10px; font-size: 1rem; }
 
   .full-screen-note-action-bar { gap: 6px; }
 
@@ -4614,6 +4679,23 @@ body[data-language='ar'] .notes-list-panel.hidden {
   .notes-send-btn {
     width: 38px;
     height: 38px;
+  }
+}
+
+/* Very narrow phones / split screen: compact ONLY the Note editor bar, so the
+   title stays usable and the X / PDF / Share icons stay clear and on screen. */
+@media (max-width: 340px) {
+  #fullScreenNoteModal .full-screen-note-header { gap: 5px; padding-inline: 8px; }
+
+  #fullScreenNoteModal .full-screen-note-action-bar { gap: 5px; }
+
+  #fullScreenNoteModal .note-title-input { padding-inline: 7px; font-size: 0.95rem; }
+
+  #fullScreenNoteModal .notes-back-btn,
+  #fullScreenNoteModal .notes-save-btn,
+  #fullScreenNoteModal .notes-send-btn {
+    width: 34px;
+    height: 34px;
   }
 }
 
