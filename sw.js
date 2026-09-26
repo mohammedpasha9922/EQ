@@ -1,4 +1,4 @@
-const CACHE_NAME = 'eq-calculator-v4';
+const CACHE_NAME = 'eq-calculator-v5';
 const APP_SHELL = [
   './',
   './index.html',
@@ -10,6 +10,9 @@ const APP_SHELL = [
   './favicon.ico',
   './apple-touch-icon.png',
   './icon-192.png',
+  './icon-512.png',
+  './icon-512-maskable.png',
+  './og-image.png',
   './src/core/index.js',
   './src/core/Decimal.js',
   './src/core/NumberToWords.js',

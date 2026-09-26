@@ -90,7 +90,7 @@ async function clickListenerCount(selector) {
 }
 
 const SELECTOR_ORDER = [
-  '#saveFullScreenNote', '#sendNoteBtn', '#notePreviewPdfBtn', '#exportNotePdfBtn'
+  '#exportNotePdfBtn', '#sendNoteBtn', '#notePreviewPdfBtn', '#saveFullScreenNote'
 ];
 
 async function boot() {
@@ -136,7 +136,16 @@ async function measureHeader() {
     const titleInput = modal && modal.querySelector('#noteTitleInput');
     const saved = modal && modal.querySelector('#noteSavedIndicator');
     const btns = bar ? Array.from(bar.querySelectorAll('button')) : [];
-    const rects = btns.map((b) => {
+    // Hidden keep-wired buttons (display:none) must not corrupt spacing math: we
+    // still report ALL ids for the removal check, but geometry/hit assertions use
+    // only the truly visible (layout) buttons.
+    const visBtns = btns.filter((b) => {
+      const cs = getComputedStyle(b);
+      const r = b.getBoundingClientRect();
+      return cs.display !== 'none' && cs.visibility !== 'hidden'
+        && (r.width > 1 || r.height > 1);
+    });
+    const rects = visBtns.map((b) => {
       const r = b.getBoundingClientRect();
       const cs = getComputedStyle(b);
       return {

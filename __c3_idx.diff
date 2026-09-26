@@ -1,0 +1,375 @@
+﻿commit c3c2a59a166221504847cbedd537cec028916668
+Author: mohammedpasha9922 <mohammedpasha9922@gmail.com>
+Date:   Thu Sep 24 04:39:14 2026 +0300
+
+    ╪º┘â╪¬╪¿ ┘ç┘å╪º ┘ê╪╡┘ü ┘à╪«╪¬╪╡╪▒ ┘ä┘ä╪¬╪║┘è┘è╪▒╪º╪¬
+
+diff --git a/index.html b/index.html
+index 0732945..4e4154b 100644
+--- a/index.html
++++ b/index.html
+@@ -267,6 +267,249 @@
+       }
+     </style>
+     <script src="https://cdn.jsdelivr.net/npm/decimal.js@10.4.3/decimal.min.js"></script>
++    <style id="smartPdfWorkspaceShell">
++      /* PHASE 02A ΓÇö Smart PDF Workspace shell ONLY (index.html; styles.css is
++         intentionally untouched this phase). Scoped strictly to
++         #smartPdfWorkspace: full-coverage WHITE workspace, transparent top
++         toolbar (no tools yet), centered upload entry. No file-picker logic
++         and no PDF processing here ΓÇö those arrive in a later phase. */
++      #smartPdfWorkspace.settings-modal-backdrop {
++        background: #ffffff;
++        backdrop-filter: none;
++        padding: 0;
++      }
++      #smartPdfWorkspace .smart-pdf-workspace {
++        box-sizing: border-box;
++        width: 100%;
++        height: 100%;
++        max-width: none;
++        max-height: none;
++        margin: 0;
++        padding: 0;
++        border: 0;
++        border-radius: 0;
++        box-shadow: none;
++        background: #ffffff;
++        color: #0f172a;
++        display: flex;
++        flex-direction: column;
++        overflow: hidden;
++        transform: none;
++      }
++      /* Top toolbar: full workspace width, transparent, currently empty. */
++      #smartPdfWorkspace .smart-pdf-top-toolbar {
++        flex: 0 0 auto;
++        display: flex;
++        align-items: center;
++        gap: 8px;
++        width: 100%;
++        min-height: 46px;
++        padding: 8px 12px;
++        background: transparent;
++        border: 0;
++      }
++      /* Readable text on the white workspace (existing elements, untouched
++         markup; only their color is forced inside this scope). */
++      #smartPdfWorkspace .settings-modal-header {
++        flex: 0 0 auto;
++      }
++      #smartPdfWorkspace .settings-modal-header h3 {
++        color: #0f172a;
++      }
++      #smartPdfWorkspace .settings-modal-subtitle {
++        color: #64748b;
++      }
++      #smartPdfWorkspace .modal-close-btn {
++        color: #334155;
++      }
++      /* Centered upload entry: clear dashed zone with button + small hint. */
++      #smartPdfWorkspace .smart-pdf-upload-area {
++        flex: 1 1 auto;
++        display: flex;
++        flex-direction: column;
++        align-items: center;
++        justify-content: center;
++        gap: 10px;
++        margin: 8px 0;
++        padding: 28px 20px;
++        text-align: center;
++        background: #f8fafc;
++        border: 2px dashed #cbd5e1;
++        border-radius: 16px;
++      }
++      #smartPdfWorkspace .smart-pdf-upload-btn {
++        appearance: none;
++        cursor: pointer;
++        min-height: 48px;
++        padding: 12px 24px;
++        font: inherit;
++        font-size: 1rem;
++        font-weight: 600;
++        color: #ffffff;
++        background: #2563eb;
++        border: 0;
++        border-radius: 12px;
++        box-shadow: 0 8px 18px rgba(37, 99, 235, 0.28);
++        transition: background 0.15s ease, transform 0.15s ease;
++      }
++      #smartPdfWorkspace .smart-pdf-upload-btn:hover {
++        background: #1d4ed8;
++      }
++      #smartPdfWorkspace .smart-pdf-upload-btn:active {
++        transform: scale(0.98);
++      }
++      #smartPdfWorkspace .smart-pdf-upload-hint {
++        margin: 0;
++        font-size: 0.86rem;
++        color: #64748b;
++      }
++      /* Reserved success status (hidden until upload logic lands later). */
++      #smartPdfWorkspace .smart-pdf-upload-status {
++        margin: 0;
++        font-size: 0.9rem;
++        font-weight: 600;
++        color: #16a34a;
++      }
++      @media (max-width: 480px) {
++        #smartPdfWorkspace .smart-pdf-upload-area {
++          padding: 20px 14px;
++        }
++      }
++      /* PHASE 03 ΓÇö Upload ΓåÆ vertical-scroll PDF Viewer (conditional rendering
++         inside this workspace ONLY). `[hidden]` must beat the flex display of
++         the two mutually-exclusive states. */
++      #smartPdfWorkspace .smart-pdf-upload-area[hidden],
++      #smartPdfWorkspace .smart-pdf-viewer-area[hidden] {
++        display: none;
++      }
++      #smartPdfWorkspace .smart-pdf-upload-error {
++        margin: 0;
++        font-size: 0.9rem;
++        font-weight: 600;
++        color: #dc2626;
++      }
++      /* Viewer shell: small page-indicator toolbar + flexible scroll region. */
++      #smartPdfWorkspace .smart-pdf-viewer-area {
++        flex: 1 1 auto;
++        display: flex;
++        flex-direction: column;
++        min-height: 0;
++        margin: 8px 0;
++        border: 1px solid #e2e8f0;
++        border-radius: 12px;
++        overflow: hidden;
++        background: #f1f5f9;
++      }
++      #smartPdfWorkspace .smart-pdf-viewer-toolbar {
++        flex: 0 0 auto;
++        display: flex;
++        align-items: center;
++        justify-content: center;
++        gap: 8px;
++        padding: 8px 12px;
++        background: #f8fafc;
++        border-bottom: 1px solid #e2e8f0;
++      }
++      #smartPdfWorkspace .smart-pdf-page-indicator {
++        display: inline-block;
++        padding: 4px 14px;
++        font-size: 0.86rem;
++        font-weight: 600;
++        color: #334155;
++        background: #e2e8f0;
++        border-radius: 999px;
++        white-space: nowrap;
++      }
++      /* Vertical scroll region: pages flow topΓåÆbottom (scroll, not Prev/Next).
++         `pan-y pinch-zoom` keeps vertical touch panning AND allows the native
++         browser/OS pinch gesture (Chrome canonicalizes the equivalent
++         `pan-x pan-y pinch-zoom` to "manipulation", which would hide the
++         explicit pinch-zoom permission; horizontal panning is not needed
++         because this region is overflow-x: hidden). No custom zoom system. */
++      #smartPdfWorkspace .smart-pdf-viewer-scroll {
++        flex: 1 1 auto;
++        min-height: 0;
++        overflow-y: auto;
++        overflow-x: hidden;
++        -webkit-overflow-scrolling: touch;
++        touch-action: pan-y pinch-zoom;
++        overscroll-behavior: contain;
++        padding: 14px 10px 26px;
++      }
++      #smartPdfWorkspace .smart-pdf-viewer-pages {
++        display: flex;
++        flex-direction: column;
++        align-items: center;
++        gap: 14px;
++      }
++      #smartPdfWorkspace .smart-pdf-viewer-page {
++        position: relative;
++        box-sizing: border-box;
++        width: 100%;
++        max-width: 920px;
++        background: #ffffff;
++        border: 1px solid #e2e8f0;
++        border-radius: 4px;
++        overflow: hidden;
++        box-shadow: 0 2px 10px rgba(15, 23, 42, 0.14);
++        line-height: 0;
++      }
++      #smartPdfWorkspace .smart-pdf-viewer-page canvas {
++        display: block;
++        width: 100%;
++        height: auto;
++      }
++      /* INLINE TEXT EDITING (Smart PDF only) ΓÇö an invisible text layer sits
++         over each page canvas. Spans stay fully TRANSPARENT until the user
++         clicks one; no edit button, toolbar, menu, zoom control, or any other
++         visible editing UI exists anywhere. Clicking existing text turns that
++         exact span into an in-place native editable (real caret |, arrow-key
++         movement, delete/type). The original glyphs under the span are cleared
++         straight from the page canvas at edit time (JS), so NO white patch,
++         highlight, box, border, duplicated/ghost text or edit marker is ever
++         shown: during the edit only the normal caret + text are visible, and
++         after committing the changed text simply stays in place. */
++      #smartPdfWorkspace .smart-pdf-text-layer {
++        position: absolute;
++        top: 0;
++        right: 0;
++        bottom: 0;
++        left: 0;
++        overflow: hidden;
++        line-height: 1;
++      }
++      #smartPdfWorkspace .smart-pdf-text-layer > span {
++        position: absolute;
++        box-sizing: border-box;
++        margin: 0;
++        padding: 0;
++        border: 0;
++        white-space: pre;
++        color: transparent;
++        background: transparent;
++        cursor: text;
++        user-select: none;
++        -webkit-user-select: none;
++      }
++      #smartPdfWorkspace .smart-pdf-text-layer > span.smart-pdf-text-edited {
++        background: transparent;
++        color: #000000;
++      }
++      #smartPdfWorkspace .smart-pdf-text-layer > span.smart-pdf-text-editing {
++        z-index: 2;
++        background: transparent;
++        color: #000000;
++        caret-color: #000000;
++        outline: none;
++        user-select: text;
++        -webkit-user-select: text;
++      }
++      @media (max-width: 480px) {
++        #smartPdfWorkspace .smart-pdf-viewer-scroll {
++          padding: 10px 6px 20px;
++        }
++      }
++    </style>
+   </head>
+   <body data-theme="oled">
+     <div class="app-shell">
+@@ -321,10 +564,9 @@
+           <span class="feature-nav-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></span>
+           <span class="feature-nav-label" data-i18n="drawerNotes">Notes</span>
+         </button>
+-        <button class="feature-nav-btn" data-action="open-smart-docs" type="button" aria-label="Smart Documents" data-i18n-title="smartDocsTitle">
+-          <span class="feature-nav-icon feature-nav-icon-emoji" aria-hidden="true">≡ƒôä</span>
+-          <span class="feature-nav-label" data-i18n="smartDocsTitle">Smart Documents</span>
+-        </button>
++         <button class="feature-nav-btn" data-action="open-smart-pdf" type="button" aria-label="Smart PDF">
++           <span class="feature-nav-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="9" y1="15" x2="15" y2="15"></line></svg></span>
++         </button>
+         <div id="currencyMenuWrap" class="currency-menu-wrap feature-nav-currency">
+           <button id="currencyMenuButton" class="ghost-btn icon-btn" type="button" aria-label="Currency Menu" aria-expanded="false">
+             <i class="fa-solid fa-coins"></i>
+@@ -1294,33 +1536,11 @@
+           <h3 id="smartDocsTitle" data-i18n="smartDocsTitle">≡ƒôä Smart Documents</h3>
+         </header>
+         <div class="smart-docs-body">
+-          <!-- SMART DOCUMENTS ΓÇö PDF WORKSPACE (Phase: PDF import + fullscreen direct editing only). -->
+-          <input id="smartPdfFileInput" class="smart-pdf-file-input" type="file" accept="application/pdf,.pdf" hidden />
+-          <div id="smartPdfEmpty" class="smart-pdf-empty">
+-            <div class="smart-pdf-empty-icon" aria-hidden="true">≡ƒôä</div>
+-            <p class="smart-pdf-empty-title" data-i18n="smartPdfEmptyTitle">Open a PDF from your device</p>
+-            <p class="smart-pdf-empty-sub" data-i18n="smartPdfEmptySub">PDF only ┬╖ Downloads, Desktop, Documents or any folder your browser can reach</p>
+-            <button id="smartPdfUploadBtn" class="smart-pdf-upload-btn" type="button" data-i18n="smartPdfUpload">Upload PDF</button>
+-          </div>
+-          <p id="smartPdfError" class="smart-pdf-error" role="alert" hidden></p>
+-          <div id="smartPdfWorkspace" class="smart-pdf-workspace" hidden>
+-            <!-- SMART DOCUMENTS ΓÇö SLIM TOOLBAR: one single, short row pinned to
+-                 the top of the PDF workspace. It stays fixed while the PDF
+-                 scrolls and never covers the pages. Existing tools only. -->
+-            <div id="smartPdfToolbar" class="smart-pdf-toolbar" role="toolbar" aria-label="PDF tools">
+-              <button id="smartPdfBackBtn" class="smart-pdf-tb-icon" type="button" aria-label="Back">
+-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+-              </button>
+-              <span id="smartPdfFileName" class="smart-pdf-file-name"></span>
+-              <button id="smartPdfViewBtn" class="smart-pdf-tool-btn is-active" type="button" aria-pressed="true" data-i18n="smartPdfView">View</button>
+-              <button id="smartPdfEditBtn" class="smart-pdf-tool-btn" type="button" aria-pressed="false" data-i18n="smartPdfEdit">Edit text</button>
+-              <span id="smartPdfEditHint" class="smart-pdf-edit-hint" data-i18n="smartPdfEditHint">Edit mode: tap a text line, then type. Tap elsewhere or View to finish.</span>
+-              <button id="smartPdfChangeBtn" class="smart-pdf-tool-btn smart-pdf-tb-end" type="button" data-i18n="smartPdfChange">Choose another</button>
+-            </div>
+-            <div id="smartPdfScroll" class="smart-pdf-scroll" tabindex="0">
+-              <div id="smartPdfPages" class="smart-pdf-pages"></div>
+-            </div>
+-          </div>
++          <!-- SMART DOCUMENTS ΓÇö workspace intentionally EMPTY.
++               All previous internal tools were removed. The shell
++               (backdrop / header / back button / body) is unchanged;
++               the rebuild goes here later. -->
++
+         </div>
+       </div>
+     </div>
+@@ -1343,10 +1563,6 @@
+           <span class="item-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></span>
+           <span data-i18n="drawerNotes">Notes</span>
+         </button>
+-        <button class="drawer-menu-item" data-action="open-smart-docs" type="button">
+-          <span class="item-icon"><span class="smart-docs-icon">≡ƒôä</span></span>
+-          <span data-i18n="smartDocsTitle">≡ƒôä Smart Documents</span>
+-        </button>
+         <button class="drawer-menu-item" data-action="open-install" type="button">
+           <span class="item-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg></span>
+           <span data-i18n="drawerInstall">Install App</span>
+@@ -1479,6 +1695,50 @@
+       </div>
+     </div>
+ 
++    <!-- PART 14b ΓÇö Smart PDF Workspace (Phase 02A shell + PHASE 03 viewer).
++         Full-coverage white workspace with a transparent top toolbar and a
++         centered upload entry. PHASE 03 adds the conditional rendering:
++         UploadZone (#smartPdfUploadArea) ΓåÆ valid PDF ΓåÆ PDFViewer
++         (#smartPdfViewerArea, vertical scroll). The existing smartPdfBackBtn
++         (and its app.js binding) and the open-smart-pdf action are untouched. -->
++    <div id="smartPdfWorkspace" class="settings-modal-backdrop" aria-hidden="true">
++      <div class="settings-modal smart-pdf-workspace" role="dialog" aria-modal="true" aria-labelledby="smartPdfTitle">
++        <!-- PHASE 02A ΓÇö Top toolbar: spans the full workspace width,
++             transparent, intentionally empty (tools come in a later phase). -->
++        <div id="smartPdfTopToolbar" class="smart-pdf-top-toolbar" role="toolbar" aria-label="Smart PDF toolbar"></div>
++        <div class="settings-modal-header">
++          <div>
++            <h3 id="smartPdfTitle" data-i18n="smartPdfWorkspaceTitle">Smart PDF</h3>
++          </div>
++          <button id="smartPdfBackBtn" class="modal-close-btn" type="button" aria-label="Back">├ù</button>
++        </div>
++        <div class="settings-modal-body smart-pdf-body" id="smartPdfBody">
++          <!-- PHASE 03 ΓÇö the ONE PDF-only file input of Smart PDF. The upload
++               button opens it; a valid PDF (PDF only, max 20MB hint) swaps the
++               UploadZone for the PDFViewer below ΓÇö same workspace, no PDF Reports. -->
++          <input id="smartPdfFileInput" class="smart-pdf-file-input" type="file" accept="application/pdf,.pdf" hidden />
++          <!-- STATE 1 ΓÇö UploadZone: button + small helper hint (Phase 02A look). -->
++          <div id="smartPdfUploadArea" class="smart-pdf-upload-area">
++            <button id="smartPdfUploadBtn" class="smart-pdf-upload-btn" type="button" data-i18n="smartPdfUploadBtn">Upload PDF</button>
++            <p class="smart-pdf-upload-hint" data-i18n="smartPdfUploadHint">PDF only ┬╖ max 20MB</p>
++            <p id="smartPdfUploadStatus" class="smart-pdf-upload-status" data-i18n="smartPdfUploadSuccess" role="status" hidden>PDF received</p>
++            <p id="smartPdfUploadError" class="smart-pdf-upload-error" role="alert" hidden></p>
++          </div>
++          <!-- STATE 2 ΓÇö PDFViewer: small toolbar (localized page indicator) +
++               one flexible container where all pages stack vertically and the
++               user navigates by scrolling (not Prev/Next). -->
++          <div id="smartPdfViewerArea" class="smart-pdf-viewer-area" hidden>
++            <div id="smartPdfViewerToolbar" class="smart-pdf-viewer-toolbar" role="toolbar" aria-label="PDF viewer">
++              <span id="smartPdfPageIndicator" class="smart-pdf-page-indicator" data-i18n="smartPdfPageIndicator" aria-live="polite">Page {current} of {total}</span>
++            </div>
++            <div id="smartPdfViewerScroll" class="smart-pdf-viewer-scroll" tabindex="0">
++              <div id="smartPdfViewerPages" class="smart-pdf-viewer-pages"></div>
++            </div>
++          </div>
++        </div>
++      </div>
++    </div>
++
+     <script type="module" src="./app.js"></script>
+   </body>
+ </html>
