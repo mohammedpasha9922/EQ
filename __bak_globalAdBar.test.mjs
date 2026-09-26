@@ -256,11 +256,7 @@ function assertAdLayout(tag, g) {
   check('static: ad bar CSS keeps it in flow (relative, never fixed/sticky)',
     /\.ad-placeholder\s*\{[^}]*position:\s*relative/.test(css) && !/\.ad-placeholder\s*\{[^}]*position:\s*(fixed|sticky)/.test(css));
   check('static: ad bar CSS reserves a fixed height (no dynamic/vh jump)',
-    // Literal `height: 52px` OR the reserved-band refactor's fixed CSS variable
-    // (--ad-bar-h is declared as a fixed px value at every breakpoint, so the
-    // bar height can never jump with the viewport; the runtime checks below
-    // verify the actual computed px height on every viewport).
-    /\.ad-placeholder\s*\{[^}]*height:\s*(?:\d+px|var\(--ad-bar-h\))/.test(css));
+    /\.ad-placeholder\s*\{[^}]*height:\s*\d+px/.test(css));
 }
 
 // ============================================================

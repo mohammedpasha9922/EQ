@@ -203,9 +203,7 @@
       #notePdfPreviewModal.show {
         display: flex !important;
         position: fixed !important;
-        /* RESERVED TOP AD SPACE: the preview view starts BELOW the one global
-           ad bar (--ad-band) instead of covering it; left/right/bottom stay 0. */
-        inset: var(--ad-band) 0 0 0 !important;
+        inset: 0 !important;
         align-items: center !important;
         justify-content: center !important;
         padding: 20px !important;
@@ -219,10 +217,7 @@
         display: flex !important;
         flex-direction: column !important;
         width: min(92vw, 960px) !important;
-        /* Minus the reserved top ad band: the panel always fits inside the
-           space that is left below the advertisement. */
-        max-height: calc(100vh - var(--ad-band) - 40px) !important;
-        max-height: calc(100dvh - var(--ad-band) - 40px) !important;
+        max-height: calc(100vh - 40px) !important;
         max-width: min(92vw, 960px) !important;
         background: var(--panel) !important;
         border-radius: 12px !important;

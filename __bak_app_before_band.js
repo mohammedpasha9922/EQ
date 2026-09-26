@@ -4959,10 +4959,7 @@ function openCompanyNamePicker() {
   if (historyPdfTitleBar) { historyPdfTitleBar.remove(); historyPdfTitleBar = null; }
   const bar = document.createElement('div');
   bar.setAttribute('dir', (state.locale === 'ar' || state.locale === 'ku') ? 'rtl' : 'ltr');
-  // Reserved top ad space: this floating bar belongs to the History view, which
-  // now begins below the ONE global ad bar (--ad-band), so the bar is placed
-  // just under that reserved band instead of on top of it.
-  bar.style.cssText = 'position:fixed;top:calc(var(--ad-band) + 8px);left:50%;transform:translateX(-50%);z-index:10000;' +
+  bar.style.cssText = 'position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:10000;' +
     'display:flex;gap:8px;align-items:center;background:#ffffff;color:#000000;border:1px solid #cbd5e1;' +
     'border-radius:10px;padding:8px 10px;box-shadow:0 6px 24px rgba(0,0,0,.18);max-width:92vw;';
   const label = document.createElement('span');
@@ -7081,22 +7078,10 @@ function pdfV1SigOptPaintValue() {
   const close = pdfV1P2El('pdfV1SigOptClose');
   if (close) close.setAttribute('aria-label', t.close);
 }
-// Reserved top ad space helper: the ONE global ad bar (#adPlaceholder) owns the
-// band above every view. Floating popovers that belong to a view must never be
-// placed on that band, so they are clamped to its bottom edge.
-function eqAdBandBottom() {
-  try {
-    const ad = document.getElementById('adPlaceholder');
-    if (!ad) return 0;
-    return Math.max(0, Math.round(ad.getBoundingClientRect().bottom));
-  } catch (e) { return 0; }
-}
-
 function pdfV1SigOptPosition() {
   const pop = pdfV1P2El('pdfV1SigOptions');
   if (!pop || pop.hidden) return;
   const gap = 8;
-  const minTop = Math.max(gap, eqAdBandBottom() + gap); // below the reserved ad band
   const vw = Math.max(1, window.innerWidth);
   const vh = Math.max(1, window.innerHeight);
   const pw = Math.max(1, pop.offsetWidth || 200);
@@ -7109,9 +7094,9 @@ function pdfV1SigOptPosition() {
   let left = r ? (r.left + r.width + gap) : (vw - pw - gap);
   if (r && left + pw > vw - gap) left = r.left - pw - gap;
   left = Math.min(Math.max(gap, left), Math.max(gap, vw - gap - pw));
-  let top = r ? r.top : minTop;
+  let top = r ? r.top : gap;
   if (top + ph > vh - gap) top = vh - gap - ph;
-  top = Math.max(minTop, top);
+  top = Math.max(gap, top);
   pop.style.left = Math.round(left) + 'px';
   pop.style.top = Math.round(top) + 'px';
 }
@@ -7398,7 +7383,6 @@ function pdfV1StampOptPosition() {
   const pop = pdfV1P2El('pdfV1StampOptions');
   if (!pop || pop.hidden) return;
   const gap = 8;
-  const minTop = Math.max(gap, eqAdBandBottom() + gap); // below the reserved ad band
   const vw = Math.max(1, window.innerWidth);
   const vh = Math.max(1, window.innerHeight);
   const pw = Math.max(1, pop.offsetWidth || 220);
@@ -7408,9 +7392,9 @@ function pdfV1StampOptPosition() {
   let left = r ? (r.left + r.width + gap) : (vw - pw - gap);
   if (r && left + pw > vw - gap) left = r.left - pw - gap; // flip to the other side
   left = Math.min(Math.max(gap, left), Math.max(gap, vw - gap - pw));
-  let top = r ? r.top : minTop;
+  let top = r ? r.top : gap;
   if (top + ph > vh - gap) top = vh - gap - ph;
-  top = Math.max(minTop, Math.min(top, Math.max(minTop, vh - gap - ph)));
+  top = Math.max(gap, Math.min(top, Math.max(gap, vh - gap - ph)));
   pop.style.left = Math.round(left) + 'px';
   pop.style.top = Math.round(top) + 'px';
 }
@@ -9603,12 +9587,8 @@ function buildNotePdfHtml(note) {
   .eq-note-stamp { justify-self:end; text-align:right; font-size:10.5px; line-height:1.5; color:#334155; white-space:nowrap; }
   .eq-note-stamp-line { display:block; }
   .eq-note-title { font-size:17px; color:#000000; margin:12px 0 8px; line-height:1.4; text-align:center; white-space:normal; word-break:break-word; overflow-wrap:anywhere; page-break-after:avoid; break-after:avoid; }
-  /* Default (no explicit user alignment) = logical START of the content area:
-     RTL -> right edge, LTR -> left edge. Never centred. Explicit user alignment
-     is emitted per aligned run as an inline style (buildNoteBodyHTML) and always
-     wins over these class defaults. */
-  .eq-note-body { text-align:start; max-width:100%; }
-  .eq-pdf-text-block { color:#000000; margin:0 0 10px; font-size:12.5px; line-height:1.65; word-break:break-word; overflow-wrap:anywhere; white-space:pre-wrap; unicode-bidi:plaintext; text-align:start; }
+  .eq-note-body { text-align:center; max-width:100%; }
+  .eq-pdf-text-block { color:#000000; margin:0 0 10px; font-size:12.5px; line-height:1.65; word-break:break-word; overflow-wrap:anywhere; white-space:pre-wrap; unicode-bidi:plaintext; text-align:center; }
   .eq-pdf-text-block:last-child { margin-bottom:0; }
   /* PHASE 03 — headings/lists flow from buildNoteBodyHTML into the PDF via the
      existing pipeline; only presentation CSS for the block tags is added. */
@@ -9722,7 +9702,7 @@ function buildNotePdfHtml(note) {
   :where(.eq-note-report.note-frame-classic) .eq-note-body { border:1px solid #cbd5e1; border-radius:8px; padding:14px; }
   :where(.eq-note-report.note-frame-dashed) .eq-note-body { border:2px dashed rgba(13,148,136,0.55); border-radius:10px; padding:14px; }
   :where(.eq-note-report.note-frame-soft) .eq-note-body { border:none; border-radius:12px; padding:14px; background:rgba(13,148,136,0.05); }
-  @page { size: A4; margin: 16pt; } @media print { .eq-note-report.note-print-area { direction:inherit; width:100%; } .eq-note-report.note-print-area p { text-align:start; unicode-bidi:plaintext; } .eq-note-report.note-print-area li { text-align:start; unicode-bidi:plaintext; } .eq-note-report.note-print-area ul, .eq-note-report.note-print-area ol { padding-inline-start:20px; padding-inline-end:0; } .eq-note-report.note-print-area h1, .eq-note-report.note-print-area h2, .eq-note-report.note-print-area h3 { page-break-after:avoid; break-after:avoid; } .eq-note-report.note-print-area .eq-pdf-image-block, .eq-note-report.note-print-area .eq-pdf-table-wrap { page-break-inside:avoid; break-inside:avoid; } }
+  @page { size: A4; margin: 16pt; } @media print { .eq-note-report.note-print-area { direction:inherit; width:100%; } .eq-note-report.note-print-area p { text-align:center; unicode-bidi:plaintext; } .eq-note-report.note-print-area li { text-align:start; unicode-bidi:plaintext; } .eq-note-report.note-print-area ul, .eq-note-report.note-print-area ol { padding-inline-start:20px; padding-inline-end:0; } .eq-note-report.note-print-area h1, .eq-note-report.note-print-area h2, .eq-note-report.note-print-area h3 { page-break-after:avoid; break-after:avoid; } .eq-note-report.note-print-area .eq-pdf-image-block, .eq-note-report.note-print-area .eq-pdf-table-wrap { page-break-inside:avoid; break-inside:avoid; } }
 </style>
 </head>
 <body>

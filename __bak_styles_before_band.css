@@ -39,19 +39,6 @@
   --safe-right: env(safe-area-inset-right);
   --safe-bottom: env(safe-area-inset-bottom);
   --safe-left: env(safe-area-inset-left);
-
-  /* RESERVED TOP AD SPACE — single source of truth of the ONE global ad bar.
-     --ad-bar-h   : height of the ad bar itself (mirrors .ad-placeholder).
-     --ad-bar-gap : gap kept between the ad bar and the content below it.
-     --ad-band    : the whole reserved band = the app padding above the bar
-                    (same formula as the body padding-top) + the bar + the gap.
-     EVERY full-screen view starts at `top: var(--ad-band)`, so the reserved
-     advertisement space is present in every view and is never covered.
-     The values are breakpoint-identical to the previous fixed numbers, so the
-     Calculator geometry is unchanged. */
-  --ad-bar-h: 50px;
-  --ad-bar-gap: 14px;
-  --ad-band: calc(max(12px, calc(var(--safe-top) + 12px)) + var(--ad-bar-h) + var(--ad-bar-gap));
 }
 
 /* Legacy alias: old "dark" id now maps to OLED Black */
@@ -315,13 +302,13 @@ select {
   justify-content: center;
   width: 100%;
   max-width: 100%;
-  height: var(--ad-bar-h); /* mobile: fixed, modest */
-  min-height: var(--ad-bar-h);
-  max-height: var(--ad-bar-h);
+  height: 52px; /* mobile: fixed, modest */
+  min-height: 52px;
+  max-height: 52px;
   flex: 0 0 auto;
   box-sizing: border-box;
   overflow: hidden;
-  margin: 0 0 var(--ad-bar-gap);
+  margin: 0 0 14px;
   padding: 0 10px;
   border: 1px solid rgba(148, 163, 184, 0.25);
   border-radius: 12px;
@@ -346,9 +333,9 @@ select {
    content, and every fixed overlay correctly covers it. */
 .global-top-ad-banner {
   width: 100%;
-  height: var(--ad-bar-h);
-  min-height: var(--ad-bar-h); /* keep min <= max-height so the ceiling holds on every breakpoint */
-  max-height: var(--ad-bar-h);
+  height: 50px;
+  min-height: 50px; /* keep min <= max-height so the 50px ceiling holds on every breakpoint */
+  max-height: 50px;
   background-color: transparent;
   display: flex;
   justify-content: center;
@@ -421,17 +408,12 @@ select {
   opacity: 0.85;
 }
 
-/* Tablet / desktop: a little taller, still modest and fixed.
-   The height lives in --ad-bar-h so the reserved band (--ad-band) that every
-   view uses stays in sync with the bar itself. */
+/* Tablet / desktop: a little taller, still modest and fixed. */
 @media (min-width: 768px) {
-  :root {
-    --ad-bar-h: 60px;
-  }
   .ad-placeholder {
-    height: var(--ad-bar-h);
-    min-height: var(--ad-bar-h);
-    max-height: var(--ad-bar-h);
+    height: 60px;
+    min-height: 60px;
+    max-height: 60px;
   }
 }
 
@@ -1552,9 +1534,7 @@ body[data-language='ar'] .currency-popover {
   padding-top: 18px;
   margin-top: 16px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  /* Minus the reserved top ad band so the Settings panel always fits BELOW
-     the global advertisement bar. */
-  max-height: calc(100dvh - var(--ad-band) - 220px);
+  max-height: calc(100dvh - 220px);
   overflow-y: auto;
   overscroll-behavior: contain;
 }
@@ -1628,8 +1608,7 @@ body[data-language='ar'] .settings-modal-body .field-caption {
     gap: 14px;
     padding-top: 16px;
     margin-top: 14px;
-    /* Small screens: same cap, still minus the reserved top ad band. */
-    max-height: calc(100dvh - var(--ad-band) - 180px);
+    max-height: calc(100dvh - 180px);
   }
   .settings-modal-body .app-sounds-group {
     padding: 12px 12px 14px;
@@ -1657,10 +1636,8 @@ body[data-language='ar'] .settings-modal-body .field-caption {
 }
 .help-modal {
   width: min(92vw, 480px);
-  /* Reserved top ad band (--ad-band) is added to the 40px backdrop padding so
-     the panel can never grow up into the advertisement space. */
-  max-height: calc(100vh - var(--ad-band) - 40px);
-  max-height: calc(100dvh - var(--ad-band) - 40px);
+  max-height: calc(100dvh - 40px);
+  max-height: calc(100vh - 40px);
   display: flex;
   flex-direction: column;
   background: var(--panel);
@@ -2684,10 +2661,7 @@ body[data-language='ar'] .favorite-btn {
 
 .currency-modal {
   width: min(100%, 640px);
-  /* 90vh minus the reserved top ad band, so the panel always fits BELOW the
-     advertisement band (it used to centre against the whole viewport). */
-  max-height: min(calc(100vh - var(--ad-band) - 40px), 740px);
-  max-height: min(calc(100dvh - var(--ad-band) - 40px), 740px);
+  max-height: min(90vh, 740px);
   overflow-y: auto;
   display: grid;
   gap: 18px;
@@ -3111,9 +3085,7 @@ body[data-language='ar'] .favorite-btn {
 
   .currency-modal {
     width: min(100%, 100vw);
-    /* 92vh minus the reserved top ad band (see the base rule). */
-    max-height: calc(100vh - var(--ad-band) - 40px);
-    max-height: calc(100dvh - var(--ad-band) - 40px);
+    max-height: 92vh;
     border-radius: 22px;
   }
 
@@ -6342,21 +6314,15 @@ body[data-language='ar'] .note-item-meta {
    compact paddings/gaps + viewport-height-aware key sizing so the
    full display + full keypad stay inside the viewport. */
 @media (max-height: 520px) {
-  /* Compact ad bar at short heights. Declared here (last) so these values win
-     for the bar AND for the shared reserved band (--ad-band). */
-  :root {
-    --ad-bar-h: 40px;
-    --ad-bar-gap: 8px;
-  }
   body {
     align-items: flex-start;
   }
   .ad-placeholder,
   .global-top-ad-banner {
-    height: var(--ad-bar-h); /* keeps the documented 40-80px ad contract at EVERY height */
-    min-height: var(--ad-bar-h);
-    max-height: var(--ad-bar-h);
-    margin-bottom: var(--ad-bar-gap);
+    height: 40px; /* keeps the documented 40-80px ad contract at EVERY height */
+    min-height: 40px;
+    max-height: 40px;
+    margin-bottom: 8px;
   }
   .top-bar {
     margin-bottom: 8px;
@@ -6473,75 +6439,5 @@ body[data-language='ar'] .note-item-meta {
 }
 @media (max-width: 480px) {
   #pdfReportsWorkspace .pdfv1-stamp-options { min-width: min(186px, calc(100vw - 16px)); }
-}
-
-
-/* ============================================================
-   RESERVED TOP AD SPACE — EVERY USER-FACING VIEW
-   The Calculator already demonstrates the model: the ONE global ad bar
-   (#adPlaceholder) sits FIRST inside the app shell, in normal flow, and the
-   calculator content simply begins below it. The same reserved band is now
-   honoured by every other view (History, Notes, Notes→PDF preview, PDF V1,
-   Smart PDF, Smart Documents, Settings, Help, Currency converter/modals,
-   install + delete confirm and the side drawer): each one begins at
-   `top: var(--ad-band)` instead of the viewport top, so the reserved
-   advertisement area is never covered:
-
-        RESERVED AD SPACE   (the one global bar)
-                ↓
-        VIEW HEADER → TOOLBAR → CONTENT → BUTTONS
-
-   This is a plain normal-flow geometry offset ONLY:
-     • the ad bar stays `position: relative` in the shell (no fixed/sticky
-       overlay, no z-index, no per-view ad, no duplicated ad unit);
-     • no view is resized with transform/zoom/negative margins;
-     • every view keeps its own scrolling and stays reachable — only the
-       band already reserved above the app is skipped.
-   Placed LAST in the stylesheet (same convention as the full-screen Notes
-   block above) so these offsets win by source order over the earlier
-   `inset: 0` / `top: 0` declarations, including inside media queries.
-   ============================================================ */
-.settings-modal-backdrop,
-.currency-modal-backdrop,
-.install-modal-backdrop,
-.pdf-reports-backdrop,
-.notes-manager-backdrop,
-.full-screen-note-backdrop,
-.delete-confirm-backdrop,
-.help-modal-backdrop,
-.smart-docs-backdrop,
-.note-pdf-preview-backdrop,
-.history-panel,
-.drawer-overlay {
-  top: var(--ad-band); /* left/right/bottom stay 0 from `inset: 0` */
-}
-
-/* The side drawer is a full-height sheet: reserve the band at the top and end
-   at the viewport bottom (its old 100vh height would stick out below the fold
-   once the top is offset). */
-.drawer {
-  top: var(--ad-band);
-  bottom: 0;
-  height: auto;
-}
-
-/* Panels that capped themselves with viewport units (100dvh / 100vh) would now
-   overflow the shorter backdrop and paint over the advertisement. Capping them
-   against the backdrop instead keeps them exactly inside the space that is left
-   below the reserved band - at every breakpoint and on rotation. */
-.smart-docs-home {
-  max-height: 100%;
-}
-
-/* The install dialog centres itself inside its backdrop, so on short viewports
-   (e.g. 800x360 landscape) an uncapped panel taller than the space below the
-   band would poke BOTH above it (over the advertisement) and below the fold.
-   Capping it against the backdrop — same rule as the currency/help modals
-   above — keeps it fully inside the space left below the reserved band, and it
-   scrolls internally instead. 40px = the backdrop's 20px padding top+bottom. */
-.install-modal {
-  max-height: calc(100vh - var(--ad-band) - 40px);
-  max-height: calc(100dvh - var(--ad-band) - 40px);
-  overflow-y: auto;
 }
 

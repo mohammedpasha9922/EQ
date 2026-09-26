@@ -9603,12 +9603,8 @@ function buildNotePdfHtml(note) {
   .eq-note-stamp { justify-self:end; text-align:right; font-size:10.5px; line-height:1.5; color:#334155; white-space:nowrap; }
   .eq-note-stamp-line { display:block; }
   .eq-note-title { font-size:17px; color:#000000; margin:12px 0 8px; line-height:1.4; text-align:center; white-space:normal; word-break:break-word; overflow-wrap:anywhere; page-break-after:avoid; break-after:avoid; }
-  /* Default (no explicit user alignment) = logical START of the content area:
-     RTL -> right edge, LTR -> left edge. Never centred. Explicit user alignment
-     is emitted per aligned run as an inline style (buildNoteBodyHTML) and always
-     wins over these class defaults. */
-  .eq-note-body { text-align:start; max-width:100%; }
-  .eq-pdf-text-block { color:#000000; margin:0 0 10px; font-size:12.5px; line-height:1.65; word-break:break-word; overflow-wrap:anywhere; white-space:pre-wrap; unicode-bidi:plaintext; text-align:start; }
+  .eq-note-body { text-align:center; max-width:100%; }
+  .eq-pdf-text-block { color:#000000; margin:0 0 10px; font-size:12.5px; line-height:1.65; word-break:break-word; overflow-wrap:anywhere; white-space:pre-wrap; unicode-bidi:plaintext; text-align:center; }
   .eq-pdf-text-block:last-child { margin-bottom:0; }
   /* PHASE 03 — headings/lists flow from buildNoteBodyHTML into the PDF via the
      existing pipeline; only presentation CSS for the block tags is added. */
@@ -9722,7 +9718,7 @@ function buildNotePdfHtml(note) {
   :where(.eq-note-report.note-frame-classic) .eq-note-body { border:1px solid #cbd5e1; border-radius:8px; padding:14px; }
   :where(.eq-note-report.note-frame-dashed) .eq-note-body { border:2px dashed rgba(13,148,136,0.55); border-radius:10px; padding:14px; }
   :where(.eq-note-report.note-frame-soft) .eq-note-body { border:none; border-radius:12px; padding:14px; background:rgba(13,148,136,0.05); }
-  @page { size: A4; margin: 16pt; } @media print { .eq-note-report.note-print-area { direction:inherit; width:100%; } .eq-note-report.note-print-area p { text-align:start; unicode-bidi:plaintext; } .eq-note-report.note-print-area li { text-align:start; unicode-bidi:plaintext; } .eq-note-report.note-print-area ul, .eq-note-report.note-print-area ol { padding-inline-start:20px; padding-inline-end:0; } .eq-note-report.note-print-area h1, .eq-note-report.note-print-area h2, .eq-note-report.note-print-area h3 { page-break-after:avoid; break-after:avoid; } .eq-note-report.note-print-area .eq-pdf-image-block, .eq-note-report.note-print-area .eq-pdf-table-wrap { page-break-inside:avoid; break-inside:avoid; } }
+  @page { size: A4; margin: 16pt; } @media print { .eq-note-report.note-print-area { direction:inherit; width:100%; } .eq-note-report.note-print-area p { text-align:center; unicode-bidi:plaintext; } .eq-note-report.note-print-area li { text-align:start; unicode-bidi:plaintext; } .eq-note-report.note-print-area ul, .eq-note-report.note-print-area ol { padding-inline-start:20px; padding-inline-end:0; } .eq-note-report.note-print-area h1, .eq-note-report.note-print-area h2, .eq-note-report.note-print-area h3 { page-break-after:avoid; break-after:avoid; } .eq-note-report.note-print-area .eq-pdf-image-block, .eq-note-report.note-print-area .eq-pdf-table-wrap { page-break-inside:avoid; break-inside:avoid; } }
 </style>
 </head>
 <body>
