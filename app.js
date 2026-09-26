@@ -13851,6 +13851,9 @@ function handleDrawerMenuItem(action) {
     case 'open-notes':
       openNotesManager();
       break;
+    case 'open-smart-docs':
+      openSmartDocs();
+      break;
     case 'open-smart-pdf':
       openSmartPdfWorkspace();
       break;
@@ -14279,6 +14282,15 @@ function wireEvents() {
       if (action === 'open-currency') {
         e.stopPropagation();
         toggleCurrencyMenu();
+        return;
+      }
+      // PDF V1 — Phase 1 TARGET LOCK: the circled 📄 button in the Feature
+      // Navigation Bar (button.feature-nav-btn[data-action="open-smart-docs"]
+      // inside #featureNavBar) opens the EXISTING #pdfReportsWorkspace.
+      // Drawer open-smart-docs still opens Smart Docs; Smart Docs code untouched.
+      if (action === 'open-smart-docs' && btn.closest && btn.closest('#featureNavBar')) {
+        e.stopPropagation();
+        openPdfReportsWorkspace();
         return;
       }
       handleDrawerMenuItem(action);

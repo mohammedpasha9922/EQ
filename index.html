@@ -13,7 +13,17 @@
     <link rel="icon" type="image/x-icon" href="./favicon.ico" />
     <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="./icon-512.png" />
     <link rel="manifest" href="./manifest.json" />
+    <meta property="og:title" content="EQ7 — Smart Calculator" />
+    <meta property="og:description" content="Fast, private EQ7 Smart Calculator — 100% offline with notes, history and smart documents." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="./og-image.png" />
+    <meta property="og:image:alt" content="EQ7 Smart Calculator preview" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="EQ7 — Smart Calculator" />
+    <meta name="twitter:description" content="Fast, private EQ7 Smart Calculator — 100% offline with notes, history and smart documents." />
+    <meta name="twitter:image" content="./og-image.png" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
     <link rel="stylesheet" href="./styles.css" />
     <style id="currency-dropdown-rtl-mobile-fix">
@@ -619,8 +629,9 @@
           <span class="feature-nav-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></span>
           <span class="feature-nav-label" data-i18n="drawerNotes">Notes</span>
         </button>
-         <button class="feature-nav-btn" data-action="open-smart-pdf" type="button" aria-label="Smart PDF">
-           <span class="feature-nav-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="9" y1="15" x2="15" y2="15"></line></svg></span>
+         <button class="feature-nav-btn" data-action="open-smart-docs" type="button" aria-label="Smart Documents" data-i18n-title="smartDocsTitle">
+           <span class="feature-nav-icon feature-nav-icon-emoji" aria-hidden="true">📄</span>
+          <span class="feature-nav-label" data-i18n="smartDocsTitle">Smart Documents</span>
          </button>
         <div id="currencyMenuWrap" class="currency-menu-wrap feature-nav-currency">
           <button id="currencyMenuButton" class="ghost-btn icon-btn" type="button" aria-label="Currency Menu" aria-expanded="false">
@@ -1304,6 +1315,7 @@
 <div class="full-screen-note-title-row">
              <div class="full-screen-note-title-wrap">
                <input id="noteTitleInput" class="note-title-input" type="text" maxlength="80" placeholder="Title" data-i18n-placeholder="noteTitlePlaceholder" />
+               <span id="noteSavedIndicator" class="note-saved-indicator" role="status" aria-live="polite" data-i18n="noteSavedLabel">Saved ✓</span>
              </div>
            </div>
            <!-- Same button, same id, same handler, same back/close behaviour; only the
@@ -1630,6 +1642,10 @@
         <button class="drawer-menu-item" data-action="open-notes" type="button">
           <span class="item-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></span>
           <span data-i18n="drawerNotes">Notes</span>
+        </button>
+        <button class="drawer-menu-item" data-action="open-smart-docs" type="button">
+          <span class="item-icon"><span class="smart-docs-icon">📄</span></span>
+          <span data-i18n="smartDocsTitle">📄 Smart Documents</span>
         </button>
         <button class="drawer-menu-item" data-action="open-install" type="button">
           <span class="item-icon"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg></span>

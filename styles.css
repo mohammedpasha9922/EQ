@@ -3627,6 +3627,14 @@ body[data-language='ar'] .favorite-btn {
   width: min(100vw - 32px, 960px);
 }
 
+.smart-docs-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
 body[data-language='ar'] .smart-docs-header {
   flex-direction: row-reverse;
 }
@@ -4645,6 +4653,25 @@ body[data-language='ar'] .notes-list-panel.hidden {
 
 .note-title-input::placeholder { color: var(--text-muted); opacity: 0.8; font-weight: 500; }
 .note-title-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+
+/* N03 — autosave confirmation chip beside the title input. Rendered (non-zero
+   width) at all times; only its colour/opacity change when a save lands. */
+.note-saved-indicator {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 45%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  opacity: 0.85;
+  transition: opacity 0.2s ease;
+}
+
+.note-saved-indicator.show { opacity: 1; color: var(--accent); }
 
 /* Fixed-size action group: never grows, never shrinks — so the icons can never
    overlap the title field nor push anything out of the bar. */
